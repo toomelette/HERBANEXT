@@ -32,14 +32,7 @@ class CheckUserStatus{
 
         if($this->auth->guard()->check()){
 
-            if($this->auth->user()->is_online == false){
-
-                $this->auth->logout();
-                $this->session->flush();
-                $this->session->flash('CHECK_NOT_LOGGED_IN', 'You have been SIGNED OUT somewhere! Please Sign in again.');
-                return redirect('/');
-
-            }elseif($this->auth->user()->is_active == false){
+            if($this->auth->user()->is_active == false){
 
                 $this->auth->logout();
                 $this->session->flush();
@@ -48,7 +41,7 @@ class CheckUserStatus{
 
             }
 
-        return $next($request);
+            return $next($request);
 
         }
 

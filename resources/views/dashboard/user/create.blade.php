@@ -167,10 +167,11 @@
 
   {!! __js::show_password('password', 'show_password') !!}
   {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
-  
 
+
+  {{-- UPDATE TOAST --}}
   @if(Session::has('USER_CREATE_SUCCESS'))
-    $('#user_create').modal('show');
+    {!! __js::toast(Session::get('USER_CREATE_SUCCESS')) !!}
   @endif
 
 

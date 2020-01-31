@@ -80,12 +80,6 @@ class LoginController extends Controller{
                 $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personel to activate your account.');
                 $this->auth->logout();
 
-            }elseif($this->auth->user()->is_online == true){
-
-                $this->session->flush();
-                $this->session->flash('AUTH_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account and try again.');
-                $this->auth->logout();
-
             }else{
 
                 $user = $this->user_repo->login($this->auth->user()->slug);

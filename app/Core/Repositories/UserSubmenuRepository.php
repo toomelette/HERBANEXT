@@ -39,6 +39,7 @@ class UserSubmenuRepository extends BaseRepository implements UserSubmenuInterfa
         $user_submenu->user_id = $user_menu->user_id;
         $user_submenu->is_nav = $submenu->is_nav;
         $user_submenu->name = $submenu->name;
+        $user_submenu->nav_name = $submenu->nav_name;
         $user_submenu->route = $submenu->route;
         $user_submenu->save();
 

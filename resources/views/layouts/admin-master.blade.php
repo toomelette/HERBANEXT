@@ -11,7 +11,7 @@
     @include('layouts.css-plugins')
 
   </head>
-  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}">
+  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" style="zoom:90%;">
 
     <div id="loader"></div>
 
