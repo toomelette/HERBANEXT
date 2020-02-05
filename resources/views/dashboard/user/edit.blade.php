@@ -14,9 +14,11 @@
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h3 class="box-title">Edit User</h3>
+        <h3 class="box-title" style="padding-top: 5px;">Edit User</h3>
         <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
+          <code>Fields with asterisks(*) are required</code>
+          &nbsp;
+          {!! __html::back_button(['dashboard.user.index']) !!}
         </div>
       </div>
       
@@ -153,9 +155,6 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
-          <div class="pull-right">
-            {!! __html::back_button(['dashboard.user.index', 'dashboard.user.show']) !!}
-          </div>
         </div>
 
       </form>

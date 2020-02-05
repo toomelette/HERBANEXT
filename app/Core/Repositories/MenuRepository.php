@@ -91,6 +91,8 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->user_updated = $this->auth->user()->user_id;
         $menu->save();
 
+        $menu->submenu()->delete();
+        
         return $menu;
 
     }

@@ -31,7 +31,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 1.1.0
         </div>
-        <strong>Copyright &copy; 2018-2019 <a href="#">toomelette</a>.</strong> All rights
+        <strong>Copyright &copy; 2019-2020.</strong> All rights
         reserved.
       </footer>
 

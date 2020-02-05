@@ -24,10 +24,10 @@ class MenuFormRequest extends FormRequest{
 
         $rules = [
             
-            'name'=>'required|string|max:45',
-            'route'=>'required|string|max:45',
-            'icon'=>'required|string|max:45',
-            'is_menu'=>'required|string|max:11',
+            'name'=>'required|string|max:90',
+            'route'=>'required|string|max:90',
+            'icon'=>'required|string|max:90',
+            'is_menu'=>'required|string|max:5',
             'is_dropdown'=>'required|string|max:5',
 
         ];

@@ -30,8 +30,6 @@ class UserSubscriber extends BaseSubscriber{
         $events->listen('user.deactivate', 'App\Core\Subscribers\UserSubscriber@onDeactivate');
         $events->listen('user.logout', 'App\Core\Subscribers\UserSubscriber@onLogout');
         $events->listen('user.reset_password_post', 'App\Core\Subscribers\UserSubscriber@onResetPasswordPost');
-        $events->listen('user.sync_employee_post', 'App\Core\Subscribers\UserSubscriber@onSyncEmployeePost');
-        $events->listen('user.unsync_employee', 'App\Core\Subscribers\UserSubscriber@onUnsyncEmployee');
 
 	}
 
@@ -145,42 +143,6 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);
-
-    }
-
-
-
-
-
-    public function onSyncEmployeePost($user, $employee){
-
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
-
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findBySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findByUserId:'. $user->user_id .'');
-
-        $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS', 'User Successfully Synchronized!');
-        $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS_SLUG', $user->slug);
-        
-    }
-
-
-
-
-
-    public function onUnsyncEmployee($user, $employee){
-
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
-
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findBySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findByUserId:'. $user->user_id .'');
-
-        $this->session->flash('USER_UNSYNC_EMPLOYEE_SUCCESS', 'User Successfully Unsynchronized!');
-        $this->session->flash('USER_UNSYNC_EMPLOYEE_SUCCESS_SLUG', $user->slug);
 
     }
 

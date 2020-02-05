@@ -51,12 +51,14 @@
               <td>{{ $data->name }}</td>
               <td>{{ $data->route }}</td>
               <td><i class="fa {{ $data->icon }}"></i></td>
-              <td> 
-                <select id="action" class="form-control input-md">
-                  <option value="">Select</option>
-                  <option data-type="1" data-url="{{ route('dashboard.menu.edit', $data->slug) }}">Edit</option>
-                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.menu.destroy', $data->slug) }}">Delete</option>
-                </select>
+              <td>
+                <div class="btn-group">
+                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.menu.edit', $data->slug) }}">
+                    <i class="fa fa-pencil"></i></a>
+                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.menu.destroy', $data->slug) }}">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
               </td>
             </tr>
             @endforeach
@@ -99,7 +101,7 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! __js::modal_confirm_delete_caller('menu_delete') !!}
+    {!! __js::button_modal_confirm_delete_caller('menu_delete') !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('MENU_UPDATE_SUCCESS'))

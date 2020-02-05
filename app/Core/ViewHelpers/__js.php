@@ -59,7 +59,7 @@ class __js{
 
 
 
-    public static function modal_confirm_delete_caller($modal){
+    public static function select_modal_confirm_delete_caller($modal){
 
        return '$(document).on("change", "#action", function () {
 			      var element = $(this).children("option:selected");
@@ -67,6 +67,20 @@ class __js{
 			        $("#'. $modal .'").modal("show");
 			        $("#delete_body #form").attr("action", element.data("url"));
 			        $(this).val("");
+			      }
+			    });';
+
+    }
+
+
+
+
+    public static function button_modal_confirm_delete_caller($modal){
+
+       return '$(document).on("click", "#delete_button", function () {
+			      if($(this).data("action") == "delete"){
+			        $("#'. $modal .'").modal("show");
+			        $("#delete_body #form").attr("action", $(this).data("url"));
 			      }
 			    });';
 

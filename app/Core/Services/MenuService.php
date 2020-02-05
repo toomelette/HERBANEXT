@@ -43,19 +43,13 @@ class MenuService extends BaseService{
 
 
     public function store($request){
-       
-        $rows = $request->row;
 
         $menu = $this->menu_repo->store($request);
 
-        if(!empty($rows)){
-
-            foreach ($rows as $row) {
-
+        if(!empty($request->row)){
+            foreach ($request->row as $row) {
                 $submenu = $this->submenu_repo->store($row, $menu);
-                
             }
-
         }
         
         $this->event->fire('menu.store');
@@ -83,6 +77,12 @@ class MenuService extends BaseService{
     public function update($request, $slug){
 
         $menu = $this->menu_repo->update($request, $slug);
+
+        if(!empty($request->row)){
+            foreach ($request->row as $row) {
+                $submenu = $this->submenu_repo->store($row, $menu);
+            }
+        }
 
         $this->event->fire('menu.update', $menu);
         return redirect()->route('dashboard.menu.index');

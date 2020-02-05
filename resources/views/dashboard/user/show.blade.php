@@ -7,7 +7,10 @@
   <div class="box box-solid">
         
     <div class="box-header with-border">
-      <h3 class="box-title">User Details</h3>
+      <h3 class="box-title" style="padding-top: 5px;">User Details</h3>
+      <div class="pull-right">
+        {!! __html::back_button(['dashboard.user.index']) !!}
+      </div>
     </div>
 
     <div class="box-body">

@@ -36,9 +36,9 @@
       <footer class="main-footer">
         <div class="container">
           <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 1.1
           </div>
-          <strong>Copyright &copy; 2018-2019 <a href="#">toomelette</a>.</strong> All rights
+          <strong>Copyright &copy; 2019-2020 .</strong> All rights
           reserved.
         </div>
       </footer>

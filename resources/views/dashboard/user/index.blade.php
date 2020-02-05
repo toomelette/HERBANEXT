@@ -7,8 +7,6 @@
                       Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
                       Session::get('USER_LOGOUT_SUCCESS_SLUG'),
                       Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
-                      Session::get('USER_SYNC_EMPLOYEE_SUCCESS_SLUG'),  
-                      Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS_SLUG'), 
                     ];
 
   $appended_requests = [
@@ -83,7 +81,7 @@
               <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
               <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
               <td>
-                <select id="action" class="form-control input-md">
+                <select id="action" class="form-control">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.user.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.user.edit', $data->slug) }}">Edit</option>
@@ -158,7 +156,7 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! __js::modal_confirm_delete_caller('user_delete') !!}
+    {!! __js::select_modal_confirm_delete_caller('user_delete') !!}
 
 
     {{-- CALL LOGOUT FORM --}}
@@ -208,17 +206,6 @@
         {!! __js::toast(Session::get('USER_RESET_PASSWORD_SUCCESS')) !!}
     @endif
 
-
-    {{-- SYNC EMPLOYEE SUCCESS TOAST --}}
-    @if(Session::has('USER_SYNC_EMPLOYEE_SUCCESS'))
-        {!! __js::toast(Session::get('USER_SYNC_EMPLOYEE_SUCCESS')) !!}
-    @endif
-
-
-    {{-- UNSYNC EMPLOYEE SUCCESS TOAST --}}
-    @if(Session::has('USER_UNSYNC_EMPLOYEE_SUCCESS'))
-        {!! __js::toast(Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS')) !!}
-    @endif
 
   </script>
     

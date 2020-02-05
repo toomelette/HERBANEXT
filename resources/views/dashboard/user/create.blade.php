@@ -51,7 +51,7 @@
                   ) !!}
                   
                   {!! __form::textbox(
-                    '12', 'password', 'password', 'Password *', 'Password', old('password'), $errors->has('password'), $errors->first('password'), ''
+                    '12', 'password', 'password', 'Password *', 'Password', '', $errors->has('password'), $errors->first('password'), ''
                   ) !!}
                   
                   {!! __form::textbox(
