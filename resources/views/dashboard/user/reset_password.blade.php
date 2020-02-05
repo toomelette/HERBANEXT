@@ -2,19 +2,12 @@
 
 @section('content')
 
-<section class="content-header">
-  <h1>User Reset Password</h1>
-  <div class="pull-right" style="margin-top: -25px;">
-    {!! __html::back_button(['dashboard.user.index']) !!}
-  </div>
-</section>
-
 <section class="content">
             
-    <div class="box">
+    <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
+        <h3 class="box-title">User Reset Password</h3>
       </div>
       
       <form class="form-horizontal">
@@ -49,6 +42,9 @@
 
       <div class="box-footer">
           <button class="btn btn-success" id="reset_button">Reset <i class="fa fa-fw fa-refresh"></i></button>
+          <div class="pull-right">
+            {!! __html::back_button(['dashboard.user.index']) !!}
+          </div>
       </div>
 
     </div>

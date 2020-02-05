@@ -2,16 +2,12 @@
 
 @section('content')
 
-<section class="content-header">
-    <h1>Create Menu</h1>
-</section>
-
 <section class="content">
             
-    <div class="box">
+    <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
+        <h2 class="box-title">Add Menu</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 
@@ -21,7 +17,7 @@
 
         <div class="box-body">
 
-          <div class="col-md-11">
+          <div class="col-md-12">
                   
             @csrf    
 
@@ -51,10 +47,10 @@
 
 
           {{-- USER MENU DYNAMIC TABLE GRID --}}
-          <div class="col-md-12" style="padding-top:50px;">
+          <div class="col-md-12" style="padding-top:10px;">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">Submenu</h3>
+                <h3 class="box-title">Submenus:</h3>
                 <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
               </div>
               
@@ -63,7 +59,9 @@
                 <table class="table table-bordered">
 
                   <tr>
+                    <th>Submenu ID *</th>
                     <th>Name *</th>
+                    <th>Nav Name *</th>
                     <th>Route *</th>
                     <th>Is Nav *</th>
                     <th style="width: 40px"></th>
@@ -78,10 +76,27 @@
 
                         <tr>
 
+
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_submenu_id]" class="form-control" placeholder="Submenu ID" value="{{ $value['sub_submenu_id'] }}">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.sub_submenu_id') }}</small>
+                            </div>
+                          </td>
+
+
                           <td>
                             <div class="form-group">
                               <input type="text" name="row[{{ $key }}][sub_name]" class="form-control" placeholder="Name" value="{{ $value['sub_name'] }}">
                               <small class="text-danger">{{ $errors->first('row.'. $key .'.sub_name') }}</small>
+                            </div>
+                          </td>
+
+
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_nav_name]" class="form-control" placeholder="Nav Name" value="{{ $value['sub_nav_name'] }}">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.sub_nav_name') }}</small>
                             </div>
                           </td>
 
@@ -141,30 +156,12 @@
 
 
 
-
-@section('modals')
-
-  @if(Session::has('MENU_CREATE_SUCCESS'))
-
-    {!! __html::modal(
-      'menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')
-    ) !!}
-  
-  @endif
-
-@endsection 
-
-
-
-
-
-
 @section('scripts')
 
   <script type="text/javascript">
 
     @if(Session::has('MENU_CREATE_SUCCESS'))
-      $('#menu_create').modal('show');
+      {!! __js::toast(Session::get('MENU_CREATE_SUCCESS')) !!}
     @endif
 
 
@@ -175,7 +172,19 @@
         var content ='<tr>' +
                         '<td>' +
                           '<div class="form-group">' +
+                            '<input type="text" name="row[' + i + '][sub_submenu_id]" class="form-control" placeholder="Submenu ID">' +
+                          '</div>' +
+                        '</td>' +
+
+                        '<td>' +
+                          '<div class="form-group">' +
                             '<input type="text" name="row[' + i + '][sub_name]" class="form-control" placeholder="Name">' +
+                          '</div>' +
+                        '</td>' +
+
+                        '<td>' +
+                          '<div class="form-group">' +
+                            '<input type="text" name="row[' + i + '][sub_nav_name]" class="form-control" placeholder="Nav Name">' +
                           '</div>' +
                         '</td>' +
 

@@ -29,13 +29,13 @@ class __js{
 
        return '$.toast({
 	            text: "'. $message .'",
-	            showHideTransition: "fade",
+	            showHideTransition: "slide",
 	            allowToastClose: true,
-	            hideAfter: 2000,
+	            hideAfter: 3000,
 	            loader: false,
-	            position: "top-center",
+	            position: "top-right",
 	            bgColor: "#444",
-	            textColor: "#eee",
+	            textColor: "white",
 	            textAlign: "left",
 	          });';
 

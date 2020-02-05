@@ -2,19 +2,12 @@
 
 @section('content')
 
-<section class="content-header">
-    <h1>Edit Menu</h1>
-    <div class="pull-right" style="margin-top: -25px;">
-      {!! __html::back_button(['dashboard.menu.index']) !!}
-    </div>
-</section>
-
 <section class="content">
             
-    <div class="box">
+    <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
+        <h2 class="box-title">Edit Menu</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 
@@ -24,7 +17,7 @@
 
         <div class="box-body">
 
-          <div class="col-md-11">
+          <div class="col-md-12">
             
             <input name="_method" value="PUT" type="hidden">
             
@@ -58,6 +51,9 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
+          <div class="pull-right">
+              {!! __html::back_button(['dashboard.menu.index']) !!}
+          </div> 
         </div>
 
       </form>

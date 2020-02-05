@@ -110,18 +110,34 @@ class __html{
 
     public static function table_search($refresh_route){
 
-       return '<div class="box-title">  
-                <div class="input-group input-group-sm" style="width: 250px;">
-                  <input name="q" class="form-control pull-right" placeholder="Search any.." type="text" value="'. old("q") .'">
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default btn-md"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
+    	$string = "'";
 
-              <div class="box-tools">
-                <a href="'. $refresh_route .'" class="btn btn-sm btn-default">Refresh Data &nbsp;<i class="fa fa-refresh"></i></a>
-              </div>';
+    	$seach_button_id = 'table_search_button';
+
+     	$option_50 = Input::old('e') == '50' ? 'selected' : '';
+     	$option_100 = Input::old('e') == '100' ? 'selected' : '';
+
+       	return '<div class="box-title">  
+	                <div class="input-group input-group-sm" style="width: 250px;">
+	                  <input name="q" class="form-control pull-right" placeholder="Search any.." type="text" value="'. old("q") .'">
+	                  <div class="input-group-btn">
+	                    <button  id="'. $seach_button_id .'" type="submit" class="btn btn-default btn-md"><i class="fa fa-search"></i></button>
+	                  </div>
+	                </div>
+                </div>
+
+	          	<div class="box-tools" style="margin-top:6px;">
+	              	<div class="col-md-4" style="margin-top:6px;">
+	              		Entries:
+	              	</div>
+	              	<div class="col-md-8">
+				        <select id="e" class="form-control input-sm" name="e" onchange="document.getElementById('.$string.''. $seach_button_id .''.$string.').click()">
+				          <option value="">20</option>
+				          <option value="50" '. $option_50 .'>50</option>
+				          <option value="100" '. $option_100 .'>100</option>
+				        </select>
+	              	</div>
+	            </div>';
 
     }
 
@@ -184,7 +200,7 @@ class __html{
 
     	foreach($route as $data){
 	    	if(self::previous_route() == $data){
-	        	return '<a href="'. URL::previous() .'" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
+	        	return '<a href="'. URL::previous() .'" class="btn btn-default"><i class="fa fa-fw fa-arrow-left"></i> Back</a>';
 	    	}
     	}
 

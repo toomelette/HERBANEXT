@@ -36,9 +36,11 @@ class MenuFormRequest extends FormRequest{
         if(!empty($rows)){
 
             foreach($rows as $key => $value){
-                    
-                $rules['row.'.$key.'.sub_name'] = 'required|string|max:45';
-                $rules['row.'.$key.'.sub_route'] = 'required|string|max:45';
+                
+                $rules['row.'.$key.'.sub_submenu_id'] = 'required|string|max:11';
+                $rules['row.'.$key.'.sub_name'] = 'required|string|max:90';
+                $rules['row.'.$key.'.sub_nav_name'] = 'nullable|string|max:90';
+                $rules['row.'.$key.'.sub_route'] = 'required|string|max:90';
                 $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:11';
 
             } 

@@ -56,7 +56,7 @@
     {!! __html::filter_close('submit_user_filter') !!}
 
 
-    <div class="box" id="pjax-container" style="overflow-x:auto;">
+    <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">

@@ -27,7 +27,7 @@
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.menu.index') }}">
 
-    <div class="box" id="pjax-container" style="overflow-x:auto;">
+    <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
@@ -71,7 +71,7 @@
 
       <div class="box-footer">
         {!! __html::table_counter($menus) !!}
-        {!! $menus->appends($appended_requests)!!}
+        {!! $menus->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
       </div>
 
     </div>

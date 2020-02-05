@@ -2,22 +2,12 @@
 
 @section('content')
 
-<section class="content-header">
-  <h1>User Details</h1>
-  <div class="pull-right" style="margin-top: -25px;">
-    {!! __html::back_button(['dashboard.user.index']) !!}
-  </div>
-</section>
-
 <section class="content">
   
-  <div class="box">
+  <div class="box box-solid">
         
     <div class="box-header with-border">
-      <h3 class="box-title">Details</h3>
-      <div class="box-tools">
-        <a href="{{ route('dashboard.user.edit', $user->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
-      </div>
+      <h3 class="box-title">User Details</h3>
     </div>
 
     <div class="box-body">
