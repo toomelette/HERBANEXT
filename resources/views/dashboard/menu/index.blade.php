@@ -48,10 +48,10 @@
           </tr>
           @foreach($menus as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td>{{ $data->name }}</td>
-              <td>{{ $data->route }}</td>
-              <td><i class="fa {{ $data->icon }}"></i></td>
-              <td>
+              <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert">{{ $data->route }}</td>
+              <td id="mid-vert"><i class="fa {{ $data->icon }}"></i></td>
+              <td id="mid-vert">
                 <div class="btn-group">
                   <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.menu.edit', $data->slug) }}">
                     <i class="fa fa-pencil"></i></a>

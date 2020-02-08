@@ -1,7 +1,7 @@
 <header class="main-header">
   <a href="#" class="logo">
-    <span class="logo-mini">L</span>
-    <span class="logo-lg"><b>Laravel AdminLTE</b></span>
+    <span class="logo-mini">H</span>
+    <span class="logo-lg"><b>Herbanext</b></span>
   </a>
   <nav class="navbar navbar-static-top">
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

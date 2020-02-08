@@ -22,3 +22,9 @@
 input[data-transform=uppercase] {
     text-transform: uppercase;
 }
+
+
+
+#mid-vert{
+    vertical-align: middle;
+}

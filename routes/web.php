@@ -40,6 +40,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** MENU **/
 	Route::resource('menu', 'MenuController');
+
+
+	/** ITEMS **/
+	Route::resource('item', 'ItemController');
 	
 });
 

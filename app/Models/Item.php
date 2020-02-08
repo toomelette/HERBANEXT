@@ -12,6 +12,8 @@ class Item extends Model{
 
     protected $table = 'items';
 
+    public $sortable = ['product_code', 'name', 'weight', 'quantity', 'price', 'min_req_qty'];
+
     protected $dates = ['created_at', 'updated_at'];
     
 	public $timestamps = false;
@@ -22,7 +24,8 @@ class Item extends Model{
     protected $attributes = [
 
         'product_code' => '',
-        'item_type_id' => '',
+        'item_unit_id' => '',
+        'item_category_id' => '',
         'slug' => '',
         'name' => '',
         'description' => '',
