@@ -24,7 +24,7 @@ class Item extends Model{
     protected $attributes = [
 
         'product_code' => '',
-        'item_unit_id' => '',
+        'unit_type_id' => '',
         'item_category_id' => '',
         'slug' => '',
         'name' => '',
@@ -32,6 +32,8 @@ class Item extends Model{
         'quantity' => 0.00,
         'weight' => 0.00,
         'weight_unit' => '',
+        'volume' => 0.00,
+        'volume_unit' => '',
         'price' => 0.00,
         'min_req_qty' => 0.00,
         'is_incoming' => false,

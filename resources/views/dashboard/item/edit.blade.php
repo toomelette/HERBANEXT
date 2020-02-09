@@ -59,12 +59,20 @@
               <div class="box-body">
 
               {!! __form::select_static(
-                '12', 'item_unit_id', 'Unit Type *', old('item_unit_id') ? old('item_unit_id') : $item->item_unit_id, ['BY WEIGHT' => 'IU1001', 'BY QUANTITY' => 'IU1002'], $errors->has('item_unit_id'), $errors->first('item_unit_id'), '', ''
+                '12', 'unit_type_id', 'Unit Type *', old('unit_type_id') ? old('unit_type_id') : $item->unit_type_id, ['BY QUANTITY' => 'IU1001', 'BY WEIGHT' => 'IU1002', 'BY VOLUME' => 'IU1003'], $errors->has('unit_type_id'), $errors->first('unit_type_id'), '', ''
               ) !!}
               
+              <div class="col-md-12 no-padding" id="qty_div">
+
+                {!! __form::textbox_numeric(
+                  '12', 'quantity', 'text', 'Quantity', 'Quantity', old('quantity') ? old('quantity') : $item->quantity, $errors->has('quantity'), $errors->first('quantity'), ''
+                ) !!} 
+
+              </div>
+
               <div class="col-md-12 no-padding" id="weight_div">
 
-                {!! __form::textbox(
+                {!! __form::textbox_numeric(
                   '12', 'weight', 'text', 'Weight', 'Weight', old('weight') ? old('weight') : $item->weight, $errors->has('weight'), $errors->first('weight'), ''
                 ) !!} 
 
@@ -74,19 +82,24 @@
 
               </div>
               
-              <div class="col-md-12 no-padding" id="qty_div">
+              <div class="col-md-12 no-padding" id="volume_div">
 
-                {!! __form::textbox(
-                  '12', 'quantity', 'text', 'Quantity', 'Quantity', old('quantity') ? old('quantity') : $item->quantity, $errors->has('quantity'), $errors->first('quantity'), ''
+                {!! __form::textbox_numeric(
+                  '12', 'volume', 'text', 'Volume', 'Volume', old('volume') ? old('volume') : $item->volume, $errors->has('volume'), $errors->first('volume'), ''
                 ) !!} 
+
+                {!! __form::select_static(
+                  '12', 'volume_unit', 'Volume Unit *', old('volume_unit') ? old('volume_unit') : $item->volume_unit, ['LITERS' => 'L'], $errors->has('volume_unit'), $errors->first('volume_unit'), '', ''
+                ) !!}
 
               </div>
 
-              {!! __form::textbox(
+
+              {!! __form::textbox_numeric(
                 '12', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty') ? old('min_req_qty') : $item->min_req_qty, $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
               ) !!}
 
-              {!! __form::textbox(
+              {!! __form::textbox_numeric(
                 '12', 'price', 'text', 'Price *', 'Price', old('price') ? old('price') : $item->price, $errors->has('price') , $errors->first('price'), ''
               ) !!}
 
@@ -116,45 +129,117 @@
   <script type="text/javascript">
 
 
-    @if($item->item_unit_id == 'IU1001')
-      $('#weight_div').show();
-      $('#qty_div').hide();
-    @elseif($item->item_unit_id == 'IU1002')
-      $('#weight_div').hide();
+    $(document).ready(function($){
+
+      // Price Format
+
+      $("#quantity").priceFormat({
+          centsLimit: 0,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+      
+      $("#weight").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+      
+      $("#volume").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+      $("#min_req_qty").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+      $("#price").priceFormat({
+          centsLimit: 2,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+    });
+
+
+    @if($item->unit_type_id == 'IU1001')
       $('#qty_div').show();
+      $('#weight_div').hide();
+      $('#volume_div').hide();
+    @elseif($item->unit_type_id == 'IU1002')
+      $('#qty_div').hide();
+      $('#weight_div').show();
+      $('#volume_div').hide();
+    @elseif($item->unit_type_id == 'IU1003')
+      $('#qty_div').hide();
+      $('#weight_div').hide();
+      $('#volume_div').show();
     @else
       $( document ).ready(function() {
-        $('#weight_div').hide();
         $('#qty_div').hide();
+        $('#weight_div').hide();
+        $('#volume_div').hide();
       });
     @endif
 
 
-    @if(old('item_unit_id') == 'IU1001')
-      $('#weight_div').show();
-      $('#qty_div').hide();
-    @elseif(old('item_unit_id') == 'IU1002')
-      $('#weight_div').hide();
+
+    @if(old('unit_type_id') == 'IU1001')
       $('#qty_div').show();
+      $('#weight_div').hide();
+      $('#volume_div').hide();
+    @elseif(old('unit_type_id') == 'IU1002')
+      $('#qty_div').hide();
+      $('#weight_div').show();
+      $('#volume_div').hide();
+    @elseif(old('unit_type_id') == 'IU1003')
+      $('#qty_div').hide();
+      $('#weight_div').hide();
+      $('#volume_div').show();
     @endif
 
 
-    $(document).on("change", "#item_unit_id", function () {
-      $('#weight').val('');
-      $('#weight_unit').val('');
-      $('#quantity').val('');
-      var val = $(this).val();
-        if(val == "IU1001"){ 
-          $('#weight_div').show();
-          $('#qty_div').hide();
-        }else if(val == "IU1002"){
-          $('#weight_div').hide();
-          $('#qty_div').show();
-        }else{
-          $('#weight_div').hide();
-          $('#qty_div').hide();
-        }
-    });
+
+    $(document).on("change", "#unit_type_id", function () {
+        $('#quantity').val('');
+        $('#weight').val('');
+        $('#weight_unit').val('');
+        $('#volume').val('');
+        $('#volume_unit').val('');
+        var val = $(this).val();
+          if(val == "IU1001"){ 
+            $('#qty_div').show();
+            $('#weight_div').hide();
+            $('#volume_div').hide();
+          }else if(val == "IU1002"){
+            $('#qty_div').hide();
+            $('#weight_div').show();
+            $('#volume_div').hide();
+          }else if(val == "IU1003"){
+            $('#qty_div').hide();
+            $('#weight_div').hide();
+            $('#volume_div').show();
+          }else{
+            $('#qty_div').hide();
+            $('#weight_div').hide();
+            $('#volume_div').hide();
+          }
+      });
+
 
 
   </script>

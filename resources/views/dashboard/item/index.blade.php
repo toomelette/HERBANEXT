@@ -52,22 +52,34 @@
               <td id="mid-vert">{{ $data->product_code }}</td>
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">
-                  @if($data->item_unit_id == "IU1001")
-                    @if($data->min_req_qty > $data->weight)
-                      <span class="text-red">{{ $data->weight .' '. $data->weight_unit }}<span>
-                    @else
-                      <span class="text-green">{{ $data->weight .' '. $data->weight_unit }}<span>
-                    @endif
-                  @elseif($data->item_unit_id == "IU1002")
+                  @if($data->unit_type_id == "IU1001")
                     @if($data->min_req_qty > $data->quantity)
-                      <span class="text-red">{{ $data->quantity .' PCS'}}<span>
+                      <span class="text-red">{{ number_format($data->quantity) .' PCS'}}<span>
                     @else
-                      <span class="text-green">{{ $data->quantity .' PCS'}}<span>
+                      <span class="text-green">{{ number_format($data->quantity) .' PCS'}}<span>
+                    @endif
+                  @elseif($data->unit_type_id == "IU1002")
+                    @if($data->min_req_qty > $data->weight)
+                      <span class="text-red">{{ number_format($data->weight, 3) .' '. $data->weight_unit }}<span>
+                    @else
+                      <span class="text-green">{{ number_format($data->weight, 3) .' '. $data->weight_unit }}<span>
+                    @endif
+                  @elseif($data->unit_type_id == "IU1003")
+                    @if($data->min_req_qty > $data->volume)
+                      <span class="text-red">{{ number_format($data->volume, 3) .' '. $data->volume_unit }}<span>
+                    @else
+                      <span class="text-green">{{ number_format($data->volume, 3) .' '. $data->volume_unit }}<span>
                     @endif
                   @endif
               </td>
               <td id="mid-vert">
-                &#8369; {{ $data->price }} {{ $data->item_unit_id == "IU1001" ? " / KG" : " / PCS"}}
+                @if($data->unit_type_id == "IU1001")
+                  &#8369; {{ number_format($data->price) .' / PCS' }}
+                @elseif($data->unit_type_id == "IU1002")
+                  &#8369; {{ number_format($data->price) .' / '. $data->weight_unit }}
+                @elseif($data->unit_type_id == "IU1003")
+                  &#8369; {{ number_format($data->price) .' / '. $data->volume_unit }}
+                @endif
               </td>
               <td id="mid-vert">
                 <div class="btn-group">

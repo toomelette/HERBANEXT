@@ -59,12 +59,14 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->product_code = $request->product_code;
         $item->name = $request->name;
         $item->description = $request->description;
-        $item->item_unit_id = $request->item_unit_id;
-        $item->weight = (float)$request->weight;;
+        $item->unit_type_id = $request->unit_type_id;
+        $item->quantity = $this->__dataType->string_to_num($request->quantity);
+        $item->weight = $this->__dataType->string_to_num($request->weight);
         $item->weight_unit = $request->weight_unit;
-        $item->quantity = (float)$request->quantity;
-        $item->min_req_qty = (float)$request->min_req_qty;
-        $item->price = (float)$request->price;
+        $item->volume = $this->__dataType->string_to_num($request->volume);
+        $item->volume_unit = $request->volume_unit;
+        $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
+        $item->price = $this->__dataType->string_to_num($request->price);
         $item->created_at = $this->carbon->now();
         $item->updated_at = $this->carbon->now();
         $item->ip_created = request()->ip();
@@ -87,12 +89,14 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->product_code = $request->product_code;
         $item->name = $request->name;
         $item->description = $request->description;
-        $item->item_unit_id = $request->item_unit_id;
-        $item->weight = (float)$request->weight;;
+        $item->unit_type_id = $request->unit_type_id;
+        $item->quantity = $this->__dataType->string_to_num($request->quantity);
+        $item->weight = $this->__dataType->string_to_num($request->weight);
         $item->weight_unit = $request->weight_unit;
-        $item->quantity = (float)$request->quantity;
-        $item->min_req_qty = (float)$request->min_req_qty;
-        $item->price = (float)$request->price;
+        $item->volume = $this->__dataType->string_to_num($request->volume);
+        $item->volume_unit = $request->volume_unit;
+        $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
+        $item->price = $this->__dataType->string_to_num($request->price);
         $item->updated_at = $this->carbon->now();
         $item->ip_updated = request()->ip();
         $item->user_updated = $this->auth->user()->user_id;
@@ -153,7 +157,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'name', 'item_unit_id', 'weight', 'weight_unit', 'quantity', 'price', 'min_req_qty', 'slug')
+        return $model->select('product_code', 'name', 'unit_type_id', 'quantity', 'weight', 'weight_unit', 'volume', 'volume_unit', 'price', 'min_req_qty', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

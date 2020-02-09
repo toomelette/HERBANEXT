@@ -18,7 +18,7 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/toast/jquery.toast.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('template/plugins/price-format/jquery.priceformat.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/price-format/jquery.priceformat.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('template/plugins/iCheck/icheck.min.js') }}"></script>
 

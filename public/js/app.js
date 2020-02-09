@@ -34,17 +34,6 @@ $(document).ready(function($){
 });
 
 
-
-// Price Format
-$(".priceformat").priceFormat({
-    prefix: "",
-    thousandsSeparator: ",",
-    clearOnEmpty: true,
-    allowNegative: true
-});
-
-
-
 // Input to Uppercase
 $(document).on('blur', "input[data-transform=uppercase]", function () {
     $(this).val(function (_, val) {

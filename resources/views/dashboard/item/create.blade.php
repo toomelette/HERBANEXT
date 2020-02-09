@@ -55,36 +55,48 @@
               <div class="box-body">
 
               {!! __form::select_static(
-                '12', 'item_unit_id', 'Unit Type *', old('item_unit_id'), ['BY WEIGHT' => 'IU1001', 'BY QUANTITY' => 'IU1002'], $errors->has('item_unit_id'), $errors->first('item_unit_id'), '', ''
+                '12', 'unit_type_id', 'Unit Type *', old('unit_type_id'), ['BY QUANTITY' => 'IU1001', 'BY WEIGHT' => 'IU1002', 'BY VOLUME' => 'IU1003'], $errors->has('unit_type_id'), $errors->first('unit_type_id'), '', ''
               ) !!}
 
               <div class="col-md-12"></div>
               
               <div class="col-md-12 no-padding" id="weight_div">
 
-                {!! __form::textbox(
+                {!! __form::textbox_numeric(
                   '12', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
-                ) !!} 
+                ) !!}
 
                 {!! __form::select_static(
-                  '12', 'weight_unit', 'Weight Unit *', old('weight_unit'), ['KILOGRAM' => 'KG', 'GRAM' => 'G'], $errors->has('weight_unit'), $errors->first('weight_unit'), '', ''
+                  '12', 'weight_unit', 'Weight Unit', old('weight_unit'), ['KILOGRAM' => 'KG', 'GRAM' => 'G', 'METRIC TON' => 'MT'], $errors->has('weight_unit'), $errors->first('weight_unit'), '', ''
+                ) !!}
+
+              </div>
+              
+              <div class="col-md-12 no-padding" id="volume_div">
+
+                {!! __form::textbox_numeric(
+                  '12', 'volume', 'text', 'Volume', 'Volume', old('volume'), $errors->has('volume'), $errors->first('volume'), ''
+                ) !!}
+
+                {!! __form::select_static(
+                  '12', 'volume_unit', 'Volume Unit', old('volume_unit'), ['LITERS' => 'L'], $errors->has('volume_unit'), $errors->first('volume_unit'), '', ''
                 ) !!}
 
               </div>
               
               <div class="col-md-12 no-padding" id="qty_div">
 
-                {!! __form::textbox(
+                {!! __form::textbox_numeric(
                   '12', 'quantity', 'text', 'Quantity', 'Quantity', old('quantity'), $errors->has('quantity'), $errors->first('quantity'), ''
                 ) !!} 
 
               </div>
 
-              {!! __form::textbox(
+              {!! __form::textbox_numeric(
                 '12', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty'), $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
               ) !!}
 
-              {!! __form::textbox(
+              {!! __form::textbox_numeric(
                 '12', 'price', 'text', 'Price *', 'Price', old('price'), $errors->has('price'), $errors->first('price'), ''
               ) !!}
 
@@ -114,34 +126,98 @@
   <script type="text/javascript">
 
 
-    @if(old('item_unit_id') == 'IU1001')
-      $('#weight_div').show();
-      $('#qty_div').hide();
-    @elseif(old('item_unit_id') == 'IU1002')
-      $('#weight_div').hide();
+    $(document).ready(function($){
+
+      // Price Format
+      $("#weight").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+
+      $("#volume").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+
+      $("#quantity").priceFormat({
+          centsLimit: 0,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+      $("#min_req_qty").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+      $("#price").priceFormat({
+          centsLimit: 2,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+
+    });
+
+
+    @if(old('unit_type_id') == 'IU1001')
       $('#qty_div').show();
+      $('#weight_div').hide();
+      $('#volume_div').hide();
+    @elseif(old('unit_type_id') == 'IU1002')
+      $('#qty_div').hide();
+      $('#weight_div').show();
+      $('#volume_div').hide();
+    @elseif(old('unit_type_id') == 'IU1003')
+      $('#qty_div').hide();
+      $('#weight_div').hide();
+      $('#volume_div').show();
     @else
       $( document ).ready(function() {
-        $('#weight_div').hide();
-        $('#qty_div').hide();
+      $('#qty_div').hide();
+      $('#weight_div').hide();
+      $('#volume_div').hide();
       });
     @endif
 
 
-    $(document).on("change", "#item_unit_id", function () {
+    $(document).on("change", "#unit_type_id", function () {
+      $('#quantity').val('');
       $('#weight').val('');
       $('#weight_unit').val('');
-      $('#quantity').val('');
+      $('#volume').val('');
+      $('#volume_unit').val('');
       var val = $(this).val();
         if(val == "IU1001"){ 
-          $('#weight_div').show();
-          $('#qty_div').hide();
-        }else if(val == "IU1002"){
-          $('#weight_div').hide();
           $('#qty_div').show();
-        }else{
           $('#weight_div').hide();
+          $('#volume_div').hide();
+        }else if(val == "IU1002"){
           $('#qty_div').hide();
+          $('#weight_div').show();
+          $('#volume_div').hide();
+        }else if(val == "IU1003"){
+          $('#qty_div').hide();
+          $('#weight_div').hide();
+          $('#volume_div').show();
+        }else{
+          $('#qty_div').hide();
+          $('#weight_div').hide();
+          $('#volume_div').hide();
         }
     });
 
