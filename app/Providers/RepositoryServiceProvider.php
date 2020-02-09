@@ -28,6 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 
 		$this->app->bind('App\Core\Interfaces\ItemInterface', 'App\Core\Repositories\ItemRepository');
+
+		$this->app->bind('App\Core\Interfaces\ItemCategoryInterface', 'App\Core\Repositories\ItemCategoryRepository');
 		
 	}
 
