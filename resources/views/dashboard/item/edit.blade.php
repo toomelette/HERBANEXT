@@ -35,6 +35,10 @@
                 '12', 'product_code', 'text', 'Product Code *', 'Product Code', old('product_code') ? old('product_code') : $item->product_code, $errors->has('product_code'), $errors->first('product_code'), ''
               ) !!}
 
+              {!! __form::select_dynamic(
+                '12', 'item_category_id', 'Category *', old('item_category_id') ? old('item_category_id') : $item->item_category_id, $global_item_categories_all, 'item_category_id', 'name', $errors->has('item_category_id'), $errors->first('item_category_id'), '', ''
+              ) !!}
+
               {!! __form::textbox(
                 '12', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $item->name, $errors->has('name'), $errors->first('name'), ''
               ) !!}

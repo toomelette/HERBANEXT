@@ -37,5 +37,14 @@ class ItemCategory extends Model{
 
 
 
+
+
+    /** RELATIONSHIPS **/
+    public function item() {
+        return $this->hasMany('App\Models\Item','item_category_id','item_category_id');
+    }
+
+
+
  
 }

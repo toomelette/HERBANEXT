@@ -57,6 +57,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item = new Item;
         $item->slug = $this->str->random(16);
         $item->product_code = $request->product_code;
+        $item->item_category_id = $request->item_category_id;
         $item->name = $request->name;
         $item->description = $request->description;
         $item->unit_type_id = $request->unit_type_id;
@@ -87,6 +88,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = $this->findBySlug($slug);
         $item->product_code = $request->product_code;
+        $item->item_category_id = $request->item_category_id;
         $item->name = $request->name;
         $item->description = $request->description;
         $item->unit_type_id = $request->unit_type_id;
@@ -126,7 +128,9 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function findBySlug($slug){
 
         $item = $this->cache->remember('items:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->item->where('slug', $slug)->first();
+            return $this->item->where('slug', $slug)
+                              ->with('itemCategory')
+                              ->first();
         }); 
         
         if(empty($item)){
@@ -157,7 +161,8 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'name', 'unit_type_id', 'quantity', 'weight', 'weight_unit', 'volume', 'volume_unit', 'price', 'min_req_qty', 'slug')
+        return $model->select('product_code', 'item_category_id', 'name', 'unit_type_id', 'quantity', 'weight', 'weight_unit', 'volume', 'volume_unit', 'price', 'min_req_qty', 'slug')
+                     ->with('itemCategory')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

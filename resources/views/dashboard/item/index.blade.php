@@ -42,6 +42,7 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('product_code', 'Product Code')</th>
+            <th>@sortablelink('itemCategory.name', 'Category')</th>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('', 'Weight / Quantity')</th>
             <th>@sortablelink('price', 'Price')</th>
@@ -50,6 +51,7 @@
           @foreach($items as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->product_code }}</td>
+              <td id="mid-vert">{{ optional($data->itemCategory)->name }}</td>
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">
                   @if($data->unit_type_id == "IU1001")

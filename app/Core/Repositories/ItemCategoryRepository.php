@@ -175,6 +175,21 @@ class ItemCategoryRepository extends BaseRepository implements ItemCategoryInter
 
 
 
+    public function getAll(){
+
+        $item_categories = $this->cache->remember('item_categories:getAll', 240, function(){
+            return $this->item_category->select('item_category_id', 'name')->get();
+        });
+        
+        return $item_categories;
+
+    }
+
+
+
+
+
+
 
 
 }
