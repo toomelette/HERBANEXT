@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9a3bb115277deb98c0b723b9f428fb1",
+    "content-hash": "6798233f774724e8cd3d3f78360587ee",
     "packages": [
+        {
+            "name": "abhimanyusharma003/conversion",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/abhimanyu003/conversion.git",
+                "reference": "21ab5cfa431723ce015b1a0c9e66a92c49a32405"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/abhimanyu003/conversion/zipball/21ab5cfa431723ce015b1a0c9e66a92c49a32405",
+                "reference": "21ab5cfa431723ce015b1a0c9e66a92c49a32405",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.*|~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Abhimanyu003\\Conversion": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abhimanyu Sharma",
+                    "email": "abhimanyusharma003@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Unit Conversion",
+            "homepage": "https://github.com/abhimanyu003/conversion",
+            "keywords": [
+                "conversion",
+                "laravel",
+                "measurements",
+                "unit"
+            ],
+            "time": "2016-08-31T19:54:38+00:00"
+        },
         {
             "name": "appstract/laravel-opcache",
             "version": "2.0.5",
@@ -1011,16 +1056,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.63",
+            "version": "1.0.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
                 "shasum": ""
             },
             "require": {
@@ -1032,7 +1077,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+                "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -1091,7 +1136,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-01-04T16:30:31+00:00"
+            "time": "2020-02-05T18:14:17+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5011,7 +5056,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "abhimanyusharma003/conversion": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

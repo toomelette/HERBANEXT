@@ -91,14 +91,25 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->item_category_id = $request->item_category_id;
         $item->name = $request->name;
         $item->description = $request->description;
-        $item->unit_type_id = $request->unit_type_id;
-        $item->quantity = $this->__dataType->string_to_num($request->quantity);
-        $item->weight = $this->__dataType->string_to_num($request->weight);
-        $item->weight_unit = $request->weight_unit;
-        $item->volume = $this->__dataType->string_to_num($request->volume);
-        $item->volume_unit = $request->volume_unit;
         $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
         $item->price = $this->__dataType->string_to_num($request->price);
+        $item->updated_at = $this->carbon->now();
+        $item->ip_updated = request()->ip();
+        $item->user_updated = $this->auth->user()->user_id;
+        $item->save();
+        
+        return $item;
+
+    }
+
+
+
+
+
+    public function updateCheckIn($request, $slug){
+
+        $item = $this->findBySlug($slug);
+        
         $item->updated_at = $this->carbon->now();
         $item->ip_updated = request()->ip();
         $item->user_updated = $this->auth->user()->user_id;

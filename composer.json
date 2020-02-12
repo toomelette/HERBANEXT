@@ -13,7 +13,8 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.6",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "abhimanyusharma003/conversion": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

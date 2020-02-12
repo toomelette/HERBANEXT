@@ -29,7 +29,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '8', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $item_category->description, $errors->has('description'), $errors->first('description'), ''
+              '4', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $item_category->description, $errors->has('description'), $errors->first('description'), ''
             ) !!}
 
           </div>

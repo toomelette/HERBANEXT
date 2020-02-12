@@ -26,6 +26,7 @@ class ItemSubscriber extends BaseSubscriber{
         $events->listen('item.store', 'App\Core\Subscribers\ItemSubscriber@onStore');
         $events->listen('item.update', 'App\Core\Subscribers\ItemSubscriber@onUpdate');
         $events->listen('item.destroy', 'App\Core\Subscribers\ItemSubscriber@onDestroy');
+        $events->listen('item.check_in', 'App\Core\Subscribers\ItemSubscriber@onCheckIn');
 
     }
 
@@ -63,6 +64,20 @@ class ItemSubscriber extends BaseSubscriber{
 
         $this->session->flash('ITEM_DELETE_SUCCESS', 'The Item has been successfully deleted!');
         $this->session->flash('ITEM_DELETE_SUCCESS_SLUG', $item->slug);
+
+    }
+
+
+
+
+
+    public function onCheckIn($item){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
+
+        $this->session->flash('ITEM_CHECK_IN_SUCCESS', 'The Item batch has been successfully check in!');
+        $this->session->flash('ITEM_CHECK_IN_SUCCESS_SLUG', $item->slug);
 
     }
 

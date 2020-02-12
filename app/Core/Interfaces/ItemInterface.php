@@ -12,6 +12,8 @@ interface ItemInterface {
 
 	public function update($request, $slug);
 
+	public function updateCheckIn($request, $slug);
+
 	public function destroy($slug);
 
 	public function findBySlug($menu_id);

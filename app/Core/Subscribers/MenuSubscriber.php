@@ -55,6 +55,7 @@ class MenuSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:menus:findByMenuId:'. $menu->menu_id .'');
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:submenus:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:submenus:findBySubmenuId:*');
 
         $this->session->flash('MENU_UPDATE_SUCCESS', 'The Menu has been successfully updated!');
         $this->session->flash('MENU_UPDATE_SUCCESS_SLUG', $menu->slug);
@@ -71,6 +72,7 @@ class MenuSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:menus:findByMenuId:'. $menu->menu_id .'');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:submenus:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:submenus:findBySubmenuId:*');
 
         $this->session->flash('MENU_DELETE_SUCCESS', 'The Menu has been successfully deleted!');
         $this->session->flash('MENU_DELETE_SUCCESS_SLUG', $menu->slug);

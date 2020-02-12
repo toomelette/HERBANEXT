@@ -71,7 +71,7 @@
                 ) !!}
 
                 {!! __form::select_static(
-                  '12', 'weight_unit', 'Weight Unit', old('weight_unit'), ['KILOGRAM' => 'KG', 'GRAM' => 'G', 'METRIC TON' => 'MT'], $errors->has('weight_unit'), $errors->first('weight_unit'), '', ''
+                  '12', 'weight_unit', 'Standard Weight Unit', old('weight_unit'), ['KILOGRAM' => 'KG', 'GRAM' => 'G'], $errors->has('weight_unit'), $errors->first('weight_unit'), '', ''
                 ) !!}
 
               </div>
@@ -83,7 +83,7 @@
                 ) !!}
 
                 {!! __form::select_static(
-                  '12', 'volume_unit', 'Volume Unit', old('volume_unit'), ['LITERS' => 'L'], $errors->has('volume_unit'), $errors->first('volume_unit'), '', ''
+                  '12', 'volume_unit', 'Standard Volume Unit', old('volume_unit'), ['LITERS' => 'L', 'MILLILITERS' => 'ML'], $errors->has('volume_unit'), $errors->first('volume_unit'), '', ''
                 ) !!}
 
               </div>

@@ -27,7 +27,7 @@ class ItemFormRequest extends FormRequest{
             'name'=>'required|string|max:255',
             'description'=>'nullable|string|max:255',
             
-            'unit_type_id'=>'required|string|max:11',
+            'unit_type_id'=>'sometimes|required|string|max:11',
             'quantity'=>'nullable|string|max:11',
             'weight'=>'nullable|string|max:21',
             'weight_unit'=>'nullable|string|max:11',

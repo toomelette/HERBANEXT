@@ -42,7 +42,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('menu', 'MenuController');
 
 
-	/** ITEMS **/
+	/** ITEMS **/	
+	Route::post('/item/check_in/{slug}', 'ItemController@checkInPost')->name('item.check_in_post');
 	Route::resource('item', 'ItemController');
 
 

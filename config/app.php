@@ -160,6 +160,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Abhimanyu003\Conversion\ConversionServiceProvider::class,
 
         /** CUSTOM PROVIDERS **/
         App\Providers\ViewComposerServiceProvider::class,
@@ -216,6 +217,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Carbon' => Carbon\Carbon::class,
         'Str' => 'Illuminate\Support\Str',
+        'Conversion'  => Abhimanyu003\Conversion\Facades\Conversion::class,
 
         /** View Helper **/
         '__chart' => App\Core\ViewHelpers\__chart::class,

@@ -93,4 +93,18 @@ class ItemService extends BaseService{
 
 
 
+    public function checkInPost($request, $slug){
+
+        dd($request);
+
+        $this->event->fire('item.check_in', $item);
+        return redirect()->back();
+
+    }
+
+
+
+
+
+
 }

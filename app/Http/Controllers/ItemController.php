@@ -74,4 +74,13 @@ class ItemController extends Controller{
     
 
 
+    public function checkInPost($slug){
+        
+        return $this->item->checkInPost($slug);
+
+    }
+
+    
+
+
 }
