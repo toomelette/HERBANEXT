@@ -12,10 +12,12 @@ interface ItemInterface {
 
 	public function update($request, $slug);
 
-	public function updateCheckIn($request, $slug);
+	public function updateCheckIn($amount, $item);
+
+	public function updateCheckOut($amount, $item);
 
 	public function destroy($slug);
 
-	public function findBySlug($menu_id);
+	public function findBySlug($slug);
 		
 }

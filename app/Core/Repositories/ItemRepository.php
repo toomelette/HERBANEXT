@@ -61,11 +61,9 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->name = $request->name;
         $item->description = $request->description;
         $item->unit_type_id = $request->unit_type_id;
-        $item->quantity = $this->__dataType->string_to_num($request->quantity);
-        $item->weight = $this->__dataType->string_to_num($request->weight);
-        $item->weight_unit = $request->weight_unit;
-        $item->volume = $this->__dataType->string_to_num($request->volume);
-        $item->volume_unit = $request->volume_unit;
+        $item->beginning_balance = $this->__dataType->string_to_num($request->beginning_balance);
+        $item->current_balance = $this->__dataType->string_to_num($request->beginning_balance);
+        $item->unit = $request->unit;
         $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
         $item->price = $this->__dataType->string_to_num($request->price);
         $item->created_at = $this->carbon->now();
@@ -106,16 +104,27 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
-    public function updateCheckIn($request, $slug){
+    public function updateCheckIn($amount, $item){
 
-        $item = $this->findBySlug($slug);
-        
+        $item->current_balance = $item->current_balance + $amount;
         $item->updated_at = $this->carbon->now();
         $item->ip_updated = request()->ip();
         $item->user_updated = $this->auth->user()->user_id;
         $item->save();
-        
-        return $item;
+
+    }
+
+
+
+
+
+    public function updateCheckOut($amount, $item){
+
+        $item->current_balance = $item->current_balance - $amount;
+        $item->updated_at = $this->carbon->now();
+        $item->ip_updated = request()->ip();
+        $item->user_updated = $this->auth->user()->user_id;
+        $item->save();
 
     }
 
@@ -127,6 +136,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = $this->findBySlug($slug);
         $item->delete();
+        $item->itemBatch()->delete();
 
         return $item;
 
@@ -141,6 +151,8 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item = $this->cache->remember('items:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->item->where('slug', $slug)
                               ->with('itemCategory')
+                              ->with('itemBatch')
+                              ->with('itemLog')
                               ->first();
         }); 
         
@@ -172,7 +184,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'item_category_id', 'name', 'unit_type_id', 'quantity', 'weight', 'weight_unit', 'volume', 'volume_unit', 'price', 'min_req_qty', 'slug')
+        return $model->select('product_code', 'item_category_id', 'name', 'current_balance', 'unit', 'min_req_qty', 'slug')
                      ->with('itemCategory')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')

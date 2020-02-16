@@ -12,7 +12,7 @@ class Item extends Model{
 
     protected $table = 'items';
 
-    public $sortable = ['product_code', 'name', 'weight', 'quantity', 'price', 'min_req_qty'];
+    public $sortable = ['product_code', 'name', 'current_balance', 'price', 'min_req_qty'];
 
     protected $dates = ['created_at', 'updated_at'];
     
@@ -23,19 +23,17 @@ class Item extends Model{
 
     protected $attributes = [
 
-        'product_code' => '',
-        'unit_type_id' => '',
-        'item_category_id' => '',
         'slug' => '',
+        'product_code' => '',
+        'item_category_id' => '',
+        'unit_type_id' => '',
         'name' => '',
         'description' => '',
-        'quantity' => 0.00,
-        'weight' => 0.00,
-        'weight_unit' => '',
-        'volume' => 0.00,
-        'volume_unit' => '',
+        'beginning_balance' => 0.000,
+        'current_balance' => 0.000,
+        'unit' => '',
         'price' => 0.00,
-        'min_req_qty' => 0.00,
+        'min_req_qty' => 0.000,
         'is_incoming' => false,
         'created_at' => null,
         'updated_at' => null,
@@ -54,6 +52,11 @@ class Item extends Model{
     public function itemBatch() {
     	return $this->hasMany('App\Models\ItemBatch','product_code','product_code');
    	}
+
+
+    public function itemLog() {
+        return $this->hasMany('App\Models\ItemLog','product_code','product_code');
+    }
 
 
 

@@ -14,7 +14,7 @@ interface MenuInterface {
 
 	public function destroy($slug);
 
-	public function findBySlug($menu_id);
+	public function findBySlug($slug);
 
 	public function findByMenuId($menu_id);
 

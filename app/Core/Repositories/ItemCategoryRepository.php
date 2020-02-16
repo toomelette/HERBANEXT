@@ -59,6 +59,7 @@ class ItemCategoryRepository extends BaseRepository implements ItemCategoryInter
         $item_category->item_category_id = $this->getItemCategoryIdInc();
         $item_category->name = $request->name;
         $item_category->description = $request->description;
+        $item_category->created_at = $this->carbon->now();
         $item_category->updated_at = $this->carbon->now();
         $item_category->ip_created = request()->ip();
         $item_category->ip_updated = request()->ip();

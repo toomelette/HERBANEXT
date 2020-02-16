@@ -62,46 +62,20 @@
                 '12', 'unit_type_id', 'Unit Type *', old('unit_type_id'), ['BY QUANTITY' => 'IU1001', 'BY WEIGHT' => 'IU1002', 'BY VOLUME' => 'IU1003'], $errors->has('unit_type_id'), $errors->first('unit_type_id'), '', ''
               ) !!}
 
-              <div class="col-md-12"></div>
-              
-              <div class="col-md-12 no-padding" id="weight_div">
+              {!! __form::textbox_numeric(
+                '6', 'beginning_balance', 'text', 'Beggining Balance *', 'Beggining Balance *', old('beginning_balance'), $errors->has('beginning_balance'), $errors->first('beginning_balance'), ''
+              ) !!}
 
-                {!! __form::textbox_numeric(
-                  '12', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
-                ) !!}
-
-                {!! __form::select_static(
-                  '12', 'weight_unit', 'Standard Weight Unit', old('weight_unit'), ['KILOGRAM' => 'KG', 'GRAM' => 'G'], $errors->has('weight_unit'), $errors->first('weight_unit'), '', ''
-                ) !!}
-
-              </div>
-              
-              <div class="col-md-12 no-padding" id="volume_div">
-
-                {!! __form::textbox_numeric(
-                  '12', 'volume', 'text', 'Volume', 'Volume', old('volume'), $errors->has('volume'), $errors->first('volume'), ''
-                ) !!}
-
-                {!! __form::select_static(
-                  '12', 'volume_unit', 'Standard Volume Unit', old('volume_unit'), ['LITERS' => 'L', 'MILLILITERS' => 'ML'], $errors->has('volume_unit'), $errors->first('volume_unit'), '', ''
-                ) !!}
-
-              </div>
-              
-              <div class="col-md-12 no-padding" id="qty_div">
-
-                {!! __form::textbox_numeric(
-                  '12', 'quantity', 'text', 'Quantity', 'Quantity', old('quantity'), $errors->has('quantity'), $errors->first('quantity'), ''
-                ) !!} 
-
-              </div>
+              {!! __form::select_static(
+                '6', 'unit', 'Standard Unit *', old('unit'), [], $errors->has('unit'), $errors->first('unit'), '', ''
+              ) !!}
 
               {!! __form::textbox_numeric(
                 '12', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty'), $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
-                '12', 'price', 'text', 'Price *', 'Price', old('price'), $errors->has('price'), $errors->first('price'), ''
+                '12', 'price', 'text', 'Price', 'Price', old('price'), $errors->has('price'), $errors->first('price'), ''
               ) !!}
 
               </div>
@@ -130,35 +104,43 @@
   <script type="text/javascript">
 
 
-    $(document).ready(function($){
+    $("#price").priceFormat({
+        centsLimit: 2,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
 
-      // Price Format
-      $("#weight").priceFormat({
-          centsLimit: 3,
-          prefix: "",
-          thousandsSeparator: ",",
-          clearOnEmpty: true,
-          allowNegative: false
-      });
-
-
-      $("#volume").priceFormat({
-          centsLimit: 3,
-          prefix: "",
-          thousandsSeparator: ",",
-          clearOnEmpty: true,
-          allowNegative: false
-      });
-
-
-      $("#quantity").priceFormat({
+    @if(old('unit_type_id') == 'IU1001')
+      $("#unit").empty();
+      $("#unit").append("<option value='PCS'{{ old('unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
+      $("#beginning_balance").priceFormat({
           centsLimit: 0,
           prefix: "",
           thousandsSeparator: ",",
           clearOnEmpty: true,
           allowNegative: false
       });
-
+      $("#min_req_qty").priceFormat({
+          centsLimit: 0,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+    @elseif(old('unit_type_id') == 'IU1002')
+      $("#unit").empty();
+      $("#unit").append("<option value>Select</option>");
+      $("#unit").append("<option value='GRAM' {{ old('unit') == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
+      $("#unit").append("<option value='KILOGRAM' {{ old('unit') == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
+      $("#beginning_balance").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
       $("#min_req_qty").priceFormat({
           centsLimit: 3,
           prefix: "",
@@ -166,63 +148,123 @@
           clearOnEmpty: true,
           allowNegative: false
       });
-
-      $("#price").priceFormat({
-          centsLimit: 2,
+    @elseif(old('unit_type_id') == 'IU1003')
+      $("#unit").empty();
+      $("#unit").append("<option value>Select</option>");
+      $("#unit").append("<option value='MILLILITRE' {{ old('unit') == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
+      $("#unit").append("<option value='LITRE' {{ old('unit') == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
+      $("#beginning_balance").priceFormat({
+          centsLimit: 3,
           prefix: "",
           thousandsSeparator: ",",
           clearOnEmpty: true,
           allowNegative: false
       });
-
-    });
-
-
-    @if(old('unit_type_id') == 'IU1001')
-      $('#qty_div').show();
-      $('#weight_div').hide();
-      $('#volume_div').hide();
-    @elseif(old('unit_type_id') == 'IU1002')
-      $('#qty_div').hide();
-      $('#weight_div').show();
-      $('#volume_div').hide();
-    @elseif(old('unit_type_id') == 'IU1003')
-      $('#qty_div').hide();
-      $('#weight_div').hide();
-      $('#volume_div').show();
+      $("#min_req_qty").priceFormat({
+          centsLimit: 3,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
     @else
-      $( document ).ready(function() {
-      $('#qty_div').hide();
-      $('#weight_div').hide();
-      $('#volume_div').hide();
+      $("#unit").empty();
+      $("#beginning_balance").priceFormat({
+          centsLimit: 0,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+      $("#min_req_qty").priceFormat({
+          centsLimit: 0,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
       });
     @endif
 
 
+
+
     $(document).on("change", "#unit_type_id", function () {
-      $('#quantity').val('');
-      $('#weight').val('');
-      $('#weight_unit').val('');
-      $('#volume').val('');
-      $('#volume_unit').val('');
+      
       var val = $(this).val();
-        if(val == "IU1001"){ 
-          $('#qty_div').show();
-          $('#weight_div').hide();
-          $('#volume_div').hide();
-        }else if(val == "IU1002"){
-          $('#qty_div').hide();
-          $('#weight_div').show();
-          $('#volume_div').hide();
-        }else if(val == "IU1003"){
-          $('#qty_div').hide();
-          $('#weight_div').hide();
-          $('#volume_div').show();
-        }else{
-          $('#qty_div').hide();
-          $('#weight_div').hide();
-          $('#volume_div').hide();
-        }
+        
+      if(val == "IU1001"){ 
+        $("#unit").empty();
+        $("#unit").append("<option value='PCS'>PCS</option>");
+        $("#beginning_balance").priceFormat({
+            centsLimit: 0,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+        $("#min_req_qty").priceFormat({
+            centsLimit: 0,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+      }else if(val == "IU1002"){
+        $("#unit").empty();
+        $("#unit").append("<option value>Select</option>");
+        $("#unit").append("<option value='GRAM'>GRAMS</option>");
+        $("#unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
+        $("#beginning_balance").priceFormat({
+            centsLimit: 3,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+        $("#min_req_qty").priceFormat({
+            centsLimit: 3,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+      }else if(val == "IU1003"){
+        $("#unit").empty();
+        $("#unit").append("<option value>Select</option>");
+        $("#unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
+        $("#unit").append("<option value='LITRE'>LITERS</option>");
+        $("#beginning_balance").priceFormat({
+            centsLimit: 3,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+        $("#min_req_qty").priceFormat({
+            centsLimit: 3,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+      }else{
+        $("#unit").empty();
+        $("#beginning_balance").priceFormat({
+            centsLimit: 0,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+        $("#min_req_qty").priceFormat({
+            centsLimit: 0,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+      }
+
     });
 
 

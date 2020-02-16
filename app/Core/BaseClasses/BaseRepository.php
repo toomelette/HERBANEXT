@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Core\Helpers\__dataType;
 use Illuminate\Cache\Repository as Cache;
-use Conversion;
 
 
 class BaseRepository{
@@ -21,7 +20,6 @@ class BaseRepository{
     protected $str;
     protected $__dataType;
     protected $cache;
-    protected $convertion;
 
 
 
@@ -33,7 +31,6 @@ class BaseRepository{
         $this->str = App::make(Str::class);
         $this->__dataType = App::make(__dataType::class);
         $this->cache = App::make(Cache::class);
-        $this->convertion = App::make(Conversion::class);
         
     }
 

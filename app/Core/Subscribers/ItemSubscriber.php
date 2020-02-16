@@ -27,6 +27,8 @@ class ItemSubscriber extends BaseSubscriber{
         $events->listen('item.update', 'App\Core\Subscribers\ItemSubscriber@onUpdate');
         $events->listen('item.destroy', 'App\Core\Subscribers\ItemSubscriber@onDestroy');
         $events->listen('item.check_in', 'App\Core\Subscribers\ItemSubscriber@onCheckIn');
+        $events->listen('item.check_out', 'App\Core\Subscribers\ItemSubscriber@onCheckOut');
+
 
     }
 
@@ -74,10 +76,26 @@ class ItemSubscriber extends BaseSubscriber{
     public function onCheckIn($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
 
         $this->session->flash('ITEM_CHECK_IN_SUCCESS', 'The Item batch has been successfully check in!');
         $this->session->flash('ITEM_CHECK_IN_SUCCESS_SLUG', $item->slug);
+
+    }
+
+
+
+
+
+    public function onCheckOut($item){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
+
+        $this->session->flash('ITEM_CHECK_OUT_SUCCESS', 'The Amount has been successfully check out!');
+        $this->session->flash('ITEM_CHECK_OUT_SUCCESS_SLUG', $item->slug);
 
     }
 

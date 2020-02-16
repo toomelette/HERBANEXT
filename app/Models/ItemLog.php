@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
-class ItemBatch extends Model{
+class ItemLog extends Model{
 
+    use Sortable;
 
+    protected $table = 'item_logs';
 
-    protected $table = 'item_batches';
+    protected $dates = ['created_at', 'updated_at'];
 
-    protected $dates = ['expiry_date', 'created_at', 'updated_at'];
+    public $sortable = ['product_code', 'transaction_type', 'amount', 'unit', 'updated_at'];
     
 	public $timestamps = false;
 
@@ -19,10 +22,10 @@ class ItemBatch extends Model{
     protected $attributes = [
 
         'product_code' => '',
-    	'batch_code' => '',
+    	'transaction_type' => false,
         'amount' => 0.000,
         'unit' => '',
-        'expiry_date' => null,
+        'balance_before_transaction' => 0.000,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -39,17 +42,12 @@ class ItemBatch extends Model{
     /** RELATIONSHIPS **/
     public function item() {
     	return $this->belongsTo('App\Models\Item','product_code','product_code');
-   	}
+   	}	
 
 
-    public function itemLog() {
-        return $this->hasOne('App\Models\ItemLog','batch_code','batch_code');
-    }
-
-
-
-
-
+    public function itemBatch() {
+    	return $this->belongsTo('App\Models\ItemBatch','batch_code','batch_code');
+   	}	
 
     
 }

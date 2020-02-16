@@ -26,6 +26,7 @@ class MenuSubscriber extends BaseSubscriber{
         $events->listen('menu.store', 'App\Core\Subscribers\MenuSubscriber@onStore');
         $events->listen('menu.update', 'App\Core\Subscribers\MenuSubscriber@onUpdate');
         $events->listen('menu.destroy', 'App\Core\Subscribers\MenuSubscriber@onDestroy');
+        $events->listen('menu.destroy', 'App\Core\Subscribers\MenuSubscriber@onDestroy');
 
     }
 
