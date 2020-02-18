@@ -160,14 +160,17 @@ class ItemService extends BaseService{
         $amount = 0;
         $request_amount = $this->__dataType->string_to_num($request->amount);
         $item = $this->item_repo->findbySlug($slug);
-
+        $item_batches = $item->itemBatch()
+                             ->where('amount', '>' , 0)
+                             ->whereDate('expiry_date', '>=' , $this->carbon->now()->format('Y-m-d'))
+                             ->orderBy('updated_at')
+                             ->get();
 
         if ($item->unit != 'PCS') {
-            $amount = Conversion::convert($this->__dataType->string_to_num($request->amount), $request->unit)->to($item->unit)->format(3,'.','');
+            $amount = Conversion::convert($request_amount, $request->unit)->to($item->unit)->format(3,'.','');
         }else{
-            $amount = $this->__dataType->string_to_num($request->amount);
+            $amount = $request_amount;
         }
-
 
         if ($item->current_balance > $amount) {
             
@@ -177,8 +180,8 @@ class ItemService extends BaseService{
             // Updating Current Balance
             $this->item_repo->updateCheckOut($amount, $item); 
 
-            // Updating 
-            foreach ($item->itemBatch->where('amount', '>' , 0)->sortBy('updated_at') as $key => $item_batch) {
+            // Updating Batches
+            foreach ($item_batches as $key => $item_batch) {
                 
                 $request_amount;
                 $batch_amount = $item_batch->amount;
@@ -204,9 +207,7 @@ class ItemService extends BaseService{
             $this->event->fire('item.check_out', $item);
 
         }else{
-
             $this->session->flash('ITEM_INSUFFICIENT_BALANCE', 'You dont have enough balance to checkout !');
-        
         }
 
         return redirect()->back();
@@ -223,6 +224,34 @@ class ItemService extends BaseService{
 
         $request->flash();
         return view('dashboard.item.logs')->with('logs', $logs);
+
+    }
+
+
+
+
+
+    public function fetchBatchByItem($slug, $request){
+
+        $item = $this->item_repo->findbySlug($slug);
+        $batches = $this->item_batch_repo->fetchByItem($item->product_code, $request);
+
+        $request->flash();
+        return view('dashboard.item.batch_by_item')->with(['batches' => $batches, 'slug' => $item->slug]);
+
+    }
+
+
+
+
+
+    public function fetchLogsByItem($slug, $request){
+
+        $item = $this->item_repo->findbySlug($slug);
+        $logs = $this->item_log_repo->fetchByItem($item->product_code, $request);
+
+        $request->flash();
+        return view('dashboard.item.logs_by_item')->with(['logs' => $logs, 'slug' => $item->slug]);
 
     }
 

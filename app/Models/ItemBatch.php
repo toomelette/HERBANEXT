@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class ItemBatch extends Model{
 
-
+    
+    use Sortable;
 
     protected $table = 'item_batches';
 

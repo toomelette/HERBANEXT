@@ -55,6 +55,31 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
+    public function fetchByItem($product_code, $request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 100;
+
+        $item_logs = $this->cache->remember('item_logs:fetchByItem:' . $key, 240, function() use ($request, $entries, $product_code){
+
+            $item_log = $this->item_log->newQuery();
+            
+            if(isset($request->q)){
+                $this->searchByItem($item_log, $request->q);
+            }
+
+            return $this->populateByItem($item_log, $entries, $product_code);
+
+        });
+
+        return $item_logs;
+
+    }
+
+
+
+
+
 
     public function storeCheckIn($request, $item){
 
@@ -109,6 +134,22 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
+                $model->where('product_code', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('item', function ($model) use ($key) {
+                            $model->where('name', 'LIKE', '%'. $key .'%');
+                        });
+        });
+
+    }
+
+
+
+
+
+
+    public function searchByItem($model, $key){
+
+        return $model->where(function ($model) use ($key) {
                 $model->where('product_code', 'LIKE', '%'. $key .'%');
         });
 
@@ -124,6 +165,20 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
                      ->with('item')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+
+    }
+
+
+
+
+
+    public function populateByItem($model, $entries, $product_code){
+
+        return $model->select('transaction_type', 'amount', 'unit', 'created_at', 'user_created', 'ip_created')
+                     ->where('product_code', $product_code)
+                     ->sortable()
+                     ->orderBy('updated_at')
                      ->paginate($entries);
 
     }

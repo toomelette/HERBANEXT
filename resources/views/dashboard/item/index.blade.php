@@ -42,15 +42,13 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('product_code', 'Product Code')</th>
-            <th>@sortablelink('itemCategory.name', 'Category')</th>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('current_balance', 'Balance')</th>
-            <th style="width: 300px">Action</th>
+            <th style="width: 400px">Action</th>
           </tr>
           @foreach($items as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->product_code }}</td>
-              <td id="mid-vert">{{ optional($data->itemCategory)->name }}</td>
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">
                   @if($data->min_req_qty > $data->current_balance)
@@ -75,8 +73,15 @@
                   <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_out', $data->slug) }}">
                      Check-Out
                   </a>
+                  <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_batch_by_item', $data->slug) }}">
+                    <i class="fa fa-cubes "></i>
+                  </a>
+                  <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_logs_by_item', $data->slug) }}">
+                    <i class="fa fa-file-text-o "></i>
+                  </a>
                   <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.item.edit', $data->slug) }}">
-                    <i class="fa fa-pencil"></i></a>
+                    <i class="fa fa-pencil"></i>
+                  </a>
                   <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.item.destroy', $data->slug) }}">
                     <i class="fa fa-trash"></i>
                   </a>

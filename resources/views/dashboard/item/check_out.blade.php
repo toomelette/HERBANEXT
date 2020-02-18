@@ -11,7 +11,7 @@
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
             &nbsp;
-            <a href="#" type="button" class="btn btn-sm btn-default"><i class="fa fa-fw fa-cubes"></i> View Batches</a>
+            <a href="{{ route('dashboard.item.fetch_batch_by_item', $item->slug) }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-fw fa-cubes"></i> View Batches</a>
             &nbsp;
             <a href="{{ route('dashboard.item.index') }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-fw fa-arrow-left"></i> Back to List</a>
         </div> 

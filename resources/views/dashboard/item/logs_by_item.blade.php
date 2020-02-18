@@ -19,19 +19,24 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Item Logs</h1>
+      <h1>List of Logs by Item</h1>
+      <div class="pull-right" style="margin-top:-25px;">
+        <a href="{{ route('dashboard.item.index') }}" type="button" class="btn btn-sm btn-default">
+          <i class="fa fa-fw fa-arrow-left"></i> Back to List
+        </a>
+      </div>
   </section>
 
   <section class="content">
     
     {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.item.logs') }}">
+    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.item.fetch_logs_by_item', $slug) }}">
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.item.logs')) !!}
+        {!! __html::table_search(route('dashboard.item.fetch_logs_by_item', $slug )) !!}
       </div>
 
     {{-- Form End --}}  
@@ -41,16 +46,12 @@
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
-            <th>@sortablelink('product_code', 'Product Code')</th>
-            <th>@sortablelink('', 'Name')</th>
             <th>@sortablelink('transaction_type', 'Transaction Type')</th>
             <th>@sortablelink('amount', 'Amount')</th>
             <th>@sortablelink('updated_at', 'Date')</th>
           </tr>
           @foreach($logs as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td id="mid-vert">{{ $data->product_code }}</td>
-              <td id="mid-vert">{{ optional($data->item)->name }}</td>
               <td id="mid-vert"> {{ $data->transaction_type == 1 ? 'Check In' : 'Check Out' }}</td>
               <td id="mid-vert">
                 @if(optional($data->item)->unit != 'PCS')
@@ -67,7 +68,7 @@
                   @endif
                 @endif
               </td>
-              <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
+              <td id="mid-vert">{{ $data->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
           </table>

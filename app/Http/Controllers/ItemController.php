@@ -8,6 +8,8 @@ use App\Http\Requests\Item\ItemFilterRequest;
 use App\Http\Requests\Item\ItemCheckInFormRequest;
 use App\Http\Requests\Item\ItemCheckOutFormRequest;
 use App\Http\Requests\Item\ItemLogsFilterRequest;
+use App\Http\Requests\Item\ItemBatchByItemFilterRequest;
+use App\Http\Requests\Item\ItemLogsByItemFilterRequest;
 
 
 class ItemController extends Controller{
@@ -116,6 +118,24 @@ class ItemController extends Controller{
     public function logs(ItemLogsFilterRequest $request){
 
         return $this->item->logs($request);
+
+    }
+
+    
+
+
+    public function fetchBatchByItem($slug, ItemBatchByItemFilterRequest $request){
+
+        return $this->item->fetchBatchByItem($slug, $request);
+
+    }
+
+    
+
+
+    public function fetchLogsByItem($slug, ItemLogsByItemFilterRequest $request){
+
+        return $this->item->fetchLogsByItem($slug, $request);
 
     }
 

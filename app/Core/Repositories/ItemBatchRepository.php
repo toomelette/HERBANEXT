@@ -30,6 +30,31 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
+    public function fetchByItem($product_code, $request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 100;
+
+        $item_batches = $this->cache->remember('item_batches:fetchByItem:' . $key, 240, function() use ($request, $entries, $product_code){
+
+            $item_batch = $this->item_batch->newQuery();
+            
+            if(isset($request->q)){
+                $this->searchByItem($item_batch, $request->q);
+            }
+
+            return $this->populateByItem($item_batch, $entries, $product_code);
+
+        });
+
+        return $item_batches;
+
+    }
+
+
+
+
+
 
     public function store($request, $item){
 
@@ -79,6 +104,33 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
         }
 
         return $item_batch;
+
+    }
+
+
+
+
+
+
+    public function searchByItem($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('batch_code', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+    public function populateByItem($model, $entries, $product_code){
+
+        return $model->select('batch_code', 'amount', 'unit', 'expiry_date', 'updated_at')
+                     ->where('product_code', $product_code)
+                     ->sortable()
+                     ->orderBy('updated_at')
+                     ->paginate($entries);
 
     }
 

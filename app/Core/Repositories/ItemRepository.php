@@ -150,9 +150,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = $this->cache->remember('items:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->item->where('slug', $slug)
-                              ->with('itemCategory')
-                              ->with('itemBatch')
-                              ->with('itemLog')
+                              ->with('itemCategory', 'itemBatch', 'itemLog')
                               ->first();
         }); 
         
