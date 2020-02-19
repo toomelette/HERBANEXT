@@ -115,7 +115,8 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
     public function searchByItem($model, $key){
 
         return $model->where(function ($model) use ($key) {
-                $model->where('batch_code', 'LIKE', '%'. $key .'%');
+                $model->where('batch_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('amount', 'LIKE', '%'. $key .'%');
         });
 
     }

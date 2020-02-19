@@ -182,8 +182,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'item_category_id', 'name', 'current_balance', 'unit', 'min_req_qty', 'slug')
-                     ->with('itemCategory')
+        return $model->select('product_code', 'name', 'current_balance', 'unit', 'min_req_qty', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

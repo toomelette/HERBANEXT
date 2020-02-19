@@ -45,12 +45,20 @@
             <th>@sortablelink('', 'Name')</th>
             <th>@sortablelink('transaction_type', 'Transaction Type')</th>
             <th>@sortablelink('amount', 'Amount')</th>
+            <th>@sortablelink('user.username', 'User Updated')</th>
             <th>@sortablelink('updated_at', 'Date')</th>
           </tr>
           @foreach($logs as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->product_code }}</td>
-              <td id="mid-vert">{{ optional($data->item)->name }}</td>
+              <td id="mid-vert">
+                @if(!empty($data->item))
+                  {{ optional($data->item)->name }}
+                @else
+                  <span class="badge bg-red"><i class="fa fa-times "></i></span>
+                @endif
+                
+              </td>
               <td id="mid-vert"> {{ $data->transaction_type == 1 ? 'Check In' : 'Check Out' }}</td>
               <td id="mid-vert">
                 @if(optional($data->item)->unit != 'PCS')
@@ -67,6 +75,7 @@
                   @endif
                 @endif
               </td>
+              <td id="mid-vert">{{ optional($data->user)->username }}</td>
               <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
             </tr>
             @endforeach

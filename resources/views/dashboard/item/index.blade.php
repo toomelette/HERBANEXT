@@ -19,7 +19,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Item List</h1>
+      <h1>Items</h1>
   </section>
 
   <section class="content">

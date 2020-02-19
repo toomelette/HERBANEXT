@@ -38,6 +38,9 @@ class ItemSubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
 
         $this->session->flash('ITEM_CREATE_SUCCESS', 'The Item has been successfully created!');
 
@@ -62,6 +65,10 @@ class ItemSubscriber extends BaseSubscriber{
     public function onDestroy($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
+
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
 
         $this->session->flash('ITEM_DELETE_SUCCESS', 'The Item has been successfully deleted!');
@@ -76,7 +83,10 @@ class ItemSubscriber extends BaseSubscriber{
     public function onCheckIn($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
+
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
 
         $this->session->flash('ITEM_CHECK_IN_SUCCESS', 'The Item batch has been successfully check in!');
@@ -91,7 +101,10 @@ class ItemSubscriber extends BaseSubscriber{
     public function onCheckOut($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
+        
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
 
         $this->session->flash('ITEM_CHECK_OUT_SUCCESS', 'The Amount has been successfully check out!');

@@ -42,12 +42,13 @@ class ItemLog extends Model{
     /** RELATIONSHIPS **/
     public function item() {
     	return $this->belongsTo('App\Models\Item','product_code','product_code');
-   	}	
+   	}		
 
 
-    public function itemBatch() {
-    	return $this->belongsTo('App\Models\ItemBatch','batch_code','batch_code');
-   	}	
+    public function user() {
+        return $this->belongsTo('App\Models\user','user_updated','user_id');
+    }   
+
 
     
 }

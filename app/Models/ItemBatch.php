@@ -44,11 +44,6 @@ class ItemBatch extends Model{
    	}
 
 
-    public function itemLog() {
-        return $this->hasOne('App\Models\ItemLog','batch_code','batch_code');
-    }
-
-
 
 
 

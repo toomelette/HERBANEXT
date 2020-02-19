@@ -135,8 +135,12 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
         return $model->where(function ($model) use ($key) {
                 $model->where('product_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
                       ->orwhereHas('item', function ($model) use ($key) {
                             $model->where('name', 'LIKE', '%'. $key .'%');
+                        })
+                      ->orwhereHas('user', function ($model) use ($key) {
+                            $model->where('username', 'LIKE', '%'. $key .'%');
                         });
         });
 
@@ -150,7 +154,11 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     public function searchByItem($model, $key){
 
         return $model->where(function ($model) use ($key) {
-                $model->where('product_code', 'LIKE', '%'. $key .'%');
+                $model->where('product_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('user', function ($model) use ($key) {
+                            $model->where('username', 'LIKE', '%'. $key .'%');
+                        });
         });
 
     }
@@ -161,8 +169,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'transaction_type', 'amount', 'unit', 'updated_at')
-                     ->with('item')
+        return $model->select('product_code', 'transaction_type', 'amount', 'unit', 'user_updated', 'updated_at')
+                     ->with('item', 'user')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -175,7 +183,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populateByItem($model, $entries, $product_code){
 
-        return $model->select('transaction_type', 'amount', 'unit', 'created_at', 'user_created', 'ip_created')
+        return $model->select('transaction_type', 'amount', 'unit', 'created_at', 'user_updated', 'updated_at')
+                     ->with('user')
                      ->where('product_code', $product_code)
                      ->sortable()
                      ->orderBy('updated_at')
