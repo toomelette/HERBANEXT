@@ -71,7 +71,7 @@ class User extends Authenticatable{
 
 
     public function itemLog() {
-        return $this->hasMany('App\Models\ItemLog','user_id','user_updated');
+        return $this->hasMany('App\Models\ItemLog','user_id','user_id');
     }
     
 

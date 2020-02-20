@@ -13,7 +13,7 @@ class ItemLog extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public $sortable = ['product_code', 'transaction_type', 'amount', 'unit', 'updated_at'];
+    public $sortable = ['product_code', 'transaction_type', 'amount', 'unit', 'datetime'];
     
 	public $timestamps = false;
 
@@ -26,12 +26,9 @@ class ItemLog extends Model{
         'amount' => 0.000,
         'unit' => '',
         'balance_before_transaction' => 0.000,
-        'created_at' => null,
-        'updated_at' => null,
-        'ip_created' => '',
-        'ip_updated' => '',
-        'user_created' => '',
-        'user_updated' => '',
+        'datetime' => null,
+        'ip_address' => '',
+        'user_id' => '',
 
     ];
 
@@ -46,7 +43,7 @@ class ItemLog extends Model{
 
 
     public function user() {
-        return $this->belongsTo('App\Models\user','user_updated','user_id');
+        return $this->belongsTo('App\Models\user','user_id','user_id');
     }   
 
 

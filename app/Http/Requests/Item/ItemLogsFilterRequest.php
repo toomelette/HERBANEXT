@@ -22,6 +22,8 @@ class ItemLogsFilterRequest extends FormRequest{
         return [
             
             'q'=>'nullable|string|max:90',
+            'df'=>'nullable|date_format:"m/d/Y"',
+            'dt'=>'nullable|date_format:"m/d/Y"',
             
         ];
 

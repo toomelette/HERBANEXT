@@ -66,7 +66,7 @@
                   @if($data->expiry_date <= Carbon::now()->format('Y-m-d'))
                     <span class="text-red">{{ __dataType::date_parse($data->expiry_date, 'M d,Y') }}<span>
                   @else
-                    {{ __dataType::date_parse($data->expiry_date, 'M d,Y') }}
+                    {{ __dataType::date_parse($data->expiry_date, 'M d, Y') }}
                   @endif
                 </td>
               </tr>

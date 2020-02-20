@@ -6,6 +6,10 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
+
                       ];
 
 ?>
@@ -27,6 +31,24 @@
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.item.logs') }}">
 
+      {!! __html::filter_open() !!}
+
+        <div class="col-md-12">
+          
+          <h5>Date Filter : </h5>
+
+          {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+
+          {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
+
+          <button type="submit" class="btn btn-primary" style="margin:25px;">
+            Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i>
+          </button>
+
+        </div>
+
+      {!! __html::filter_close('submit_dv_filter') !!}
+
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
@@ -42,11 +64,11 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('product_code', 'Product Code')</th>
-            <th>@sortablelink('', 'Name')</th>
+            <th>@sortablelink('item.name', 'Name')</th>
             <th>@sortablelink('transaction_type', 'Transaction Type')</th>
             <th>@sortablelink('amount', 'Amount')</th>
             <th>@sortablelink('user.username', 'User Updated')</th>
-            <th>@sortablelink('updated_at', 'Date')</th>
+            <th>@sortablelink('datetime', 'Date')</th>
           </tr>
           @foreach($logs as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -76,7 +98,7 @@
                 @endif
               </td>
               <td id="mid-vert">{{ optional($data->user)->username }}</td>
-              <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->datetime, 'M d, Y g:i A') }}</td>
             </tr>
             @endforeach
           </table>

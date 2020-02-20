@@ -38,9 +38,16 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
         $item_logs = $this->cache->remember('item_logs:fetch:' . $key, 240, function() use ($request, $entries){
 
             $item_log = $this->item_log->newQuery();
-            
+
+            $df = $this->__dataType->date_parse($request->df, 'Y-m-d 00:00:00');
+            $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d 24:00:00');
+
             if(isset($request->q)){
                 $this->search($item_log, $request->q);
+            }
+            
+            if(isset($request->df) || isset($request->dt)){
+                $item_log->where('datetime', '>=', $df)->where('datetime', '<=', $dt);
             }
 
             return $this->populate($item_log, $entries);
@@ -89,12 +96,9 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     	$item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
     	$item_log->balance_before_transaction = $item->current_balance;
-        $item_log->created_at = $this->carbon->now();
-        $item_log->updated_at = $this->carbon->now();
-        $item_log->ip_created = request()->ip();
-        $item_log->ip_updated = request()->ip();
-        $item_log->user_created = $this->auth->user()->user_id;
-        $item_log->user_updated = $this->auth->user()->user_id;
+        $item_log->datetime = $this->carbon->now();
+        $item_log->ip_address = request()->ip();
+        $item_log->user_id = $this->auth->user()->user_id;
         $item_log->save();
 
     	return $item_log;
@@ -114,12 +118,10 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
         $item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
         $item_log->balance_before_transaction = $item->current_balance;
-        $item_log->created_at = $this->carbon->now();
-        $item_log->updated_at = $this->carbon->now();
-        $item_log->ip_created = request()->ip();
-        $item_log->ip_updated = request()->ip();
-        $item_log->user_created = $this->auth->user()->user_id;
-        $item_log->user_updated = $this->auth->user()->user_id;
+        $item_log->datetime = $this->carbon->now();
+        $item_log->ip_address = request()->ip();
+        $item_log->user_id = $this->auth->user()->user_id;
+        $item_log->save();
         $item_log->save();
 
         return $item_log;
@@ -169,10 +171,10 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'transaction_type', 'amount', 'unit', 'user_updated', 'updated_at')
+        return $model->select('product_code', 'transaction_type', 'amount', 'unit', 'user_id', 'datetime')
                      ->with('item', 'user')
                      ->sortable()
-                     ->orderBy('updated_at', 'desc')
+                     ->orderBy('datetime', 'desc')
                      ->paginate($entries);
 
     }
@@ -183,11 +185,11 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populateByItem($model, $entries, $product_code){
 
-        return $model->select('transaction_type', 'amount', 'unit', 'created_at', 'user_updated', 'updated_at')
+        return $model->select('transaction_type', 'amount', 'unit', 'user_id', 'datetime')
                      ->with('user')
                      ->where('product_code', $product_code)
                      ->sortable()
-                     ->orderBy('updated_at')
+                     ->orderBy('datetime', 'desc')
                      ->paginate($entries);
 
     }

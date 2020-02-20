@@ -6,6 +6,9 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
                       ];
 
 ?>
@@ -51,7 +54,7 @@
               <th>@sortablelink('transaction_type', 'Transaction Type')</th>
               <th>@sortablelink('amount', 'Amount')</th>
               <th>@sortablelink('user.name', 'User Updated')</th>
-              <th>@sortablelink('updated_at', 'Date')</th>
+              <th>@sortablelink('datetime', 'Date')</th>
             </tr>
             @foreach($logs as $data) 
               <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -72,7 +75,7 @@
                   @endif
                 </td>
                 <td id="mid-vert">{{ optional($data->user)->username }}</td>
-                <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
+                <td id="mid-vert">{{ __dataType::date_parse($data->datetime, 'M d, Y g:i A') }}</td>
               </tr>
               @endforeach
             </table>
