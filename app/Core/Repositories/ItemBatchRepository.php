@@ -85,6 +85,9 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
         $item_batch = $this->findByBatchCode($batch_code);
         $item_batch->amount = $item_batch->amount - $amount;
+        $item_batch->updated_at = $this->carbon->now();
+        $item_batch->ip_updated = request()->ip();
+        $item_batch->user_updated = $this->auth->user()->user_id;
         $item_batch->save();
 
         return $item_batch;

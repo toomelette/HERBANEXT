@@ -59,9 +59,13 @@ class Item extends Model{
     }
 
 
-
     public function itemCategory() {
         return $this->belongsTo('App\Models\ItemCategory','item_category_id','item_category_id');
+    }
+
+
+    public function purchaseOrderItem() {
+        return $this->hasMany('App\Models\PurchaseOrderItem','product_code','product_code');
     }
 
 

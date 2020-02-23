@@ -7,7 +7,7 @@
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h2 class="box-title">Add Item</h2>
+        <h2 class="box-title">New Item</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 

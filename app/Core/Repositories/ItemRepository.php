@@ -194,6 +194,40 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
+    public function getAll(){
+
+        $items = $this->cache->remember('items:getAll', 240, function(){
+            return $this->item->select('product_code', 'unit_type_id', 'name')
+                              ->get();
+        });
+        
+        return $items;
+
+    }
+
+
+
+
+
+
+    public function getByProductCode($product_code){
+
+        $items = $this->cache->remember('items:getByProductCode:' . $product_code , 240, function() use ($product_code){
+            return $this->item->select('unit_type_id')
+                              ->where('product_code', $product_code)
+                              ->orderBy('name', 'asc')
+                              ->get();
+        });
+        
+        return $items;
+
+    }
+
+
+
+
+
+
 
 
 }

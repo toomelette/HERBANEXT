@@ -32,12 +32,10 @@
               </a>
           </div>
       </div>
-      <div class="box-body no-padding">
+      <div class="box-body no-padding" id="pjax-container">
     
         {{-- Form Start --}}
         <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.item.fetch_logs_by_item', $slug) }}">
-
-        <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
           {{-- Table Search --}}        
           <div class="box-header with-border">

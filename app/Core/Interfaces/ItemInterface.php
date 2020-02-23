@@ -19,5 +19,10 @@ interface ItemInterface {
 	public function destroy($slug);
 
 	public function findBySlug($slug);
+
+	public function getAll();
+
+	public function getByProductCode($product_code);
+		
 		
 }

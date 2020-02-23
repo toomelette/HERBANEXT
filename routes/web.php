@@ -55,6 +55,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** ITEMS CATEGORY **/
 	Route::resource('item_category', 'ItemCategoryController');
+
+
+	/** PURCHASE ORDER **/
+	Route::resource('purchase_order', 'PurchaseOrderController');
 	
 });
 

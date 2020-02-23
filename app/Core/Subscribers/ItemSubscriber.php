@@ -38,6 +38,8 @@ class ItemSubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByProductCode:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
@@ -53,6 +55,8 @@ class ItemSubscriber extends BaseSubscriber{
     public function onUpdate($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByProductCode:'. $item->product_code .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
 
         $this->session->flash('ITEM_UPDATE_SUCCESS', 'The Item has been successfully updated!');
@@ -65,6 +69,8 @@ class ItemSubscriber extends BaseSubscriber{
     public function onDestroy($item){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByProductCode:'. $item->product_code .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
