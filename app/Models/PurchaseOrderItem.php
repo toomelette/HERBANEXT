@@ -18,6 +18,7 @@ class PurchaseOrderItem extends Model{
 
     protected $attributes = [
 
+        'slug' => '',
         'po_no' => '',
     	'po_item_id' => '',
         'product_code' => '',

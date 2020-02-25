@@ -10,15 +10,15 @@ class PurchaseOrderController extends Controller{
 
 
 
-	// protected $purchase_order;
+	protected $purchase_order;
 
 
 
- //    public function __construct(PurchaseOrderService $purchase_order){
+    public function __construct(PurchaseOrderService $purchase_order){
 
- //        $this->purchase_order = $purchase_order;
+        $this->purchase_order = $purchase_order;
 
- //    }
+    }
 
 
     
@@ -38,11 +38,11 @@ class PurchaseOrderController extends Controller{
 
    
 
-    // public function store(PurchaseOrderFormRequest $request){
+    public function store(PurchaseOrderFormRequest $request){
         
-    //     return $this->purchase_order->store($request);
+        return $this->purchase_order->store($request);
 
-    // }
+    }
  
 
 

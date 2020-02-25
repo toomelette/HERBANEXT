@@ -13,7 +13,7 @@
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.item.store') }}">
+      <form method="POST" autocomplete="off" action="{{ route('dashboard.purchase_order.store') }}">
 
         <div class="box-body">
         
@@ -98,7 +98,7 @@
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Items</h3>
-                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
+                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Item &nbsp;<i class="fa fw fa-plus"></i></button>
               </div>
               
               <div class="box-body no-padding">

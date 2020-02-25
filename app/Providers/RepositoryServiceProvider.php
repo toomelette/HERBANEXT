@@ -34,6 +34,11 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Core\Interfaces\ItemBatchInterface', 'App\Core\Repositories\ItemBatchRepository');
 
 		$this->app->bind('App\Core\Interfaces\ItemLogInterface', 'App\Core\Repositories\ItemLogRepository');
+
+		$this->app->bind('App\Core\Interfaces\PurchaseOrderInterface', 'App\Core\Repositories\PurchaseOrderRepository');
+
+		$this->app->bind('App\Core\Interfaces\PurchaseOrderItemInterface', 'App\Core\Repositories\PurchaseOrderItemRepository');
+		
 		
 	}
 
