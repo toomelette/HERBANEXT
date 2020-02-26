@@ -5,7 +5,9 @@ namespace App\Core\Services;
 
 use App\Core\Interfaces\PurchaseOrderInterface;
 use App\Core\Interfaces\PurchaseOrderItemInterface;
+use App\Core\Interfaces\ItemInterface;
 use App\Core\BaseClasses\BaseService;
+use Conversion;
 
 
 class PurchaseOrderService extends BaseService{
@@ -13,13 +15,15 @@ class PurchaseOrderService extends BaseService{
 
     protected $purchase_order_repo;
     protected $purchase_order_item_repo;
+    protected $item_repo;
 
 
 
-    public function __construct(PurchaseOrderInterface $purchase_order_repo, PurchaseOrderItemInterface $purchase_order_item_repo){
+    public function __construct(PurchaseOrderInterface $purchase_order_repo, PurchaseOrderItemInterface $purchase_order_item_repo, ItemInterface $item_repo){
 
         $this->purchase_order_repo = $purchase_order_repo;
-         $this->purchase_order_item_repo = $purchase_order_item_repo;
+        $this->purchase_order_item_repo = $purchase_order_item_repo;
+        $this->item_repo = $item_repo;
         parent::__construct();
 
     }
@@ -46,11 +50,37 @@ class PurchaseOrderService extends BaseService{
 
         $purchase_order = $this->purchase_order_repo->store($request);
 
-        foreach ($request->row as $key => $value) {
-            
-            
+        $subtotal_price = 0.00;
+        $total_price = 0.00;
 
+        if (!empty($request->row)) {
+
+            foreach ($request->row as $data) {
+
+                $item = $this->item_repo->findByProductCode($data['item']);
+
+                $amount = $this->__dataType->string_to_num($data['amount']);
+
+                if ($item->unit != 'PCS') {
+                    $converted_amount = Conversion::convert($amount, $data['unit'])->to($item->unit)->format(10,'.','');
+                }else{
+                    $converted_amount = $data['amount'];
+                }
+
+                $line_price = $item->price * $converted_amount;
+                $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
+
+                $subtotal_price += $line_price; 
+
+            }
+            
         }
+
+        $factor = $this->__dataType->string_to_num($request->vat) / 100;       
+        $vatable = $subtotal_price * $factor;
+        $total_price = $subtotal_price - $vatable;
+
+        $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
         $this->event->fire('purchase_order.store');
         return redirect()->back();

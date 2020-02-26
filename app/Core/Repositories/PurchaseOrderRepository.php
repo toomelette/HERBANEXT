@@ -84,6 +84,23 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
+    public function updatePrices($purchase_order, $subtotal_price, $total_price){
+        
+        $purchase_order->subtotal_price = $subtotal_price;
+        $purchase_order->total_price = $total_price;
+        $purchase_order->updated_at = $this->carbon->now();
+        $purchase_order->ip_updated = request()->ip();
+        $purchase_order->user_updated = $this->auth->user()->user_id;
+        $purchase_order->save();
+        
+        return $purchase_order;
+
+    }
+
+
+
+
+
     // public function update($request, $slug){
 
     //     $purchase_order = $this->findBySlug($slug);
@@ -188,20 +205,20 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function getPONoInc(){
 
         
-        $current_year = $date->format('Y');
-        $date_from = $year_from .'-01-01';
-        $date_to = $year_to .'-12-31';
+        $current_year = $this->carbon->now()->format('Y');
+        $date_from = $current_year .'-01-01';
+        $date_to = $current_year .'-12-31';
 
         $po_no = $current_year . "-001";
 
         $purchase_order = $this->purchase_order->select('po_no')
-                                               ->whereBetween('created_by', [$date_from, $date_to])
+                                               ->whereBetween('created_at', [$date_from, $date_to])
                                                ->orderBy('po_no', 'desc')
                                                ->first();
 
         if($purchase_order != null){
             $num = str_replace($current_year .'-', '', $purchase_order->po_no) + 1;
-            $po_no = $current_year . $num;
+            $po_no = $current_year . '-00' . $num;
         }
 
         return $po_no;

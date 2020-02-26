@@ -10,6 +10,8 @@ interface PurchaseOrderInterface {
 
 	public function store($request);
 
+	public function updatePrices($purchase_order, $subtotal_price, $total_price);
+
 	//public function update($request, $slug);
 
 	//public function destroy($slug);
@@ -18,5 +20,4 @@ interface PurchaseOrderInterface {
 
 	//public function findByMenuId($menu_id);
 
-		
 }

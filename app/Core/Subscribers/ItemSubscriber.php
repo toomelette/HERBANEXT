@@ -58,6 +58,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByProductCode:'. $item->product_code .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findByProductCode:'. $item->product_code .'');
 
         $this->session->flash('ITEM_UPDATE_SUCCESS', 'The Item has been successfully updated!');
         $this->session->flash('ITEM_UPDATE_SUCCESS_SLUG', $item->slug);
@@ -94,6 +95,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findByProductCode:'. $item->product_code .'');
 
         $this->session->flash('ITEM_CHECK_IN_SUCCESS', 'The Item batch has been successfully check in!');
         $this->session->flash('ITEM_CHECK_IN_SUCCESS_SLUG', $item->slug);
@@ -112,6 +114,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findByProductCode:'. $item->product_code .'');
 
         $this->session->flash('ITEM_CHECK_OUT_SUCCESS', 'The Amount has been successfully check out!');
         $this->session->flash('ITEM_CHECK_OUT_SUCCESS_SLUG', $item->slug);

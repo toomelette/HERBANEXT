@@ -103,7 +103,6 @@
 
   <script type="text/javascript">
 
-
     $("#price").priceFormat({
         centsLimit: 2,
         prefix: "",

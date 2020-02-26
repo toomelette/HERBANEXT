@@ -166,6 +166,24 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
+    public function findByProductCode($product_code){
+
+        $item = $this->cache->remember('items:findByProductCode:' . $product_code, 240, function() use ($product_code){
+            return $this->item->where('product_code', $product_code)->first();
+        }); 
+        
+        if(empty($item)){
+            abort(404);
+        }
+
+        return $item;
+
+    }
+
+
+
+
+
 
     public function search($model, $key){
 

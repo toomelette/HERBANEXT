@@ -171,7 +171,7 @@ class ItemService extends BaseService{
         }else{
             $amount = $request_amount;
         }
-
+        
         if ($item->current_balance > $amount) {
             
             // Storing Logs

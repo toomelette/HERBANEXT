@@ -108,8 +108,7 @@
                   <tr>
                     <th style="width:400px;">Item *</th>
                     <th>Quantity</th>
-                    <th style="width:180px;">Unit</th>
-                    <th>Price</th>
+                    <th>Unit</th>
                     <th style="width: 40px"></th>
                   </tr>
 
@@ -119,13 +118,29 @@
                       
                       @foreach(old('row') as $key => $value)
 
+                        <?php
+
+                          $unit_type_list = [];
+
+                          if ($value['unit_type_id'] == 'IU1001') {
+                            $unit_type_list = ['PCS' => 'PCS', ];
+                          }elseif ($value['unit_type_id'] == 'IU1002') {
+                            $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
+                          }elseif ($value['unit_type_id'] == 'IU1003') {
+                            $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
+                          }
+
+                        ?>
+
                         <tr>
 
+                          <input type="hidden" name="row[{{ $key }}][unit_type_id]" id="unit_type_id" class="unit_type_id">
+
                           <td>
-                            <select name="row[{{ $key }}][item]" class="form-control select2">
+                            <select name="row[{{ $key }}][item]" id="item" class="form-control item">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value['item'] == $data->item_id ? 'selected' : ''!!}>{{ $value['item'] }}</option>
+                                  <option value="{{ $data->product_code }}" {!! $value['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row.'. $key .'.item') }}</small>
@@ -133,22 +148,21 @@
 
                           <td>
                             <div class="form-group">
-                              <input type="text" name="row[{{ $key }}][amount]" class="form-control" placeholder="Quantity" value="{{ $value['amount'] }}">
+                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount" placeholder="Quantity" value="{{ $value['amount'] }}">
                               <small class="text-danger">{{ $errors->first('row.'. $key .'.amount') }}</small>
                             </div>
                           </td>
 
                           <td>
-                            {!! __form::select_static_for_dt(
-                              'row['. $key .'][unit]', [], $value['unit'], $errors->first('row.'. $key .'.unit')
-                            ) !!}
-                          </td>
+                            
+                          <div class="form-group">
+                            <select name="row[{{ $key }}][unit]"  id="unit" class="form-control unit">
+                              @foreach($unit_type_list as $data)
+                                <option value="{{ $data }}" {!! $value['unit'] == $data ? 'selected' : ''!!}>{{ $data }}</option>
+                              @endforeach
+                            </select>
+                          </div>
 
-                          <td>
-                            <div class="form-group">
-                              <input type="text" name="row[{{ $key }}][price]" class="form-control" placeholder="Price" value="{{ $value['price'] }}">
-                              <small class="text-danger">{{ $errors->first('row.'. $key .'.price') }}</small>
-                            </div>
                           </td>
 
                           <td>
@@ -211,8 +225,8 @@
     });
 
 
-    @if(Session::has('PO_CREATE_SUCCESS'))
-      {!! __js::toast(Session::get('PO_CREATE_SUCCESS')) !!}
+    @if(Session::has('PURCHASE_ORDER_CREATE_SUCCESS'))
+      {!! __js::toast(Session::get('PURCHASE_ORDER_CREATE_SUCCESS')) !!}
     @endif
 
 
@@ -222,6 +236,8 @@
           var i = $("#table_body").children().length;
           $('.item').select2('destroy');
           var content ='<tr>' +
+
+                        '<input type="hidden" name="row[' + i + '][unit_type_id]" id="unit_type_id" class="unit_type_id">' +
 
                         '<td>' +
                           '<select name="row[' + i + '][item]" id="item" class="form-control item">' +
@@ -246,12 +262,6 @@
                         '</td>' +
 
                         '<td>' +
-                          '<div class="form-group">' +
-                            '<input type="text" name="row[' + i + '][price]"  id="price" class="form-control price" placeholder="Price">' +
-                          '</div>' +
-                        '</td>' +
-
-                        '<td>' +
                             '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
                         '</td>' +
                       '</tr>';
@@ -261,14 +271,6 @@
         $('.item').select2({
           width:400,
           dropdownParent: $('#table_body')
-        });
-
-        $(".price").priceFormat({
-            centsLimit: 2,
-            prefix: "",
-            thousandsSeparator: ",",
-            clearOnEmpty: true,
-            allowNegative: false
         });
 
       });
@@ -292,8 +294,10 @@
                   success:function(data) {  
 
                       $(parent).find("#unit").empty();
-
+                      $(parent).find("#unit_type_id").empty();
                       $.each(data, function(key, value) {
+
+                        $(parent).find(".unit_type_id").val(value.unit_type_id);
 
                         if (value.unit_type_id == "IU1001") {
 
@@ -336,13 +340,17 @@
                   }
               });
           }else{
-
-              $(parent).find("#unit").empty();
-
+            $(parent).find("#unit").empty();
+            $(parent).find("#unit_type_id").empty();
           }
       });
     });
 
+
+    $('.item').select2({
+      width:400,
+      dropdownParent: $('#table_body')
+    });
 
 
   </script>

@@ -38,9 +38,9 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
         $po_item->po_item_id = $this->getPOItemId();
         $po_item->po_no = $purchase_order->po_no;
         $po_item->product_code = $data['item'];
-        $po_item->amount = $data['amount'];
+        $po_item->amount = $this->__dataType->string_to_num($data['amount']);
         $po_item->unit = $data['unit'];
-        $po_item->item_price = $item->product_code;
+        $po_item->item_price = $item->price;
         $po_item->line_price = $line_price;
         $po_item->save();
         
@@ -54,7 +54,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
     public function getPOItemId(){
 
-        $id = 'POI';
+        $id = 'POI10001';
 
         $po_item = $this->po_item->select('po_item_id')->orderBy('po_item_id', 'desc')->first();
 

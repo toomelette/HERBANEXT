@@ -20,6 +20,8 @@ interface ItemInterface {
 
 	public function findBySlug($slug);
 
+	public function findByProductCode($product_code);
+
 	public function getAll();
 
 	public function getByProductCode($product_code);
