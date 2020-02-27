@@ -93,7 +93,6 @@
 
 
 
-          {{-- USER MENU DYNAMIC TABLE GRID --}}
           <div class="col-md-12" style="padding-top:20px;">
             <div class="box">
               <div class="box-header with-border">

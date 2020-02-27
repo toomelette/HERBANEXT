@@ -24,6 +24,10 @@ interface ItemInterface {
 
 	public function getAll();
 
+	public function getRawMats();
+
+	public function getPackMats();
+
 	public function getByProductCode($product_code);
 		
 		

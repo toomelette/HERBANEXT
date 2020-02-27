@@ -19,8 +19,6 @@ class PurchaseOrderFormRequest extends FormRequest{
 
 
     public function rules(){
-       
-        $rows = $this->request->get('row');
 
         $rules = [
             
@@ -36,9 +34,9 @@ class PurchaseOrderFormRequest extends FormRequest{
         ];
 
 
-        if(!empty($rows)){
+        if(!empty($this->request->get('row'))){
 
-            foreach($rows as $key => $value){
+            foreach($this->request->get('row') as $key => $value){
                 
                 $rules['row.'.$key.'.unit_type_id'] = 'string|max:11';
                 $rules['row.'.$key.'.item'] = 'required|string|max:11';

@@ -69,6 +69,16 @@ class Item extends Model{
     }
 
 
+    public function itemRawMat() {
+        return $this->hasMany('App\Models\ItemRawMat','product_code','product_code');
+    }
+
+
+    public function itemPackMat() {
+        return $this->hasMany('App\Models\ItemPackMat','product_code','product_code');
+    }
+
+
 
 
     

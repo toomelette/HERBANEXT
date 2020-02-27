@@ -66,8 +66,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->status = "PENDING";
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
-        // $purchase_order->subtotal_price = ;
-        // $purchase_order->total_price = ;
         $purchase_order->created_at = $this->carbon->now();
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_created = request()->ip();

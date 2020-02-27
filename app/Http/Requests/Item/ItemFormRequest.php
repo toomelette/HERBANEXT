@@ -20,7 +20,7 @@ class ItemFormRequest extends FormRequest{
 
     public function rules(){
 
-        return [
+        $rules = [
             
             'product_code'=>'required|string|max:45|unique:items,product_code,'.$this->route('item').',slug',
             'item_category_id'=>'required|string|max:11',
@@ -34,6 +34,36 @@ class ItemFormRequest extends FormRequest{
             'price'=>'nullable|string|max:21',
             
         ];
+
+
+        if(!empty($this->request->get('row_raw'))){
+
+            foreach($this->request->get('row_raw') as $key => $value){
+                
+                $rules['row_raw.'.$key.'.unit_type_id'] = 'string|max:11';
+                $rules['row_raw.'.$key.'.item'] = 'required|string|max:11';
+                $rules['row_raw.'.$key.'.required_quantity'] = 'required|string|max:21';
+                $rules['row_raw.'.$key.'.unit'] = 'nullable|string|max:11'; 
+
+            } 
+
+        }
+
+
+        if(!empty($this->request->get('row_pack'))){
+
+            foreach($this->request->get('row_pack') as $key => $value){
+                
+                $rules['row_pack.'.$key.'.unit_type_id'] = 'string|max:11';
+                $rules['row_pack.'.$key.'.item'] = 'required|string|max:11';
+                $rules['row_pack.'.$key.'.required_quantity'] = 'required|string|max:21';
+                $rules['row_pack.'.$key.'.unit'] = 'nullable|string|max:11'; 
+
+            } 
+
+        }
+
+        return $rules;
 
     }
 

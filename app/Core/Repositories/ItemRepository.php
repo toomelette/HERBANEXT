@@ -228,6 +228,40 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
+    public function getRawMats(){
+
+        $items = $this->cache->remember('items:getRawMats', 240, function(){
+            return $this->item->select('product_code', 'unit_type_id', 'name')
+                              ->where('item_category_id', 'IC10007')
+                              ->get();
+        });
+        
+        return $items;
+
+    }
+
+
+
+
+
+
+    public function getPackMats(){
+
+        $items = $this->cache->remember('items:getPackMats', 240, function(){
+            return $this->item->select('product_code', 'unit_type_id', 'name')
+                              ->where('item_category_id', 'IC10004')
+                              ->get();
+        });
+        
+        return $items;
+
+    }
+
+
+
+
+
+
     public function getByProductCode($product_code){
 
         $items = $this->cache->remember('items:getByProductCode:' . $product_code , 240, function() use ($product_code){

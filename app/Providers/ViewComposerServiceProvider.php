@@ -36,7 +36,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         // ITEMS
         View::composer(['dashboard.purchase_order.create', 
-                        'dashboard.purchase_order.edit'], 'App\Core\ViewComposers\ItemComposer');
+                        'dashboard.purchase_order.edit',
+                        'dashboard.item.create',
+                        'dashboard.item.edit'], 'App\Core\ViewComposers\ItemComposer');
         
     }
 
