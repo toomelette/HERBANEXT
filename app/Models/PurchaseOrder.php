@@ -36,6 +36,7 @@ class PurchaseOrder extends Model{
         'status' => '',
         'freight_fee' => 0.00,
         'vat' => 0.00,
+        'instructions' => '',
         'subtotal_price' => 0.00,
         'total_price' => 0.00,
         'created_at' => null,

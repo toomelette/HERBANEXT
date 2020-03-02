@@ -74,6 +74,173 @@
             </div>
           </div>
 
+          <div class="col-md-12"></div>
+
+
+
+
+          {{-- Raw Materials --}}
+          <div class="col-md-6">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Raw Materials</h3>
+                <button id="add_row_raw" type="button" class="btn btn-sm bg-green pull-right">Add New &nbsp;<i class="fa fw fa-plus"></i></button>
+              </div>
+              
+              <div class="box-body no-padding">
+                
+                <table class="table table-bordered">
+
+                  <tr>
+                    <th>Item *</th>
+                    <th style="width: 40px"></th>
+                  </tr>
+
+                  <tbody id="table_body_raw">
+
+                    @if(old('row_raw'))
+                      
+                      @foreach(old('row_raw') as $key_raw => $value_raw)
+
+                        <tr>
+
+                          <td>
+                            <select name="row_raw[{{ $key_raw }}][item]" id="item_raw" class="form-control item_raw">
+                              <option value="">Select</option>
+                              @foreach($global_raw_mat_items_all as $data) 
+                                  <option value="{{ $data->product_code }}" {!! $value_raw['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                              @endforeach
+                            </select>
+                            <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+                    @else
+
+                      
+                      @foreach($item->itemRawMat as $key_raw => $value_raw)
+
+                        <tr>
+
+                          <td>
+                            <select name="row_raw[{{ $key_raw }}][item]" id="item_raw" class="form-control item_raw">
+                              <option value="">Select</option>
+                              @foreach($global_raw_mat_items_all as $data) 
+                                  <option value="{{ $data->product_code }}" {!! $value_raw->item_raw_mat_product_code == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                              @endforeach
+                            </select>
+                            <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+
+                    @endif
+
+                    </tbody>
+                </table>
+               
+              </div>
+
+            </div>
+          </div>
+
+
+          {{-- Pack Materials --}}
+          <div class="col-md-6">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Packaging Materials</h3>
+                <button id="add_row_pack" type="button" class="btn btn-sm bg-green pull-right">Add New &nbsp;<i class="fa fw fa-plus"></i></button>
+              </div>
+              
+              <div class="box-body no-padding">
+                
+                <table class="table table-bordered">
+
+                  <tr>
+                    <th>Item *</th>
+                    <th style="width: 40px"></th>
+                  </tr>
+
+                  <tbody id="table_body_pack">
+
+                    @if(old('row_pack'))
+                      
+                      @foreach(old('row_pack') as $key_pack => $value_pack)
+
+                        <tr>
+
+                          <td>
+                            <select name="row_pack[{{ $key_pack }}][item]" id="item_pack" class="form-control item_pack">
+                              <option value="">Select</option>
+                              @foreach($global_pack_mat_items_all as $data) 
+                                  <option value="{{ $data->product_code }}" {!! $value_pack['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                              @endforeach
+                            </select>
+                            <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+
+                    @else
+
+                      
+                      @foreach($item->itemPackMat as $key_pack => $value_pack)
+
+                        <tr>
+
+                          <td>
+                            <select name="row_pack[{{ $key_pack }}][item]" id="item_raw" class="form-control item_raw">
+                              <option value="">Select</option>
+                              @foreach($global_pack_mat_items_all as $data) 
+                                  <option value="{{ $data->product_code }}" {!! $value_pack->item_pack_mat_product_code == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                              @endforeach
+                            </select>
+                            <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+                    @endif
+
+                    </tbody>
+                </table>
+               
+              </div>
+
+            </div>
+          </div>
+
+
+
+
         </div>
 
         <div class="box-footer">
@@ -114,6 +281,80 @@
           allowNegative: false
       });
 
+    });
+
+
+    {{-- ADD RAW Mats --}}
+    $(document).ready(function() {
+      $("#add_row_raw").on("click", function() {
+          var i = $("#table_body_raw").children().length;
+          $('.item_raw').select2('destroy');
+          var content ='<tr>' +
+
+                        '<td>' +
+                          '<select name="row_raw[' + i + '][item]" id="item_raw" class="form-control item_raw">' +
+                            '<option value="">Select</option>' +
+                            '@foreach($global_raw_mat_items_all as $data)' +
+                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                            '@endforeach' +
+                          '</select>' +
+                        '</td>' +
+
+                        '<td>' +
+                            '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                        '</td>' +
+                      '</tr>';
+
+        $("#table_body_raw").append($(content));
+
+        $('.item_raw').select2({
+          dropdownParent: $('#table_body_raw')
+        });
+
+      });
+    });
+
+
+
+
+    {{-- ADD PACK Mats --}}
+    $(document).ready(function() {
+      $("#add_row_pack").on("click", function() {
+          var i = $("#table_body_pack").children().length;
+          $('.item_pack').select2('destroy');
+          var content ='<tr>' +
+
+                        '<td>' +
+                          '<select name="row_pack[' + i + '][item]" id="item_pack" class="form-control item_pack">' +
+                            '<option value="">Select</option>' +
+                            '@foreach($global_pack_mat_items_all as $data)' +
+                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                            '@endforeach' +
+                          '</select>' +
+                        '</td>' +
+
+                        '<td>' +
+                            '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                        '</td>' +
+                      '</tr>';
+
+        $("#table_body_pack").append($(content));
+
+        $('.item_pack').select2({
+          dropdownParent: $('#table_body_pack')
+        });
+
+      });
+    });
+
+
+    $('.item_raw').select2({
+      dropdownParent: $('#table_body_raw')
+    });
+
+
+    $('.item_pack').select2({
+      dropdownParent: $('#table_body_pack')
     });
 
 

@@ -30,6 +30,7 @@ class PurchaseOrderFormRequest extends FormRequest{
             'ship_to_address'=>'required|string|max:255',
             'vat'=>'required|string|max:21',
             'freight_fee'=>'nullable|string|max:21',
+            'instructions'=>'nullable|string|max:255',
 
         ];
 

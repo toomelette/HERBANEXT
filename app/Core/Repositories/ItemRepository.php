@@ -95,6 +95,9 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->ip_updated = request()->ip();
         $item->user_updated = $this->auth->user()->user_id;
         $item->save();
+
+        $item->itemRawMat()->delete();
+        $item->itemPackMat()->delete();
         
         return $item;
 
@@ -135,8 +138,10 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function destroy($slug){
 
         $item = $this->findBySlug($slug);
-        $item->delete();
         $item->itemBatch()->delete();
+        $item->itemRawMat()->delete();
+        $item->itemPackMat()->delete();
+        $item->delete();
 
         return $item;
 
@@ -150,7 +155,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = $this->cache->remember('items:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->item->where('slug', $slug)
-                              ->with('itemCategory', 'itemBatch', 'itemLog')
+                              ->with('itemCategory', 'itemBatch', 'itemLog', 'itemRawMat', 'itemPackMat')
                               ->first();
         }); 
         

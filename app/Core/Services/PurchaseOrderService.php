@@ -70,19 +70,24 @@ class PurchaseOrderService extends BaseService{
                 $line_price = $item->price * $converted_amount;
                 $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
 
-                $subtotal_price += $line_price; 
+                $subtotal_price += $line_price;
 
             }
             
         }
 
-        $factor = $this->__dataType->string_to_num($request->vat) / 100;       
-        $vatable = $subtotal_price * $factor;
-        $total_price = $subtotal_price - $vatable;
+        $vat_rounded_off = $this->__dataType->string_to_num($request->vat) / 100;   
+
+        $vatable = $subtotal_price * $vat_rounded_off;
+        $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
+
+        $total_debit = $vatable + $freight_fee;
+
+        $total_price = $subtotal_price - $total_debit;
 
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
-        $this->event->fire('purchase_order.store');
+        $this->event->fire('purchase_order.store', $purchase_order);
         return redirect()->back();
 
     }
@@ -98,6 +103,18 @@ class PurchaseOrderService extends BaseService{
     //     return view('dashboard.purchase_order.edit')->with('purchase_order', $purchase_order);
 
     // }
+
+
+
+
+
+
+    public function show($slug){
+
+        $purchase_order = $this->purchase_order_repo->findbySlug($slug);
+        return view('dashboard.purchase_order.show')->with('purchase_order', $purchase_order);
+
+    }
 
 
 

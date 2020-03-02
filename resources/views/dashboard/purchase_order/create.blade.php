@@ -86,6 +86,10 @@
                   '6', 'vat', 'text', 'VAT (%)', 'VAT (%)', old('vat') ? old('vat') : "12.00", $errors->has('vat'), $errors->first('vat'), ''
                 ) !!}
 
+                {!! __form::textbox(
+                  '12', 'instructions', 'text', 'Shipping/Special Instructions', 'Shipping/Special Instructions', old('instructions'), $errors->has('instructions'), $errors->first('instructions'), ''
+                ) !!}
+
               </div>
             </div>
           </div>
@@ -201,9 +205,30 @@
 
 
 
+
+@section('modals')
+
+  {{-- DV CREATE SUCCESS --}}
+  @if(Session::has('PURCHASE_ORDER_CREATE_SUCCESS'))
+
+    {!! __html::modal_print(
+      'po_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('PURCHASE_ORDER_CREATE_SUCCESS'), route('dashboard.purchase_order.show', Session::get('PURCHASE_ORDER_CREATE_SUCCESS_SLUG'))
+    ) !!}
+
+  @endif
+
+@endsection 
+
+
+
+
 @section('scripts')
 
   <script type="text/javascript">
+  
+    @if(Session::has('PURCHASE_ORDER_CREATE_SUCCESS'))
+      $('#po_create').modal('show');
+    @endif
 
 
     $("#freight_fee").priceFormat({
@@ -222,11 +247,6 @@
         clearOnEmpty: true,
         allowNegative: false
     });
-
-
-    @if(Session::has('PURCHASE_ORDER_CREATE_SUCCESS'))
-      {!! __js::toast(Session::get('PURCHASE_ORDER_CREATE_SUCCESS')) !!}
-    @endif
 
 
     {{-- ADD ROW --}}

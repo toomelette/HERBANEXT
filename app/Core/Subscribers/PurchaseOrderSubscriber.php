@@ -32,11 +32,12 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
 
 
 
-    public function onStore(){
+    public function onStore($purchase_order){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
 
         $this->session->flash('PURCHASE_ORDER_CREATE_SUCCESS', 'The Purchase Order has been successfully created!');
+        $this->session->flash('PURCHASE_ORDER_CREATE_SUCCESS_SLUG', $purchase_order->slug);
 
     }
 

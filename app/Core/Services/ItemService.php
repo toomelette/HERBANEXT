@@ -6,6 +6,8 @@ namespace App\Core\Services;
 use App\Core\Interfaces\ItemInterface;
 use App\Core\Interfaces\ItemBatchInterface;
 use App\Core\Interfaces\ItemLogInterface;
+use App\Core\Interfaces\ItemRawMatInterface;
+use App\Core\Interfaces\ItemPackMatInterface;
 use App\Core\BaseClasses\BaseService;
 use Conversion;
 
@@ -15,14 +17,18 @@ class ItemService extends BaseService{
     protected $item_repo;
     protected $item_batch_repo;
     protected $item_log_repo;
+    protected $item_raw_mat_repo;
+    protected $item_pack_mat_repo;
 
 
 
-    public function __construct(ItemInterface $item_repo, ItemBatchInterface $item_batch_repo, ItemLogInterface $item_log_repo){
+    public function __construct(ItemInterface $item_repo, ItemBatchInterface $item_batch_repo, ItemLogInterface $item_log_repo, ItemRawMatInterface $item_raw_mat_repo, ItemPackMatInterface $item_pack_mat_repo){
 
         $this->item_repo = $item_repo;
         $this->item_batch_repo = $item_batch_repo;
         $this->item_log_repo = $item_log_repo;
+        $this->item_raw_mat_repo = $item_raw_mat_repo;
+        $this->item_pack_mat_repo = $item_pack_mat_repo;
         parent::__construct();
 
     }
@@ -48,6 +54,20 @@ class ItemService extends BaseService{
     public function store($request){
 
         $item = $this->item_repo->store($request);
+
+        if(!empty($request->row_raw)){
+            foreach ($request->row_raw as $row_raw) {
+                $item_raw_mat_orig = $this->item_repo->findByProductCode($row_raw['item']);
+                $this->item_raw_mat_repo->store($row_raw, $item, $item_raw_mat_orig);
+            }
+        }
+
+        if(!empty($request->row_pack)){
+            foreach ($request->row_pack as $row_pack) {
+                $item_pack_mat_orig = $this->item_repo->findByProductCode($row_pack['item']);
+                $this->item_pack_mat_repo->store($row_pack, $item, $item_pack_mat_orig);
+            }
+        }
         
         $this->event->fire('item.store');
         return redirect()->back();
@@ -74,6 +94,20 @@ class ItemService extends BaseService{
     public function update($request, $slug){
 
         $item = $this->item_repo->update($request, $slug);
+
+        if(!empty($request->row_raw)){
+            foreach ($request->row_raw as $row_raw) {
+                $item_raw_mat_orig = $this->item_repo->findByProductCode($row_raw['item']);
+                $this->item_raw_mat_repo->store($row_raw, $item, $item_raw_mat_orig);
+            }
+        }
+
+        if(!empty($request->row_pack)){
+            foreach ($request->row_pack as $row_pack) {
+                $item_pack_mat_orig = $this->item_repo->findByProductCode($row_pack['item']);
+                $this->item_pack_mat_repo->store($row_pack, $item, $item_pack_mat_orig);
+            }
+        }
 
         $this->event->fire('item.update', $item);
         return redirect()->route('dashboard.item.index');

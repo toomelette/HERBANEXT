@@ -66,6 +66,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->status = "PENDING";
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
+        $purchase_order->instructions = $request->instructions;
         $purchase_order->created_at = $this->carbon->now();
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_created = request()->ip();
@@ -136,19 +137,19 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    // public function findBySlug($slug){
+    public function findBySlug($slug){
 
-    //     $purchase_order = $this->cache->remember('purchase_orders:findBySlug:' . $slug, 240, function() use ($slug){
-    //         return $this->purchase_order->where('slug', $slug)->first();
-    //     }); 
+        $purchase_order = $this->cache->remember('purchase_orders:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->purchase_order->where('slug', $slug)->first();
+        }); 
         
-    //     if(empty($purchase_order)){
-    //         abort(404);
-    //     }
+        if(empty($purchase_order)){
+            abort(404);
+        }
 
-    //     return $purchase_order;
+        return $purchase_order;
 
-    // }
+    }
 
 
 

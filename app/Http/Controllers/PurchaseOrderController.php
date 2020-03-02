@@ -52,6 +52,15 @@ class PurchaseOrderController extends Controller{
     //     return $this->purchase_order->edit($slug);
 
     // }
+ 
+
+
+
+    public function show($slug){
+        
+        return $this->purchase_order->show($slug);
+
+    }
 
 
 
