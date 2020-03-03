@@ -37,6 +37,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
         $po_item->slug = $this->str->random(16);
         $po_item->po_item_id = $this->getPOItemId();
         $po_item->po_no = $purchase_order->po_no;
+        $po_item->unit_type_id = $data['unit_type_id'];
         $po_item->product_code = $data['item'];
         $po_item->amount = $this->__dataType->string_to_num($data['amount']);
         $po_item->unit = $data['unit'];

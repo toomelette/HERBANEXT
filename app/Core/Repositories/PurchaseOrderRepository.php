@@ -27,26 +27,33 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    // public function fetch($request){
+    public function fetch($request){
 
-    //     $key = str_slug($request->fullUrl(), '_');
-    //     $entries = isset($request->e) ? $request->e : 20;
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-    //     $purchase_orders = $this->cache->remember('purchase_orders:fetch:' . $key, 240, function() use ($request, $entries){
+        $purchase_orders = $this->cache->remember('purchase_orders:fetch:' . $key, 240, function() use ($request, $entries){
 
-    //         $purchase_order = $this->purchase_order->newQuery();
+            $purchase_order = $this->purchase_order->newQuery();
+
+            $df = $this->__dataType->date_parse($request->df, 'Y-m-d 00:00:00');
+            $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d 24:00:00');
             
-    //         if(isset($request->q)){
-    //             $this->search($purchase_order, $request->q);
-    //         }
+            if(isset($request->q)){
+                $this->search($purchase_order, $request->q);
+            }
+            
+            if(isset($request->df) || isset($request->dt)){
+                $purchase_order->where('created_at', '>=', $df)->where('created_at', '<=', $dt);
+            }
 
-    //         return $this->populate($purchase_order, $entries);
+            return $this->populate($purchase_order, $entries);
 
-    //     });
+        });
 
-    //     return $purchase_orders;
+        return $purchase_orders;
 
-    // }
+    }
 
 
 
@@ -83,6 +90,33 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
+    public function update($request, $slug){
+
+        $purchase_order = $this->findBySlug($slug);
+        $purchase_order->bill_to_name = $request->bill_to_name;
+        $purchase_order->bill_to_company = $request->bill_to_company;
+        $purchase_order->bill_to_address = $request->bill_to_address;
+        $purchase_order->ship_to_name = $request->ship_to_name;
+        $purchase_order->ship_to_company = $request->ship_to_company;
+        $purchase_order->ship_to_address = $request->ship_to_address;
+        $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
+        $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
+        $purchase_order->instructions = $request->instructions;
+        $purchase_order->updated_at = $this->carbon->now();
+        $purchase_order->ip_updated = request()->ip();
+        $purchase_order->user_updated = $this->auth->user()->user_id;
+        $purchase_order->save();
+
+        $purchase_order->purchaseOrderItem()->delete();
+        
+        return $purchase_order;
+
+    }
+
+
+
+
+
     public function updatePrices($purchase_order, $subtotal_price, $total_price){
         
         $purchase_order->subtotal_price = $subtotal_price;
@@ -100,38 +134,15 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    // public function update($request, $slug){
+    public function destroy($slug){
 
-    //     $purchase_order = $this->findBySlug($slug);
-    //     $purchase_order->name = $request->name;
-    //     $purchase_order->route = $request->route;
-    //     $purchase_order->icon = $request->icon;
-    //     $purchase_order->is_purchase_order = $this->__dataType->string_to_boolean($request->is_purchase_order);
-    //     $purchase_order->is_dropdown = $this->__dataType->string_to_boolean($request->is_dropdown);
-    //     $purchase_order->updated_at = $this->carbon->now();
-    //     $purchase_order->ip_updated = request()->ip();
-    //     $purchase_order->user_updated = $this->auth->user()->user_id;
-    //     $purchase_order->save();
+        $purchase_order = $this->findBySlug($slug);
+        $purchase_order->delete();
+        $purchase_order->purchaseOrderItem()->delete();
 
-    //     $purchase_order->subpurchase_order()->delete();
-        
-    //     return $purchase_order;
+        return $purchase_order;
 
-    // }
-
-
-
-
-
-    // public function destroy($slug){
-
-    //     $purchase_order = $this->findBySlug($slug);
-    //     $purchase_order->delete();
-    //     $purchase_order->subpurchase_order()->delete();
-
-    //     return $purchase_order;
-
-    // }
+    }
 
 
 
@@ -140,7 +151,9 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function findBySlug($slug){
 
         $purchase_order = $this->cache->remember('purchase_orders:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->purchase_order->where('slug', $slug)->first();
+            return $this->purchase_order->where('slug', $slug)
+                                        ->with('purchaseOrderItem')
+                                        ->first();
         }); 
         
         if(empty($purchase_order)){
@@ -175,26 +188,32 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    // public function search($model, $key){
+    public function search($model, $key){
 
-    //     return $model->where(function ($model) use ($key) {
-    //             $model->where('name', 'LIKE', '%'. $key .'%');
-    //     });
+        return $model->where(function ($model) use ($key) {
+                $model->where('po_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('bill_to_name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('bill_to_company', 'LIKE', '%'. $key .'%')
+                      ->orWhere('bill_to_address', 'LIKE', '%'. $key .'%')
+                      ->orWhere('ship_to_name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('ship_to_company', 'LIKE', '%'. $key .'%')
+                      ->orWhere('ship_to_address', 'LIKE', '%'. $key .'%');
+        });
 
-    // }
+    }
 
 
 
 
 
-    // public function populate($model, $entries){
+    public function populate($model, $entries){
 
-    //     return $model->select('name', 'route', 'icon', 'slug')
-    //                  ->sortable()
-    //                  ->orderBy('updated_at', 'desc')
-    //                  ->paginate($entries);
+        return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
 
-    // }
+    }
 
 
 

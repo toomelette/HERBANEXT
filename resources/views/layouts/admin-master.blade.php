@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @include('layouts.css-plugins')
+    @yield('utils')
 
   </head>
   <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" style="zoom:90%;">

@@ -22,11 +22,11 @@ class PurchaseOrderController extends Controller{
 
 
     
- //    public function index(PurchaseOrderFilterRequest $request){
+    public function index(PurchaseOrderFilterRequest $request){
         
- //        return $this->purchase_order->fetch($request);
+        return $this->purchase_order->fetch($request);
 
- //    }
+    }
 
     
 
@@ -47,11 +47,11 @@ class PurchaseOrderController extends Controller{
 
 
 
-    // public function edit($slug){
+    public function edit($slug){
         
-    //     return $this->purchase_order->edit($slug);
+        return $this->purchase_order->edit($slug);
 
-    // }
+    }
  
 
 
@@ -61,24 +61,33 @@ class PurchaseOrderController extends Controller{
         return $this->purchase_order->show($slug);
 
     }
+ 
 
 
 
-
-    // public function update(PurchaseOrderFormRequest $request, $slug){
+    public function print($slug){
         
-    //     return $this->purchase_order->update($request, $slug);
+        return $this->purchase_order->print($slug);
 
-    // }
+    }
+
+
+
+
+    public function update(PurchaseOrderFormRequest $request, $slug){
+        
+        return $this->purchase_order->update($request, $slug);
+
+    }
 
     
 
 
-    // public function destroy($slug){
+    public function destroy($slug){
         
-    //     return $this->purchase_order->destroy($slug);
+        return $this->purchase_order->destroy($slug);
 
-    // }
+    }
 
 
 

@@ -137,13 +137,13 @@
 
                         <tr>
 
-                          <input type="hidden" name="row[{{ $key }}][unit_type_id]" id="unit_type_id" class="unit_type_id">
+                          <input type="hidden" value="{{ $value['unit_type_id'] }}" name="row[{{ $key }}][unit_type_id]" id="unit_type_id" class="unit_type_id">
 
                           <td>
                             <select name="row[{{ $key }}][item]" id="item" class="form-control item">
                               <option value="">Select</option>
-                              @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                              @foreach($global_items_all as $data_item) 
+                                  <option value="{{ $data_item->product_code }}" {!! $value['item'] == $data_item->product_code ? 'selected' : ''!!}>{{ $data_item->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row.'. $key .'.item') }}</small>
@@ -160,8 +160,8 @@
                             
                           <div class="form-group">
                             <select name="row[{{ $key }}][unit]"  id="unit" class="form-control unit">
-                              @foreach($unit_type_list as $data)
-                                <option value="{{ $data }}" {!! $value['unit'] == $data ? 'selected' : ''!!}>{{ $data }}</option>
+                              @foreach($unit_type_list as $key_unit => $data_unit)
+                                <option value="{{ $key_unit }}" {!! $value['unit'] == $key_unit ? 'selected' : ''!!}>{{ $data_unit }}</option>
                               @endforeach
                             </select>
                           </div>
@@ -208,7 +208,7 @@
 
 @section('modals')
 
-  {{-- DV CREATE SUCCESS --}}
+  {{-- PO CREATE SUCCESS --}}
   @if(Session::has('PURCHASE_ORDER_CREATE_SUCCESS'))
 
     {!! __html::modal_print(

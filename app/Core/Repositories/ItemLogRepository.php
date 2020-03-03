@@ -47,7 +47,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
             }
             
             if(isset($request->df) || isset($request->dt)){
-                $item_log->where('datetime', '>=', $df)->where('datetime', '<=', $dt);
+                $item_log->where('created_at', '>=', $df)->where('created_at', '<=', $dt);
             }
 
             return $this->populate($item_log, $entries);
