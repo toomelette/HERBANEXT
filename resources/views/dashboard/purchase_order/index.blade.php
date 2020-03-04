@@ -86,15 +86,21 @@
 
               <td id="mid-vert">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.purchase_order.show', $data->slug) }}">
-                    <i class="fa fa-info-circle"></i>
-                  </a>
-                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.purchase_order.edit', $data->slug) }}">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.purchase_order.destroy', $data->slug) }}">
-                    <i class="fa fa-trash"></i>
-                  </a>
+                  @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.purchase_order.show', $data->slug) }}">
+                      <i class="fa fa-info-circle"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.purchase_order.edit', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.purchase_order.edit', $data->slug) }}">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.purchase_order.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.purchase_order.destroy', $data->slug) }}">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  @endif
                 </div>
               </td>
 

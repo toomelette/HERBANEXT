@@ -10,10 +10,6 @@
 
 ?>
 
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -67,24 +63,42 @@
               </td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_in', $data->slug) }}">
-                     Check-In
-                  </a>
-                  <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_out', $data->slug) }}">
-                     Check-Out
-                  </a>
-                  <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_batch_by_item', $data->slug) }}">
-                    <i class="fa fa-cubes "></i>
-                  </a>
-                  <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_logs_by_item', $data->slug) }}">
-                    <i class="fa fa-file-text-o "></i>
-                  </a>
-                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.item.edit', $data->slug) }}">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.item.destroy', $data->slug) }}">
-                    <i class="fa fa-trash"></i>
-                  </a>
+                  @if(in_array('dashboard.item.check_in', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_in', $data->slug) }}">
+                       Check-In
+                    </a>
+                  @endif
+
+                  @if(in_array('dashboard.item.check_out', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_out', $data->slug) }}">
+                       Check-Out
+                    </a>
+                  @endif
+
+                  @if(in_array('dashboard.item.fetch_batch_by_item', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_batch_by_item', $data->slug) }}">
+                      <i class="fa fa-cubes "></i>
+                    </a>
+                  @endif
+
+                  @if(in_array('dashboard.item.fetch_logs_by_item', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="batch_button" href="{{ route('dashboard.item.fetch_logs_by_item', $data->slug) }}">
+                      <i class="fa fa-file-text-o "></i>
+                    </a>
+                  @endif
+
+                  @if(in_array('dashboard.item.edit', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.item.edit', $data->slug) }}">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  @endif
+
+                  @if(in_array('dashboard.item.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.item.destroy', $data->slug) }}">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  @endif
+
                 </div>
               </td>
             </tr>

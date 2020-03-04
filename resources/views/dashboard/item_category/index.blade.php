@@ -51,11 +51,16 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.item_category.edit', $data->slug) }}">
-                    <i class="fa fa-pencil"></i></a>
-                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.item_category.destroy', $data->slug) }}">
-                    <i class="fa fa-trash"></i>
-                  </a>
+                  @if(in_array('dashboard.item_category.edit', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.item_category.edit', $data->slug) }}">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.item_category.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.item_category.destroy', $data->slug) }}">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  @endif
                 </div>
               </td>
             </tr>

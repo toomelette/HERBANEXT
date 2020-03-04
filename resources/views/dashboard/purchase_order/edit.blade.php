@@ -365,7 +365,7 @@
 
 
 
-    {{-- AJAX Item Unit --}}
+    {{-- AJAX PO Unit --}}
     $(document).ready(function() {
       $(document).on("change", "#item", function() {
           var key = $(this).val();

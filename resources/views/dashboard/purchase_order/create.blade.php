@@ -19,6 +19,30 @@
         
           @csrf    
 
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Type</h3>
+              </div>
+              <div class="box-body">
+
+
+                <label>
+                  <input type="checkbox" class="minimal" name="buffer_status" value="false">
+                  &nbsp; For Process
+                </label>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <label>
+                  <input type="checkbox" class="minimal" name="buffer_status" value="true">
+                  &nbsp; For Buffer
+                </label>
+
+              </div>
+            </div>
+          </div>
+
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">

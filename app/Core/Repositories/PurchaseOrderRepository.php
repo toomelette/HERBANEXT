@@ -70,7 +70,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
-        $purchase_order->status = "PENDING";
+        $purchase_order->process_status = 1;
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
@@ -163,25 +163,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         return $purchase_order;
 
     }
-
-
-
-
-
-
-    // public function findByPurchaseOrderId($purchase_order_id){
-
-    //     $purchase_order = $this->cache->remember('purchase_orders:findByPurchaseOrderId:' . $purchase_order_id, 240, function() use ($purchase_order_id){
-    //         return $this->purchase_order->where('purchase_order_id', $purchase_order_id)->first();
-    //     });
-        
-    //     if(empty($purchase_order)){
-    //         abort(404);
-    //     }
-        
-    //     return $purchase_order;
-
-    // }
 
 
 

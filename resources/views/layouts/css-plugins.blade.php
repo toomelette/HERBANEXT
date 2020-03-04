@@ -23,7 +23,7 @@
 
 <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-<link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
+{{-- <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}"> --}}
 
 
 {{-- Charts --}}	

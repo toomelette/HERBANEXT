@@ -33,16 +33,11 @@ class UserMenuComposer{
 
         $user_menus = [];
 
-
         if($this->auth->check()){
-
             $user_menus = $this->user_menu_repo->getAll();
-
         }  
 
-
     	$view->with('global_user_menus', $user_menus);
-
 
     }
 

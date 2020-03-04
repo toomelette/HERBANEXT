@@ -56,6 +56,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getAll:'. $user->user_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_submenus:getAll:'. $user->user_id .'');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
@@ -77,6 +78,7 @@ class UserSubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getAll:'. $user->user_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_submenus:getAll:'. $user->user_id .'');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');

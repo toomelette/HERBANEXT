@@ -31,4 +31,17 @@ class __static{
     }
 
 
+    // Profile
+    public static function po_status(){
+
+        return [
+
+	      'For Confirmation' => 1,
+
+	    ];
+
+    
+    }
+
+
 }
