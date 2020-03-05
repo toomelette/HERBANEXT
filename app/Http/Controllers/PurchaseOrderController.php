@@ -99,9 +99,17 @@ class PurchaseOrderController extends Controller{
 
 
     
-    public function bufferProcess($slug){
+    public function toProcess($slug){
         
-        return $this->purchase_order->bufferProcess($slug);
+        return $this->purchase_order->toProcess($slug);
+
+    }
+
+
+    
+    public function toBuffer($slug){
+        
+        return $this->purchase_order->toBuffer($slug);
 
     }
 

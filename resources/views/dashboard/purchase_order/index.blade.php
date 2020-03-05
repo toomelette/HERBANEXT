@@ -67,7 +67,7 @@
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
-            <th style="width: 150px">Action</th>
+            <th style="width: 300px">Action</th>
           </tr>
           @foreach($purchase_orders as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -86,6 +86,11 @@
 
               <td id="mid-vert">
                 <div class="btn-group">
+                  @if(in_array('dashboard.purchase_order.to_buffer', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="buffer_button" data-action="buffer" data-url="{{ route('dashboard.purchase_order.to_buffer', $data->slug) }}">
+                      Add to Buffer &nbsp;<i class="fa fa-plus"></i>
+                    </a>
+                  @endif
                   @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.purchase_order.show', $data->slug) }}">
                       <i class="fa fa-info-circle"></i>
@@ -124,6 +129,10 @@
 
   </section>
 
+  <form id="frm-buffer" method="POST" style="display: none;">
+    @csrf
+  </form>
+
 @endsection
 
 
@@ -153,6 +162,13 @@
 
   <script type="text/javascript">
 
+    $(document).on("click", "#buffer_button", function () {
+      if($(this).data("action") == "buffer"){
+        $("#frm-buffer").attr("action", $(this).data("url"));
+        $("#frm-buffer").submit();
+      }
+    });
+
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('po_delete') !!}
 
@@ -164,6 +180,11 @@
     {{-- DELETE TOAST --}}
     @if(Session::has('PURCHASE_ORDER_DELETE_SUCCESS'))
       {!! __js::toast(Session::get('PURCHASE_ORDER_DELETE_SUCCESS')) !!}
+    @endif
+
+    {{-- TO BUFFER TOAST --}}
+    @if(Session::has('PURCHASE_ORDER_TO_BUFFER_SUCCESS'))
+      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_BUFFER_SUCCESS')) !!}
     @endif
 
   </script>

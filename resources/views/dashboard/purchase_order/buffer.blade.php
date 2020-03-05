@@ -86,9 +86,9 @@
 
               <td id="mid-vert">
                 <div class="btn-group">
-                  @if(in_array('dashboard.purchase_order.buffer_process', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="process_button" data-action="process" data-url="{{ route('dashboard.purchase_order.buffer_process', $data->slug) }}">
-                      Process
+                  @if(in_array('dashboard.purchase_order.to_process', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="process_button" data-action="process" data-url="{{ route('dashboard.purchase_order.to_process', $data->slug) }}">
+                      Add to Process &nbsp;<i class="fa fa-plus"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
@@ -183,8 +183,8 @@
     @endif
 
     {{-- BUFFER PROCESS TOAST --}}
-    @if(Session::has('PURCHASE_ORDER_BUFFER_PROCESS_SUCCESS'))
-      {!! __js::toast(Session::get('PURCHASE_ORDER_BUFFER_PROCESS_SUCCESS')) !!}
+    @if(Session::has('PURCHASE_ORDER_TO_PROCESS_SUCCESS'))
+      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_PROCESS_SUCCESS')) !!}
     @endif
 
   </script>

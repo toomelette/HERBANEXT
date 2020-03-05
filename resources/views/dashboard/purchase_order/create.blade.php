@@ -138,7 +138,7 @@
                   <tr>
                     <th style="width:450px;">Item *</th>
                     <th style="width:300px;">Quantity</th>
-                    <th>Unit</th>
+                    <th style="width:200px;">Unit</th>
                     <th style="width:400px;">Remaining Quantity</th>
                     <th style="width: 40px"></th>
                   </tr>

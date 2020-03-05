@@ -181,10 +181,27 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    public function bufferProcess($slug){
+    public function toProcess($slug){
 
         $purchase_order = $this->findBySlug($slug);
         $purchase_order->buffer_status = 0;
+        $purchase_order->updated_at = $this->carbon->now();
+        $purchase_order->ip_updated = request()->ip();
+        $purchase_order->user_updated = $this->auth->user()->user_id;
+        $purchase_order->save();
+
+        return $purchase_order;
+
+    }
+
+
+
+
+
+    public function toBuffer($slug){
+
+        $purchase_order = $this->findBySlug($slug);
+        $purchase_order->buffer_status = 1;
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;

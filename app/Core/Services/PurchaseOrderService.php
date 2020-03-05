@@ -226,11 +226,24 @@ class PurchaseOrderService extends BaseService{
 
 
 
-    public function bufferProcess($slug){
+    public function toProcess($slug){
 
-        $purchase_order = $this->purchase_order_repo->bufferProcess($slug);
+        $purchase_order = $this->purchase_order_repo->toProcess($slug);
 
-        $this->event->fire('purchase_order.buffer_process', $purchase_order);
+        $this->event->fire('purchase_order.toProcess', $purchase_order);
+        return redirect()->back();
+
+    }
+
+
+
+
+
+    public function toBuffer($slug){
+
+        $purchase_order = $this->purchase_order_repo->toBuffer($slug);
+
+        $this->event->fire('purchase_order.toBuffer', $purchase_order);
         return redirect()->back();
 
     }

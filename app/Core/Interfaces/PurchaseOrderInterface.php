@@ -18,6 +18,10 @@ interface PurchaseOrderInterface {
 
 	public function destroy($slug);
 
+	public function toProcess($slug);
+
+	public function toBuffer($slug);
+
 	public function findBySlug($slug);
 
 }
