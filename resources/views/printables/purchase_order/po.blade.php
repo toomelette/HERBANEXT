@@ -18,7 +18,7 @@
 
 	<section class="invoice">
 
-        <div class="row">
+        <div class="row" style="padding-top:10px;">
           <div class="col-xs-12">
             <h2 class="page-header">
               <img src="{{ asset('images/logo.png') }}" style="width:200px; height:70px; margin-top: -20px"> 

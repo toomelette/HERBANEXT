@@ -38,11 +38,17 @@ class PurchaseOrderItem extends Model{
         return $this->belongsTo('App\Models\PurchaseOrder','po_no','po_no');
     }
 
-
-
     public function item() {
     	return $this->belongsTo('App\Models\Item','product_code','product_code');
    	}
+
+    public function purchaseOrderItemRawMat() {
+        return $this->hasMany('App\Models\PurchaseOrderItemRawMat','po_item_id','po_item_id');
+    }
+
+    public function purchaseOrderItemPackMat() {
+        return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_item_id','po_item_id');
+    }
 
 
 

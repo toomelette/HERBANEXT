@@ -59,6 +59,38 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
+    public function fetchBuffer($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
+
+        $purchase_orders = $this->cache->remember('purchase_orders:fetchBuffer:' . $key, 240, function() use ($request, $entries){
+
+            $purchase_order = $this->purchase_order->newQuery();
+
+            $df = $this->__dataType->date_parse($request->df, 'Y-m-d 00:00:00');
+            $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d 24:00:00');
+            
+            if(isset($request->q)){
+                $this->search($purchase_order, $request->q);
+            }
+            
+            if(isset($request->df) || isset($request->dt)){
+                $purchase_order->where('created_at', '>=', $df)->where('created_at', '<=', $dt);
+            }
+
+            return $this->populateBuffer($purchase_order, $entries);
+
+        });
+
+        return $purchase_orders;
+
+    }
+
+
+
+
+
     public function store($request){
 
         $purchase_order = new PurchaseOrder;
@@ -71,6 +103,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
         $purchase_order->process_status = 1;
+        $purchase_order->buffer_status = $this->__dataType->string_to_boolean($request->buffer_status);
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
@@ -148,11 +181,28 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
+    public function bufferProcess($slug){
+
+        $purchase_order = $this->findBySlug($slug);
+        $purchase_order->buffer_status = 0;
+        $purchase_order->updated_at = $this->carbon->now();
+        $purchase_order->ip_updated = request()->ip();
+        $purchase_order->user_updated = $this->auth->user()->user_id;
+        $purchase_order->save();
+
+        return $purchase_order;
+
+    }
+
+
+
+
+
     public function findBySlug($slug){
 
         $purchase_order = $this->cache->remember('purchase_orders:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->purchase_order->where('slug', $slug)
-                                        ->with('purchaseOrderItem')
+                                        ->with('purchaseOrderItem', 'purchaseOrderItem.purchaseOrderItemRawMat', 'purchaseOrderItem.purchaseOrderItemPackMat')
                                         ->first();
         }); 
         
@@ -190,6 +240,21 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function populate($model, $entries){
 
         return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at', 'slug')
+                     ->where('buffer_status', 0)
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+
+    }
+
+
+
+
+
+    public function populateBuffer($model, $entries){
+
+        return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at', 'slug')
+                     ->where('buffer_status', 1)
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

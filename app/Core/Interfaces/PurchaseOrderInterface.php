@@ -8,6 +8,8 @@ interface PurchaseOrderInterface {
 
 	public function fetch($request);
 
+	public function fetchBuffer($request);
+
 	public function store($request);
 
 	public function update($request, $slug);

@@ -22,6 +22,7 @@ class PurchaseOrderFormRequest extends FormRequest{
 
         $rules = [
             
+            'buffer_status'=>'sometimes|required|string|max:5',
             'bill_to_name'=>'required|string|max:255',
             'bill_to_company'=>'required|string|max:255',
             'bill_to_address'=>'required|string|max:255',

@@ -174,7 +174,9 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function findByProductCode($product_code){
 
         $item = $this->cache->remember('items:findByProductCode:' . $product_code, 240, function() use ($product_code){
-            return $this->item->where('product_code', $product_code)->first();
+            return $this->item->where('product_code', $product_code)
+                              ->with('itemRawMat', 'itemPackMat')
+                              ->first();
         }); 
         
         if(empty($item)){
@@ -270,7 +272,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function getByProductCode($product_code){
 
         $items = $this->cache->remember('items:getByProductCode:' . $product_code , 240, function() use ($product_code){
-            return $this->item->select('unit_type_id')
+            return $this->item->select('unit_type_id','current_balance','unit')
                               ->where('product_code', $product_code)
                               ->orderBy('name', 'asc')
                               ->get();

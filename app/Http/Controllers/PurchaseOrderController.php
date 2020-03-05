@@ -90,6 +90,23 @@ class PurchaseOrderController extends Controller{
     }
 
 
+    
+    public function buffer(PurchaseOrderFilterRequest $request){
+        
+        return $this->purchase_order->fetchBuffer($request);
+
+    }
+
+
+    
+    public function bufferProcess($slug){
+        
+        return $this->purchase_order->bufferProcess($slug);
+
+    }
+
+
+
 
 
     

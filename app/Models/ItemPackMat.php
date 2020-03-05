@@ -34,6 +34,10 @@ class ItemPackMat extends Model{
         return $this->belongsTo('App\Models\Item','product_code','product_code');
     }
 
+    public function purchaseOrderItemPackMat() {
+        return $this->hasMany('App\Models\PurchaseOrderItemPackMat','item_pack_mat_id','item_pack_mat_id');
+    }
+
 
     
 }

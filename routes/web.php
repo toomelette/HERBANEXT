@@ -58,8 +58,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** PURCHASE ORDER **/
-	Route::resource('purchase_order', 'PurchaseOrderController');
 	Route::get('/purchase_order/print/{slug}', 'PurchaseOrderController@print')->name('purchase_order.print');
+	Route::get('/purchase_order/buffers/', 'PurchaseOrderController@buffer')->name('purchase_order.buffer');
+	Route::post('/purchase_order/buffer_process/{slug}', 'PurchaseOrderController@bufferProcess')->name('purchase_order.buffer_process');
+	Route::resource('purchase_order', 'PurchaseOrderController');
 	
 });
 

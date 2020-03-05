@@ -17,7 +17,7 @@
     <div class="box-header with-border">
       <h2 class="box-title" style="padding-top: 5px;">Purchase Order Details</h2>
       <div class="pull-right">
-          {!! __html::back_button(['dashboard.purchase_order.index']) !!}
+          {!! __html::back_button(['dashboard.purchase_order.index', 'dashboard.purchase_order.buffer']) !!}
       </div> 
     </div>
     <div class="box-body">
@@ -57,6 +57,8 @@
             <tr>
               <th>Item No.</th>
               <th>Item Name</th>
+              <th>Raw Mats</th>
+              <th>Pack Mats</th>
               <th>Quantity</th>
               <th>Price</th>
               <th>Line Total</th>
@@ -67,6 +69,16 @@
                 <tr>
                   <td>{{ $key + 1 }}</td>
                   <td>{{ optional($data->item)->name }}</td>
+                  <td>
+                    @foreach($data->purchaseOrderItemRawMat as $data_poirm)
+                      <li>{{ $data_poirm->name }}</li>
+                    @endforeach
+                  </td>
+                  <td>
+                    @foreach($data->purchaseOrderItemPackMat as $data_poipm)
+                      <li>{{ $data_poipm->name }}</li>
+                    @endforeach
+                  </td>
                   <td>
                     @if($data->unit != 'PCS')
                       <span>{{ number_format($data->amount, 3) }} {{ $data->unit }}<span>

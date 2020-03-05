@@ -3,9 +3,11 @@
 namespace App\Core\Services;
 
 
+use App\Core\Interfaces\ItemInterface;
 use App\Core\Interfaces\PurchaseOrderInterface;
 use App\Core\Interfaces\PurchaseOrderItemInterface;
-use App\Core\Interfaces\ItemInterface;
+use App\Core\Interfaces\PurchaseOrderItemRawMatInterface;
+use App\Core\Interfaces\PurchaseOrderItemPackMatInterface;
 use App\Core\BaseClasses\BaseService;
 use Conversion;
 
@@ -13,17 +15,21 @@ use Conversion;
 class PurchaseOrderService extends BaseService{
 
 
+    protected $item_repo;
     protected $purchase_order_repo;
     protected $purchase_order_item_repo;
-    protected $item_repo;
+    protected $purchase_order_item_rm_repo;
+    protected $purchase_order_item_pm_repo;
 
 
 
-    public function __construct(PurchaseOrderInterface $purchase_order_repo, PurchaseOrderItemInterface $purchase_order_item_repo, ItemInterface $item_repo){
-
+    public function __construct(ItemInterface $item_repo, PurchaseOrderInterface $purchase_order_repo, PurchaseOrderItemInterface $purchase_order_item_repo, PurchaseOrderItemRawMatInterface $purchase_order_item_rm_repo, PurchaseOrderItemPackMatInterface $purchase_order_item_pm_repo){
+        
+        $this->item_repo = $item_repo;
         $this->purchase_order_repo = $purchase_order_repo;
         $this->purchase_order_item_repo = $purchase_order_item_repo;
-        $this->item_repo = $item_repo;
+        $this->purchase_order_item_rm_repo = $purchase_order_item_rm_repo;
+        $this->purchase_order_item_pm_repo = $purchase_order_item_pm_repo;
         parent::__construct();
 
     }
@@ -45,9 +51,22 @@ class PurchaseOrderService extends BaseService{
 
 
 
+    public function fetchBuffer($request){
+
+        $purchase_orders = $this->purchase_order_repo->fetchBuffer($request);
+
+        $request->flash();
+        return view('dashboard.purchase_order.buffer')->with('purchase_orders', $purchase_orders);
+
+    }
+
+
+
+
+
 
     public function store($request){
-
+        
         $purchase_order = $this->purchase_order_repo->store($request);
 
         $subtotal_price = 0.00;
@@ -68,9 +87,17 @@ class PurchaseOrderService extends BaseService{
                 }
 
                 $line_price = $item->price * $converted_amount;
-                $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
+                $po_item = $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
 
                 $subtotal_price += $line_price;
+
+                foreach ($item->itemRawMat as $data_irm) {
+                    $this->purchase_order_item_rm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_irm);
+                }
+
+                foreach ($item->itemPackMat as $data_ipm) {
+                    $this->purchase_order_item_pm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_ipm);
+                }
 
             }
             
@@ -79,11 +106,12 @@ class PurchaseOrderService extends BaseService{
         $vat_rounded_off = $this->__dataType->string_to_num($request->vat) / 100;   
 
         $vatable = $subtotal_price * $vat_rounded_off;
+        
         $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
 
-        $total_debit = $vatable + $freight_fee;
+        $total_price = $subtotal_price + $vatable;
 
-        $total_price = $subtotal_price - $total_debit;
+        $total_price = $total_price - $freight_fee;
 
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
@@ -166,11 +194,12 @@ class PurchaseOrderService extends BaseService{
         $vat_rounded_off = $this->__dataType->string_to_num($request->vat) / 100;   
 
         $vatable = $subtotal_price * $vat_rounded_off;
+        
         $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
 
-        $total_debit = $vatable + $freight_fee;
+        $total_price = $subtotal_price + $vatable;
 
-        $total_price = $subtotal_price - $total_debit;
+        $total_price = $total_price - $freight_fee;
 
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
@@ -189,6 +218,19 @@ class PurchaseOrderService extends BaseService{
         $purchase_order = $this->purchase_order_repo->destroy($slug);
 
         $this->event->fire('purchase_order.destroy', $purchase_order);
+        return redirect()->back();
+
+    }
+
+
+
+
+
+    public function bufferProcess($slug){
+
+        $purchase_order = $this->purchase_order_repo->bufferProcess($slug);
+
+        $this->event->fire('purchase_order.buffer_process', $purchase_order);
         return redirect()->back();
 
     }

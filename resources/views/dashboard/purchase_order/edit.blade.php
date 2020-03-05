@@ -11,7 +11,7 @@
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
             &nbsp;
-            {!! __html::back_button(['dashboard.purchase_order.index']) !!}
+            {!! __html::back_button(['dashboard.purchase_order.index', 'dashboard.purchase_order.buffer']) !!}
         </div> 
       </div>
       
@@ -113,8 +113,9 @@
                 <table class="table table-bordered">
 
                   <tr>
-                    <th style="width:400px;">Item *</th>
-                    <th>Quantity</th>
+                    <th style="width:450px;">Item *</th>
+                    <th style="width:300px;">Quantity</th>
+                    <th style="width:300px;">Remaining Quantity</th>
                     <th>Unit</th>
                     <th style="width: 40px"></th>
                   </tr>
@@ -128,13 +129,17 @@
                         <?php
 
                           $unit_type_list = [];
+                          $class = "";
 
                           if ($value['unit_type_id'] == 'IU1001') {
                             $unit_type_list = ['PCS' => 'PCS', ];
+                            $class = "pcs";
                           }elseif ($value['unit_type_id'] == 'IU1002') {
                             $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
+                            $class = "weight";
                           }elseif ($value['unit_type_id'] == 'IU1003') {
                             $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
+                            $class = "volume";
                           }
 
                         ?>
@@ -155,7 +160,7 @@
 
                           <td>
                             <div class="form-group">
-                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount" placeholder="Quantity" value="{{ $value['amount'] }}">
+                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount {{ $class }}" placeholder="Quantity" value="{{ $value['amount'] }}">
                               <small class="text-danger">{{ $errors->first('row.'. $key .'.amount') }}</small>
                             </div>
                           </td>
@@ -169,6 +174,17 @@
                               @endforeach
                             </select>
                           </div>
+
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row[{{ $key }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ $value['remaining_balance'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row[{{ $key }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ $value['remaining_balance_unit'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.remaining_balance_unit') }}</small>
+                            </div>
+                          </td>
 
                           </td>
 
@@ -188,13 +204,17 @@
                         <?php
 
                           $unit_type_list = [];
+                          $class = "";
 
                           if ($data->unit_type_id == 'IU1001') {
                             $unit_type_list = ['PCS' => 'PCS', ];
+                            $class = "pcs";
                           }elseif ($data->unit_type_id == 'IU1002') {
                             $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
+                            $class = "weight";
                           }elseif ($data->unit_type_id == 'IU1003') {
                             $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
+                            $class = "volume";
                           }
 
                         ?>
@@ -215,21 +235,30 @@
 
                           <td>
                             <div class="form-group">
-                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount" placeholder="Quantity" value="{{ $data->amount }}">
+                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount {{ $class }}" placeholder="Quantity" value="{{ $data->amount }}">
                               <small class="text-danger">{{ $errors->first('row.'. $key .'.amount') }}</small>
                             </div>
                           </td>
 
                           <td>
-                            
-                          <div class="form-group">
-                            <select name="row[{{ $key }}][unit]"  id="unit" class="form-control unit">
-                              @foreach($unit_type_list as $key_unit => $data_unit)
-                                <option value="{{ $key_unit }}" {!! $data->unit == $key_unit ? 'selected' : ''!!}>{{ $data_unit }}</option>
-                              @endforeach
-                            </select>
-                          </div>
+                            <div class="form-group">
+                              <select name="row[{{ $key }}][unit]"  id="unit" class="form-control unit">
+                                @foreach($unit_type_list as $key_unit => $data_unit)
+                                  <option value="{{ $key_unit }}" {!! $data->unit == $key_unit ? 'selected' : ''!!}>{{ $data_unit }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </td>
 
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row[{{ $key }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ optional($data->item)->current_balance }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row[{{ $key }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ optional($data->item)->unit }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row.'. $key .'.remaining_balance_unit') }}</small>
+                            </div>
                           </td>
 
                           <td>
@@ -315,9 +344,46 @@
     });
 
 
-    {{-- ADD ROW --}}
+    $(".remaining_balance").priceFormat({
+        centsLimit: 3,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
+
+
+    $(".pcs").priceFormat({
+        centsLimit: 3,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
+
+
+    $(".weight").priceFormat({
+        centsLimit: 3,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
+
+
+    $(".volume").priceFormat({
+        centsLimit: 3,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
+
+
+   {{-- ADD ROW --}}
     $(document).ready(function() {
       $("#add_row").on("click", function() {
+
           var i = $("#table_body").children().length;
           $('.item').select2('destroy');
           var content ='<tr>' +
@@ -347,6 +413,15 @@
                         '</td>' +
 
                         '<td>' +
+                          '<div class="form-group col-md-6 no-padding">' +
+                            '<input type="text" name="row[' + i + '][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" readonly="readonly">' +
+                          '</div>' +
+                          '<div class="form-group col-md-6 no-padding" >' +
+                            '<input type="text" name="row[' + i + '][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" readonly="readonly">' +
+                          '</div>' +
+                        '</td>' +
+
+                        '<td>' +
                             '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
                         '</td>' +
                       '</tr>';
@@ -365,7 +440,7 @@
 
 
 
-    {{-- AJAX PO Unit --}}
+    {{-- AJAX Item Unit --}}
     $(document).ready(function() {
       $(document).on("change", "#item", function() {
           var key = $(this).val();
@@ -380,7 +455,11 @@
 
                       $(parent).find("#unit").empty();
                       $(parent).find("#unit_type_id").empty();
+
                       $.each(data, function(key, value) {
+
+                        $(parent).find(".remaining_balance").val(value.current_balance);
+                        $(parent).find(".remaining_balance_unit").val(value.unit);
 
                         $(parent).find(".unit_type_id").val(value.unit_type_id);
 
@@ -388,6 +467,13 @@
 
                           $(parent).find(".unit").append("<option value='PCS'>PCS</option>");
                           $(parent).find(".amount").priceFormat({
+                              centsLimit: 0,
+                              prefix: "",
+                              thousandsSeparator: ",",
+                              clearOnEmpty: true,
+                              allowNegative: false
+                          });
+                          $(parent).find(".remaining_balance").priceFormat({
                               centsLimit: 0,
                               prefix: "",
                               thousandsSeparator: ",",
@@ -406,12 +492,26 @@
                               clearOnEmpty: true,
                               allowNegative: false
                           });
+                          $(parent).find(".remaining_balance").priceFormat({
+                              centsLimit: 3,
+                              prefix: "",
+                              thousandsSeparator: ",",
+                              clearOnEmpty: true,
+                              allowNegative: false
+                          });
 
                         }else if(value.unit_type_id == "IU1003"){
 
                           $(parent).find(".unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
                           $(parent).find(".unit").append("<option value='LITRE'>LITERS</option>");
                           $(parent).find(".amount").priceFormat({
+                              centsLimit: 3,
+                              prefix: "",
+                              thousandsSeparator: ",",
+                              clearOnEmpty: true,
+                              allowNegative: false
+                          });
+                          $(parent).find(".remaining_balance").priceFormat({
                               centsLimit: 3,
                               prefix: "",
                               thousandsSeparator: ",",

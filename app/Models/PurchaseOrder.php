@@ -57,6 +57,14 @@ class PurchaseOrder extends Model{
     	return $this->hasMany('App\Models\PurchaseOrderItem','po_no','po_no');
    	}
 
+    public function purchaseOrderItemRawMat() {
+        return $this->hasMany('App\Models\PurchaseOrderItemRawMat','po_no','po_no');
+    }
+
+    public function purchaseOrderItemPackMat() {
+        return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_no','po_no');
+    }
+
 
 
     
