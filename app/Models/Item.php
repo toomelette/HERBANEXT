@@ -24,6 +24,7 @@ class Item extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'item_id' => '',
         'product_code' => '',
         'item_category_id' => '',
         'unit_type_id' => '',
@@ -50,12 +51,12 @@ class Item extends Model{
 
     /** RELATIONSHIPS **/
     public function itemBatch() {
-    	return $this->hasMany('App\Models\ItemBatch','product_code','product_code');
+    	return $this->hasMany('App\Models\ItemBatch','item_id','item_id');
    	}
 
 
     public function itemLog() {
-        return $this->hasMany('App\Models\ItemLog','product_code','product_code');
+        return $this->hasMany('App\Models\ItemLog','item_id','item_id');
     }
 
 
@@ -65,17 +66,17 @@ class Item extends Model{
 
 
     public function purchaseOrderItem() {
-        return $this->hasMany('App\Models\PurchaseOrderItem','product_code','product_code');
+        return $this->hasMany('App\Models\PurchaseOrderItem','item_id','item_id');
     }
 
 
     public function itemRawMat() {
-        return $this->hasMany('App\Models\ItemRawMat','product_code','product_code');
+        return $this->hasMany('App\Models\ItemRawMat','item_id','item_id');
     }
 
 
     public function itemPackMat() {
-        return $this->hasMany('App\Models\ItemPackMat','product_code','product_code');
+        return $this->hasMany('App\Models\ItemPackMat','item_id','item_id');
     }
 
 

@@ -27,10 +27,10 @@ class ApiItemController extends Controller{
 
 
 
-	public function selectItemByProductCode(Request $request, $product_code){
+	public function selectItemByItemId(Request $request, $item_id){
 
     	if($request->Ajax()){
-    		$response_item = $this->item_repo->getByProductCode($product_code);
+    		$response_item = $this->item_repo->getByItemId($item_id);
 	    	return json_encode($response_item);
 	    }
 

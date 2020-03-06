@@ -57,14 +57,14 @@ class ItemService extends BaseService{
 
         if(!empty($request->row_raw)){
             foreach ($request->row_raw as $row_raw) {
-                $item_raw_mat_orig = $this->item_repo->findByProductCode($row_raw['item']);
+                $item_raw_mat_orig = $this->item_repo->findByItemId($row_raw['item']);
                 $this->item_raw_mat_repo->store($row_raw, $item, $item_raw_mat_orig);
             }
         }
 
         if(!empty($request->row_pack)){
             foreach ($request->row_pack as $row_pack) {
-                $item_pack_mat_orig = $this->item_repo->findByProductCode($row_pack['item']);
+                $item_pack_mat_orig = $this->item_repo->findByItemId($row_pack['item']);
                 $this->item_pack_mat_repo->store($row_pack, $item, $item_pack_mat_orig);
             }
         }
@@ -97,14 +97,14 @@ class ItemService extends BaseService{
 
         if(!empty($request->row_raw)){
             foreach ($request->row_raw as $row_raw) {
-                $item_raw_mat_orig = $this->item_repo->findByProductCode($row_raw['item']);
+                $item_raw_mat_orig = $this->item_repo->findByItemId($row_raw['item']);
                 $this->item_raw_mat_repo->store($row_raw, $item, $item_raw_mat_orig);
             }
         }
 
         if(!empty($request->row_pack)){
             foreach ($request->row_pack as $row_pack) {
-                $item_pack_mat_orig = $this->item_repo->findByProductCode($row_pack['item']);
+                $item_pack_mat_orig = $this->item_repo->findByItemId($row_pack['item']);
                 $this->item_pack_mat_repo->store($row_pack, $item, $item_pack_mat_orig);
             }
         }
@@ -228,9 +228,9 @@ class ItemService extends BaseService{
 
                 if ($request_amount >= 0) {
                     if ($request_amount_converted >= $batch_amount) {
-                        $this->item_batch_repo->updateCheckOut($item_batch->batch_code, $batch_amount);
+                        $this->item_batch_repo->updateCheckOut($item_batch->batch_id, $batch_amount);
                     }else{
-                        $this->item_batch_repo->updateCheckOut($item_batch->batch_code, $request_amount_converted);
+                        $this->item_batch_repo->updateCheckOut($item_batch->batch_id, $request_amount_converted);
                     }  
                 }  
 
@@ -268,7 +268,7 @@ class ItemService extends BaseService{
     public function fetchBatchByItem($slug, $request){
 
         $item = $this->item_repo->findbySlug($slug);
-        $batches = $this->item_batch_repo->fetchByItem($item->product_code, $request);
+        $batches = $this->item_batch_repo->fetchByItem($item->item_id, $request);
 
         $request->flash();
         return view('dashboard.item.batch_by_item')->with(['batches' => $batches, 'slug' => $item->slug]);
@@ -282,7 +282,7 @@ class ItemService extends BaseService{
     public function fetchLogsByItem($slug, $request){
 
         $item = $this->item_repo->findbySlug($slug);
-        $logs = $this->item_log_repo->fetchByItem($item->product_code, $request);
+        $logs = $this->item_log_repo->fetchByItem($item->item_id, $request);
 
         $request->flash();
         return view('dashboard.item.logs_by_item')->with(['logs' => $logs, 'slug' => $item->slug]);

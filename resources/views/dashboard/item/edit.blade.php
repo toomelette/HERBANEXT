@@ -108,7 +108,7 @@
                             <select name="row_raw[{{ $key_raw }}][item]" id="item_raw" class="form-control item_raw">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value_raw['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                  <option value="{{ $data->item_id }}" {!! $value_raw['item'] == $data->item_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
@@ -133,7 +133,7 @@
                             <select name="row_raw[{{ $key_raw }}][item]" id="item_raw" class="form-control item_raw">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value_raw->item_raw_mat_product_code == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                  <option value="{{ $data->item_id }}" {!! $value_raw->item_raw_mat_item_id == $data->item_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
@@ -188,7 +188,7 @@
                             <select name="row_pack[{{ $key_pack }}][item]" id="item_pack" class="form-control item_pack">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value_pack['item'] == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                  <option value="{{ $data->item_id }}" {!! $value_pack['item'] == $data->item_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
@@ -214,7 +214,7 @@
                             <select name="row_pack[{{ $key_pack }}][item]" id="item_raw" class="form-control item_raw">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data) 
-                                  <option value="{{ $data->product_code }}" {!! $value_pack->item_pack_mat_product_code == $data->product_code ? 'selected' : ''!!}>{{ $data->name }}</option>
+                                  <option value="{{ $data->item_id }}" {!! $value_pack->item_pack_mat_item_id == $data->item_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
@@ -295,7 +295,7 @@
                           '<select name="row_raw[' + i + '][item]" id="item_raw" class="form-control item_raw">' +
                             '<option value="">Select</option>' +
                             '@foreach($global_items_all as $data)' +
-                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                              '<option value="{{ $data->item_id }}">{{ $data->name }}</option>' +
                             '@endforeach' +
                           '</select>' +
                         '</td>' +
@@ -328,7 +328,7 @@
                           '<select name="row_pack[' + i + '][item]" id="item_pack" class="form-control item_pack">' +
                             '<option value="">Select</option>' +
                             '@foreach($global_items_all as $data)' +
-                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                              '<option value="{{ $data->item_id }}">{{ $data->name }}</option>' +
                             '@endforeach' +
                           '</select>' +
                         '</td>' +

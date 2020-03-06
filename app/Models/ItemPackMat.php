@@ -16,9 +16,10 @@ class ItemPackMat extends Model{
 
     protected $attributes = [
 
+        'item_id' => '',
         'product_code' => '',
     	'item_pack_mat_id' => '',
-        'item_pack_mat_product_code' => '',
+        'item_pack_mat_item_id' => '',
         'name' => '',
         'description' => '',
         'required_quantity' => 0.000,
@@ -31,7 +32,7 @@ class ItemPackMat extends Model{
 
     /** RELATIONSHIPS **/
     public function item() {
-        return $this->belongsTo('App\Models\Item','product_code','product_code');
+        return $this->belongsTo('App\Models\Item','item_id','item_id');
     }
 
     public function purchaseOrderItemPackMat() {

@@ -21,7 +21,9 @@ class ItemLog extends Model{
 
     protected $attributes = [
 
+        'item_id' => '',
         'product_code' => '',
+        'item_name' => '',
     	'transaction_type' => false,
         'amount' => 0.000,
         'unit' => '',
@@ -38,7 +40,7 @@ class ItemLog extends Model{
 
     /** RELATIONSHIPS **/
     public function item() {
-    	return $this->belongsTo('App\Models\Item','product_code','product_code');
+    	return $this->belongsTo('App\Models\Item','item_id','item_id');
    	}		
 
 

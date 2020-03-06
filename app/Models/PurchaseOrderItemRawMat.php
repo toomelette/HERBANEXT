@@ -38,7 +38,7 @@ class PurchaseOrderItemRawMat extends Model{
 
     /** RELATIONSHIPS **/
     public function purchaseOrder() {
-        return $this->belongsTo('App\Models\PurchaseOrder','po_no','po_no');
+        return $this->belongsTo('App\Models\PurchaseOrder','po_id','po_id');
     }
 
 

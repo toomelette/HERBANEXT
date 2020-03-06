@@ -11,6 +11,10 @@
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
             &nbsp;
+            <a href="{{ route('dashboard.item.fetch_logs_by_item', $item->slug) }}" type="button" class="btn btn-sm btn-default">
+              <i class="fa fa-fw fa-file-text-o"></i> View logs
+            </a>
+            &nbsp;
             <a href="{{ route('dashboard.item.fetch_batch_by_item', $item->slug) }}" type="button" class="btn btn-sm btn-default">
               <i class="fa fa-fw fa-cubes"></i> View Batches
             </a>

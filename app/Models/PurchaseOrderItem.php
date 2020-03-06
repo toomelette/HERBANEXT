@@ -21,7 +21,7 @@ class PurchaseOrderItem extends Model{
         'slug' => '',
         'po_no' => '',
     	'po_item_id' => '',
-        'product_code' => '',
+        'item_id' => '',
         'unit_type_id' => '',
         'amount' => 0.000,
         'unit' => '',
@@ -35,11 +35,11 @@ class PurchaseOrderItem extends Model{
 
     /** RELATIONSHIPS **/
     public function purchaseOrder() {
-        return $this->belongsTo('App\Models\PurchaseOrder','po_no','po_no');
+        return $this->belongsTo('App\Models\PurchaseOrder','po_id','po_id');
     }
 
     public function item() {
-    	return $this->belongsTo('App\Models\Item','product_code','product_code');
+    	return $this->belongsTo('App\Models\Item','item_id','item_id');
    	}
 
     public function purchaseOrderItemRawMat() {

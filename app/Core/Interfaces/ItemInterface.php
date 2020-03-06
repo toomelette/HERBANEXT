@@ -20,7 +20,7 @@ interface ItemInterface {
 
 	public function findBySlug($slug);
 
-	public function findByProductCode($product_code);
+	public function findByItemId($item_id);
 
 	public function getAll();
 
@@ -28,7 +28,7 @@ interface ItemInterface {
 
 	public function getPackMats();
 
-	public function getByProductCode($product_code);
+	public function getByItemId($item_id);
 		
 		
 }

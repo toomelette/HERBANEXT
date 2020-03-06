@@ -94,7 +94,8 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function store($request){
 
         $purchase_order = new PurchaseOrder;
-        $purchase_order->po_no = $this->getPONoInc();
+        $purchase_order->po_id = $this->getPOIdInc();
+        $purchase_order->po_no = $request->po_no;
         $purchase_order->slug = $this->str->random(16);
         $purchase_order->bill_to_name = $request->bill_to_name;
         $purchase_order->bill_to_company = $request->bill_to_company;
@@ -126,6 +127,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function update($request, $slug){
 
         $purchase_order = $this->findBySlug($slug);
+        $purchase_order->po_no = $request->po_no;
         $purchase_order->bill_to_name = $request->bill_to_name;
         $purchase_order->bill_to_company = $request->bill_to_company;
         $purchase_order->bill_to_address = $request->bill_to_address;
@@ -141,6 +143,8 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->save();
 
         $purchase_order->purchaseOrderItem()->delete();
+        $purchase_order->purchaseOrderItemRawMat()->delete();
+        $purchase_order->purchaseOrderItemPackMat()->delete();
         
         return $purchase_order;
 
@@ -285,26 +289,22 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-    public function getPONoInc(){
+    public function getPOIdInc(){
 
-        
-        $current_year = $this->carbon->now()->format('Y');
-        $date_from = $current_year .'-01-01';
-        $date_to = $current_year .'-12-31';
+        $id = 'PO10001';
 
-        $po_no = $current_year . "-001";
-
-        $purchase_order = $this->purchase_order->select('po_no')
-                                               ->whereBetween('created_at', [$date_from, $date_to])
-                                               ->orderBy('po_no', 'desc')
-                                               ->first();
+        $purchase_order = $this->purchase_order->select('po_id')->orderBy('po_id', 'desc')->first();
 
         if($purchase_order != null){
-            $num = str_replace($current_year .'-', '', $purchase_order->po_no) + 1;
-            $po_no = $current_year . '-00' . $num;
-        }
 
-        return $po_no;
+            if($purchase_order->po_id != null){
+                $num = str_replace('PO', '', $purchase_order->po_id) + 1;
+                $id = 'PO' . $num;
+            }
+        
+        }
+        
+        return $id;
         
     }
 

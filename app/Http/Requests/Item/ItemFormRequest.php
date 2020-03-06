@@ -22,7 +22,7 @@ class ItemFormRequest extends FormRequest{
 
         $rules = [
             
-            'product_code'=>'required|string|max:45|unique:items,product_code,'.$this->route('item').',slug',
+            'product_code'=>'required|string|max:45',
             'item_category_id'=>'required|string|max:11',
             'name'=>'required|string|max:255',
             'description'=>'nullable|string|max:255',

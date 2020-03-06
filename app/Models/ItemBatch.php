@@ -19,7 +19,8 @@ class ItemBatch extends Model{
 
 
     protected $attributes = [
-
+        
+        'item_id' => '',
         'product_code' => '',
     	'batch_code' => '',
         'amount' => 0.000,
@@ -40,7 +41,7 @@ class ItemBatch extends Model{
 
     /** RELATIONSHIPS **/
     public function item() {
-    	return $this->belongsTo('App\Models\Item','product_code','product_code');
+    	return $this->belongsTo('App\Models\Item','item_id','item_id');
    	}
 
 

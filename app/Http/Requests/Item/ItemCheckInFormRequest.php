@@ -22,7 +22,7 @@ class ItemCheckInFormRequest extends FormRequest{
 
         return [
             
-            'batch_code'=>'required|string|max:45|unique:item_batches,batch_code',
+            'batch_code'=>'required|string|max:45',
             'amount'=>'required|string|max:21',
             'unit'=>'required|string|max:11',
             'expiry_date'=>'required|date_format:"m/d/Y"',

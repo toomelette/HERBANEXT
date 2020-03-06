@@ -30,12 +30,12 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
-    public function fetchByItem($product_code, $request){
+    public function fetchByItem($item_id, $request){
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 100;
 
-        $item_batches = $this->cache->remember('item_batches:fetchByItem:' . $key, 240, function() use ($request, $entries, $product_code){
+        $item_batches = $this->cache->remember('item_batches:fetchByItem:' . $key, 240, function() use ($request, $entries, $item_id){
 
             $item_batch = $this->item_batch->newQuery();
             
@@ -43,7 +43,7 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
                 $this->searchByItem($item_batch, $request->q);
             }
 
-            return $this->populateByItem($item_batch, $entries, $product_code);
+            return $this->populateByItem($item_batch, $entries, $item_id);
 
         });
 
@@ -59,7 +59,9 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
     public function store($request, $item){
 
     	$item_batch = new ItemBatch;
+        $item_batch->batch_id = $this->getBatchIdInc();
     	$item_batch->product_code = $item->product_code;
+        $item_batch->item_id = $item->item_id;
     	$item_batch->batch_code = $request->batch_code;
     	$item_batch->amount = $this->__dataType->string_to_num($request->amount);
         $item_batch->unit = $request->unit;
@@ -81,9 +83,9 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
-    public function updateCheckOut($batch_code, $amount){
+    public function updateCheckOut($batch_id, $amount){
 
-        $item_batch = $this->findByBatchCode($batch_code);
+        $item_batch = $this->findByBatchId($batch_id);
         $item_batch->amount = $item_batch->amount - $amount;
         $item_batch->updated_at = $this->carbon->now();
         $item_batch->ip_updated = request()->ip();
@@ -98,9 +100,9 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
-    public function findByBatchCode($batch_code){
+    public function findByBatchId($batch_id){
 
-        $item_batch = $this->item_batch->where('batch_code', $batch_code)->first();
+        $item_batch = $this->item_batch->where('batch_id', $batch_id)->first();
         
         if(empty($item_batch)){
             abort(404);
@@ -128,14 +130,38 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
-    public function populateByItem($model, $entries, $product_code){
+    public function populateByItem($model, $entries, $item_id){
 
         return $model->select('batch_code', 'amount', 'unit', 'expiry_date', 'updated_at')
-                     ->where('product_code', $product_code)
+                     ->where('item_id', $item_id)
                      ->sortable()
                      ->orderBy('updated_at')
                      ->paginate($entries);
 
+    }
+
+
+
+
+
+
+    public function getBatchIdInc(){
+
+        $id = 'B10001';
+
+        $item_batch = $this->item_batch->select('batch_id')->orderBy('batch_id', 'desc')->first();
+
+        if($item_batch != null){
+
+            if($item_batch->batch_id != null){
+                $num = str_replace('B', '', $item_batch->batch_id) + 1;
+                $id = 'B' . $num;
+            }
+        
+        }
+        
+        return $id;
+        
     }
 
 

@@ -76,7 +76,7 @@ class PurchaseOrderService extends BaseService{
 
             foreach ($request->row as $data) {
 
-                $item = $this->item_repo->findByProductCode($data['item']);
+                $item = $this->item_repo->findByItemId($data['item']);
 
                 $amount = $this->__dataType->string_to_num($data['amount']);
 
@@ -92,11 +92,11 @@ class PurchaseOrderService extends BaseService{
                 $subtotal_price += $line_price;
 
                 foreach ($item->itemRawMat as $data_irm) {
-                    $this->purchase_order_item_rm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_irm);
+                    $this->purchase_order_item_rm_repo->store($purchase_order, $po_item->po_item_id, $data_irm);
                 }
 
                 foreach ($item->itemPackMat as $data_ipm) {
-                    $this->purchase_order_item_pm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_ipm);
+                    $this->purchase_order_item_pm_repo->store($purchase_order, $po_item->po_item_id, $data_ipm);
                 }
 
             }
@@ -165,6 +165,8 @@ class PurchaseOrderService extends BaseService{
 
         $purchase_order = $this->purchase_order_repo->update($request, $slug);
 
+        $route = $purchase_order->buffer_status == 1 ? 'dashboard.purchase_order.buffer' : 'dashboard.purchase_order.index'; 
+
         $subtotal_price = 0.00;
         $total_price = 0.00;
 
@@ -172,7 +174,7 @@ class PurchaseOrderService extends BaseService{
 
             foreach ($request->row as $data) {
 
-                $item = $this->item_repo->findByProductCode($data['item']);
+                $item = $this->item_repo->findByItemId($data['item']);
 
                 $amount = $this->__dataType->string_to_num($data['amount']);
 
@@ -189,11 +191,11 @@ class PurchaseOrderService extends BaseService{
                 $subtotal_price += $line_price;
 
                 foreach ($item->itemRawMat as $data_irm) {
-                    $this->purchase_order_item_rm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_irm);
+                    $this->purchase_order_item_rm_repo->store($purchase_order, $po_item->po_item_id, $data_irm);
                 }
 
                 foreach ($item->itemPackMat as $data_ipm) {
-                    $this->purchase_order_item_pm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_ipm);
+                    $this->purchase_order_item_pm_repo->store($purchase_order, $po_item->po_item_id, $data_ipm);
                 }
 
 
@@ -214,7 +216,7 @@ class PurchaseOrderService extends BaseService{
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
         $this->event->fire('purchase_order.update', $purchase_order);
-        return redirect()->route('dashboard.purchase_order.index');
+        return redirect()->route($route);
 
     }
 

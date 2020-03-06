@@ -26,6 +26,7 @@ class PurchaseOrder extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'po_id' => '',
         'po_no' => '',
         'bill_to_name' => '',
         'bill_to_company' => '',
@@ -54,15 +55,15 @@ class PurchaseOrder extends Model{
 
     /** RELATIONSHIPS **/
     public function purchaseOrderItem() {
-    	return $this->hasMany('App\Models\PurchaseOrderItem','po_no','po_no');
+    	return $this->hasMany('App\Models\PurchaseOrderItem','po_id','po_id');
    	}
 
     public function purchaseOrderItemRawMat() {
-        return $this->hasMany('App\Models\PurchaseOrderItemRawMat','po_no','po_no');
+        return $this->hasMany('App\Models\PurchaseOrderItemRawMat','po_id','po_id');
     }
 
     public function purchaseOrderItemPackMat() {
-        return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_no','po_no');
+        return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_id','po_id');
     }
 
 

@@ -60,6 +60,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = new Item;
         $item->slug = $this->str->random(16);
+        $item->item_id = $this->getItemIdInc();
         $item->product_code = $request->product_code;
         $item->item_category_id = $request->item_category_id;
         $item->name = $request->name;
@@ -175,10 +176,10 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
-    public function findByProductCode($product_code){
+    public function findByItemId($item_id){
 
-        $item = $this->cache->remember('items:findByProductCode:' . $product_code, 240, function() use ($product_code){
-            return $this->item->where('product_code', $product_code)
+        $item = $this->cache->remember('items:findByItemId:' . $item_id, 240, function() use ($item_id){
+            return $this->item->where('item_id', $item_id)
                               ->with('itemRawMat', 'itemPackMat')
                               ->first();
         }); 
@@ -226,7 +227,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function getAll(){
 
         $items = $this->cache->remember('items:getAll', 240, function(){
-            return $this->item->select('product_code', 'unit_type_id', 'name')
+            return $this->item->select('item_id', 'unit_type_id', 'name')
                               ->get();
         });
         
@@ -242,7 +243,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function getRawMats(){
 
         $items = $this->cache->remember('items:getRawMats', 240, function(){
-            return $this->item->select('product_code', 'unit_type_id', 'name')
+            return $this->item->select('item_id', 'unit_type_id', 'name')
                               ->where('item_category_id', 'IC10007')
                               ->get();
         });
@@ -259,7 +260,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
     public function getPackMats(){
 
         $items = $this->cache->remember('items:getPackMats', 240, function(){
-            return $this->item->select('product_code', 'unit_type_id', 'name')
+            return $this->item->select('item_id', 'unit_type_id', 'name')
                               ->where('item_category_id', 'IC10004')
                               ->get();
         });
@@ -273,17 +274,41 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
-    public function getByProductCode($product_code){
+    public function getByItemId($item_id){
 
-        $items = $this->cache->remember('items:getByProductCode:' . $product_code , 240, function() use ($product_code){
+        $items = $this->cache->remember('items:getByItemId:' . $item_id , 240, function() use ($item_id){
             return $this->item->select('unit_type_id','current_balance','unit')
-                              ->where('product_code', $product_code)
+                              ->where('item_id', $item_id)
                               ->orderBy('name', 'asc')
                               ->get();
         });
         
         return $items;
 
+    }
+
+
+
+
+
+
+    public function getItemIdInc(){
+
+        $id = 'I10001';
+
+        $item = $this->item->select('item_id')->orderBy('item_id', 'desc')->first();
+
+        if($item != null){
+
+            if($item->item_id != null){
+                $num = str_replace('I', '', $item->item_id) + 1;
+                $id = 'I' . $num;
+            }
+        
+        }
+        
+        return $id;
+        
     }
 
 

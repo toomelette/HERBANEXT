@@ -28,11 +28,12 @@ class PurchaseOrderItemPackMatRepository extends BaseRepository implements Purch
 
 
 
-    public function store($po_no, $po_item_id, $item_pack_mat){
+    public function store($purchase_order, $po_item_id, $item_pack_mat){
 
         $po_item_pack_mat = new PurchaseOrderItemPackMat;
         $po_item_pack_mat->slug = $this->str->random(16);
-        $po_item_pack_mat->po_no = $po_no;
+        $po_item_pack_mat->po_no = $purchase_order->po_no;
+        $po_item_pack_mat->po_id = $purchase_order->po_id;
         $po_item_pack_mat->po_item_id = $po_item_id;
         $po_item_pack_mat->item_pack_mat_id = $item_pack_mat->item_pack_mat_id;
         $po_item_pack_mat->name = $item_pack_mat->name;

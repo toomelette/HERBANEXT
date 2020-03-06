@@ -62,12 +62,12 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
-    public function fetchByItem($product_code, $request){
+    public function fetchByItem($item_id, $request){
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 100;
 
-        $item_logs = $this->cache->remember('item_logs:fetchByItem:' . $key, 240, function() use ($request, $entries, $product_code){
+        $item_logs = $this->cache->remember('item_logs:fetchByItem:' . $key, 240, function() use ($request, $entries, $item_id){
 
             $item_log = $this->item_log->newQuery();
             
@@ -75,7 +75,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
                 $this->searchByItem($item_log, $request->q);
             }
 
-            return $this->populateByItem($item_log, $entries, $product_code);
+            return $this->populateByItem($item_log, $entries, $item_id);
 
         });
 
@@ -92,6 +92,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     	$item_log = new ItemLog;
     	$item_log->product_code = $item->product_code;
+        $item_log->item_id = $item->item_id;
+        $item_log->item_name = $item->name;
     	$item_log->transaction_type = true;
     	$item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
@@ -114,6 +116,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
         $item_log = new ItemLog;
         $item_log->product_code = $item->product_code;
+        $item_log->item_id = $item->item_id;
+        $item_log->item_name = $item->name;
         $item_log->transaction_type = false;
         $item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
@@ -171,7 +175,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'transaction_type', 'amount', 'unit', 'user_id', 'datetime')
+        return $model->select('product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'user_id', 'datetime')
                      ->with('item', 'user')
                      ->sortable()
                      ->orderBy('datetime', 'desc')
@@ -183,11 +187,11 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
-    public function populateByItem($model, $entries, $product_code){
+    public function populateByItem($model, $entries, $item_id){
 
         return $model->select('transaction_type', 'amount', 'unit', 'user_id', 'datetime')
                      ->with('user')
-                     ->where('product_code', $product_code)
+                     ->where('item_id', $item_id)
                      ->sortable()
                      ->orderBy('datetime', 'desc')
                      ->paginate($entries);

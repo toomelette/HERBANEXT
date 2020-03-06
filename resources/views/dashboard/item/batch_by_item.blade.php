@@ -24,9 +24,8 @@
       <div class="box-header with-border">
         <h3 class="box-title" style="padding-top: 5px;">Batch by Item</h3>
           <div class="pull-right">
-              <a href="{{ route('dashboard.item.index') }}" type="button" class="btn btn-sm btn-default">
-                <i class="fa fa-fw fa-arrow-left"></i> Back to List
-              </a>
+            &nbsp;
+            {!! __html::back_button(['dashboard.item.index', 'dashboard.item.check_in', 'dashboard.item.check_out']) !!} 
           </div>
       </div>
       <div class="box-body no-padding" id="pjax-container">

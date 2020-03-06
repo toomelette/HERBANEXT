@@ -16,9 +16,10 @@ class ItemRawMat extends Model{
 
     protected $attributes = [
 
+        'item_id' => '',
         'product_code' => '',
     	'item_raw_mat_id' => '',
-        'item_raw_mat_product_code' => '',
+        'item_raw_mat_item_id' => '',
         'name' => '',
         'required_quantity' => 0.000,
         'unit_type_id' => '',
@@ -30,7 +31,7 @@ class ItemRawMat extends Model{
 
     /** RELATIONSHIPS **/
     public function item() {
-        return $this->belongsTo('App\Models\Item','product_code','product_code');
+        return $this->belongsTo('App\Models\Item','item_id','item_id');
     }
 
     public function purchaseOrderItemRawMat() {

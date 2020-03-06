@@ -23,6 +23,21 @@
 
           <input name="_method" value="PUT" type="hidden">
 
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">PO Number</h3>
+              </div>
+              <div class="box-body">
+
+                {!! __form::textbox(
+                  '6', 'po_no', 'text', 'PO Number *', 'PO Number', old('po_no') ? old('po_no') : $purchase_order->po_no, $errors->has('po_no'), $errors->first('po_no'), ''
+                ) !!}  
+
+              </div>
+            </div>
+          </div>
+
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
@@ -152,7 +167,7 @@
                             <select name="row[{{ $key }}][item]" id="item" class="form-control item">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data_item) 
-                                  <option value="{{ $data_item->product_code }}" {!! $value['item'] == $data_item->product_code ? 'selected' : ''!!}>{{ $data_item->name }}</option>
+                                  <option value="{{ $data_item->item_id }}" {!! $value['item'] == $data_item->item_id ? 'selected' : ''!!}>{{ $data_item->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row.'. $key .'.item') }}</small>
@@ -227,7 +242,7 @@
                             <select name="row[{{ $key }}][item]" id="item" class="form-control item">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data_item) 
-                                  <option value="{{ $data_item->product_code }}" {!! $data->product_code == $data_item->product_code ? 'selected' : ''!!}>{{ $data_item->name }}</option>
+                                  <option value="{{ $data_item->item_id }}" {!! $data->item_id == $data_item->item_id ? 'selected' : ''!!}>{{ $data_item->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row.'. $key .'.item') }}</small>
@@ -394,7 +409,7 @@
                           '<select name="row[' + i + '][item]" id="item" class="form-control item">' +
                             '<option value="">Select</option>' +
                             '@foreach($global_items_all as $data)' +
-                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                              '<option value="{{ $data->item_id }}">{{ $data->name }}</option>' +
                             '@endforeach' +
                           '</select>' +
                         '</td>' +
@@ -448,7 +463,7 @@
           if(key) {
               $.ajax({
                   headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                  url: "/api/item/select_item_byProductCode/" + key,
+                  url: "/api/item/select_item_byItemId/" + key,
                   type: "GET",
                   dataType: "json",
                   success:function(data) {  

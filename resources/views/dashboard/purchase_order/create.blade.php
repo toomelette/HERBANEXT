@@ -19,32 +19,53 @@
         
           @csrf    
 
-          <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">PO Number</h3>
+              </div>
+              <div class="box-body">
+
+                {!! __form::textbox(
+                  '12', 'po_no', 'text', 'PO Number *', 'PO Number', old('po_no'), $errors->has('po_no'), $errors->first('po_no'), ''
+                ) !!}  
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Type</h3>
               </div>
               <div class="box-body">
 
-                <label>
-                  <input type="radio" class="minimal buffer_status" name="buffer_status" value="false" {{ old('buffer_status') == 'false' ? 'checked' : 'checked' }}>
-                  &nbsp; For Process
-                </label>
+                <div class="col-md-12" style="padding:25px;">
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>
+                    <input type="radio" class="minimal buffer_status" name="buffer_status" value="false" {{ old('buffer_status') == 'false' ? 'checked' : 'checked' }}>
+                    &nbsp; For Process
+                  </label>
 
-                <label>
-                  <input type="radio" class="minimal buffer_status"  name="buffer_status" value="true" {{ old('buffer_status') == 'true' ? 'checked' : '' }}>
-                  &nbsp; For Buffer
-                </label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                @if($errors->has('buffer_status'))
-                  <p class="text-danger" style="padding-top:10px;">{{ $errors->first('buffer_status') }}</p>
-                @endif
+                  <label>
+                    <input type="radio" class="minimal buffer_status"  name="buffer_status" value="true" {{ old('buffer_status') == 'true' ? 'checked' : '' }}>
+                    &nbsp; For Buffer
+                  </label>
+
+                  @if($errors->has('buffer_status'))
+                    <p class="text-danger" style="padding-top:10px;">{{ $errors->first('buffer_status') }}</p>
+                  @endif
+
+                </div>
 
               </div>
             </div>
           </div>
+
+          <div class="col-md-12"></div>
 
           <div class="col-md-6">
             <div class="box">
@@ -175,7 +196,7 @@
                             <select name="row[{{ $key }}][item]" id="item" class="form-control item">
                               <option value="">Select</option>
                               @foreach($global_items_all as $data_item) 
-                                  <option value="{{ $data_item->product_code }}" {!! $value['item'] == $data_item->product_code ? 'selected' : ''!!}>{{ $data_item->name }}</option>
+                                  <option value="{{ $data_item->item_id }}" {!! $value['item'] == $data_item->item_id ? 'selected' : ''!!}>{{ $data_item->name }}</option>
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row.'. $key .'.item') }}</small>
@@ -330,7 +351,7 @@
                           '<select name="row[' + i + '][item]" id="item" class="form-control item">' +
                             '<option value="">Select</option>' +
                             '@foreach($global_items_all as $data)' +
-                              '<option value="{{ $data->product_code }}">{{ $data->name }}</option>' +
+                              '<option value="{{ $data->item_id }}">{{ $data->name }}</option>' +
                             '@endforeach' +
                           '</select>' +
                         '</td>' +
@@ -384,7 +405,7 @@
           if(key) {
               $.ajax({
                   headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                  url: "/api/item/select_item_byProductCode/" + key,
+                  url: "/api/item/select_item_byItemId/" + key,
                   type: "GET",
                   dataType: "json",
                   success:function(data) {  
