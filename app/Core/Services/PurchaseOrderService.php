@@ -183,9 +183,19 @@ class PurchaseOrderService extends BaseService{
                 }
 
                 $line_price = $item->price * $converted_amount;
-                $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
+                
+                $po_item = $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
 
                 $subtotal_price += $line_price;
+
+                foreach ($item->itemRawMat as $data_irm) {
+                    $this->purchase_order_item_rm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_irm);
+                }
+
+                foreach ($item->itemPackMat as $data_ipm) {
+                    $this->purchase_order_item_pm_repo->store($purchase_order->po_no, $po_item->po_item_id, $data_ipm);
+                }
+
 
             }
             

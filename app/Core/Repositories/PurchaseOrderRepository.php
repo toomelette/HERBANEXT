@@ -172,6 +172,8 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order = $this->findBySlug($slug);
         $purchase_order->delete();
         $purchase_order->purchaseOrderItem()->delete();
+        $purchase_order->purchaseOrderItemRawMat()->delete();
+        $purchase_order->purchaseOrderItemPackMat()->delete();
 
         return $purchase_order;
 

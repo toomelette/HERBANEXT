@@ -27,7 +27,7 @@
               <div class="box-body">
 
                 <label>
-                  <input type="radio" class="minimal buffer_status" name="buffer_status" value="false" {{ old('buffer_status') == 'false' ? 'checked' : '' }}>
+                  <input type="radio" class="minimal buffer_status" name="buffer_status" value="false" {{ old('buffer_status') == 'false' ? 'checked' : 'checked' }}>
                   &nbsp; For Process
                 </label>
 
@@ -397,19 +397,20 @@
                         $(parent).find(".remaining_balance").val(value.current_balance);
                         $(parent).find(".remaining_balance_unit").val(value.unit);
 
+                        $(parent).find(".remaining_balance").priceFormat({
+                            centsLimit: 3,
+                            prefix: "",
+                            thousandsSeparator: ",",
+                            clearOnEmpty: true,
+                            allowNegative: false
+                        });
+
                         $(parent).find(".unit_type_id").val(value.unit_type_id);
 
                         if (value.unit_type_id == "IU1001") {
 
                           $(parent).find(".unit").append("<option value='PCS'>PCS</option>");
                           $(parent).find(".amount").priceFormat({
-                              centsLimit: 0,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
-                          $(parent).find(".remaining_balance").priceFormat({
                               centsLimit: 0,
                               prefix: "",
                               thousandsSeparator: ",",
@@ -428,26 +429,12 @@
                               clearOnEmpty: true,
                               allowNegative: false
                           });
-                          $(parent).find(".remaining_balance").priceFormat({
-                              centsLimit: 3,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
 
                         }else if(value.unit_type_id == "IU1003"){
 
                           $(parent).find(".unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
                           $(parent).find(".unit").append("<option value='LITRE'>LITERS</option>");
                           $(parent).find(".amount").priceFormat({
-                              centsLimit: 3,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
-                          $(parent).find(".remaining_balance").priceFormat({
                               centsLimit: 3,
                               prefix: "",
                               thousandsSeparator: ",",

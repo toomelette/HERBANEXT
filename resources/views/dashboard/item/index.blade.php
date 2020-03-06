@@ -6,6 +6,7 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'cat' => Request::get('cat'),
                       ];
 
 ?>
@@ -22,6 +23,15 @@
     
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.item.index') }}">
+
+      {!! __html::filter_open() !!}
+
+
+        {!! __form::select_dynamic_for_filter(
+          '4', 'cat', 'Categories', old('cat'), $global_item_categories_all, 'item_category_id', 'name', 'submit_item_filter', 'select2', 'style="width:100%;"'
+        ) !!}
+
+      {!! __html::filter_close('submit_item_filter') !!}
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 

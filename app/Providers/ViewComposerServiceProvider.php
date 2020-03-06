@@ -30,7 +30,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         // ITEM CATEGORY
         View::composer(['dashboard.item.create', 
-                        'dashboard.item.edit'], 'App\Core\ViewComposers\ItemCategoryComposer');
+                        'dashboard.item.edit',
+                        'dashboard.item.index'], 'App\Core\ViewComposers\ItemCategoryComposer');
 
         
 
@@ -42,7 +43,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         
 
-        // ITEMS
+        // USER ROUTES
         View::composer(['*'], 'App\Core\ViewComposers\UserSubmenuComposer');
         
     }

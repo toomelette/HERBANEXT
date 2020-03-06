@@ -38,14 +38,14 @@ class ItemFormRequest extends FormRequest{
 
         if(!empty($this->request->get('row_raw'))){
             foreach($this->request->get('row_raw') as $key => $value){   
-                $rules['row_raw.'.$key.'.item'] = 'nullable|string|max:11';
+                $rules['row_raw.'.$key.'.item'] = 'required|string|max:11';
             } 
         }
 
 
         if(!empty($this->request->get('row_pack'))){
             foreach($this->request->get('row_pack') as $key => $value){ 
-                $rules['row_pack.'.$key.'.item'] = 'nullable|string|max:11';
+                $rules['row_pack.'.$key.'.item'] = 'required|string|max:11';
             } 
         }
 

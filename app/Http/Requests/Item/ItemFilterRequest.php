@@ -22,6 +22,7 @@ class ItemFilterRequest extends FormRequest{
         return [
             
             'q'=>'nullable|string|max:90',
+            'cat'=>'nullable|string|max:11',
             
         ];
 

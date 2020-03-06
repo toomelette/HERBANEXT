@@ -39,6 +39,10 @@ class ItemRepository extends BaseRepository implements ItemInterface {
             if(isset($request->q)){
                 $this->search($item, $request->q);
             }
+            
+            if(isset($request->cat)){
+                $item->whereItemCategoryId($request->cat);
+            }
 
             return $this->populate($item, $entries);
 
