@@ -129,9 +129,9 @@
 
                   <tr>
                     <th style="width:450px;">Item *</th>
-                    <th style="width:300px;">Quantity</th>
+                    <th style="width:300px;">Required Quantity</th>
                     <th style="width:200px;">Unit</th>
-                    <th style="width:400px;">Remaining Quantity</th>
+                    <th style="width:400px;">Current Inventory</th>
                     <th style="width: 40px"></th>
                   </tr>
 
@@ -341,58 +341,23 @@
     @endif
 
 
-    $("#freight_fee").priceFormat({
-        centsLimit: 2,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
+    function textboxNumeric(id, dec){
+      $(id).priceFormat({
+          centsLimit: dec,
+          prefix: "",
+          thousandsSeparator: ",",
+          clearOnEmpty: true,
+          allowNegative: false
+      });
+    }
+    
+    textboxNumeric("#freight_fee", 2);
+    textboxNumeric("#vat", 2);
+    textboxNumeric(".pcs", 0);
+    textboxNumeric(".weight", 3);
+    textboxNumeric(".volume", 3);
+    textboxNumeric(".remaining_balance", 3);
 
-
-    $("#vat").priceFormat({
-        centsLimit: 2,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
-
-
-    $(".remaining_balance").priceFormat({
-        centsLimit: 3,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
-
-
-    $(".pcs").priceFormat({
-        centsLimit: 3,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
-
-
-    $(".weight").priceFormat({
-        centsLimit: 3,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
-
-
-    $(".volume").priceFormat({
-        centsLimit: 3,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
 
 
    {{-- ADD ROW --}}
@@ -468,67 +433,47 @@
                   dataType: "json",
                   success:function(data) {  
 
-                      $(parent).find("#unit").empty();
-                      $(parent).find("#unit_type_id").empty();
-
-                      $.each(data, function(key, value) {
-
-                        $(parent).find(".remaining_balance").val(value.current_balance);
-                        $(parent).find(".remaining_balance_unit").val(value.unit);
-
-                        $(parent).find(".remaining_balance").priceFormat({
-                            centsLimit: 3,
+                      function textboxNumeric(id, dec){
+                        $(id).priceFormat({
+                            centsLimit: dec,
                             prefix: "",
                             thousandsSeparator: ",",
                             clearOnEmpty: true,
                             allowNegative: false
                         });
+                      }
 
+                      $(parent).find(".unit").empty();
+                      $(parent).find(".unit_type_id").empty();
+
+                      $.each(data, function(key, value) {
+
+                        $(parent).find(".remaining_balance").val(value.current_balance);
+                        $(parent).find(".remaining_balance_unit").val(value.unit);
                         $(parent).find(".unit_type_id").val(value.unit_type_id);
+                        textboxNumeric(".remaining_balance", 3);
 
                         if (value.unit_type_id == "IU1001") {
-
                           $(parent).find(".unit").append("<option value='PCS'>PCS</option>");
-                          $(parent).find(".amount").priceFormat({
-                              centsLimit: 0,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
-
+                          textboxNumeric(".amount", 0); 
                         }else if(value.unit_type_id == "IU1002"){
-
                           $(parent).find(".unit").append("<option value='GRAM'>GRAMS</option>");
                           $(parent).find(".unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
-                          $(parent).find(".amount").priceFormat({
-                              centsLimit: 3,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
-
+                          textboxNumeric(".amount", 3); 
                         }else if(value.unit_type_id == "IU1003"){
-
                           $(parent).find(".unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
                           $(parent).find(".unit").append("<option value='LITRE'>LITERS</option>");
-                          $(parent).find(".amount").priceFormat({
-                              centsLimit: 3,
-                              prefix: "",
-                              thousandsSeparator: ",",
-                              clearOnEmpty: true,
-                              allowNegative: false
-                          });
-
+                          textboxNumeric(".amount", 3); 
                         }
                       });
           
                   }
               });
           }else{
-            $(parent).find("#unit").empty();
-            $(parent).find("#unit_type_id").empty();
+            $(parent).find(".unit").empty();
+            $(parent).find(".unit_type_id").empty();
+            $(parent).find(".remaining_balance").val('');
+            $(parent).find(".remaining_balance_unit").val('');
           }
       });
     });

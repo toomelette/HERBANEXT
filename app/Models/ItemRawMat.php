@@ -33,6 +33,10 @@ class ItemRawMat extends Model{
     public function item() {
         return $this->belongsTo('App\Models\Item','item_id','item_id');
     }
+    
+    public function itemOrig() {
+        return $this->belongsTo('App\Models\Item','item_raw_mat_item_id','item_id');
+    }
 
     public function purchaseOrderItemRawMat() {
         return $this->hasMany('App\Models\PurchaseOrderItemRawMat','item_raw_mat_id','item_raw_mat_id');

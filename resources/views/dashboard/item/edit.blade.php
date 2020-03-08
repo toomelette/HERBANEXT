@@ -93,6 +93,7 @@
 
                   <tr>
                     <th>Item *</th>
+                    <th style="width:300px;">Current Inventory</th>
                     <th style="width: 40px"></th>
                   </tr>
 
@@ -112,6 +113,17 @@
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_raw[{{ $key_raw }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ $value_raw['remaining_balance'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_raw[{{ $key_raw }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ $value_raw['remaining_balance_unit'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.remaining_balance_unit') }}</small>
+                            </div>
                           </td>
 
                           <td>
@@ -137,6 +149,17 @@
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_raw[{{ $key_raw }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ optional($value_raw->itemOrig)->current_balance }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_raw[{{ $key_raw }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ optional($value_raw->itemOrig)->unit }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_raw.'. $key_raw .'.remaining_balance_unit') }}</small>
+                            </div>
                           </td>
 
                           <td>
@@ -173,6 +196,7 @@
 
                   <tr>
                     <th>Item *</th>
+                    <th style="width:300px;">Current Inventory</th>
                     <th style="width: 40px"></th>
                   </tr>
 
@@ -192,6 +216,17 @@
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_pack[{{ $key_pack }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ $value_pack['remaining_balance'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_pack[{{ $key_pack }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ $value_pack['remaining_balance_unit'] }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.remaining_balance_unit') }}</small>
+                            </div>
                           </td>
 
                           <td>
@@ -218,6 +253,17 @@
                               @endforeach
                             </select>
                             <br><small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.item') }}</small>
+                          </td>
+
+                          <td>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_pack[{{ $key_pack }}][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" value="{{ optional($value_pack->itemOrig)->current_balance }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.remaining_balance') }}</small>
+                            </div>
+                            <div class="form-group col-md-6 no-padding">
+                              <input type="text" name="row_pack[{{ $key_pack }}][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" value="{{ optional($value_pack->itemOrig)->unit }}" readonly="readonly">
+                              <small class="text-danger">{{ $errors->first('row_pack.'. $key_pack .'.remaining_balance_unit') }}</small>
+                            </div>
                           </td>
 
                           <td>
@@ -264,22 +310,21 @@
 
     $(document).ready(function($){
 
-      // Price Format
-      $("#min_req_qty").priceFormat({
-          centsLimit: 3,
-          prefix: "",
-          thousandsSeparator: ",",
-          clearOnEmpty: true,
-          allowNegative: false
-      });
+      function textboxNumeric(id, dec){
+        $(id).priceFormat({
+            centsLimit: dec,
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: false
+        });
+      }
 
-      $("#price").priceFormat({
-          centsLimit: 2,
-          prefix: "",
-          thousandsSeparator: ",",
-          clearOnEmpty: true,
-          allowNegative: false
-      });
+      textboxNumeric("#min_req_qty", 3);
+
+      textboxNumeric("#price", 2);
+
+      textboxNumeric(".remaining_balance", 3);
 
     });
 
@@ -301,6 +346,15 @@
                         '</td>' +
 
                         '<td>' +
+                          '<div class="form-group col-md-6 no-padding">' +
+                            '<input type="text" name="row_raw[' + i + '][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" readonly="readonly">' +
+                          '</div>' +
+                          '<div class="form-group col-md-6 no-padding" >' +
+                            '<input type="text" name="row_raw[' + i + '][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" readonly="readonly">' +
+                          '</div>' +
+                        '</td>' +
+
+                        '<td>' +
                             '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
                         '</td>' +
                       '</tr>';
@@ -311,6 +365,45 @@
           dropdownParent: $('#table_body_raw')
         });
 
+      });
+    });
+
+
+
+
+    $(document).ready(function() {
+      $(document).on("change", "#item_raw", function() {
+          var key = $(this).val();
+          var parent = $(this).closest('tr');
+          if(key) {
+              $.ajax({
+                  headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
+                  url: "/api/item/select_item_byItemId/" + key,
+                  type: "GET",
+                  dataType: "json",
+                  success:function(data) {  
+
+                      $.each(data, function(key, value) {
+
+                        $(parent).find(".remaining_balance").val(value.current_balance);
+                        $(parent).find(".remaining_balance_unit").val(value.unit);
+
+                        $(parent).find(".remaining_balance").priceFormat({
+                            centsLimit: 3,
+                            prefix: "",
+                            thousandsSeparator: ",",
+                            clearOnEmpty: true,
+                            allowNegative: false
+                        });
+
+                      });
+          
+                  }
+              });
+          }else{
+            $(parent).find(".remaining_balance").val('');
+            $(parent).find(".remaining_balance_unit").val('');
+          }
       });
     });
 
@@ -334,6 +427,15 @@
                         '</td>' +
 
                         '<td>' +
+                          '<div class="form-group col-md-6 no-padding">' +
+                            '<input type="text" name="row_pack[' + i + '][remaining_balance]" id="remaining_balance" class="form-control remaining_balance" placeholder="Remaining Balance" readonly="readonly">' +
+                          '</div>' +
+                          '<div class="form-group col-md-6 no-padding" >' +
+                            '<input type="text" name="row_pack[' + i + '][remaining_balance_unit]" id="remaining_balance_unit" class="form-control remaining_balance_unit" placeholder="Unit" readonly="readonly">' +
+                          '</div>' +
+                        '</td>' +
+
+                        '<td>' +
                             '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
                         '</td>' +
                       '</tr>';
@@ -346,6 +448,45 @@
 
       });
     });
+
+
+
+    $(document).ready(function() {
+      $(document).on("change", "#item_pack", function() {
+          var key = $(this).val();
+          var parent = $(this).closest('tr');
+          if(key) {
+              $.ajax({
+                  headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
+                  url: "/api/item/select_item_byItemId/" + key,
+                  type: "GET",
+                  dataType: "json",
+                  success:function(data) {  
+
+                      $.each(data, function(key, value) {
+
+                        $(parent).find(".remaining_balance").val(value.current_balance);
+                        $(parent).find(".remaining_balance_unit").val(value.unit);
+
+                        $(parent).find(".remaining_balance").priceFormat({
+                            centsLimit: 3,
+                            prefix: "",
+                            thousandsSeparator: ",",
+                            clearOnEmpty: true,
+                            allowNegative: false
+                        });
+
+                      });
+          
+                  }
+              });
+          }else{
+            $(parent).find(".remaining_balance").val('');
+            $(parent).find(".remaining_balance_unit").val('');
+          }
+      });
+    });
+
 
 
     $('.item_raw').select2({
