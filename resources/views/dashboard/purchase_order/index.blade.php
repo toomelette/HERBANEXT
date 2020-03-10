@@ -12,6 +12,15 @@
 
                       ];
 
+  $list_of_status = [
+                    0 => '',
+                    1 => '<span class="badge bg-orange">Pending..</span>',
+                    2 => '<span class="badge bg-orange">Manufacturing..</span>',
+                    3 => '<span class="badge bg-blue">Subject for Delivery</span>',
+                    5 => '<span class="badge bg-green">Delivered</span>',
+
+  ];
+
 ?>
 
 
@@ -67,6 +76,7 @@
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
+            <th>@sortablelink('status', 'Status')</th>
             <th style="width: 300px">Action</th>
           </tr>
           @foreach($purchase_orders as $data) 
@@ -83,6 +93,16 @@
                 {{ $data->ship_to_address }}<br>
               </td>
               <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'M d, Y g:i A') }}</td>
+
+              <td id="mid-vert">
+
+                @foreach ($list_of_status as $key => $value)
+                  @if ($key == $data->process_status)
+                      {!! $value !!}
+                  @endif
+                @endforeach
+
+              </td>
 
               <td id="mid-vert">
                 <div class="btn-group">

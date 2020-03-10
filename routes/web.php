@@ -63,6 +63,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/purchase_order/to_process/{slug}', 'PurchaseOrderController@toProcess')->name('purchase_order.to_process');
 	Route::post('/purchase_order/to_buffer/{slug}', 'PurchaseOrderController@toBuffer')->name('purchase_order.to_buffer');
 	Route::resource('purchase_order', 'PurchaseOrderController');
+
+
+	/** JOB ORDER **/
+	Route::get('/job_order/generate/{slug}', 'JobOrderController@generate')->name('job_order.generate');
+	Route::resource('job_order', 'JobOrderController');
 	
 });
 

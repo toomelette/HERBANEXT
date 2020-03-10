@@ -50,6 +50,7 @@
             <th>@sortablelink('product_code', 'Product Code')</th>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('current_balance', 'Balance')</th>
+            <th>@sortablelink('', 'Pending Check Out')</th>
             <th style="width: 400px">Action</th>
           </tr>
           @foreach($items as $data) 
@@ -70,6 +71,27 @@
                       <span class="text-green">{{ number_format($data->current_balance) }} {{ $data->unit }}<span>
                     @endif
                   @endif
+              </td>
+              <td id="mid-vert">
+
+                <?php 
+                  $amount = 0.00;
+                ?> 
+
+                @foreach($data->purchaseOrderItem as $data_po_item)
+                  @if ($data_po_item->purchaseOrder->process_status != 5)
+                      <?php 
+                        $amount += $data_po_item->amount;
+                      ?>
+                  @endif
+                @endforeach
+
+                @if($data->unit != 'PCS')
+                  <span class="text-yellow">{{ number_format($amount, 3) }} {{ $data->unit }}<span>
+                @else
+                  <span class="text-yellow">{{ number_format($amount) }} {{ $data->unit }}<span>
+                @endif
+
               </td>
               <td id="mid-vert">
                 <div class="btn-group">

@@ -67,6 +67,13 @@
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Ship to</h3>
+                <div class="box-tools">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" class="minimal" id="fill_ship_to" value=""> &nbsp;The same as Bill to
+                      </label>
+                    </div>
+                </div>
               </div>
               <div class="box-body">
 
@@ -250,7 +257,7 @@
 
                           <td>
                             <div class="form-group">
-                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control amount {{ $class }}" placeholder="Quantity" value="{{ $data->amount }}">
+                              <input type="text" name="row[{{ $key }}][amount]" id="amount" class="form-control {{ $class }}" placeholder="Quantity" value="{{ $data->amount }}">
                               <small class="text-danger">{{ $errors->first('row.'. $key .'.amount') }}</small>
                             </div>
                           </td>
@@ -341,6 +348,20 @@
     @endif
 
 
+    $('#fill_ship_to').on('ifChecked', function(event){
+      $('#ship_to_name').val($('#bill_to_name').val());
+      $('#ship_to_company').val($('#bill_to_company').val());
+      $('#ship_to_address').val($('#bill_to_address').val());
+    });
+    
+
+    $('#fill_ship_to').on('ifUnchecked', function(event){
+      $('#ship_to_name').val('');
+      $('#ship_to_company').val('');
+      $('#ship_to_address').val('');
+    });
+
+
     function textboxNumeric(id, dec){
       $(id).priceFormat({
           centsLimit: dec,
@@ -353,7 +374,7 @@
     
     textboxNumeric("#freight_fee", 2);
     textboxNumeric("#vat", 2);
-    textboxNumeric(".pcs", 0);
+    textboxNumeric(".pcs", 3);
     textboxNumeric(".weight", 3);
     textboxNumeric(".volume", 3);
     textboxNumeric(".remaining_balance", 3);
@@ -446,24 +467,35 @@
                       $(parent).find(".unit").empty();
                       $(parent).find(".unit_type_id").empty();
 
+
                       $.each(data, function(key, value) {
 
                         $(parent).find(".remaining_balance").val(value.current_balance);
                         $(parent).find(".remaining_balance_unit").val(value.unit);
                         $(parent).find(".unit_type_id").val(value.unit_type_id);
-                        textboxNumeric(".remaining_balance", 3);
+
+                        textboxNumeric($(parent).find(".remaining_balance"), 3);
 
                         if (value.unit_type_id == "IU1001") {
+
                           $(parent).find(".unit").append("<option value='PCS'>PCS</option>");
-                          textboxNumeric(".amount", 0); 
+
+                          textboxNumeric($(parent).find(".amount"), 0); 
+
                         }else if(value.unit_type_id == "IU1002"){
+
                           $(parent).find(".unit").append("<option value='GRAM'>GRAMS</option>");
                           $(parent).find(".unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
-                          textboxNumeric(".amount", 3); 
+
+                          textboxNumeric($(parent).find(".amount"), 3); 
+
                         }else if(value.unit_type_id == "IU1003"){
+
                           $(parent).find(".unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
                           $(parent).find(".unit").append("<option value='LITRE'>LITERS</option>");
-                          textboxNumeric(".amount", 3); 
+
+                          textboxNumeric($(parent).find(".amount"), 3);
+
                         }
                       });
           

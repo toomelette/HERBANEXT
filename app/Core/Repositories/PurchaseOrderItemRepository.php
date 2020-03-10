@@ -30,6 +30,31 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
 
 
+    public function fetch($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
+
+        $po_items = $this->cache->remember('purchase_order_items:fetch:' . $key, 240, function() use ($request, $entries){
+
+            $po_item = $this->po_item->newQuery();
+            
+            if(isset($request->q)){
+                $this->search($po_item, $request->q);
+            }
+
+            return $this->populate($po_item, $entries);
+
+        });
+
+        return $po_items;
+
+    }
+
+
+
+
+
 
     public function store($data, $item, $purchase_order, $line_price){
 
@@ -44,9 +69,61 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
         $po_item->unit = $data['unit'];
         $po_item->item_price = $item->price;
         $po_item->line_price = $line_price;
+        $po_item->created_at = $this->carbon->now();
+        $po_item->updated_at = $this->carbon->now();
+        $po_item->ip_created = request()->ip();
+        $po_item->ip_updated = request()->ip();
+        $po_item->user_created = $this->auth->user()->user_id;
+        $po_item->user_updated = $this->auth->user()->user_id;
         $po_item->save();
         
         return $po_item;
+
+    }
+
+
+
+
+
+    public function findBySlug($slug){
+
+        $po_item = $this->cache->remember('purchase_order_items:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->po_item->where('slug', $slug)
+                                 ->with('jobOrder')
+                                 ->first();
+        }); 
+        
+        if(empty($po_item)){
+            abort(404);
+        }
+
+        return $po_item;
+
+    }
+
+
+
+
+
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('po_no', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('po_no', 'item_id', 'amount', 'unit', 'updated_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
 
     }
 

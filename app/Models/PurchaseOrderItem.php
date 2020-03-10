@@ -3,14 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class PurchaseOrderItem extends Model{
 
 
+    use Sortable;
 
     protected $table = 'purchase_order_items';
 
-    protected $dates = ['expiry_date', 'created_at', 'updated_at'];
+    public $sortable = ['po_no', 'amount', 'unit', 'updated_at'];
+
+    protected $dates = ['created_at', 'updated_at'];
     
 	public $timestamps = false;
 
@@ -19,6 +23,7 @@ class PurchaseOrderItem extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'po_id' => '',
         'po_no' => '',
     	'po_item_id' => '',
         'item_id' => '',
@@ -27,9 +32,14 @@ class PurchaseOrderItem extends Model{
         'unit' => '',
         'item_price' => 0.00,
         'line_price' => 0.00,
+        'created_at' => null,
+        'updated_at' => null,
+        'ip_created' => '',
+        'ip_updated' => '',
+        'user_created' => '',
+        'user_updated' => '',
 
     ];
-
 
 
 
@@ -50,6 +60,9 @@ class PurchaseOrderItem extends Model{
         return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_item_id','po_item_id');
     }
 
+    public function jobOrder() {
+        return $this->hasMany('App\Models\JobOrder','po_item_id','po_item_id');
+    }
 
 
     

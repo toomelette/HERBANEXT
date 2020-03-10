@@ -34,7 +34,7 @@ class PurchaseOrder extends Model{
         'ship_to_name' => '',
         'ship_to_company' => '',
         'ship_to_address' => '',
-        'process_status' => 1,
+        'process_status' => 0,
         'buffer_status' => 0,
         'freight_fee' => 0.00,
         'vat' => 0.00,
