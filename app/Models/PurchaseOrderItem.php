@@ -12,7 +12,7 @@ class PurchaseOrderItem extends Model{
 
     protected $table = 'purchase_order_items';
 
-    public $sortable = ['po_no', 'amount', 'unit', 'updated_at'];
+    public $sortable = ['po_no', 'item.name' ,'amount', 'unit', 'is_generated', 'updated_at'];
 
     protected $dates = ['created_at', 'updated_at'];
     
@@ -32,6 +32,7 @@ class PurchaseOrderItem extends Model{
         'unit' => '',
         'item_price' => 0.00,
         'line_price' => 0.00,
+        'is_generated' => false,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

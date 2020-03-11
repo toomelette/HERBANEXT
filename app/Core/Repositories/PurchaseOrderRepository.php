@@ -141,10 +141,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
         $purchase_order->save();
-
-        $purchase_order->purchaseOrderItem()->delete();
-        $purchase_order->purchaseOrderItemRawMat()->delete();
-        $purchase_order->purchaseOrderItemPackMat()->delete();
         
         return $purchase_order;
 
@@ -176,8 +172,13 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order = $this->findBySlug($slug);
         $purchase_order->delete();
         $purchase_order->purchaseOrderItem()->delete();
+        $purchase_order->purchaseOrderItem()->delete();
         $purchase_order->purchaseOrderItemRawMat()->delete();
         $purchase_order->purchaseOrderItemPackMat()->delete();
+
+        foreach ($purchase_order->purchaseOrderItem as $po_item) {
+            $po_item->jobOrder()->delete();
+        }
 
         return $purchase_order;
 

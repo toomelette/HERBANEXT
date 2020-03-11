@@ -164,56 +164,8 @@ class PurchaseOrderService extends BaseService{
     public function update($request, $slug){
 
         $purchase_order = $this->purchase_order_repo->update($request, $slug);
-
-        $route = $purchase_order->buffer_status == 1 ? 'dashboard.purchase_order.buffer' : 'dashboard.purchase_order.index'; 
-
-        $subtotal_price = 0.00;
-        $total_price = 0.00;
-
-        if (!empty($request->row)) {
-
-            foreach ($request->row as $data) {
-
-                $item = $this->item_repo->findByItemId($data['item']);
-
-                $amount = $this->__dataType->string_to_num($data['amount']);
-
-                if ($item->unit != 'PCS') {
-                    $converted_amount = Conversion::convert($amount, $data['unit'])->to($item->unit)->format(10,'.','');
-                }else{
-                    $converted_amount = $amount;
-                }
-
-                $line_price = $item->price * $converted_amount;
-                
-                $po_item = $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
-
-                $subtotal_price += $line_price;
-
-                foreach ($item->itemRawMat as $data_irm) {
-                    $this->purchase_order_item_rm_repo->store($purchase_order, $po_item->po_item_id, $data_irm);
-                }
-
-                foreach ($item->itemPackMat as $data_ipm) {
-                    $this->purchase_order_item_pm_repo->store($purchase_order, $po_item->po_item_id, $data_ipm);
-                }
-
-
-            }
-            
-        }
-
-        $vat_rounded_off = $this->__dataType->string_to_num($request->vat) / 100;   
-
-        $vatable = $subtotal_price * $vat_rounded_off;
         
-        $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
-
-        $total_price = $subtotal_price + $vatable;
-
-        $total_price = $total_price - $freight_fee;
-
-        $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
+        $route = $purchase_order->buffer_status == 1 ? 'dashboard.purchase_order.buffer' : 'dashboard.purchase_order.index'; 
 
         $this->event->fire('purchase_order.update', $purchase_order);
         return redirect()->route($route);

@@ -85,17 +85,27 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
 
 
+
+    public function generate($po_item){
+
+        $po_item->is_generated = true;
+        $po_item->save();
+
+        return $po_item;
+
+    }
+
+
+
+
+
     public function findBySlug($slug){
 
         $po_item = $this->cache->remember('purchase_order_items:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->po_item->where('slug', $slug)
-                                 ->with('jobOrder')
-                                 ->first();
+            return $this->po_item->where('slug', $slug)->with('jobOrder')->first();
         }); 
         
-        if(empty($po_item)){
-            abort(404);
-        }
+        if(empty($po_item)){ abort(404); }
 
         return $po_item;
 
@@ -120,7 +130,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'item_id', 'amount', 'unit', 'updated_at', 'slug')
+        return $model->select('po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

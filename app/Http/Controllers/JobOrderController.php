@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Core\Services\JobOrderService;
-use App\Http\Requests\JobOrder\JobOrderFormRequest;
+use App\Http\Requests\JobOrder\JobOrderGenerateFormRequest;
 use App\Http\Requests\JobOrder\PurchaseOrderFilterRequest;
 
 
 class JobOrderController extends Controller{
+
 
 
 	protected $job_order;
@@ -39,9 +40,18 @@ class JobOrderController extends Controller{
 
 
 
-    public function generate($slug){
+    public function generate(JobOrderGenerateFormRequest $request, $slug){
         
-        return $this->job_order->generate($slug);
+        return $this->job_order->generate($request, $slug);
+
+    }
+ 
+
+
+
+    public function generateFill($slug){
+        
+        return $this->job_order->generateFill($slug);
 
     }
 

@@ -35,6 +35,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Core\Subscribers\ItemSubscriber',
         'App\Core\Subscribers\ItemCategorySubscriber',
         'App\Core\Subscribers\PurchaseOrderSubscriber',
+        'App\Core\Subscribers\JobOrderSubscriber',
         
     ];
 
