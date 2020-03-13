@@ -25,7 +25,9 @@
 	        <h2 class="box-title">Fill JO Batches</h2>
 	        <div class="pull-right">
 	            <code>Fields with asterisks(*) are required</code>
-	        </div> 
+	            &nbsp;
+	            {!! __html::back_button(['dashboard.job_order.create']) !!}
+			</div> 
 	      </div>
 
 	        <div class="box-body">

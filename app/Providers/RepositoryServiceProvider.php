@@ -39,6 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\ItemPackMatInterface', 'App\Core\Repositories\ItemPackMatRepository');
 
+		$this->app->bind('App\Core\Interfaces\ItemTypeInterface', 'App\Core\Repositories\ItemTypeRepository');
+
 		$this->app->bind('App\Core\Interfaces\PurchaseOrderInterface', 'App\Core\Repositories\PurchaseOrderRepository');
 
 		$this->app->bind('App\Core\Interfaces\PurchaseOrderItemInterface', 'App\Core\Repositories\PurchaseOrderItemRepository');

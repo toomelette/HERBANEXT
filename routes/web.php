@@ -57,6 +57,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('item_category', 'ItemCategoryController');
 
 
+	/** ITEMS TYPES **/
+	Route::resource('item_type', 'ItemTypeController');
+
+
 	/** PURCHASE ORDER **/
 	Route::get('/purchase_order/print/{slug}', 'PurchaseOrderController@print')->name('purchase_order.print');
 	Route::get('/purchase_order/buffers/', 'PurchaseOrderController@buffer')->name('purchase_order.buffer');

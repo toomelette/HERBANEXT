@@ -113,7 +113,7 @@
                   @endif
                   @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.purchase_order.show', $data->slug) }}">
-                      <i class="fa fa-info-circle"></i>
+                      <i class="fa fa-print"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.purchase_order.edit', $global_user_submenus))

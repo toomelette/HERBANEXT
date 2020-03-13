@@ -76,11 +76,19 @@
 			                  @endif
 			              </td>
 			              <td id="mid-vert">
+			              	@if ($data->is_generated == false)
 			                  @if(in_array('dashboard.job_order.generate', $global_user_submenus))
 			                    <a type="button" class="btn btn-default" id="generate_button" data-action="generate" data-url="{{ route('dashboard.job_order.generate', $data->slug) }}">
 			                      Generate JO
 			                    </a>
 			                  @endif
+			                @else
+			                  @if(in_array('dashboard.job_order.generate_fill', $global_user_submenus))
+			                    <a href="{{ route('dashboard.job_order.generate_fill', $data->slug) }}" type="button" class="btn btn-default">
+			                      View JO
+			                    </a>
+			                  @endif
+			              	@endif
 			              </td>
 			            </tr>
 			            @endforeach

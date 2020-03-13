@@ -26,6 +26,14 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // SUBMENU
         View::composer(['dashboard.user.create', 
                         'dashboard.user.edit'], 'App\Core\ViewComposers\SubmenuComposer');
+
+        
+
+        // ITEMS
+        View::composer(['dashboard.purchase_order.create', 
+                        'dashboard.purchase_order.edit',
+                        'dashboard.item.create',
+                        'dashboard.item.edit'], 'App\Core\ViewComposers\ItemComposer');
         
 
         // ITEM CATEGORY
@@ -35,11 +43,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         
 
-        // ITEMS
-        View::composer(['dashboard.purchase_order.create', 
-                        'dashboard.purchase_order.edit',
-                        'dashboard.item.create',
-                        'dashboard.item.edit'], 'App\Core\ViewComposers\ItemComposer');
+        // ITEM TYPES
+        View::composer(['dashboard.item.create',
+                        'dashboard.item.edit'], 'App\Core\ViewComposers\ItemTypeComposer');
 
         
 

@@ -27,6 +27,7 @@ class Item extends Model{
         'item_id' => '',
         'product_code' => '',
         'item_category_id' => '',
+        'item_type_id' => '',
         'unit_type_id' => '',
         'name' => '',
         'description' => '',
@@ -62,6 +63,11 @@ class Item extends Model{
 
     public function itemCategory() {
         return $this->belongsTo('App\Models\ItemCategory','item_category_id','item_category_id');
+    }
+
+
+    public function itemType() {
+        return $this->belongsTo('App\Models\ItemType','item_type_id','item_type_id');
     }
 
 

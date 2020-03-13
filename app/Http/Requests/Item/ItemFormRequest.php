@@ -24,6 +24,7 @@ class ItemFormRequest extends FormRequest{
             
             'product_code'=>'required|string|max:45',
             'item_category_id'=>'required|string|max:11',
+            'item_type_id'=>'required|string|max:11',
             'name'=>'required|string|max:255',
             'description'=>'nullable|string|max:255',
             

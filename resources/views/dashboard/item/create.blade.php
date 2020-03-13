@@ -32,7 +32,11 @@
               ) !!}
 
               {!! __form::select_dynamic(
-                '12', 'item_category_id', 'Category *', old('item_category_id'), $global_item_categories_all, 'item_category_id', 'name', $errors->has('item_category_id'), $errors->first('item_category_id'), '', ''
+                '6', 'item_category_id', 'Category *', old('item_category_id'), $global_item_categories_all, 'item_category_id', 'name', $errors->has('item_category_id'), $errors->first('item_category_id'), 'select2', ''
+              ) !!}
+
+              {!! __form::select_dynamic(
+                '6', 'item_type_id', 'Type *', old('item_type_id'), $global_item_types_all, 'item_type_id', 'name', $errors->has('item_type_id'), $errors->first('item_type_id'), 'select2', ''
               ) !!}
 
               {!! __form::textbox(

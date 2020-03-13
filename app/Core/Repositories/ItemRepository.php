@@ -63,6 +63,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->item_id = $this->getItemIdInc();
         $item->product_code = $request->product_code;
         $item->item_category_id = $request->item_category_id;
+        $item->item_type_id = $request->item_type_id;
         $item->name = $request->name;
         $item->description = $request->description;
         $item->unit_type_id = $request->unit_type_id;
@@ -92,6 +93,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item = $this->findBySlug($slug);
         $item->product_code = $request->product_code;
         $item->item_category_id = $request->item_category_id;
+        $item->item_type_id = $request->item_type_id;
         $item->name = $request->name;
         $item->description = $request->description;
         $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);

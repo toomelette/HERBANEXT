@@ -27,6 +27,8 @@ class PurchaseOrderItem extends Model{
         'po_no' => '',
     	'po_item_id' => '',
         'item_id' => '',
+        'item_type_id' => '',
+        'item_type_percent' => 0,
         'unit_type_id' => '',
         'amount' => 0.000,
         'unit' => '',
