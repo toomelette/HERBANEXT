@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Services\JobOrderService;
 use App\Http\Requests\JobOrder\JobOrderGenerateFormRequest;
+use App\Http\Requests\JobOrder\JobOrderGenerateFillFormRequest;
 use App\Http\Requests\JobOrder\PurchaseOrderFilterRequest;
 
 
@@ -42,6 +43,8 @@ class JobOrderController extends Controller{
 
     public function generate(JobOrderGenerateFormRequest $request, $slug){
         
+        dd($request);
+
         return $this->job_order->generate($request, $slug);
 
     }
@@ -52,6 +55,15 @@ class JobOrderController extends Controller{
     public function generateFill($slug){
         
         return $this->job_order->generateFill($slug);
+
+    }
+ 
+
+
+
+    public function generateFillPost(JobOrderGenerateFillFormRequest $request, $slug){
+        
+        return $this->job_order->generateFillPost($request, $slug);
 
     }
 

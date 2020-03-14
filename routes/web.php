@@ -70,8 +70,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** JOB ORDER **/
-	Route::get('/job_order/generate_fill/{slug}', 'JobOrderController@generateFill')->name('job_order.generate_fill');
 	Route::post('/job_order/generate/{slug}', 'JobOrderController@generate')->name('job_order.generate');
+	Route::get('/job_order/generate_fill/{slug}', 'JobOrderController@generateFill')->name('job_order.generate_fill');
+	Route::post('/job_order/generate_fill/{slug}', 'JobOrderController@generateFillPost')->name('job_order.generate_fill_post');
 	Route::resource('job_order', 'JobOrderController');
 	
 });

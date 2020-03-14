@@ -1,4 +1,4 @@
-@extends('layouts.admin-master')
+$row_data@extends('layouts.admin-master')
 
 @section('content')
 
