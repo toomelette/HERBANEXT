@@ -12,7 +12,9 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 	
 
 
+
     protected $job_order;
+
 
 
 
@@ -55,6 +57,45 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
+    public function updateGenerateFillPost($data){
+
+        $job_order = $this->findByJoId($data['jo_id']);
+        $job_order->date = $this->__dataType->date_parse($data['date']);
+        $job_order->lot_no = $data['lot_no'];
+        $job_order->pack_size = $this->__dataType->string_to_num($data['pack_size']);
+        $job_order->pack_size_unit = $data['pack_size_unit'];
+        $job_order->theo_yield = $this->__dataType->string_to_num($data['theo_yield']);
+        $job_order->theo_yield_unit = $data['theo_yield_unit'];
+        $job_order->updated_at = $this->carbon->now();
+        $job_order->ip_updated = request()->ip();
+        $job_order->user_updated = $this->auth->user()->user_id;
+        $job_order->save();
+
+    }
+
+
+
+
+
+
+    public function findByJoId($jo_id){
+
+        $job_order = $this->cache->remember('job_orders:findByJoId:' . $jo_id, 240, function() use ($jo_id){
+            return $this->job_order->where('jo_id', $jo_id)->first();
+        });
+        
+        if(empty($job_order)){
+            abort(404);
+        }
+        
+        return $job_order;
+
+    }
+
+
+
+
+
     public function getJOId(){
 
         $id = 'JO10001';
@@ -69,6 +110,7 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         return $id;
         
     }
+
 
 
 

@@ -43,8 +43,6 @@ class JobOrderController extends Controller{
 
     public function generate(JobOrderGenerateFormRequest $request, $slug){
         
-        dd($request);
-
         return $this->job_order->generate($request, $slug);
 
     }
@@ -64,6 +62,22 @@ class JobOrderController extends Controller{
     public function generateFillPost(JobOrderGenerateFillFormRequest $request, $slug){
         
         return $this->job_order->generateFillPost($request, $slug);
+
+    }
+
+   
+
+    public function show($slug){
+        
+        return $this->job_order->show($slug);
+
+    }
+
+   
+
+    public function print($slug){
+        
+        return $this->job_order->print($slug);
 
     }
 

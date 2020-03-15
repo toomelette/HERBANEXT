@@ -22,7 +22,7 @@ class JobOrder extends Model{
         'po_item_id' => '',
         'po_id' => '',
         'po_no' => '',
-        'jo_lot_no' => '',
+        'lot_no' => '',
         'item_name' => '',
         'date' => null,
         'batch_size' => 0.00,

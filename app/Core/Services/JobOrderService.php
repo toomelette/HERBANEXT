@@ -70,6 +70,51 @@ class JobOrderService extends BaseService{
 
 
 
+    public function generateFillPost($request, $slug){
+
+        if (!empty($request->row)) {
+            
+            foreach ($request->row as $data) {
+                $this->job_order_repo->updateGenerateFillPost($data);
+            }
+            
+        }
+
+        $this->event->fire('job_order.generate_fill_post', $slug);
+        return redirect()->route('dashboard.job_order.create');
+
+    }
+
+
+
+
+
+
+    public function show($slug){
+
+        $po_item = $this->po_item_repo->findbySlug($slug);
+        return view('dashboard.job_order.show')->with('po_item', $po_item);
+
+    }
+
+
+
+
+
+
+
+    public function print($slug){
+
+        dd($slug);
+
+        // $po_item = $this->po_item_repo->findbySlug($slug);
+        // return view('dashboard.job_order.show')->with('po_item', $po_item);
+
+    }
+
+
+
+
 
     // public function store($request){
 

@@ -1,6 +1,6 @@
 <?php
 
-  $table_sessions = [ ];
+  $table_sessions = [ Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG') ];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
@@ -43,7 +43,7 @@
     <div class="col-md-9">
 	    <div class="box box-solid">
 	      <div class="box-header with-border">
-	        <h2 class="box-title">Result</h2>
+	        <h2 class="box-title">PO Items</h2>
 	      </div>
 
 	        <div class="box-body no-padding">
@@ -83,9 +83,14 @@
 			                    </a>
 			                  @endif
 			                @else
+			                  @if(in_array('dashboard.job_order.show', $global_user_submenus))
+			                    <a href="{{ route('dashboard.job_order.show', $data->slug) }}" type="button" class="btn btn-default">
+			                      <i class="fa fa-print"></i>
+			                    </a>
+			                  @endif
 			                  @if(in_array('dashboard.job_order.generate_fill', $global_user_submenus))
 			                    <a href="{{ route('dashboard.job_order.generate_fill', $data->slug) }}" type="button" class="btn btn-default">
-			                      View JO
+			                      Edit JO
 			                    </a>
 			                  @endif
 			              	@endif
@@ -118,6 +123,16 @@
 
 
 @section('modals')
+
+    {{-- DV CREATE SUCCESS --}}
+	@if(Session::has('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'))
+
+		{!! __html::modal_print(
+	      'jo_generate_fill_post', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'), route('dashboard.job_order.show', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG'))
+	    ) !!}
+
+	  @endif
+
 	<div class="modal fade" id="generate" data-backdrop="static">
 		<div class="modal-dialog">
 		  <div class="modal-content">
@@ -151,6 +166,7 @@
 		  </div>
 		</div>
 	</div>
+
 @endsection
 
 
@@ -158,6 +174,11 @@
 @section('scripts')
 
 <script type="text/javascript">
+
+    {{-- Print JO Confirmation --}}
+    @if(Session::has('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'))
+      $('#jo_generate_fill_post').modal('show');
+    @endif
 		
 	$(document).on("click", "#generate_button", function () {
       if($(this).data("action") == "generate"){
