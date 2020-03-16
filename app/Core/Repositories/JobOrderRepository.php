@@ -63,9 +63,10 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         $job_order->date = $this->__dataType->date_parse($data['date']);
         $job_order->lot_no = $data['lot_no'];
         $job_order->pack_size = $this->__dataType->string_to_num($data['pack_size']);
+        $job_order->pack_size_pkging = $data['pack_size_pkging'];
         $job_order->pack_size_unit = $data['pack_size_unit'];
         $job_order->theo_yield = $this->__dataType->string_to_num($data['theo_yield']);
-        $job_order->theo_yield_unit = $data['theo_yield_unit'];
+        $job_order->theo_yield_pkging = $data['theo_yield_pkging'];
         $job_order->updated_at = $this->carbon->now();
         $job_order->ip_updated = request()->ip();
         $job_order->user_updated = $this->auth->user()->user_id;

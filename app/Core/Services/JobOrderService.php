@@ -105,10 +105,8 @@ class JobOrderService extends BaseService{
 
     public function print($slug){
 
-        dd($slug);
-
-        // $po_item = $this->po_item_repo->findbySlug($slug);
-        // return view('dashboard.job_order.show')->with('po_item', $po_item);
+        $po_item = $this->po_item_repo->findbySlug($slug);
+        return view('printables.job_order.jo')->with('po_item', $po_item);
 
     }
 
