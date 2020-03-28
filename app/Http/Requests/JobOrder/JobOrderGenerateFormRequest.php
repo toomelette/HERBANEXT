@@ -22,7 +22,6 @@ class JobOrderGenerateFormRequest extends FormRequest{
 
         return [
 
-            'jo_no' => 'required|string|max:45',
             'no_of_batch' => 'required|int|max:50',
             
         ];

@@ -23,7 +23,7 @@
 
           <input name="_method" value="PUT" type="hidden">
 
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">PO Number</h3>
@@ -37,6 +37,47 @@
               </div>
             </div>
           </div>
+
+
+          <div class="col-md-6">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Type</h3>
+              </div>
+              <div class="box-body">
+
+                <div class="col-md-12" style="padding:25px;">
+
+                  <label>
+                    <input type="radio" class="minimal type" name="type" value="1" {{ $purchase_order->type == '1' ? 'checked' : '' }}>
+                    &nbsp; For Process
+                  </label>
+
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <label>
+                    <input type="radio" class="minimal type" name="type" value="2" {{ $purchase_order->type == '2' ? 'checked' : '' }}>
+                    &nbsp; For Delivery
+                  </label>
+
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <label>
+                    <input type="radio" class="minimal type"  name="type" value="3" {{ $purchase_order->type == '3' ? 'checked' : '' }}>
+                    &nbsp; For Buffer
+                  </label>
+
+                  @if($errors->has('type'))
+                    <p class="text-danger" style="padding-top:10px;">{{ $errors->first('type') }}</p>
+                  @endif
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
 
           <div class="col-md-6">
             <div class="box">

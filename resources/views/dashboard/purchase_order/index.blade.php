@@ -13,13 +13,11 @@
                       ];
 
   $list_of_status = [
-                    0 => '',
-                    1 => '<span class="badge bg-orange">Pending..</span>',
-                    2 => '<span class="badge bg-orange">Manufacturing..</span>',
-                    3 => '<span class="badge bg-blue">Subject for Delivery</span>',
-                    5 => '<span class="badge bg-green">Delivered</span>',
-
-  ];
+                    1 => '<span class="badge bg-yellow">PENDING..</span>',
+                    2 => '<span class="badge bg-orange">MANUFACTURING..</span>',
+                    3 => '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>',
+                    5 => '<span class="badge bg-green">DELIVERED</span>',
+                  ];
 
 ?>
 

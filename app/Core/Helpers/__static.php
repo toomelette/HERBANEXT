@@ -36,7 +36,10 @@ class __static{
 
         return [
 
-	      'For Confirmation' => 1,
+	      1 => 'PENDING',
+	      2 => 'MANUFACTURING',
+	      3 => 'SUBJECT FOR DELIVERY',
+	      4 => 'DELIVERED',
 
 	    ];
 

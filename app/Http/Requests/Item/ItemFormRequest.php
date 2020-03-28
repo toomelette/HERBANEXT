@@ -31,6 +31,8 @@ class ItemFormRequest extends FormRequest{
             'unit_type_id'=>'sometimes|required|string|max:11',
             'beginning_balance'=>'sometimes|required|string|max:21',
             'unit'=>'sometimes|required|string|max:11',
+            'batch_size'=>'required|string|max:21',
+            'batch_size_unit'=>'required|string|max:11',
             'min_req_qty'=>'required|string|max:21',
             'price'=>'nullable|string|max:21',
             

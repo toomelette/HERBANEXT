@@ -131,7 +131,7 @@
 	      'jo_generate_fill_post', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'), route('dashboard.job_order.show', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG'))
 	    ) !!}
 
-	  @endif
+	 @endif
 
 	<div class="modal fade" id="generate" data-backdrop="static">
 		<div class="modal-dialog">
@@ -149,11 +149,7 @@
 		        
 		        <div class="row">
 			        {!! __form::textbox(
-			         '6', 'jo_no', 'text', 'JO No. *', 'JO No.', old('jo_no'), $errors->has('jo_no'), $errors->first('jo_no'), 'required'
-			        ) !!}  
-
-			        {!! __form::textbox(
-			         '6', 'no_of_batch', 'number', 'Number of Batch *', 'Number of Batch', old('no_of_batch'), $errors->has('no_of_batch'), $errors->first('no_of_batch'), 'required'
+			         '12', 'no_of_batch', 'number', 'Number of Batch *', 'Number of Batch', old('no_of_batch'), $errors->has('no_of_batch'), $errors->first('no_of_batch'), 'required'
 			        ) !!}  	
 		        </div>
 

@@ -103,8 +103,8 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
-        $purchase_order->process_status = 1;
-        $purchase_order->buffer_status = $this->__dataType->string_to_boolean($request->buffer_status);
+        $purchase_order->process_status = $request->type == '2' ? 3 : 1;
+        $purchase_order->type = $request->type;
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
@@ -134,6 +134,8 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
+        $purchase_order->process_status = $request->type == '2' ? 3 : 1;
+        $purchase_order->type = $request->type;
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
@@ -172,7 +174,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order = $this->findBySlug($slug);
         $purchase_order->delete();
         $purchase_order->purchaseOrderItem()->delete();
-        $purchase_order->purchaseOrderItem()->delete();
         $purchase_order->purchaseOrderItemRawMat()->delete();
         $purchase_order->purchaseOrderItemPackMat()->delete();
 
@@ -191,7 +192,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function toProcess($slug){
 
         $purchase_order = $this->findBySlug($slug);
-        $purchase_order->buffer_status = 0;
+        $purchase_order->type = 1;
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
@@ -208,7 +209,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function toBuffer($slug){
 
         $purchase_order = $this->findBySlug($slug);
-        $purchase_order->buffer_status = 1;
+        $purchase_order->type = 3;
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
@@ -263,10 +264,10 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at','process_status', 'slug')
-                     ->where('buffer_status', 0)
-                     ->sortable()
+        return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'type', 'created_at','process_status', 'slug')
+                     ->whereIn('type', [1,2])
                      ->orderBy('updated_at', 'desc')
+                     ->sortable()
                      ->paginate($entries);
 
     }
@@ -278,7 +279,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
     public function populateBuffer($model, $entries){
 
         return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at', 'slug')
-                     ->where('buffer_status', 1)
+                     ->where('type', 3)
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

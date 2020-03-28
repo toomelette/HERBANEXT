@@ -70,6 +70,8 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->beginning_balance = $this->__dataType->string_to_num($request->beginning_balance);
         $item->current_balance = $this->__dataType->string_to_num($request->beginning_balance);
         $item->unit = $request->unit;
+        $item->batch_size = $this->__dataType->string_to_num($request->batch_size);
+        $item->batch_size_unit = $request->batch_size_unit;
         $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
         $item->price = $this->__dataType->string_to_num($request->price);
         $item->created_at = $this->carbon->now();
@@ -96,6 +98,8 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->item_type_id = $request->item_type_id;
         $item->name = $request->name;
         $item->description = $request->description;
+        $item->batch_size = $this->__dataType->string_to_num($request->batch_size);
+        $item->batch_size_unit = $request->batch_size_unit;
         $item->min_req_qty = $this->__dataType->string_to_num($request->min_req_qty);
         $item->price = $this->__dataType->string_to_num($request->price);
         $item->updated_at = $this->carbon->now();

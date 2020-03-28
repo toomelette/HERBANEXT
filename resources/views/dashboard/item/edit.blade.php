@@ -65,14 +65,24 @@
                 <h3 class="box-title">Figures</h3>
               </div>
               <div class="box-body">
+                
+                {!! __form::textbox_numeric(
+                  '6', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size') ? old('batch_size') : $item->batch_size, $errors->has('batch_size'), $errors->first('batch_size'), ''
+                ) !!}
 
-              {!! __form::textbox_numeric(
-                '12', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty') ? old('min_req_qty') : $item->min_req_qty, $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
-              ) !!}
+                {!! __form::select_static(
+                  '6', 'batch_size_unit', 'Standard Batch Size Unit *', old('batch_size_unit'), [], $errors->has('batch_size_unit'), $errors->first('batch_size_unit'), '', ''
+                ) !!}
 
-              {!! __form::textbox_numeric(
-                '12', 'price', 'text', 'Price *', 'Price', old('price') ? old('price') : $item->price, $errors->has('price') , $errors->first('price'), ''
-              ) !!}
+                <div class="col-md-12"></div>
+
+                {!! __form::textbox_numeric(
+                  '6', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty') ? old('min_req_qty') : $item->min_req_qty, $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
+                ) !!}
+
+                {!! __form::textbox_numeric(
+                  '6', 'price', 'text', 'Price *', 'Price', old('price') ? old('price') : $item->price, $errors->has('price') , $errors->first('price'), ''
+                ) !!}
 
               </div>
             </div>
@@ -324,13 +334,50 @@
         });
       }
 
-      textboxNumeric("#min_req_qty", 3);
-
       textboxNumeric("#price", 2);
 
       textboxNumeric(".remaining_balance", 3);
 
     });
+
+
+
+    @if($item->unit_type_id == 'IU1001')
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value='PCS'{{ old('batch_size_unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
+      textboxNumeric("#batch_size", 0);
+
+      textboxNumeric("#min_req_qty", 0);
+
+    @elseif($item->unit_type_id == 'IU1002')
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value>Select</option>");
+      $("#batch_size_unit").append("<option value='GRAM' {{ $item->batch_size_unit == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
+      $("#batch_size_unit").append("<option value='KILOGRAM' {{ $item->batch_size_unit == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
+      textboxNumeric("#batch_size", 3);
+
+      textboxNumeric("#min_req_qty", 3);
+
+    @elseif($item->unit_type_id == 'IU1003')
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value>Select</option>");
+      $("#batch_size_unit").append("<option value='MILLILITRE' {{ $item->batch_size_unit == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
+      $("#batch_size_unit").append("<option value='LITRE' {{ $item->batch_size_unit == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
+      textboxNumeric("#batch_size", 3);
+
+      textboxNumeric("#min_req_qty", 3);
+
+    @else
+
+      $("#batch_size_unit").empty();
+      textboxNumeric("#batch_size", 0);
+      
+      textboxNumeric("#min_req_qty", 0);
+
+    @endif
 
 
     {{-- ADD RAW Mats --}}

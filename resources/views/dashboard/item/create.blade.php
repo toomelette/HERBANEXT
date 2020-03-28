@@ -73,12 +73,24 @@
                   '6', 'unit', 'Standard Unit *', old('unit'), [], $errors->has('unit'), $errors->first('unit'), '', ''
                 ) !!}
 
+                <div class="col-md-12"></div>
+                
                 {!! __form::textbox_numeric(
-                  '12', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty'), $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
+                  '6', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size'), $errors->has('batch_size'), $errors->first('batch_size'), ''
+                ) !!}
+
+                {!! __form::select_static(
+                  '6', 'batch_size_unit', 'Standard Batch Size Unit *', old('batch_size_unit'), [], $errors->has('batch_size_unit'), $errors->first('batch_size_unit'), '', ''
+                ) !!}
+
+                <div class="col-md-12"></div>
+
+                {!! __form::textbox_numeric(
+                  '6', 'min_req_qty', 'text', 'Minimum Required Quantity *', 'Minimum Required Quantity', old('min_req_qty'), $errors->has('min_req_qty'), $errors->first('min_req_qty'), ''
                 ) !!}
 
                 {!! __form::textbox_numeric(
-                  '12', 'price', 'text', 'Price', 'Price', old('price'), $errors->has('price'), $errors->first('price'), ''
+                  '6', 'price', 'text', 'Price', 'Price', old('price'), $errors->has('price'), $errors->first('price'), ''
                 ) !!}
 
               </div>
@@ -257,28 +269,59 @@
     textboxNumeric(".remaining_balance", 3);
 
     @if(old('unit_type_id') == 'IU1001')
+
       $("#unit").empty();
       $("#unit").append("<option value='PCS'{{ old('unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
       textboxNumeric("#beginning_balance", 0);
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value='PCS'{{ old('batch_size_unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
+      textboxNumeric("#batch_size", 0);
+
       textboxNumeric("#min_req_qty", 0);
+
     @elseif(old('unit_type_id') == 'IU1002')
+
       $("#unit").empty();
       $("#unit").append("<option value>Select</option>");
       $("#unit").append("<option value='GRAM' {{ old('unit') == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
       $("#unit").append("<option value='KILOGRAM' {{ old('unit') == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
       textboxNumeric("#beginning_balance", 3);
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value>Select</option>");
+      $("#batch_size_unit").append("<option value='GRAM' {{ old('batch_size_unit') == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
+      $("#batch_size_unit").append("<option value='KILOGRAM' {{ old('batch_size_unit') == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
+      textboxNumeric("#batch_size", 3);
+
       textboxNumeric("#min_req_qty", 3);
+
     @elseif(old('unit_type_id') == 'IU1003')
+
       $("#unit").empty();
       $("#unit").append("<option value>Select</option>");
       $("#unit").append("<option value='MILLILITRE' {{ old('unit') == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
       $("#unit").append("<option value='LITRE' {{ old('unit') == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
       textboxNumeric("#beginning_balance", 3);
+
+      $("#batch_size_unit").empty();
+      $("#batch_size_unit").append("<option value>Select</option>");
+      $("#batch_size_unit").append("<option value='MILLILITRE' {{ old('batch_size_unit') == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
+      $("#batch_size_unit").append("<option value='LITRE' {{ old('batch_size_unit') == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
+      textboxNumeric("#batch_size", 3);
+
       textboxNumeric("#min_req_qty", 3);
+
     @else
+
       $("#unit").empty();
       textboxNumeric("#beginning_balance", 0);
+
+      $("#batch_size_unit").empty();
+      textboxNumeric("#batch_size", 0);
+      
       textboxNumeric("#min_req_qty", 0);
+
     @endif
 
 
@@ -288,28 +331,57 @@
       var val = $(this).val();
       
       if(val == "IU1001"){ 
+
         $("#unit").empty();
         $("#unit").append("<option value='PCS'>PCS</option>");
         textboxNumeric("#beginning_balance", 0);
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value='PCS'>PCS</option>");
+        textboxNumeric("#batch_size", 0);
+
         textboxNumeric("#min_req_qty", 0);
+
       }else if(val == "IU1002"){
+
         $("#unit").empty();
         $("#unit").append("<option value>Select</option>");
         $("#unit").append("<option value='GRAM'>GRAMS</option>");
         $("#unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
         textboxNumeric("#beginning_balance", 3);
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value>Select</option>");
+        $("#batch_size_unit").append("<option value='GRAM'>GRAMS</option>");
+        $("#batch_size_unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
+        textboxNumeric("#batch_size", 3);
+
         textboxNumeric("#min_req_qty", 3);
+
       }else if(val == "IU1003"){
+
         $("#unit").empty();
         $("#unit").append("<option value>Select</option>");
         $("#unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
         $("#unit").append("<option value='LITRE'>LITERS</option>");
         textboxNumeric("#beginning_balance", 3);
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value>Select</option>");
+        $("#batch_size_unit").append("<option value='MILLILITRE'>MILLILITERS</option>");
+        $("#batch_size_unit").append("<option value='LITRE'>LITERS</option>");
+        textboxNumeric("#batch_size", 3);
+
         textboxNumeric("#min_req_qty", 3);
+
       }else{
+
         $("#unit").empty();
+        $("#batch_size_unit").empty();
         textboxNumeric("#beginning_balance", 0);
+        textboxNumeric("#batch_size", 0);
         textboxNumeric("#min_req_qty", 0);
+
       }
 
     });

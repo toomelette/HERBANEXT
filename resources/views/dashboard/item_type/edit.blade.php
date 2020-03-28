@@ -29,7 +29,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', 'percent', 'numeric', 'Description', 'Description', old('percent') ? old('percent') : $item_type->percent, $errors->has('percent'), $errors->first('percent'), ''
+              '4', 'percent', 'numeric', 'Percent (%) *', 'Percent (%)', old('percent') ? old('percent') : $item_type->percent, $errors->has('percent'), $errors->first('percent'), ''
             ) !!}
 
           </div>

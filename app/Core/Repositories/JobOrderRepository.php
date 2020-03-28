@@ -29,12 +29,11 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-    public function store($request, $purchase_order_item, $batch_size){
+    public function store($purchase_order_item, $batch_size){
 
         $job_order = new JobOrder;
         $job_order->slug = $this->str->random(16);
         $job_order->jo_id = $this->getJOId();
-        $job_order->jo_no = $request->jo_no;
         $job_order->po_item_id = $purchase_order_item->po_item_id;
         $job_order->po_id = $purchase_order_item->po_id;
         $job_order->po_no = $purchase_order_item->po_no;

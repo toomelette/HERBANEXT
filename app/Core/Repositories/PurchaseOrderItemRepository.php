@@ -90,9 +90,12 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
     public function generate($po_item){
 
+        $po_item->purchaseOrder->process_status = 2;
+        $po_item->purchaseOrder->save();
+
         $po_item->is_generated = true;
         $po_item->save();
-
+ 
         return $po_item;
 
     }
@@ -133,6 +136,9 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
     public function populate($model, $entries){
 
         return $model->select('po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
+                     ->whereHas('purchaseOrder', function($query) {
+                        $query->where('type', 1);
+                     })
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

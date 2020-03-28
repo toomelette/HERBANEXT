@@ -35,6 +35,7 @@ class JobOrderSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
 
         $this->session->flash('JOB_ORDER_GENERATE_SUCCESS', 'The Job Order has been successfully generated!');
         $this->session->flash('JOB_ORDER_GENERATE_SUCCESS_SLUG', $slug);

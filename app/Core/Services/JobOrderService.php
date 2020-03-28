@@ -47,7 +47,7 @@ class JobOrderService extends BaseService{
         $batch_size = $po_item->amount / $request->no_of_batch;
 
         for ($i=0; $i < $request->no_of_batch; $i++) { 
-            $this->job_order_repo->store($request, $po_item, $batch_size);
+            $this->job_order_repo->store($po_item, $batch_size);
         }
 
         $this->event->fire('job_order.generate', $slug);

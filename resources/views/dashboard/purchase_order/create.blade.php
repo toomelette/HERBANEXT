@@ -44,19 +44,26 @@
                 <div class="col-md-12" style="padding:25px;">
 
                   <label>
-                    <input type="radio" class="minimal buffer_status" name="buffer_status" value="false" {{ old('buffer_status') == 'false' ? 'checked' : 'checked' }}>
+                    <input type="radio" class="minimal type" name="type" value="1" {{ old('type') == '1' ? 'checked' : 'checked' }}>
                     &nbsp; For Process
                   </label>
 
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                   <label>
-                    <input type="radio" class="minimal buffer_status"  name="buffer_status" value="true" {{ old('buffer_status') == 'true' ? 'checked' : '' }}>
+                    <input type="radio" class="minimal type" name="type" value="2" {{ old('type') == '2' ? 'checked' : '' }}>
+                    &nbsp; For Delivery
+                  </label>
+
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <label>
+                    <input type="radio" class="minimal type"  name="type" value="3" {{ old('type') == '3' ? 'checked' : '' }}>
                     &nbsp; For Buffer
                   </label>
 
-                  @if($errors->has('buffer_status'))
-                    <p class="text-danger" style="padding-top:10px;">{{ $errors->first('buffer_status') }}</p>
+                  @if($errors->has('type'))
+                    <p class="text-danger" style="padding-top:10px;">{{ $errors->first('type') }}</p>
                   @endif
 
                 </div>
