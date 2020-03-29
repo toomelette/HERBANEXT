@@ -8,18 +8,18 @@
 @extends('layouts.admin-master')
 
 @section('content')
+  
+<section class="content-header">
+  <h1>Edit User</h1>
+  {{ Breadcrumbs::render('user_edit', $user) }}  
+</section>
 
 <section class="content">
             
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h3 class="box-title" style="padding-top: 5px;">Edit User</h3>
-        <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-          &nbsp;
-          {!! __html::back_button(['dashboard.user.index']) !!}
-        </div>
+        <code>Fields with asterisks(*) are required</code>
       </div>
       
       <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.update', $user->slug) }}">

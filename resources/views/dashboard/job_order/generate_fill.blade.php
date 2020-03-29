@@ -11,7 +11,7 @@
 	}
 
 	$jobOrder = $po_item->jobOrder->toArray();
-
+	
 ?>
 @extends('layouts.admin-master')
 
@@ -57,9 +57,11 @@
 					                  '6', '', 'text', 'Reference PO Number', 'PO Number', $jobOrder[$key]['po_no'], '', '', 'readonly'
 					                ) !!}  
 
-					                {!! __form::textbox(
-					                  '6', '', 'text', 'JO Number', 'JO Number', $jobOrder[$key]['jo_no'], '', '', 'readonly'
-					                ) !!} 
+		                            <div class="form-group col-md-6">
+						              <label for="jo_no">JO No.</label>
+		                              <input type="text" name="row[{{ $key }}][jo_no]" id="jo_no" class="form-control jo_no" placeholder="JO No." value="{{ $data['jo_no'] }}">
+						              <small class="text-danger">{{ $errors->first('row.'. $key .'.jo_no') }}</small>
+		                            </div>
 
 					                <div class="col-md-12"></div>
 
@@ -158,9 +160,10 @@
 					                  '6', '', 'text', 'Reference PO Number', 'PO Number', $data->po_no, '', '', 'readonly'
 					                ) !!}  
 
-					                {!! __form::textbox(
-					                  '6', '', 'text', 'JO Number', 'JO Number', $data->jo_no, '', '', 'readonly'
-					                ) !!} 
+		                            <div class="form-group col-md-6">
+						              <label for="jo_no">JO No.</label>
+		                              <input type="text" name="row[{{ $key }}][jo_no]" id="jo_no" class="form-control jo_no" placeholder="JO No." value="{{ $data->jo_no }}">
+		                            </div>
 
 					                <div class="col-md-12"></div>
 
@@ -187,7 +190,7 @@
 					                <div class="col-md-12"></div>
 
 					                {!! __form::textbox(
-					                  '6', '', 'text', 'Batch Size', 'Batch Size', number_format($data->batch_size, 3) .' '. $data->batch_size_unit, '', '', 'readonly'
+					                  '6', '', 'text', 'Batch Size', 'Batch Size', number_format(optional($data->item)->batch_size, 3) .' '. $data->batch_size_unit, '', '', 'readonly'
 					                ) !!}  
 
 		                            <div class="form-group col-md-6">

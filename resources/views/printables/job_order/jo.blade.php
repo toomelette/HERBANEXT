@@ -12,21 +12,21 @@
 	<section class="invoice">
 
     @foreach ($po_item->jobOrder as $key => $data)
-
-      <div class="row" style="padding-top:10px;">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <img src="{{ asset('images/logo.png') }}" style="width:200px; height:70px; margin-top: -20px"> 
-            <span class="pull-right" style="font-size:30px;">Job Order Form</span>
-          </h2>
+      <div style="border:solid 1px; padding:10px;" >
+        <div class="row" style="padding-top:10px;">
+          <div class="col-xs-12">
+            <h2 class="page-header">
+              <img src="{{ asset('images/logo.png') }}" style="width:200px; height:70px; margin-top: -20px"> 
+              <span class="pull-right" style="font-size:30px;">Job Order Form</span>
+            </h2>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <tbody>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
                   <tr>
                     <td>Reference PO No. :</td>
                     <td>{{ $po_item->po_no }}</td>
@@ -47,6 +47,14 @@
                     <td>Pack Size :</td>
                     <td>{{ number_format($data->pack_size, 3) .' '. $data->pack_size_unit .' / '. $data->pack_size_pkging }}</td>
                   </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
                   <tr>
                     <td>Lot No :</td>
                     <td>{{ $data->lot_no }}</td>
@@ -64,7 +72,8 @@
                     <td>{{ number_format($data->theo_yield, 3) .' '. $data->theo_yield_pkging }}</td>
                   </tr>
               </tbody>
-            </table>
+              </table>
+            </div>
           </div>
         </div>
       </div>

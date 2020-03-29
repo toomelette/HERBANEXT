@@ -33,6 +33,7 @@
     
   <section class="content-header">
       <h1>User List</h1>
+      {{ Breadcrumbs::render('user') }}  
   </section>
 
   <section class="content">

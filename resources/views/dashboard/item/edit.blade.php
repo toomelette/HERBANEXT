@@ -335,49 +335,36 @@
       }
 
       textboxNumeric("#price", 2);
-
+      textboxNumeric("#batch_size", 3);
+      textboxNumeric("#min_req_qty", 3);
       textboxNumeric(".remaining_balance", 3);
 
+      @if($item->unit_type_id == 'IU1001')
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value='PCS'{{ old('batch_size_unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
+
+      @elseif($item->unit_type_id == 'IU1002')
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value>Select</option>");
+        $("#batch_size_unit").append("<option value='GRAM' {{ $item->batch_size_unit == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
+        $("#batch_size_unit").append("<option value='KILOGRAM' {{ $item->batch_size_unit == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
+
+      @elseif($item->unit_type_id == 'IU1003')
+
+        $("#batch_size_unit").empty();
+        $("#batch_size_unit").append("<option value>Select</option>");
+        $("#batch_size_unit").append("<option value='MILLILITRE' {{ $item->batch_size_unit == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
+        $("#batch_size_unit").append("<option value='LITRE' {{ $item->batch_size_unit == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
+
+      @else
+
+        $("#batch_size_unit").empty();
+
+      @endif
+
     });
-
-
-
-    @if($item->unit_type_id == 'IU1001')
-
-      $("#batch_size_unit").empty();
-      $("#batch_size_unit").append("<option value='PCS'{{ old('batch_size_unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
-      textboxNumeric("#batch_size", 0);
-
-      textboxNumeric("#min_req_qty", 0);
-
-    @elseif($item->unit_type_id == 'IU1002')
-
-      $("#batch_size_unit").empty();
-      $("#batch_size_unit").append("<option value>Select</option>");
-      $("#batch_size_unit").append("<option value='GRAM' {{ $item->batch_size_unit == 'GRAM' ? 'selected' : '' }}>GRAMS</option>");
-      $("#batch_size_unit").append("<option value='KILOGRAM' {{ $item->batch_size_unit == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
-      textboxNumeric("#batch_size", 3);
-
-      textboxNumeric("#min_req_qty", 3);
-
-    @elseif($item->unit_type_id == 'IU1003')
-
-      $("#batch_size_unit").empty();
-      $("#batch_size_unit").append("<option value>Select</option>");
-      $("#batch_size_unit").append("<option value='MILLILITRE' {{ $item->batch_size_unit == 'MILLILITRE' ? 'selected' : '' }}>MILLILITERS</option>");
-      $("#batch_size_unit").append("<option value='LITRE' {{ $item->batch_size_unit == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
-      textboxNumeric("#batch_size", 3);
-
-      textboxNumeric("#min_req_qty", 3);
-
-    @else
-
-      $("#batch_size_unit").empty();
-      textboxNumeric("#batch_size", 0);
-      
-      textboxNumeric("#min_req_qty", 0);
-
-    @endif
 
 
     {{-- ADD RAW Mats --}}

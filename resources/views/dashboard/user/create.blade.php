@@ -1,16 +1,18 @@
 @extends('layouts.admin-master')
 
 @section('content')
+  
+  <section class="content-header">
+      <h1>New User</h1>
+      {{ Breadcrumbs::render('user_add') }}  
+  </section>
 
-<section class="content">
-            
+  <section class="content">    
+
     <div class="box box-solid">
-        
+      
       <div class="box-header with-border">
-        <h3 class="box-title">New User</h3>
-        <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
-        </div> 
+        <code>Fields with asterisks(*) are required</code>
       </div>
       
       <form id="user_create_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">

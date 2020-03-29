@@ -6,7 +6,7 @@ namespace App\Core\Interfaces;
 
 interface JobOrderInterface {
 
-	public function store($purchase_order_item, $batch_size);
+	public function store($po_item);
 
 	public function updateGenerateFillPost($data);
 	

@@ -17,6 +17,7 @@ class JobOrder extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'item_id' => '',
         'jo_id' => '',
         'jo_no' => '',
         'po_item_id' => '',
@@ -50,13 +51,15 @@ class JobOrder extends Model{
     public function item() {
         return $this->belongsTo('App\Models\Item','item_id','item_id');
     }
-    
-    public function itemOrig() {
-        return $this->belongsTo('App\Models\Item','item_raw_mat_item_id','item_id');
+
+
+    public function purchaseOrder() {
+        return $this->belongsTo('App\Models\purchaseOrder','po_id','po_id');
     }
 
-    public function purchaseOrderItemRawMat() {
-        return $this->hasMany('App\Models\PurchaseOrderItemRawMat','item_raw_mat_id','item_raw_mat_id');
+
+    public function purchaseOrderItem() {
+        return $this->belongsTo('App\Models\PurchaseOrderItem','po_item_id','po_item_id');
     }
 
 

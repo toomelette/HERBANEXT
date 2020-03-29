@@ -29,17 +29,18 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-    public function store($purchase_order_item, $batch_size){
+    public function store($purchase_order_item){
 
         $job_order = new JobOrder;
         $job_order->slug = $this->str->random(16);
+        $job_order->item_id = $purchase_order_item->item_id;
         $job_order->jo_id = $this->getJOId();
         $job_order->po_item_id = $purchase_order_item->po_item_id;
         $job_order->po_id = $purchase_order_item->po_id;
         $job_order->po_no = $purchase_order_item->po_no;
         $job_order->item_name = optional($purchase_order_item->item)->name;
-        $job_order->batch_size = $batch_size;
-        $job_order->batch_size_unit = $purchase_order_item->unit;
+        $job_order->batch_size = optional($purchase_order_item->item)->batch_size;
+        $job_order->batch_size_unit = optional($purchase_order_item->item)->batch_size_unit;
         $job_order->amount = $purchase_order_item->amount;
         $job_order->unit = $purchase_order_item->unit;
         $job_order->created_at = $this->carbon->now();
@@ -59,6 +60,7 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
     public function updateGenerateFillPost($data){
 
         $job_order = $this->findByJoId($data['jo_id']);
+        $job_order->jo_no = $data['jo_no'];
         $job_order->date = $this->__dataType->date_parse($data['date']);
         $job_order->lot_no = $data['lot_no'];
         $job_order->pack_size = $this->__dataType->string_to_num($data['pack_size']);
