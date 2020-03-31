@@ -50,6 +50,10 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Core\Interfaces\PurchaseOrderItemPackMatInterface', 'App\Core\Repositories\PurchaseOrderItemPackMatRepository');
 
 		$this->app->bind('App\Core\Interfaces\JobOrderInterface', 'App\Core\Repositories\JobOrderRepository');
+
+		$this->app->bind('App\Core\Interfaces\ManufacturingOrderInterface', 'App\Core\Repositories\ManufacturingOrderRepository');
+
+		$this->app->bind('App\Core\Interfaces\ManufacturingOrderRawMatInterface', 'App\Core\Repositories\ManufacturingOrderRawMatRepository');
 		
 		
 	}
