@@ -78,7 +78,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MANUFACTURING ORDER **/
-	Route::get('/manufacturing_order/', 'ManufacturingOrder@index')->name('manufacturing_order.index');
+	Route::get('/manufacturing_order', 'ManufacturingOrderController@index')->name('manufacturing_order.index');
 	
 });
 

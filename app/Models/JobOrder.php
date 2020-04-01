@@ -63,6 +63,16 @@ class JobOrder extends Model{
     }
 
 
+    public function manufacturingOrder() {
+        return $this->hasOne('App\Models\ManufacturingOrder','jo_id','jo_id');
+    }
+
+
+    public function manufacturingOrderRawMat() {
+        return $this->hasMany('App\Models\ManufacturingOrderRawMat','jo_id','jo_id');
+    }
+
+
 
 
     

@@ -73,6 +73,11 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         $job_order->user_updated = $this->auth->user()->user_id;
         $job_order->save();
 
+        $job_order->manufacturingOrder()->delete();
+        $job_order->manufacturingOrderRawMat()->delete();
+
+        return $job_order;
+
     }
 
 

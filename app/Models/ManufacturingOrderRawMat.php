@@ -16,6 +16,7 @@ class ManufacturingOrderRawMat extends Model{
     protected $attributes = [
 
         'mo_raw_mat_id' => '',
+        'jo_id' => '',
         'mo_id' => '',
         'item_product_code' => '',
         'item_name' => '',
@@ -29,6 +30,10 @@ class ManufacturingOrderRawMat extends Model{
 
 
     /** RELATIONSHIPS **/
+    public function jobOrder() {
+        return $this->belongsTo('App\Models\JobOrder','jo_id','jo_id');
+    }
+
     public function manufacturingOrder() {
     	return $this->belongsTo('App\Models\ManufacturingOrder','mo_id','mo_id');
    	}

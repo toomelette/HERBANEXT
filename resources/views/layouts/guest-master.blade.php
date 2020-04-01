@@ -11,7 +11,7 @@
     @include('layouts.css-plugins')
 
   </head>
-  <body class="hold-transition skin-green layout-top-nav">
+  <body class="hold-transition skin-green layout-top-nav" style="zoom:98%;">
     <div class="wrapper">
       <header class="main-header">
         <nav class="navbar navbar-static-top">
