@@ -25,6 +25,24 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
 
 
+    public function fetch($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
+
+        $manufacturing_orders = $this->cache->remember('manufacturing_orders:fetch:' . $key, 240, function() use ($request, $entries){
+            $manufacturing_order = $this->manufacturing_order->newQuery();
+            if(isset($request->q)){
+                $this->search($manufacturing_order, $request->q);
+            }
+            return $this->populate($manufacturing_order, $entries);
+        });
+
+        return $manufacturing_orders;
+
+    }
+
+
 
     public function store($job_order){
 
@@ -36,7 +54,10 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         $manufacturing_order->item_type_id = optional($job_order->item)->item_type_id;
         $manufacturing_order->item_name = $job_order->item_name;
         $manufacturing_order->po_id = $job_order->po_id;
+        $manufacturing_order->po_no = $job_order->po_no;
         $manufacturing_order->jo_id = $job_order->jo_id;
+        $manufacturing_order->jo_no = $job_order->jo_no;
+        $manufacturing_order->lot_no = $job_order->lot_no;
         $manufacturing_order->jo_batch_size = $job_order->batch_size;
         $manufacturing_order->jo_batch_size_unit = $job_order->batch_size_unit;
         $manufacturing_order->jo_pack_size = $job_order->pack_size;
@@ -58,6 +79,16 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
 
 
+    public function findBySlug($slug){
+
+        $manufacturing_order = $this->cache->remember('manufacturing_orders:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->manufacturing_order->where('slug', $slug)->first();
+        }); 
+        if(empty($manufacturing_order)){abort(404);}
+        return $manufacturing_order;
+
+    }
+
 
 
     public function getMOId(){
@@ -74,6 +105,31 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         
     }
 
+
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('mo_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('master_mo_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('po_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('po_no', 'jo_no', 'item_name', 'updated_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+
+    }
 
 
 

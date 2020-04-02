@@ -45,5 +45,10 @@ class ItemType extends Model{
     }
 
 
+    public function manufacturingOrder() {
+        return $this->hasMany('App\Models\ManufacturingOrder','item_type_id','item_type_id');
+    }
+
+
     
 }

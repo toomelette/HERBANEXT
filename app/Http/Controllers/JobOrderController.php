@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Services\JobOrderService;
 use App\Http\Requests\JobOrder\JobOrderGenerateFormRequest;
 use App\Http\Requests\JobOrder\JobOrderGenerateFillFormRequest;
-use App\Http\Requests\JobOrder\PurchaseOrderFilterRequest;
+use App\Http\Requests\JobOrder\PurchaseOrderItemFilterRequest;
 
 
 class JobOrderController extends Controller{
@@ -22,17 +22,9 @@ class JobOrderController extends Controller{
 
     }
 
-
-    
- //    public function index(JobOrderFilterRequest $request){
-        
- //        return $this->job_order->fetch($request);
-
- //    }
-
     
 
-    public function create(PurchaseOrderFilterRequest $request){
+    public function create(PurchaseOrderItemFilterRequest $request){
         
         return $this->job_order->fetchPurchaseOrderItem($request);
 
@@ -80,41 +72,6 @@ class JobOrderController extends Controller{
         return $this->job_order->print($slug);
 
     }
-
-   
-
-    // public function store(JobOrderFormRequest $request){
-        
-    //     return $this->job_order->store($request);
-
-    // }
- 
-
-
-
-    // public function edit($slug){
-        
-    //     return $this->job_order->edit($slug);
-
-    // }
-
-
-
-
-    // public function update(JobOrderFormRequest $request, $slug){
-        
-    //     return $this->job_order->update($request, $slug);
-
-    // }
-
-    
-
-
-    // public function destroy($slug){
-        
-    //     return $this->job_order->destroy($slug);
-
-    // }
 
 
     
