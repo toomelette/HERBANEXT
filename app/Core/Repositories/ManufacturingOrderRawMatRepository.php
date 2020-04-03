@@ -33,6 +33,7 @@ class ManufacturingOrderRawMatRepository extends BaseRepository implements Manuf
         $mo_raw_mat->mo_id = $mo->mo_id;
         $mo_raw_mat->item_product_code = $item_raw_mat->product_code;
         $mo_raw_mat->item_name = $item_raw_mat->name;
+        $mo_raw_mat->unit_type_id = $item_raw_mat->unit_type_id;
         $mo_raw_mat->save();
 
     }

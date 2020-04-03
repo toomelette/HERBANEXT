@@ -40,6 +40,7 @@ class ItemPackMatRepository extends BaseRepository implements ItemPackMatInterfa
         $item_pack_mat->item_pack_mat_item_id = $data['item']; 
         $item_pack_mat->name = $item_pack_mat_orig->name; 
         $item_pack_mat->description = $item_pack_mat_orig->description; 
+        $item_pack_mat->unit_type_id = $item->unit_type_id; 
         $item_pack_mat->save();
         
         return $item_pack_mat;

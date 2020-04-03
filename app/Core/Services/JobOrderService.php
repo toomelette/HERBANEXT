@@ -82,7 +82,7 @@ class JobOrderService extends BaseService{
                 $manufacturing_order = $this->manufacturing_order_repo->store($job_order);
 
                 foreach ($job_order->item->itemRawMat as $data_item_raw_mat) {
-                    $this->mo_raw_mat_repo->store($manufacturing_order, $data_item_raw_mat); 
+                    $this->mo_raw_mat_repo->store($manufacturing_order, $data_item_raw_mat);
                 }
 
             }

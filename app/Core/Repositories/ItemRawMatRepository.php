@@ -39,6 +39,7 @@ class ItemRawMatRepository extends BaseRepository implements ItemRawMatInterface
         $item_raw_mat->item_raw_mat_id = $this->getItemRawMatIdInc();
         $item_raw_mat->item_raw_mat_item_id = $data['item']; 
         $item_raw_mat->name = $item_raw_mat_orig->name; 
+        $item_raw_mat->unit_type_id = $item->unit_type_id; 
         $item_raw_mat->save();
         
         return $item_raw_mat;

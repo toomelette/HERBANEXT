@@ -82,7 +82,9 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
     public function findBySlug($slug){
 
         $manufacturing_order = $this->cache->remember('manufacturing_orders:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->manufacturing_order->where('slug', $slug)->first();
+            return $this->manufacturing_order->where('slug', $slug)
+                                             ->with('manufacturingOrderRawMat')
+                                             ->first();
         }); 
         if(empty($manufacturing_order)){abort(404);}
         return $manufacturing_order;
