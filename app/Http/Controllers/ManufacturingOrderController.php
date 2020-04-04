@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Services\ManufacturingOrderService;
 use App\Http\Requests\ManufacturingOrder\ManufacturingOrderFilterRequest;
+use App\Http\Requests\ManufacturingOrder\ManufacturingOrderFillRequest;
 
 
 class ManufacturingOrderController extends Controller{
@@ -30,6 +31,12 @@ class ManufacturingOrderController extends Controller{
 
     public function fillUp($slug){
         return $this->manufacturing_order->fillUp($slug);
+    }
+
+
+
+    public function fillUpPost(ManufacturingOrderFillRequest $request, $slug){
+        return $this->manufacturing_order->fillUpPost($request, $slug);
     }
 
     

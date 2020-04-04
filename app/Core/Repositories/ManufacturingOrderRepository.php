@@ -79,6 +79,29 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
 
 
+    public function updateFillUp($request, $slug){
+
+        $manufacturing_order = $this->findBySlug($slug);
+        $manufacturing_order->master_mo_no = $request->master_mo_no;
+        $manufacturing_order->mo_no = $request->mo_no;
+        $manufacturing_order->client = $request->client;
+        $manufacturing_order->shell_life = $request->shell_life;
+        $manufacturing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
+        $manufacturing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
+        $manufacturing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
+        $manufacturing_order->requested_by = $request->requested_by;
+        $manufacturing_order->status = $request->status;
+        $manufacturing_order->updated_at = $this->carbon->now();
+        $manufacturing_order->ip_updated = request()->ip();
+        $manufacturing_order->user_updated = $this->auth->user()->user_id;
+        $manufacturing_order->save();
+
+        return $manufacturing_order;
+
+    }
+
+
+
     public function findBySlug($slug){
 
         $manufacturing_order = $this->cache->remember('manufacturing_orders:findBySlug:' . $slug, 240, function() use ($slug){

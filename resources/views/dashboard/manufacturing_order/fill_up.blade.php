@@ -15,26 +15,24 @@
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{-- {{ route('dashboard.item_type.update', $item_type->slug) }} --}}">
+      <form method="POST" autocomplete="off" action="{{ route('dashboard.manufacturing_order.fill_up_post', $manufacturing_order->slug) }}">
 
         <div class="box-body">
 
           <div class="col-md-12">
 
-            <input name="_method" value="PUT" type="hidden">
-
-            @csrf    
+            @csrf
 
             {!! __form::textbox('3', '', 'text', 'Product', '', $manufacturing_order->item_name, '', '', 'readonly') !!}
 
             {!! __form::textbox('3', '', 'text', 'Lot No.', '', $manufacturing_order->lot_no, '', '', 'readonly') !!}
 
             {!! __form::textbox(
-              '3', 'master_mo_no', 'text', 'Master MO No. *', 'Master MO No.', $manufacturing_order->master_mo_no, $errors->has('master_mo_no'), $errors->first('master_mo_no'), ''
+              '3', 'master_mo_no', 'text', 'Master MO No. *', 'Master MO No.', old('master_mo_no') ? old('master_mo_no') : $manufacturing_order->master_mo_no, $errors->has('master_mo_no'), $errors->first('master_mo_no'), ''
             ) !!}
 
             {!! __form::textbox(
-              '3', 'mo_no', 'text', 'MO No. *', 'MO No.', $manufacturing_order->mo_no, $errors->has('mo_no'), $errors->first('mo_no'), ''
+              '3', 'mo_no', 'text', 'MO No. *', 'MO No.', old('mo_no') ? old('mo_no') : $manufacturing_order->mo_no, $errors->has('mo_no'), $errors->first('mo_no'), ''
             ) !!}
 
             <div class="col-md-12"></div>            
@@ -54,11 +52,11 @@
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '3', 'client', 'text', 'Client *', 'Client', $manufacturing_order->client, $errors->has('client'), $errors->first('client'), ''
+              '3', 'client', 'text', 'Client *', 'Client', old('client') ? old('client') : $manufacturing_order->client, $errors->has('client'), $errors->first('client'), ''
             ) !!}
 
             {!! __form::textbox(
-              '3', 'shell_life', 'text', 'Shell Life *', 'Shell Life', $manufacturing_order->shell_life, $errors->has('shell_life'), $errors->first('shell_life'), ''
+              '3', 'shell_life', 'text', 'Shell Life *', 'Shell Life', old('shell_life') ? old('shell_life') : $manufacturing_order->shell_life, $errors->has('shell_life'), $errors->first('shell_life'), ''
             ) !!}
 
             {!! __form::textbox(
@@ -70,11 +68,11 @@
             <div class="col-md-12"></div>
 
             {!! __form::datepicker(
-              '4', 'processing_date',  'Processing Date *', old('processing_date'), $errors->has('processing_date'), $errors->first('processing_date')
+              '4', 'processing_date',  'Processing Date *', old('processing_date') ? old('processing_date') : $manufacturing_order->processing_date, $errors->has('processing_date'), $errors->first('processing_date')
             ) !!}
 
             {!! __form::datepicker(
-              '4', 'expired_date',  'Expired Date *', old('expired_date'), $errors->has('expired_date'), $errors->first('expired_date')
+              '4', 'expired_date',  'Expired Date *', old('expired_date') ? old('expired_date') : $manufacturing_order->expired_date, $errors->has('expired_date'), $errors->first('expired_date')
             ) !!}
 
             {!! __form::textbox(
@@ -84,15 +82,15 @@
             <div class="col-md-12"></div>
 
             {!! __form::datepicker(
-              '4', 'requested_date',  'Requested Date *', old('requested_date'), $errors->has('requested_date'), $errors->first('requested_date')
+              '4', 'requested_date',  'Requested Date *', old('requested_date') ? old('requested_date') : $manufacturing_order->requested_date, $errors->has('requested_date'), $errors->first('requested_date')
             ) !!}
 
             {!! __form::textbox(
-              '4', 'requested_by', 'text', 'Requested By *', 'Requested By', $manufacturing_order->requested_by, $errors->has('requested_by'), $errors->first('requested_by'), ''
+              '4', 'requested_by', 'text', 'Requested By *', 'Requested By', old('requested_by') ? old('requested_by') : $manufacturing_order->requested_by, $errors->has('requested_by'), $errors->first('requested_by'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'Status', 'text', 'Status *', 'Status', $manufacturing_order->Status, $errors->has('Status'), $errors->first('Status'), ''
+              '4', 'status', 'text', 'Status *', 'Status', old('status') ? old('status') : $manufacturing_order->status, $errors->has('status'), $errors->first('status'), ''
             ) !!}
 
           </div>
@@ -116,21 +114,21 @@
 
                 @if(old('row'))
                   @foreach(old('row') as $key => $value)
-
                     <?php
                       $unit_type_list = [];
-                      if ($value['input_type_id'] == 'IU1001') {
+                      if ($value['unit_type_id'] == 'IU1001') {
                         $unit_type_list = ['PCS' => 'PCS', ];
-                      }elseif ($value['input_type_id'] == 'IU1002') {
+                      }elseif ($value['unit_type_id'] == 'IU1002') {
                         $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
-                      }elseif ($value['input_type_id'] == 'IU1003') {
+                      }elseif ($value['unit_type_id'] == 'IU1003') {
                         $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
                       }
                     ?>
 
                     <tr>
 
-                      <input type="hidden" name="input_type_id" value="{{ $value['input_type_id'] }}">
+                      <input type="hidden" name="row[{{ $key }}][mo_raw_mat_id]" value="{{ $value['mo_raw_mat_id'] }}">
+                      <input type="hidden" name="row[{{ $key }}][unit_type_id]" value="{{ $value['unit_type_id'] }}">
 
                       <td>
                         <div class="form-group">
@@ -146,7 +144,7 @@
 
                       <td>
                         <div class="form-group">
-                          <input type="text" name="row[{{ $key }}][req_qty]" class="form-control" placeholder="Required Quantity" value="{{ $value['req_qty'] }}">
+                          <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $value['req_qty'] }}">
                           <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                         </div>
                       </td>
@@ -195,8 +193,9 @@
                     ?>
 
                     <tr>
-
-                      <input type="hidden" name="input_type_id" value="{{ $data->unit_type_id }}">
+                      
+                      <input type="hidden" name="row[{{ $key }}][mo_raw_mat_id]" value="{{ $data->mo_raw_mat_id }}">
+                      <input type="hidden" name="row[{{ $key }}][unit_type_id]" value="{{ $data->unit_type_id }}">
 
                       <td>
                         <div class="form-group">
@@ -212,7 +211,7 @@
 
                       <td>
                         <div class="form-group">
-                          <input type="text" name="row[{{ $key }}][req_qty]" class="form-control" placeholder="Required Quantity" value="{{ $data->req_qty }}">
+                          <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $data->req_qty }}">
                           <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                         </div>
                       </td>
@@ -263,5 +262,23 @@
     </div>
 
 </section>
+
+@endsection
+
+
+
+@section('scripts')
+
+<script type="text/javascript">
+
+    $('.req_qty').priceFormat({
+        centsLimit: 3,
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: false
+    });
+
+</script>
 
 @endsection

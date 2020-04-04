@@ -1,6 +1,6 @@
 <?php
 
-  $table_sessions = [ Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG') ];
+  $table_sessions = [ Session::get('MO_FILL_UP_POST_SUCCESS_SLUG') ];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
@@ -99,9 +99,9 @@
 
 @section('modals')
 
-	@if(Session::has('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'))
+	@if(Session::has('MO_FILL_UP_POST_SUCCESS'))
 		{!! __html::modal_print(
-	      'jo_generate_fill_post', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'), route('dashboard.manufacturing_order.index', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG'))
+	      'mo_fill_up_post', '<i class="fa fa-fw fa-check"></i> Posted!', Session::get('MO_FILL_UP_POST_SUCCESS'), route('dashboard.manufacturing_order.show', Session::get('MO_FILL_UP_POST_SUCCESS_SLUG'))
 	    ) !!}
 	 @endif
 
@@ -113,8 +113,8 @@
 
 <script type="text/javascript">
 
-    @if(Session::has('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'))
-      $('#jo_generate_fill_post').modal('show');
+    @if(Session::has('MO_FILL_UP_POST_SUCCESS'))
+      $('#mo_fill_up_post').modal('show');
     @endif
 
 </script>

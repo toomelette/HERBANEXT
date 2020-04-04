@@ -10,6 +10,8 @@ interface ManufacturingOrderInterface {
 
 	public function fetch($request);
 
+	public function updateFillUp($request, $slug);
+
 	public function findBySlug($slug);
 	
 }

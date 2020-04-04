@@ -80,6 +80,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** MANUFACTURING ORDER **/
 	Route::get('/manufacturing_order', 'ManufacturingOrderController@index')->name('manufacturing_order.index');
 	Route::get('/manufacturing_order/{slug}', 'ManufacturingOrderController@fillUp')->name('manufacturing_order.fill_up');
+	Route::post('/manufacturing_order/{slug}', 'ManufacturingOrderController@fillUpPost')->name('manufacturing_order.fill_up_post');
 	
 });
 

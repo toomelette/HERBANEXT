@@ -40,6 +40,29 @@ class ManufacturingOrderRawMatRepository extends BaseRepository implements Manuf
 
 
 
+    public function update($data){
+
+        $mo_raw_mat = $this->findByMORawMatId($data['mo_raw_mat_id']);
+        $mo_raw_mat->req_qty = $this->__dataType->string_to_num($data['req_qty']);
+        $mo_raw_mat->req_qty_unit = $data['req_qty_unit'];
+        $mo_raw_mat->batch_no = $data['batch_no'];
+        $mo_raw_mat->weighed_by = $data['weighed_by'];
+        $mo_raw_mat->save();
+
+    }
+
+
+
+    public function findByMORawMatId($mo_raw_mat_id){
+
+        $mo_raw_mat = $this->mo_raw_mat->where('mo_raw_mat_id', $mo_raw_mat_id)->first();
+        if(empty($mo_raw_mat)){abort(404);}
+        return $mo_raw_mat;
+
+    }
+
+
+
     public function getMORMId(){
 
         $id = 'MORM100001';
