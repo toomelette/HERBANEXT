@@ -79,7 +79,7 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
 
 
-    public function updateFillUp($request, $slug){
+    public function updateFillUp($request, $slug, $total_weight){
 
         $manufacturing_order = $this->findBySlug($slug);
         $manufacturing_order->master_mo_no = $request->master_mo_no;
@@ -91,6 +91,7 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         $manufacturing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
         $manufacturing_order->requested_by = $request->requested_by;
         $manufacturing_order->status = $request->status;
+        $manufacturing_order->total_weight = $total_weight;
         $manufacturing_order->updated_at = $this->carbon->now();
         $manufacturing_order->ip_updated = request()->ip();
         $manufacturing_order->user_updated = $this->auth->user()->user_id;

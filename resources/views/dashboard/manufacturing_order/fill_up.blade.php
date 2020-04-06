@@ -11,7 +11,7 @@
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
             &nbsp;
-            {!! __html::back_button(['dashboard.item_type.index']) !!}
+            {!! __html::back_button(['dashboard.manufacturing_order.index']) !!}
         </div> 
       </div>
       
@@ -99,6 +99,9 @@
             
             <h4>Raw Materials</h4>
 
+            <code>Please fill the CHECKBOX if you want the REQUIRED QUANTITY to add in TOTAL WEIGHT</code>
+            <br>
+            <br>
             <table class="table table-bordered">
 
               <tr>
@@ -119,9 +122,9 @@
                       if ($value['unit_type_id'] == 'IU1001') {
                         $unit_type_list = ['PCS' => 'PCS', ];
                       }elseif ($value['unit_type_id'] == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
+                        $unit_type_list = ['GRAM' => 'GRAM'];
                       }elseif ($value['unit_type_id'] == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
+                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE'];
                       }
                     ?>
 
@@ -144,7 +147,14 @@
 
                       <td>
                         <div class="form-group">
-                          <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $value['req_qty'] }}">
+                          <div class="col-md-1" style="margin-top:5px;">
+                            <label>
+                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ isset($value['req_qty_is_included']) && $value['req_qty_is_included'] == 'true'? 'checked' : '' }}>
+                            </label>
+                          </div>
+                          <div class="col-md-10">
+                            <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $value['req_qty'] }}">
+                          </div>
                           <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                         </div>
                       </td>
@@ -186,9 +196,9 @@
                       if ($data->unit_type_id == 'IU1001') {
                         $unit_type_list = ['PCS' => 'PCS', ];
                       }elseif ($data->unit_type_id == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM', 'KILOGRAM' => 'KILOGRAM'];
+                        $unit_type_list = ['GRAM' => 'GRAM',];
                       }elseif ($data->unit_type_id == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE', 'LITRE' => 'LITRE'];
+                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE',];
                       }
                     ?>
 
@@ -211,7 +221,14 @@
 
                       <td>
                         <div class="form-group">
+                          <div class="col-md-1" style="margin-top:5px;">
+                            <label>
+                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ $data->req_qty_is_included == 1 ? 'checked' : '' }}>
+                            </label>
+                          </div>
+                          <div class="col-md-10">
                           <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $data->req_qty }}">
+                          </div>
                           <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                         </div>
                       </td>
@@ -271,13 +288,13 @@
 
 <script type="text/javascript">
 
-    $('.req_qty').priceFormat({
-        centsLimit: 3,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
+  $('.req_qty').priceFormat({
+      centsLimit: 3,
+      prefix: "",
+      thousandsSeparator: ",",
+      clearOnEmpty: true,
+      allowNegative: false
+  });
 
 </script>
 

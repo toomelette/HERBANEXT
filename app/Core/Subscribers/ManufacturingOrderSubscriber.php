@@ -20,7 +20,7 @@ class ManufacturingOrderSubscriber extends BaseSubscriber{
     }
 
 
-    public function onGenerateFillPost($slug){
+    public function onFillUpPost($slug){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:findBySlug:'. $slug .'');

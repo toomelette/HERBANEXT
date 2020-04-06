@@ -62,13 +62,16 @@
 			              <td id="mid-vert">{{ $data->item_name }}</td>
 			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'M d, Y h:i A') }}</td>
 			              <td id="mid-vert">
-			              	@if ($data->is_generated == false)
-			                  @if(in_array('dashboard.manufacturing_order.fill_up', $global_user_submenus))
+			                @if(in_array('dashboard.manufacturing_order.show', $global_user_submenus))
+			                    <a href="{{ route('dashboard.manufacturing_order.show', $data->slug) }}" type="button" class="btn btn-default">
+			                      <i class="fa fa-print"></i>
+			                    </a>
+			                @endif
+			                @if(in_array('dashboard.manufacturing_order.fill_up', $global_user_submenus))
 			                    <a href="{{ route('dashboard.manufacturing_order.fill_up', $data->slug) }}" type="button" class="btn btn-default">
 			                      Fill Up
 			                    </a>
-			                  @endif
-			              	@endif
+			                @endif
 			              </td>
 			            </tr>
 			            @endforeach

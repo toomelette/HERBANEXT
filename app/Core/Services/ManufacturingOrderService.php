@@ -17,52 +17,61 @@ class ManufacturingOrderService extends BaseService{
 
 
     public function __construct(ManufacturingOrderInterface $mo_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo){
-
         $this->mo_repo = $mo_repo;
         $this->mo_raw_mat_repo = $mo_raw_mat_repo;
         parent::__construct();
-
     }
 
 
 
     public function fetch($request){
-
         $manufacturing_orders = $this->mo_repo->fetch($request);
         $request->flash();
         return view('dashboard.manufacturing_order.index')->with('manufacturing_orders', $manufacturing_orders);
-
     }
 
 
 
     public function fillUp($slug){
-
         $manufacturing_order = $this->mo_repo->findbySlug($slug);
         return view('dashboard.manufacturing_order.fill_up')->with('manufacturing_order', $manufacturing_order);
-
     }
 
 
 
     public function fillUpPost($request, $slug){
 
-        $total = 0;
+        $total_weight = 0;
 
         if (!empty($request->row)) {
             foreach ($request->row as $data) {
-                
                 $mo_raw_mat =  $this->mo_raw_mat_repo->update($data);
-
+                if ($mo_raw_mat->req_qty_is_included == true) {
+                    $total_weight += $mo_raw_mat->req_qty;
+                }
             }
         }
-
-        $this->mo_repo->updateFillUp($request, $slug, $total);
-
+        
+        $this->mo_repo->updateFillUp($request, $slug, $total_weight);
         $this->event->fire('manufacturing_order.fill_up_post', $slug);
         return redirect()->route('dashboard.manufacturing_order.index');
 
     }
+
+
+
+    public function show($slug){
+        $manufacturing_order = $this->mo_repo->findBySlug($slug);
+        return view('dashboard.manufacturing_order.show')->with('manufacturing_order', $manufacturing_order);
+    }
+
+
+
+    public function print($slug){
+        $manufacturing_order = $this->mo_repo->findBySlug($slug);
+        return view('printables.manufacturing_order.mo')->with('manufacturing_order', $manufacturing_order);
+    }
+
 
 
 

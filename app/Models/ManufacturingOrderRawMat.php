@@ -22,6 +22,7 @@ class ManufacturingOrderRawMat extends Model{
         'item_name' => '',
         'req_qty' => 0.000,
         'req_qty_unit' => '',
+        'req_qty_is_included' => false,
         'unit_type_id' => '',
         'batch_no' => '',
         'weighed_by' => '',
