@@ -83,6 +83,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/manufacturing_order/{slug}', 'ManufacturingOrderController@fillUpPost')->name('manufacturing_order.fill_up_post');
 	Route::get('/manufacturing_order/details/{slug}', 'ManufacturingOrderController@show')->name('manufacturing_order.show');
 	Route::get('/manufacturing_order/print/{slug}', 'ManufacturingOrderController@print')->name('manufacturing_order.print');
+
+
+	/** FINISHING ORDER **/
+	Route::get('/finishing_order', 'FinishingOrderController@index')->name('finishing_order.index');
+	Route::get('/finishing_order/{slug}', 'FinishingOrderController@fillUp')->name('finishing_order.fill_up');
+	Route::post('/finishing_order/{slug}', 'FinishingOrderController@fillUpPost')->name('finishing_order.fill_up_post');
+	Route::get('/finishing_order/details/{slug}', 'FinishingOrderController@show')->name('finishing_order.show');
+	Route::get('/finishing_order/print/{slug}', 'FinishingOrderController@print')->name('finishing_order.print');
 	
 });
 

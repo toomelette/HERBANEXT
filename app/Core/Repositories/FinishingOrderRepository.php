@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Core\Repositories;
+ 
+use App\Core\BaseClasses\BaseRepository;
+use App\Core\Interfaces\FinishingOrderInterface;
+
+use App\Models\FinishingOrder;
+
+
+class FinishingOrderRepository extends BaseRepository implements FinishingOrderInterface {
+	
+
+
+    protected $finishing_order;
+
+
+
+	public function __construct(FinishingOrder $finishing_order){
+
+        $this->finishing_order = $finishing_order;
+        parent::__construct();
+
+    }
+
+
+
+    // public function fetch($request){
+
+    //     $key = str_slug($request->fullUrl(), '_');
+    //     $entries = isset($request->e) ? $request->e : 20;
+
+    //     $finishing_orders = $this->cache->remember('finishing_orders:fetch:' . $key, 240, function() use ($request, $entries){
+    //         $finishing_order = $this->finishing_order->newQuery();
+    //         if(isset($request->q)){
+    //             $this->search($finishing_order, $request->q);
+    //         }
+    //         return $this->populate($finishing_order, $entries);
+    //     });
+
+    //     return $finishing_orders;
+
+    // }
+
+
+
+    // public function store($job_order){
+
+    //     $finishing_order = new FinishingOrder;
+    //     $finishing_order->slug = $this->str->random(16);
+    //     $finishing_order->mo_id = $this->getMOId();
+    //     $finishing_order->item_id = $job_order->item_id;
+    //     $finishing_order->item_product_code = optional($job_order->item)->product_code;
+    //     $finishing_order->item_type_id = optional($job_order->item)->item_type_id;
+    //     $finishing_order->item_name = $job_order->item_name;
+    //     $finishing_order->po_id = $job_order->po_id;
+    //     $finishing_order->po_no = $job_order->po_no;
+    //     $finishing_order->jo_id = $job_order->jo_id;
+    //     $finishing_order->jo_no = $job_order->jo_no;
+    //     $finishing_order->lot_no = $job_order->lot_no;
+    //     $finishing_order->jo_batch_size = $job_order->batch_size;
+    //     $finishing_order->jo_batch_size_unit = $job_order->batch_size_unit;
+    //     $finishing_order->jo_pack_size = $job_order->pack_size;
+    //     $finishing_order->jo_pack_size_unit = $job_order->pack_size_unit;
+    //     $finishing_order->jo_pack_size_pkging = $job_order->pack_size_pkging;
+    //     $finishing_order->jo_theo_yield = $job_order->theo_yield;
+    //     $finishing_order->jo_theo_yield_pkging = $job_order->theo_yield_pkging;
+    //     $finishing_order->created_at = $this->carbon->now();
+    //     $finishing_order->updated_at = $this->carbon->now();
+    //     $finishing_order->ip_created = request()->ip();
+    //     $finishing_order->ip_updated = request()->ip();
+    //     $finishing_order->user_created = $this->auth->user()->user_id;
+    //     $finishing_order->user_updated = $this->auth->user()->user_id;
+    //     $finishing_order->save();
+
+    //     return $finishing_order;
+
+    // }
+
+
+
+    // public function updateFillUp($request, $slug, $total_weight){
+
+    //     $finishing_order = $this->findBySlug($slug);
+    //     $finishing_order->master_mo_no = $request->master_mo_no;
+    //     $finishing_order->mo_no = $request->mo_no;
+    //     $finishing_order->client = $request->client;
+    //     $finishing_order->shell_life = $request->shell_life;
+    //     $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
+    //     $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
+    //     $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
+    //     $finishing_order->requested_by = $request->requested_by;
+    //     $finishing_order->status = $request->status;
+    //     $finishing_order->total_weight = $total_weight;
+    //     $finishing_order->updated_at = $this->carbon->now();
+    //     $finishing_order->ip_updated = request()->ip();
+    //     $finishing_order->user_updated = $this->auth->user()->user_id;
+    //     $finishing_order->save();
+
+    //     return $finishing_order;
+
+    // }
+
+
+
+    // public function findBySlug($slug){
+
+    //     $finishing_order = $this->cache->remember('finishing_orders:findBySlug:' . $slug, 240, function() use ($slug){
+    //         return $this->finishing_order->where('slug', $slug)
+    //                                          ->with('finishingOrderRawMat')
+    //                                          ->first();
+    //     }); 
+    //     if(empty($finishing_order)){abort(404);}
+    //     return $finishing_order;
+
+    // }
+
+
+
+    // public function getMOId(){
+
+    //     $id = 'MO100001';
+    //     $finishing_order = $this->finishing_order->select('mo_id')->orderBy('mo_id', 'desc')->first();
+
+    //     if($finishing_order != null){
+    //         $num = str_replace('MO', '', $finishing_order->mo_id) + 1;
+    //         $id = 'MO' . $num;
+    //     }
+        
+    //     return $id;
+        
+    // }
+
+
+
+    // public function search($model, $key){
+
+    //     return $model->where(function ($model) use ($key) {
+    //             $model->where('mo_no', 'LIKE', '%'. $key .'%')
+    //                   ->orWhere('master_mo_no', 'LIKE', '%'. $key .'%')
+    //                   ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
+    //                   ->orWhere('po_no', 'LIKE', '%'. $key .'%')
+    //                   ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
+    //                   ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+    //     });
+
+    // }
+
+
+
+    // public function populate($model, $entries){
+
+    //     return $model->select('po_no', 'jo_no', 'item_name', 'updated_at', 'slug')
+    //                  ->sortable()
+    //                  ->orderBy('updated_at', 'desc')
+    //                  ->paginate($entries);
+
+    // }
+
+
+
+}

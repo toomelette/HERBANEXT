@@ -4,28 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ManufacturingOrderRawMat extends Model{
+class FinishingOrderPackMat extends Model{
 
 
 
-    protected $table = 'manufacturing_order_raw_mats';    
+    protected $table = 'finishing_order_pack_mats';    
 	public $timestamps = false;
  
 
 
     protected $attributes = [
 
-        'mo_raw_mat_id' => '',
+        'fo_pack_mat_id' => '',
         'jo_id' => '',
-        'mo_id' => '',
+        'fo_id' => '',
         'item_product_code' => '',
         'item_name' => '',
         'req_qty' => 0.000,
         'req_qty_unit' => '',
-        'req_qty_is_included' => false,
         'unit_type_id' => '',
-        'batch_no' => '',
-        'weighed_by' => '',
+        'qty_issued' => 0.000,
+        'qty_issued_unit' => '',
 
     ];
 
@@ -36,8 +35,8 @@ class ManufacturingOrderRawMat extends Model{
         return $this->belongsTo('App\Models\JobOrder','jo_id','jo_id');
     }
 
-    public function manufacturingOrder() {
-    	return $this->belongsTo('App\Models\ManufacturingOrder','mo_id','mo_id');
+    public function finishingOrder() {
+    	return $this->belongsTo('App\Models\FinishingOrder','fo_id','fo_id');
    	}
 
 
