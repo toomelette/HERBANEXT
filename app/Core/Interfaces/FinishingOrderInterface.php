@@ -6,7 +6,7 @@ namespace App\Core\Interfaces;
 
 interface FinishingOrderInterface {
 
-	// public function store($job_order);
+	public function store($job_order);
 
 	// public function fetch($request);
 

@@ -24,11 +24,11 @@ class FinishingOrderService extends BaseService{
 
 
 
-    // public function fetch($request){
-    //     $manufacturing_orders = $this->fo_repo->fetch($request);
-    //     $request->flash();
-    //     return view('dashboard.manufacturing_order.index')->with('manufacturing_orders', $manufacturing_orders);
-    // }
+    public function fetch($request){
+        $finishing_orders = $this->fo_repo->fetch($request);
+        $request->flash();
+        return view('dashboard.finishing_order.index')->with('finishing_orders', $finishing_orders);
+    }
 
 
 

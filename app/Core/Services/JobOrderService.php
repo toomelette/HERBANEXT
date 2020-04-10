@@ -6,6 +6,8 @@ use App\Core\Interfaces\PurchaseOrderItemInterface;
 use App\Core\Interfaces\JobOrderInterface;
 use App\Core\Interfaces\ManufacturingOrderInterface;
 use App\Core\Interfaces\ManufacturingOrderRawMatInterface;
+use App\Core\Interfaces\FinishingOrderInterface;
+use App\Core\Interfaces\FinishingOrderPackMatInterface;
 use App\Core\BaseClasses\BaseService;
 
 
@@ -16,14 +18,18 @@ class JobOrderService extends BaseService{
     protected $job_order_repo;
     protected $manufacturing_order_repo;
     protected $mo_raw_mat_repo;
+    protected $finishing_order_repo;
+    protected $fo_pack_mat_repo;
 
 
-    public function __construct(PurchaseOrderItemInterface $po_item_repo, JobOrderInterface $job_order_repo, ManufacturingOrderInterface $manufacturing_order_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo){
+    public function __construct(PurchaseOrderItemInterface $po_item_repo, JobOrderInterface $job_order_repo, ManufacturingOrderInterface $manufacturing_order_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo, FinishingOrderInterface $finishing_order_repo, FinishingOrderPackMatInterface $fo_pack_mat_repo){
 
         $this->po_item_repo = $po_item_repo;
         $this->job_order_repo = $job_order_repo;
         $this->manufacturing_order_repo = $manufacturing_order_repo;
         $this->mo_raw_mat_repo = $mo_raw_mat_repo;
+        $this->finishing_order_repo = $finishing_order_repo;
+        $this->fo_pack_mat_repo = $fo_pack_mat_repo;
         parent::__construct();
 
     }
@@ -80,9 +86,14 @@ class JobOrderService extends BaseService{
 
                 $job_order = $this->job_order_repo->updateGenerateFillPost($data);
                 $manufacturing_order = $this->manufacturing_order_repo->store($job_order);
+                $finishing_order = $this->finishing_order_repo->store($job_order);
 
                 foreach ($job_order->item->itemRawMat as $data_item_raw_mat) {
                     $this->mo_raw_mat_repo->store($manufacturing_order, $data_item_raw_mat);
+                }
+
+                foreach ($job_order->item->itemPackMat as $data_item_pack_mat) {
+                    $this->fo_pack_mat_repo->store($finishing_order, $data_item_pack_mat);
                 }
 
             }
