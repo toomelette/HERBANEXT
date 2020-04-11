@@ -8,10 +8,14 @@ interface FinishingOrderInterface {
 
 	public function store($job_order);
 
-	// public function fetch($request);
+	public function fetch($request);
 
-	// public function updateFillUp($request, $slug, $total_weight);
+	public function updateFillUpFromMO($request, $o_id);
 
-	// public function findBySlug($slug);
+	public function updateFillUp($request, $slug);
+
+	public function findBySlug($slug);
+
+	public function findByJOId($jo_id);
 	
 }

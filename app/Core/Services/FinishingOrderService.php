@@ -32,45 +32,46 @@ class FinishingOrderService extends BaseService{
 
 
 
-    // public function fillUp($slug){
-    //     $manufacturing_order = $this->fo_repo->findbySlug($slug);
-    //     return view('dashboard.manufacturing_order.fill_up')->with('manufacturing_order', $manufacturing_order);
-    // }
+    public function fillUp($slug){
+        $finishing_order = $this->fo_repo->findbySlug($slug);
+        return view('dashboard.finishing_order.fill_up')->with('finishing_order', $finishing_order);
+    }
 
 
 
-    // public function fillUpPost($request, $slug){
+    public function fillUpPost($request, $slug){
 
-    //     $total_weight = 0;
+        if (!empty($request->row)) {
+            foreach ($request->row as $data) {
+                $this->fo_pack_mat_repo->update($data);
+            }
+        }
 
-    //     if (!empty($request->row)) {
-    //         foreach ($request->row as $data) {
-    //             $mo_raw_mat =  $this->fo_pack_mat_repo->update($data);
-    //             if ($mo_raw_mat->req_qty_is_included == true) {
-    //                 $total_weight += $mo_raw_mat->req_qty;
-    //             }
-    //         }
-    //     }
+        if (!empty($request->row_figure)) {
+            foreach ($request->row_figure as $data_figure) {
+                $this->fo_pack_mat_repo->updateFigures($data_figure);
+            }
+        }
         
-    //     $this->fo_repo->updateFillUp($request, $slug, $total_weight);
-    //     $this->event->fire('manufacturing_order.fill_up_post', $slug);
-    //     return redirect()->route('dashboard.manufacturing_order.index');
+        $this->fo_repo->updateFillUp($request, $slug);
+        $this->event->fire('finishing_order.fill_up_post', $slug);
+        return redirect()->route('dashboard.finishing_order.index');
 
-    // }
-
-
-
-    // public function show($slug){
-    //     $manufacturing_order = $this->fo_repo->findBySlug($slug);
-    //     return view('dashboard.manufacturing_order.show')->with('manufacturing_order', $manufacturing_order);
-    // }
+    }
 
 
 
-    // public function print($slug){
-    //     $manufacturing_order = $this->fo_repo->findBySlug($slug);
-    //     return view('printables.manufacturing_order.mo')->with('manufacturing_order', $manufacturing_order);
-    // }
+    public function show($slug){
+        $finishing_order = $this->fo_repo->findBySlug($slug);
+        return view('dashboard.finishing_order.show')->with('finishing_order', $finishing_order);
+    }
+
+
+
+    public function print($slug){
+        $finishing_order = $this->fo_repo->findBySlug($slug);
+        return view('printables.finishing_order.fo')->with('finishing_order', $finishing_order);
+    }
 
 
 

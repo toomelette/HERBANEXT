@@ -79,41 +79,75 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
 
 
 
-    // public function updateFillUp($request, $slug, $total_weight){
+    public function updateFillUpFromMO($request, $jo_id){
 
-    //     $finishing_order = $this->findBySlug($slug);
-    //     $finishing_order->master_mo_no = $request->master_mo_no;
-    //     $finishing_order->mo_no = $request->mo_no;
-    //     $finishing_order->client = $request->client;
-    //     $finishing_order->shell_life = $request->shell_life;
-    //     $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
-    //     $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
-    //     $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
-    //     $finishing_order->requested_by = $request->requested_by;
-    //     $finishing_order->status = $request->status;
-    //     $finishing_order->total_weight = $total_weight;
-    //     $finishing_order->updated_at = $this->carbon->now();
-    //     $finishing_order->ip_updated = request()->ip();
-    //     $finishing_order->user_updated = $this->auth->user()->user_id;
-    //     $finishing_order->save();
+        $finishing_order = $this->findByJOId($jo_id);
+        $finishing_order->client = $request->client;
+        $finishing_order->shell_life = $request->shell_life;
+        $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
+        $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
+        $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
+        $finishing_order->requested_by = $request->requested_by;
+        $finishing_order->status = $request->status;
+        $finishing_order->updated_at = $this->carbon->now();
+        $finishing_order->ip_updated = request()->ip();
+        $finishing_order->user_updated = $this->auth->user()->user_id;
+        $finishing_order->save();
 
-    //     return $finishing_order;
+        return $finishing_order;
 
-    // }
+    }
 
 
 
-    // public function findBySlug($slug){
+    public function updateFillUp($request, $slug){
 
-    //     $finishing_order = $this->cache->remember('finishing_orders:findBySlug:' . $slug, 240, function() use ($slug){
-    //         return $this->finishing_order->where('slug', $slug)
-    //                                          ->with('finishingOrderRawMat')
-    //                                          ->first();
-    //     }); 
-    //     if(empty($finishing_order)){abort(404);}
-    //     return $finishing_order;
+        $finishing_order = $this->findBySlug($slug);
+        $finishing_order->master_fo_no = $request->master_fo_no;
+        $finishing_order->fo_no = $request->fo_no;
+        $finishing_order->client = $request->client;
+        $finishing_order->shell_life = $request->shell_life;
+        $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
+        $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
+        $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
+        $finishing_order->requested_by = $request->requested_by;
+        $finishing_order->status = $request->status;
+        $finishing_order->updated_at = $this->carbon->now();
+        $finishing_order->ip_updated = request()->ip();
+        $finishing_order->user_updated = $this->auth->user()->user_id;
+        $finishing_order->save();
 
-    // }
+        return $finishing_order;
+
+    }
+
+
+
+    public function findBySlug($slug){
+
+        $finishing_order = $this->cache->remember('finishing_orders:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->finishing_order->where('slug', $slug)
+                                         ->with('finishingOrderPackMat')
+                                         ->first();
+        }); 
+        if(empty($finishing_order)){abort(404);}
+        return $finishing_order;
+
+    }
+
+
+
+    public function findByJOId($jo_id){
+
+        $finishing_order = $this->cache->remember('finishing_orders:findByJOId:' . $jo_id, 240, function() use ($jo_id){
+            return $this->finishing_order->where('jo_id', $jo_id)
+                                         ->with('finishingOrderPackMat')
+                                         ->first();
+        }); 
+        if(empty($finishing_order)){abort(404);}
+        return $finishing_order;
+
+    }
 
 
 

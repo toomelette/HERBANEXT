@@ -43,7 +43,7 @@
     <div class="col-md-9">
 	    <div class="box box-solid">
 	      <div class="box-header with-border">
-	        <h2 class="box-title">Manufacturing Orders</h2>
+	        <h2 class="box-title">Finishing Orders</h2>
 	      </div>
 
 	        <div class="box-body no-padding">

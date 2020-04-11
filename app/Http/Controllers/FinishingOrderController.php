@@ -23,24 +23,24 @@ class FinishingOrderController extends Controller{
     }
 
 
-    // public function fillUp($slug){
-    //     return $this->finishing_order->fillUp($slug);
-    // }
+    public function fillUp($slug){
+        return $this->finishing_order->fillUp($slug);
+    }
 
 
-    // public function fillUpPost(FinishingOrderFillRequest $request, $slug){
-    //     return $this->finishing_order->fillUpPost($request, $slug);
-    // }
+    public function fillUpPost(FinishingOrderFillRequest $request, $slug){
+        return $this->finishing_order->fillUpPost($request, $slug);
+    }
 
 
-    // public function show($slug){
-    //     return $this->finishing_order->show($slug);
-    // }
+    public function show($slug){
+        return $this->finishing_order->show($slug);
+    }
 
 
-    // public function print($slug){
-    //     return $this->finishing_order->print($slug);
-    // }
+    public function print($slug){
+        return $this->finishing_order->print($slug);
+    }
 
 
 }

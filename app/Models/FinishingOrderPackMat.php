@@ -20,11 +20,20 @@ class FinishingOrderPackMat extends Model{
         'fo_id' => '',
         'item_product_code' => '',
         'item_name' => '',
+        'item_description' => '',
         'req_qty' => 0.000,
         'req_qty_unit' => '',
         'unit_type_id' => '',
         'qty_issued' => 0.000,
         'qty_issued_unit' => '',
+        'figure_actual_usage' => 0.000,
+        'figure_regected' => 0.000,
+        'figure_damaged' => 0.000,
+        'figure_returns' => 0.000,
+        'figure_samples' => 0.000,
+        'figure_total' => 0.000,
+        'figure_difference' => 0.000,
+        'figure_unit' => '',
 
     ];
 

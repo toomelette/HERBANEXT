@@ -33,6 +33,7 @@ class FinishingOrderPackMatRepository extends BaseRepository implements Finishin
         $fo_pack_mat->fo_id = $mo->fo_id;
         $fo_pack_mat->item_product_code = $item_pack_mat->product_code;
         $fo_pack_mat->item_name = $item_pack_mat->name;
+        $fo_pack_mat->item_description = $item_pack_mat->description;
         $fo_pack_mat->unit_type_id = $item_pack_mat->unit_type_id;
         $fo_pack_mat->save();
 
@@ -40,31 +41,47 @@ class FinishingOrderPackMatRepository extends BaseRepository implements Finishin
 
 
 
-    // public function update($data){
+    public function update($data){
 
-    //     $fo_pack_mat = $this->findByMORawMatId($data['fo_pack_mat_id']);
-    //     $fo_pack_mat->req_qty = $this->__dataType->string_to_num($data['req_qty']);
-    //     $fo_pack_mat->req_qty_unit = $data['req_qty_unit'];
-    //     if (isset($data['req_qty_is_included']) && $data['req_qty_is_included'] == 'true') {
-    //         $fo_pack_mat->req_qty_is_included = $this->__dataType->string_to_boolean($data['req_qty_is_included']);
-    //     }
-    //     $fo_pack_mat->batch_no = $data['batch_no'];
-    //     $fo_pack_mat->weighed_by = $data['weighed_by'];
-    //     $fo_pack_mat->save();
+        $fo_pack_mat = $this->findFoPackMatId($data['fo_pack_mat_id']);
+        $fo_pack_mat->req_qty = $this->__dataType->string_to_num($data['req_qty']);
+        $fo_pack_mat->req_qty_unit = $data['req_qty_unit'];
+        $fo_pack_mat->qty_issued = $this->__dataType->string_to_num($data['qty_issued']);
+        $fo_pack_mat->qty_issued_unit = $data['qty_issued_unit'];
+        $fo_pack_mat->save();
 
-    //     return $fo_pack_mat; 
+        return $fo_pack_mat; 
 
-    // }
+    }
 
 
 
-    // public function findByMORawMatId($fo_pack_mat_id){
+    public function updateFigures($data){
 
-    //     $fo_pack_mat = $this->fo_pack_mat->where('fo_pack_mat_id', $fo_pack_mat_id)->first();
-    //     if(empty($fo_pack_mat)){abort(404);}
-    //     return $fo_pack_mat;
+        $fo_pack_mat = $this->findFoPackMatId($data['fo_pack_mat_id']);
+        $fo_pack_mat->figure_unit = $this->__dataType->string_to_num($data['figure_unit']);
+        $fo_pack_mat->figure_actual_usage = $this->__dataType->string_to_num($data['figure_actual_usage']);
+        $fo_pack_mat->figure_regected = $this->__dataType->string_to_num($data['figure_regected']);
+        $fo_pack_mat->figure_damaged = $this->__dataType->string_to_num($data['figure_damaged']);
+        $fo_pack_mat->figure_returns = $this->__dataType->string_to_num($data['figure_returns']);
+        $fo_pack_mat->figure_samples = $this->__dataType->string_to_num($data['figure_samples']);
+        $fo_pack_mat->figure_total = $this->__dataType->string_to_num($data['figure_total']);
+        $fo_pack_mat->figure_difference = $this->__dataType->string_to_num($data['figure_difference']);
+        $fo_pack_mat->save();
 
-    // }
+        return $fo_pack_mat; 
+
+    }
+
+
+
+    public function findFoPackMatId($fo_pack_mat_id){
+
+        $fo_pack_mat = $this->fo_pack_mat->where('fo_pack_mat_id', $fo_pack_mat_id)->first();
+        if(empty($fo_pack_mat)){abort(404);}
+        return $fo_pack_mat;
+
+    }
 
 
 

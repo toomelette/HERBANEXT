@@ -5,6 +5,7 @@ namespace App\Core\Services;
 
 use App\Core\Interfaces\ManufacturingOrderInterface;
 use App\Core\Interfaces\ManufacturingOrderRawMatInterface;
+use App\Core\Interfaces\FinishingOrderInterface;
 use App\Core\BaseClasses\BaseService;
 
 
@@ -13,12 +14,14 @@ class ManufacturingOrderService extends BaseService{
 
     protected $mo_repo;
     protected $mo_raw_mat_repo;
+    protected $fo_repo;
 
 
 
-    public function __construct(ManufacturingOrderInterface $mo_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo){
+    public function __construct(ManufacturingOrderInterface $mo_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo, FinishingOrderInterface $fo_repo){
         $this->mo_repo = $mo_repo;
         $this->mo_raw_mat_repo = $mo_raw_mat_repo;
+        $this->fo_repo = $fo_repo;
         parent::__construct();
     }
 
@@ -52,8 +55,9 @@ class ManufacturingOrderService extends BaseService{
             }
         }
         
-        $this->mo_repo->updateFillUp($request, $slug, $total_weight);
-        $this->event->fire('manufacturing_order.fill_up_post', $slug);
+        $mo = $this->mo_repo->updateFillUp($request, $slug, $total_weight);
+        $fo = $this->fo_repo->updateFillUpFromMO($request, $mo->jo_id);
+        $this->event->fire('manufacturing_order.fill_up_post',  [$mo, $fo]);
         return redirect()->route('dashboard.manufacturing_order.index');
 
     }
