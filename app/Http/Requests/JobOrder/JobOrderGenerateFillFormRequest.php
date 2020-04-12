@@ -30,11 +30,8 @@ class JobOrderGenerateFillFormRequest extends FormRequest{
                 $rules['row.'.$key.'.jo_no'] = 'required|string|max:45';
                 $rules['row.'.$key.'.date'] = 'required|date_format:"m/d/Y"';
                 $rules['row.'.$key.'.lot_no'] = 'required|string|max:45';
-                $rules['row.'.$key.'.pack_size'] = 'required|string|max:21';
-                $rules['row.'.$key.'.pack_size_unit'] = 'required|string|max:45';
-                $rules['row.'.$key.'.pack_size_pkging'] = 'required|string|max:45';
-                $rules['row.'.$key.'.theo_yield'] = 'required|string|max:21';
-                $rules['row.'.$key.'.theo_yield_pkging'] = 'required|string|max:45';
+                $rules['row.'.$key.'.pack_size'] = 'required|string|max:255';
+                $rules['row.'.$key.'.theo_yield'] = 'required|string|max:255';
 
             } 
 

@@ -36,7 +36,6 @@ class FinishingOrderFillRequest extends FormRequest{
 
         if(!empty($this->request->get('row'))){
             foreach($this->request->get('row') as $key => $value){
-                $rules['row.'.$key.'.unit_type_id'] = 'required|string|max:11';
                 $rules['row.'.$key.'.item_product_code'] = 'required|string|max:11';
                 $rules['row.'.$key.'.item_name'] = 'required|string|max:255';
                 $rules['row.'.$key.'.req_qty'] = 'required|string|max:21';

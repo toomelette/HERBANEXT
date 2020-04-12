@@ -30,14 +30,14 @@
               <tr>
                 <td>Product Form : {{ optional($manufacturing_order->itemType)->name }}</td>
                 <td>Product Code : {{ $manufacturing_order->item_product_code }}</td>
-                <td>Batch Size : {{ number_format($manufacturing_order->jo_batch_size, 3) .' '. $manufacturing_order->jo_batch_size_unit }}</td>
+                <td>Batch Size : {{ $manufacturing_order->jo_batch_size }}</td>
                 <td>JO No. : {{ $manufacturing_order->jo_no }}</td>
               </tr>
 
               <tr>
                 <td>Client : {{ $manufacturing_order->client }}</td>
                 <td>Shell Life : {{ $manufacturing_order->shell_life }}</td>
-                <td>Pack Size : {{ number_format($manufacturing_order->jo_pack_size, 3) .' '. $manufacturing_order->jo_pack_size_unit .' / '. $manufacturing_order->jo_pack_size_pkging }}</td>
+                <td>Pack Size : {{ $manufacturing_order->jo_pack_size }}</td>
                 <td>PO No. : {{ $manufacturing_order->po_no }}</td>
               </tr>
 
@@ -49,7 +49,7 @@
               </tr>
 
               <tr>
-                <td>Theoritical Yield : {{ number_format($manufacturing_order->jo_theo_yield, 3) .' '. $manufacturing_order->jo_theo_yield_pkging }}</td>
+                <td>Theoritical Yield : {{ $manufacturing_order->jo_theo_yield }}</td>
                 <td>Status : {{ $manufacturing_order->status }}</td>
                 <td></td>
                 <td></td>

@@ -44,11 +44,11 @@
                         </tr>
                         <tr>
                           <td>Batch Size :</td>
-                          <td>{{ number_format($data->batch_size, 3) .' '. $data->batch_size_unit }}</td>
+                          <td>{{ $data->batch_size }}</td>
                         </tr>
                         <tr>
                           <td>Pack Size :</td>
-                          <td>{{ number_format($data->pack_size, 3) .' '. $data->pack_size_unit .' / '. $data->pack_size_pkging }}</td>
+                          <td>{{ $data->pack_size }}</td>
                         </tr>
                         <tr>
                           <td>Lot No :</td>
@@ -64,7 +64,7 @@
                         </tr>
                         <tr>
                           <td>Theoritical Yield :</td>
-                          <td>{{ number_format($data->theo_yield, 3) .' '. $data->theo_yield_pkging }}</td>
+                          <td>{{ $data->theo_yield }}</td>
                         </tr>
                     </tbody>
                   </table>

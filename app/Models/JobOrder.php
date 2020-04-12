@@ -26,15 +26,11 @@ class JobOrder extends Model{
         'lot_no' => '',
         'item_name' => '',
         'date' => null,
-        'batch_size' => 0.00,
-        'batch_size_unit' => '',
-        'pack_size' => 0.00,
-        'pack_size_unit' => '',
-        'pack_size_pkging' => '',
+        'batch_size' => '',
+        'pack_size' => '',
+        'theo_yield' => '',
         'amount' => 0.00,
         'unit' => '',
-        'theo_yield' => 0.00,
-        'theo_yield_pkging' => '',
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -70,6 +66,16 @@ class JobOrder extends Model{
 
     public function manufacturingOrderRawMat() {
         return $this->hasMany('App\Models\ManufacturingOrderRawMat','jo_id','jo_id');
+    }
+
+
+    public function finishingOrder() {
+        return $this->hasOne('App\Models\FinishingOrder','jo_id','jo_id');
+    }
+
+
+    public function finishingOrderPackMat() {
+        return $this->hasMany('App\Models\FinishingOrderPackMat','jo_id','jo_id');
     }
 
 

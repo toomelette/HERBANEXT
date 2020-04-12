@@ -59,12 +59,8 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
         $finishing_order->jo_no = $job_order->jo_no;
         $finishing_order->lot_no = $job_order->lot_no;
         $finishing_order->jo_batch_size = $job_order->batch_size;
-        $finishing_order->jo_batch_size_unit = $job_order->batch_size_unit;
         $finishing_order->jo_pack_size = $job_order->pack_size;
-        $finishing_order->jo_pack_size_unit = $job_order->pack_size_unit;
-        $finishing_order->jo_pack_size_pkging = $job_order->pack_size_pkging;
         $finishing_order->jo_theo_yield = $job_order->theo_yield;
-        $finishing_order->jo_theo_yield_pkging = $job_order->theo_yield_pkging;
         $finishing_order->created_at = $this->carbon->now();
         $finishing_order->updated_at = $this->carbon->now();
         $finishing_order->ip_created = request()->ip();

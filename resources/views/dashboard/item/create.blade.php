@@ -90,11 +90,7 @@
                 <div class="col-md-12"></div>
                 
                 {!! __form::textbox_numeric(
-                  '6', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size'), $errors->has('batch_size'), $errors->first('batch_size'), ''
-                ) !!}
-
-                {!! __form::select_static(
-                  '6', 'batch_size_unit', 'Standard Batch Size Unit *', old('batch_size_unit'), $batch_type_units, $errors->has('batch_size_unit'), $errors->first('batch_size_unit'), '', ''
+                  '12', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size'), $errors->has('batch_size'), $errors->first('batch_size'), ''
                 ) !!}
 
                 <div class="col-md-12"></div>
@@ -288,7 +284,6 @@
       $("#unit").append("<option value='PCS'{{ old('unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
 
       textboxNumeric("#beginning_balance", 0);
-      textboxNumeric("#batch_size", 0);
       textboxNumeric("#min_req_qty", 0);
 
     @elseif(old('unit_type_id') == 'IU1002')
@@ -299,7 +294,6 @@
       $("#unit").append("<option value='KILOGRAM' {{ old('unit') == 'KILOGRAM' ? 'selected' : '' }}>KILOGRAMS</option>");
 
       textboxNumeric("#beginning_balance", 3);
-      textboxNumeric("#batch_size", 3);
       textboxNumeric("#min_req_qty", 3);
 
     @elseif(old('unit_type_id') == 'IU1003')
@@ -310,7 +304,6 @@
       $("#unit").append("<option value='LITRE' {{ old('unit') == 'LITRE' ? 'selected' : '' }}>LITERS</option>");
 
       textboxNumeric("#beginning_balance", 3);
-      textboxNumeric("#batch_size", 3);
       textboxNumeric("#min_req_qty", 3);
 
     @else
@@ -318,7 +311,6 @@
       $("#unit").empty();
 
       textboxNumeric("#beginning_balance", 0);
-      textboxNumeric("#batch_size", 0);
       textboxNumeric("#min_req_qty", 0);
 
     @endif
@@ -335,7 +327,6 @@
         $("#unit").append("<option value='PCS'>PCS</option>");
 
         textboxNumeric("#beginning_balance", 0);
-        textboxNumeric("#batch_size", 0);
         textboxNumeric("#min_req_qty", 0);
 
       }else if(val == "IU1002"){
@@ -346,7 +337,6 @@
         $("#unit").append("<option value='KILOGRAM'>KILOGRAMS</option>");
 
         textboxNumeric("#beginning_balance", 3);
-        textboxNumeric("#batch_size", 3);
         textboxNumeric("#min_req_qty", 3);
 
       }else if(val == "IU1003"){
@@ -357,7 +347,6 @@
         $("#unit").append("<option value='LITRE'>LITERS</option>");
 
         textboxNumeric("#beginning_balance", 3);
-        textboxNumeric("#batch_size", 3);
         textboxNumeric("#min_req_qty", 3);
 
       }else{
@@ -365,7 +354,6 @@
         $("#unit").empty();
 
         textboxNumeric("#beginning_balance", 0);
-        textboxNumeric("#batch_size", 0);
         textboxNumeric("#min_req_qty", 0);
 
       }

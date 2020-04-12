@@ -41,11 +41,11 @@
                   </tr>
                   <tr>
                     <td>Batch Size :</td>
-                    <td>{{ number_format($data->batch_size, 3) .' '. $data->batch_size_unit }}</td>
+                    <td>{{ $data->batch_size }}</td>
                   </tr>
                   <tr>
                     <td>Pack Size :</td>
-                    <td>{{ number_format($data->pack_size, 3) .' '. $data->pack_size_unit .' / '. $data->pack_size_pkging }}</td>
+                    <td>{{ $data->pack_size }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -69,7 +69,7 @@
                   </tr>
                   <tr>
                     <td>Theoritical Yield :</td>
-                    <td>{{ number_format($data->theo_yield, 3) .' '. $data->theo_yield_pkging }}</td>
+                    <td>{{ $data->theo_yield }}</td>
                   </tr>
               </tbody>
               </table>
@@ -78,13 +78,6 @@
         </div>
       </div>
     @endforeach
-
-
-    <div class="row no-print">
-      <div class="col-xs-12">
-        <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-      </div>
-    </div>
 
   </section>
 

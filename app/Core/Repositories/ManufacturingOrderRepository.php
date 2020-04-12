@@ -59,12 +59,8 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         $manufacturing_order->jo_no = $job_order->jo_no;
         $manufacturing_order->lot_no = $job_order->lot_no;
         $manufacturing_order->jo_batch_size = $job_order->batch_size;
-        $manufacturing_order->jo_batch_size_unit = $job_order->batch_size_unit;
         $manufacturing_order->jo_pack_size = $job_order->pack_size;
-        $manufacturing_order->jo_pack_size_unit = $job_order->pack_size_unit;
-        $manufacturing_order->jo_pack_size_pkging = $job_order->pack_size_pkging;
         $manufacturing_order->jo_theo_yield = $job_order->theo_yield;
-        $manufacturing_order->jo_theo_yield_pkging = $job_order->theo_yield_pkging;
         $manufacturing_order->created_at = $this->carbon->now();
         $manufacturing_order->updated_at = $this->carbon->now();
         $manufacturing_order->ip_created = request()->ip();

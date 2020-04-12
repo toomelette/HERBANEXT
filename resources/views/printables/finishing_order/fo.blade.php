@@ -37,14 +37,14 @@
             <tr>
               <td>Product Form : {{ optional($finishing_order->itemType)->name }}</td>
               <td>Product Code : {{ $finishing_order->item_product_code }}</td>
-              <td>Batch Size : {{ number_format($finishing_order->jo_batch_size, 3) .' '. $finishing_order->jo_batch_size_unit }}</td>
+              <td>Batch Size : {{ $finishing_order->jo_batch_size }}</td>
               <td>JO No. : {{ $finishing_order->jo_no }}</td>
             </tr>
 
             <tr>
               <td>Client : {{ $finishing_order->client }}</td>
               <td>Shell Life : {{ $finishing_order->shell_life }}</td>
-              <td>Pack Size : {{ number_format($finishing_order->jo_pack_size, 3) .' '. $finishing_order->jo_pack_size_unit .' / '. $finishing_order->jo_pack_size_pkging }}</td>
+              <td>Pack Size : {{ $finishing_order->jo_pack_size }}</td>
               <td>PO No. : {{ $finishing_order->po_no }}</td>
             </tr>
 
@@ -56,7 +56,7 @@
             </tr>
 
             <tr>
-              <td>Theoritical Yield : {{ number_format($finishing_order->jo_theo_yield, 3) .' '. $finishing_order->jo_theo_yield_pkging }}</td>
+              <td>Theoritical Yield : {{ $finishing_order->jo_theo_yield }}</td>
               <td>Status : {{ $finishing_order->status }}</td>
               <td></td>
               <td></td>

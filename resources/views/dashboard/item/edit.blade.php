@@ -67,11 +67,7 @@
               <div class="box-body">
                 
                 {!! __form::textbox_numeric(
-                  '6', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size') ? old('batch_size') : $item->batch_size, $errors->has('batch_size'), $errors->first('batch_size'), ''
-                ) !!}
-
-                {!! __form::select_static(
-                  '6', 'batch_size_unit', 'Standard Batch Size Unit *', old('batch_size_unit'), [], $errors->has('batch_size_unit'), $errors->first('batch_size_unit'), '', ''
+                  '12', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size') ? old('batch_size') : $item->batch_size, $errors->has('batch_size'), $errors->first('batch_size'), ''
                 ) !!}
 
                 <div class="col-md-12"></div>
@@ -335,7 +331,6 @@
       }
 
       textboxNumeric("#price", 2);
-      textboxNumeric("#batch_size", 3);
       textboxNumeric("#min_req_qty", 3);
       textboxNumeric(".remaining_balance", 3);
 

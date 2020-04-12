@@ -42,7 +42,7 @@
             {!! __form::textbox('3', '', 'text', 'Product Code', '', $finishing_order->item_product_code, '', '', 'readonly') !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Batch Size', '', number_format($finishing_order->jo_batch_size, 3).' '. $finishing_order->jo_batch_size_unit, '', '', 'readonly'
+              '3', '', 'text', 'Batch Size', '', $finishing_order->jo_batch_size, '', '', 'readonly'
             ) !!}
 
             {!! __form::textbox(
@@ -60,7 +60,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Pack Size', '', number_format($finishing_order->jo_pack_size, 3) .' '. $finishing_order->jo_pack_size_unit .' per '. $finishing_order->jo_pack_size_pkging, '', '', 'readonly'
+              '3', '', 'text', 'Pack Size', '', $finishing_order->jo_pack_size, '', '', 'readonly'
             ) !!}
 
             {!! __form::textbox('3', '', 'text', 'PO No.', '', $finishing_order->po_no, '', '', 'readonly') !!}
@@ -76,7 +76,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', '', 'text', 'Theoritical Yield', '', number_format($finishing_order->jo_theo_yield, 3).' '. $finishing_order->jo_theo_yield_pkging, '', '', 'readonly'
+              '4', '', 'text', 'Theoritical Yield', '', $finishing_order->jo_theo_yield, '', '', 'readonly'
             ) !!}
 
             <div class="col-md-12"></div>
@@ -119,20 +119,12 @@
                 @if(old('row'))
                   @foreach(old('row') as $key => $value)
                     <?php
-                      $unit_type_list = [];
-                      if ($value['unit_type_id'] == 'IU1001') {
-                        $unit_type_list = ['PCS' => 'PCS', ];
-                      }elseif ($value['unit_type_id'] == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM'];
-                      }elseif ($value['unit_type_id'] == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE'];
-                      }
+                      $unit_type_list = ['GRAM' => 'GRAMS', 'MILLILITRE' => 'MILLILITERS'];
                     ?>
 
                     <tr>
 
                       <input type="hidden" name="row[{{ $key }}][fo_pack_mat_id]" value="{{ $value['fo_pack_mat_id'] }}">
-                      <input type="hidden" name="row[{{ $key }}][unit_type_id]" value="{{ $value['unit_type_id'] }}">
 
                       <td>
                         <div class="form-group">
@@ -195,20 +187,12 @@
                 @foreach($finishing_order->finishingOrderPackMat as $key => $data)
 
                     <?php
-                      $unit_type_list = [];
-                      if ($data->unit_type_id == 'IU1001') {
-                        $unit_type_list = ['PCS' => 'PCS', ];
-                      }elseif ($data->unit_type_id == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM',];
-                      }elseif ($data->unit_type_id == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE',];
-                      }
+                      $unit_type_list = ['GRAM' => 'GRAMS', 'MILLILITRE' => 'MILLILITERS'];
                     ?>
 
                     <tr>
                       
                         <input type="hidden" name="row[{{ $key }}][fo_pack_mat_id]" value="{{ $data->fo_pack_mat_id }}">
-                        <input type="hidden" name="row[{{ $key }}][unit_type_id]" value="{{ $data->unit_type_id }}">
 
                       <td>
                         <div class="form-group">
