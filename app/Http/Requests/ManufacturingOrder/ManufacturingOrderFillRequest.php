@@ -45,8 +45,8 @@ class ManufacturingOrderFillRequest extends FormRequest{
                 $rules['row.'.$key.'.req_qty'] = 'required|string|max:21';
                 $rules['row.'.$key.'.req_qty_unit'] = 'required|string|max:45';
                 $rules['row.'.$key.'.req_qty_is_included'] = 'nullable|string|max:5';
-                $rules['row.'.$key.'.batch_no'] = 'required|string|max:45';
-                $rules['row.'.$key.'.weighed_by'] = 'required|string|max:255';
+                $rules['row.'.$key.'.batch_no'] = 'nullable|string|max:45';
+                $rules['row.'.$key.'.weighed_by'] = 'nullable|string|max:255';
 
             } 
 

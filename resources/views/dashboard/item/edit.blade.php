@@ -67,7 +67,7 @@
               <div class="box-body">
                 
                 {!! __form::textbox_numeric(
-                  '12', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size') ? old('batch_size') : $item->batch_size, $errors->has('batch_size'), $errors->first('batch_size'), ''
+                  '12', 'batch_size', 'text', 'Standard Batch Size', 'Standard Batch Size', old('batch_size') ? old('batch_size') : $item->batch_size, $errors->has('batch_size'), $errors->first('batch_size'), ''
                 ) !!}
 
                 <div class="col-md-12"></div>

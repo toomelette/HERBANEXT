@@ -37,25 +37,25 @@ class FinishingOrderFillRequest extends FormRequest{
         if(!empty($this->request->get('row'))){
             foreach($this->request->get('row') as $key => $value){
                 $rules['row.'.$key.'.item_product_code'] = 'required|string|max:11';
-                $rules['row.'.$key.'.item_name'] = 'required|string|max:255';
+                $rules['row.'.$key.'.item_name'] = 'nullable|string|max:255';
+                $rules['row.'.$key.'.item_description'] = 'nullable|string|max:255';
                 $rules['row.'.$key.'.req_qty'] = 'required|string|max:21';
-                $rules['row.'.$key.'.req_qty_unit'] = 'required|string|max:45';
-                $rules['row.'.$key.'.qty_issued'] = 'required|string|max:21';
-                $rules['row.'.$key.'.qty_issued_unit'] = 'required|string|max:45';
+                $rules['row.'.$key.'.req_qty_unit'] = 'nullable|string|max:45';
+                $rules['row.'.$key.'.qty_issued'] = 'nullable|string|max:21';
+                $rules['row.'.$key.'.qty_issued_unit'] = 'nullable|string|max:45';
             } 
         }
 
 
         if(!empty($this->request->get('row_figure'))){
             foreach($this->request->get('row_figure') as $key_figure => $value_figure){
-                $rules['row_figure.'.$key_figure.'.unit_type_id'] = 'required|string|max:11';
-                $rules['row_figure.'.$key_figure.'.figure_unit'] = 'required|string|max:45';
-                $rules['row_figure.'.$key_figure.'.figure_regected'] = 'required|string|max:21';
-                $rules['row_figure.'.$key_figure.'.figure_damaged'] = 'required|string|max:21';
-                $rules['row_figure.'.$key_figure.'.figure_returns'] = 'required|string|max:21';
-                $rules['row_figure.'.$key_figure.'.figure_samples'] = 'required|string|max:21';
-                $rules['row_figure.'.$key_figure.'.figure_total'] = 'required|string|max:21';
-                $rules['row_figure.'.$key_figure.'.figure_difference'] = 'required|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_unit'] = 'nullable|string|max:45';
+                $rules['row_figure.'.$key_figure.'.figure_regected'] = 'nullable|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_damaged'] = 'nullable|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_returns'] = 'nullable|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_samples'] = 'nullable|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_total'] = 'nullable|string|max:21';
+                $rules['row_figure.'.$key_figure.'.figure_difference'] = 'nullable|string|max:21';
             } 
         }
 

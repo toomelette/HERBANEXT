@@ -119,7 +119,7 @@
                 @if(old('row'))
                   @foreach(old('row') as $key => $value)
                     <?php
-                      $unit_type_list = ['GRAM' => 'GRAMS', 'MILLILITRE' => 'MILLILITERS'];
+                      $unit_type_list = ['PCS' => 'PCS'];
                     ?>
 
                     <tr>
@@ -187,7 +187,7 @@
                 @foreach($finishing_order->finishingOrderPackMat as $key => $data)
 
                     <?php
-                      $unit_type_list = ['GRAM' => 'GRAMS', 'MILLILITRE' => 'MILLILITERS'];
+                      $unit_type_list = ['PCS' => 'PCS'];
                     ?>
 
                     <tr>
@@ -282,20 +282,12 @@
                 @if(old('row_figure'))
                   @foreach(old('row_figure') as $key_figure => $value_figure)
                     <?php
-                      $unit_type_list = [];
-                      if ($value['unit_type_id'] == 'IU1001') {
-                        $unit_type_list = ['PCS' => 'PCS', ];
-                      }elseif ($value['unit_type_id'] == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM'];
-                      }elseif ($value['unit_type_id'] == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE'];
-                      }
+                      $unit_type_list = ['PCS' => 'PCS'];
                     ?>
 
                     <tr>
 
                       <input type="hidden" name="row_figure[{{ $key_figure }}][fo_pack_mat_id]" value="{{ $value_figure['fo_pack_mat_id'] }}">
-                      <input type="hidden" name="row_figure[{{ $key_figure }}][unit_type_id]" value="{{ $value_figure['unit_type_id'] }}">
 
                       <td>
                         <div class="form-group">
@@ -365,20 +357,12 @@
                 @foreach($finishing_order->finishingOrderPackMat as $key_figure => $data_figure)
 
                     <?php
-                      $unit_type_list = [];
-                      if ($data_figure->unit_type_id == 'IU1001') {
-                        $unit_type_list = ['PCS' => 'PCS', ];
-                      }elseif ($data_figure->unit_type_id == 'IU1002') {
-                        $unit_type_list = ['GRAM' => 'GRAM',];
-                      }elseif ($data_figure->unit_type_id == 'IU1003') {
-                        $unit_type_list = ['MILLILITRE' => 'MILLILITRE',];
-                      }
+                      $unit_type_list = ['PCS' => 'PCS'];
                     ?>
 
                     <tr>
                     
                       <input type="hidden" name="row_figure[{{ $key_figure }}][fo_pack_mat_id]" value="{{ $data_figure->fo_pack_mat_id }}">
-                      <input type="hidden" name="row_figure[{{ $key_figure }}][unit_type_id]" value="{{ $data_figure->unit_type_id }}">
 
                       <td>
                         <div class="form-group">

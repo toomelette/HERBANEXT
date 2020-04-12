@@ -107,8 +107,8 @@
               <tr>
                 <th>Code</th>
                 <th>Raw Materials</th>
-                <th>Required Quantity</th>
-                <th>Unit</th>
+                <th>Required Quantity *</th>
+                <th>Unit * </th>
                 <th>Batch No.</th>
                 <th>Weighed by/Date</th>
               </tr>
@@ -147,8 +147,8 @@
                           <div class="col-md-10">
                             <input type="text" name="row[{{ $key }}][req_qty]" class="form-control req_qty" placeholder="Required Quantity" value="{{ $value['req_qty'] }}">
                           </div>
-                          <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                         </div>
+                          <small class="text-danger">{{ $errors->first('row.'. $key .'.req_qty') }}</small>
                       </td>
 
                       <td>

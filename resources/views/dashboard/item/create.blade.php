@@ -80,7 +80,7 @@
                 ) !!}
 
                 {!! __form::textbox_numeric(
-                  '6', 'beginning_balance', 'text', 'Beggining Balance *', 'Beggining Balance *', old('beginning_balance'), $errors->has('beginning_balance'), $errors->first('beginning_balance'), ''
+                  '6', 'beginning_balance', 'text', 'Beginning Balance *', 'Beginning Balance *', old('beginning_balance'), $errors->has('beginning_balance'), $errors->first('beginning_balance'), ''
                 ) !!}
 
                 {!! __form::select_static(
@@ -90,7 +90,7 @@
                 <div class="col-md-12"></div>
                 
                 {!! __form::textbox_numeric(
-                  '12', 'batch_size', 'text', 'Standard Batch Size *', 'Standard Batch Size', old('batch_size'), $errors->has('batch_size'), $errors->first('batch_size'), ''
+                  '12', 'batch_size', 'text', 'Standard Batch Size', 'Standard Batch Size', old('batch_size'), $errors->has('batch_size'), $errors->first('batch_size'), ''
                 ) !!}
 
                 <div class="col-md-12"></div>
