@@ -91,6 +91,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/finishing_order/{slug}', 'FinishingOrderController@fillUpPost')->name('finishing_order.fill_up_post');
 	Route::get('/finishing_order/details/{slug}', 'FinishingOrderController@show')->name('finishing_order.show');
 	Route::get('/finishing_order/print/{slug}', 'FinishingOrderController@print')->name('finishing_order.print');
+
+
+	/** PERSONNELS **/
+	Route::resource('personnel', 'PersonnelController');
+
+
+	/** MACHINES **/
+	Route::resource('machine', 'MachineController');
 	
 });
 

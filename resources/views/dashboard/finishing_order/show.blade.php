@@ -110,13 +110,41 @@
               @foreach($finishing_order->finishingOrderPackMat as $data)
                 <tr>
                   <td>{{ $data->item_product_code }}</td>
-                  <td>{{ number_format($data->figure_actual_usage, 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_regected , 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_damaged  , 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_returns, 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_samples, 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_total, 3) .' '. $data->figure_unit }}</td>
-                  <td>{{ number_format($data->figure_difference, 3) .' '. $data->figure_unit }}</td>
+                  <td>
+                    @if(isset($data->figure_actual_usage))
+                      {{ number_format($data->figure_actual_usage, 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_regected))
+                      {{ number_format($data->figure_regected , 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_damaged))
+                      {{ number_format($data->figure_damaged  , 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_returns))
+                      {{ number_format($data->figure_returns, 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_samples))
+                      {{ number_format($data->figure_samples, 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_total))
+                      {{ number_format($data->figure_total, 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
+                  <td>
+                    @if(isset($data->figure_difference))
+                      {{ number_format($data->figure_difference, 3) .' '. $data->figure_unit }}
+                    @endif
+                  </td>
                 </tr>
               @endforeach
             </tbody>
