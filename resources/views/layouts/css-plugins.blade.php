@@ -21,7 +21,9 @@
 
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
 
-<link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}?p=1">
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/multiselect/css/multi-select.css') }}">
+
+<link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 
 {{-- Charts --}}	
