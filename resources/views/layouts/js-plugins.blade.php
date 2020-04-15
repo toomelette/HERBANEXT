@@ -26,6 +26,8 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('template/plugins/quicksearch/jquery.quicksearch.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('template/plugins/multiselect/js/jquery.multi-select.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>

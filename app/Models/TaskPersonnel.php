@@ -29,7 +29,6 @@ class TaskPersonnel extends Model{
         return $this->belongsTo('App\Models\Task','task_id','task_id');
     }
 
-
     public function personnel() {
         return $this->belongsTo('App\Models\Personnel','personnel_id','personnel_id');
     }

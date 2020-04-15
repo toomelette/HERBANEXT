@@ -27,6 +27,7 @@ class Task extends Model{
         'slug' => '',
         'task_id' => '',
         'item_id' => '',
+        'machine_id' => '',
         'name' => '',
         'description' => '',
         'date_from' => null,
@@ -45,6 +46,14 @@ class Task extends Model{
     // Relationships
     public function item() {
         return $this->belongsTo('App\Models\Item','item_id','item_id');
+    }
+
+    public function machine() {
+        return $this->belongsTo('App\Models\Machine','machine_id','machine_id');
+    }
+
+    public function taskPersonnel() {
+        return $this->hasMany('App\Models\TaskPersonnel','task_id','task_id');
     }
 
 

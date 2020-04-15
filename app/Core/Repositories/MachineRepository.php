@@ -191,15 +191,15 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
 
 
-    // public function getAll(){
+    public function getAll(){
 
-    //     $machines = $this->cache->remember('machines:getAll', 240, function(){
-    //         return $this->machine->select('machine_id', 'name')->get();
-    //     });
+        $machines = $this->cache->remember('machines:getAll', 240, function(){
+            return $this->machine->select('machine_id', 'name')->get();
+        });
         
-    //     return $machines;
+        return $machines;
 
-    // }
+    }
 
 
 

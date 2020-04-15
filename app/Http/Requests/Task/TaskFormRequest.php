@@ -17,7 +17,13 @@ class TaskFormRequest extends FormRequest{
     public function rules(){
 
         return [
-            
+
+            'name' => 'required|string|max:90',
+            'description' => 'nullable|string|max:255',
+            'item_id' => 'required|string|max:11',
+            'machine_id' => 'required|string|max:11',
+            'personnels' => 'nullable|array',
+
         ];
 
     }

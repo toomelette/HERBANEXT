@@ -203,15 +203,16 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
 
 
-    // public function getAll(){
+    public function getAll(){
 
-    //     $personnels = $this->cache->remember('personnels:getAll', 240, function(){
-    //         return $this->personnel->select('personnel_id', 'name')->get();
-    //     });
+        $personnels = $this->cache->remember('personnels:getAll', 240, function(){
+            return $this->personnel->select('personnel_id', 'firstname', 'middlename', 'lastname')
+                                   ->get();
+        });
         
-    //     return $personnels;
+        return $personnels;
 
-    // }
+    }
 
 
 

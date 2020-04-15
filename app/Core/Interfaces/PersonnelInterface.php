@@ -18,6 +18,6 @@ interface PersonnelInterface {
 
 	// public function findByPersonnelId($menu_id);
 
-	// public function getAll();
+	public function getAll();
 		
 }
