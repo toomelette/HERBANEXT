@@ -102,6 +102,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TASKS **/
+	Route::get('/task/scheduling', 'TaskController@scheduling')->name('task.scheduling');
 	Route::resource('task', 'TaskController');
 	
 });

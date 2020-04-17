@@ -61,6 +61,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->machine_id = $request->machine_id;
         $task->name = $request->name;
         $task->description = $request->description;
+        $task->color = $request->color;
         $task->created_at = $this->carbon->now();
         $task->updated_at = $this->carbon->now();
         $task->ip_created = request()->ip();
@@ -84,11 +85,60 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->machine_id = $request->machine_id;
         $task->name = $request->name;
         $task->description = $request->description;
+        $task->color = $request->color;
         $task->updated_at = $this->carbon->now();
         $task->ip_updated = request()->ip();
         $task->user_updated = $this->auth->user()->user_id;
         $task->save();
         $task->taskPersonnel()->delete();
+        
+        return $task;
+
+    }
+
+
+
+
+
+    public function updateDrop($request, $slug){
+
+        $task = $this->findBySlug($slug);
+        $task->date_from = $this->__dataType->date_parse($request->date);
+        $task->date_to = $this->__dataType->date_parse($request->date);
+        $task->status = 2;
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
+    public function updateResize($request, $slug){
+
+        $task = $this->findBySlug($slug);
+        $task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
+        $task->is_allday =  $this->__dataType->string_to_boolean($request->allday);
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
+    public function updateEventDrop($request, $slug){
+
+        $task = $this->findBySlug($slug);
+        $task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
+        $task->is_allday = $this->__dataType->string_to_boolean($request->allday);
+        $task->save();
         
         return $task;
 
@@ -132,25 +182,6 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-    // public function findByTaskId($task_id){
-
-    //     $task = $this->cache->remember('tasks:findByTaskId:' . $task_id, 240, function() use ($task_id){
-    //         return $this->task->where('task_id', $task_id)->first();
-    //     });
-        
-    //     if(empty($task)){
-    //         abort(404);
-    //     }
-        
-    //     return $task;
-
-    // }
-
-
-
-
-
-
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
@@ -172,7 +203,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'item_id', 'machine_id', 'is_scheduled', 'slug')
+        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -205,15 +236,34 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-    // public function getAll(){
+    public function getUnscheduled(){
 
-    //     $tasks = $this->cache->remember('tasks:getAll', 240, function(){
-    //         return $this->task->select('task_id', 'name')->get();
-    //     });
+        $tasks = $this->cache->remember('tasks:getUnscheduled', 240, function(){
+            return $this->task->select('slug', 'name', 'color')
+                              ->where('status', 1)
+                              ->get();
+        });
         
-    //     return $tasks;
+        return $tasks;
 
-    // }
+    }
+
+
+
+
+
+
+    public function getScheduled(){
+
+        $tasks = $this->cache->remember('tasks:getScheduled', 240, function(){
+            return $this->task->select('slug', 'name', 'is_allday', 'date_from', 'date_to', 'color')
+                              ->whereIn('status', [2,3])
+                              ->get();
+        });
+        
+        return $tasks;
+
+    }
 
 
 

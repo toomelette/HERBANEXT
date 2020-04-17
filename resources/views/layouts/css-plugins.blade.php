@@ -5,9 +5,14 @@
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/Ionicons/css/ionicons.min.css')}}">
 
+<link type="text/css" rel="stylesheet" href="{{ asset('template/bower_components/fullcalendar/dist/fullcalendar.min.css') }}">
+  
+<link type="text/css" rel="stylesheet" href="{{ asset('template/bower_components/fullcalendar/dist/fullcalendar.print.min.css') }}" media="print">
+
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/select2/dist/css/select2.min.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+    
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/dist/css/AdminLTE.min.css')}}">
 
@@ -25,9 +30,8 @@
 
 <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-
 {{-- Charts --}}	
-<link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
+<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
 
 
 

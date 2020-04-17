@@ -37,6 +37,20 @@ class TaskService extends BaseService{
 
 
 
+    public function scheduling(){
+
+        $unscheduled_tasks = $this->task_repo->getUnscheduled();
+        $scheduled_tasks = $this->task_repo->getScheduled();
+
+        return view('dashboard.task.scheduling')->with([
+            'unscheduled_tasks' => $unscheduled_tasks,
+            'scheduled_tasks' => $scheduled_tasks,
+        ]);
+
+    }
+
+
+
     public function store($request){    
 
         $task = $this->task_repo->store($request);
@@ -87,7 +101,6 @@ class TaskService extends BaseService{
         return redirect()->back();
 
     }
-
 
 
 

@@ -8,8 +8,9 @@
                         'direction' => Request::get('direction'),
                       ];
 
-  $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
-  $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
+  $unscheduled = '<span class="badge bg-red">Unscheduled</span>';
+  $pending = '<span class="badge bg-blue">Pending</span>';
+  $finished = '<span class="badge bg-green">Finished</span>';
 
 ?>
 
@@ -44,7 +45,7 @@
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('item.name', 'Product')</th>
             <th>@sortablelink('machine.name', 'Machine')</th>
-            <th>@sortablelink('is_scheduled', 'Scheduled')</th>
+            <th>@sortablelink('status', 'Status')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($tasks as $data) 
@@ -53,7 +54,15 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ optional($data->item)->name }}</td>
               <td id="mid-vert">{{ optional($data->machine)->name }}</td>
-              <td id="mid-vert">{!! $data->is_scheduled == 1 ?  $span_check : $span_times !!}</td>
+              <td id="mid-vert">
+                @if($data->status == 1)
+                  {!! $unscheduled !!}
+                @elseif($data->status == 2)
+                  {!! $pending !!}
+                @elseif($data->status == 3)
+                  {!! $finished !!}
+                @endif
+              </td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.task.edit', $global_user_submenus))

@@ -162,7 +162,7 @@ class PurchaseOrderService extends BaseService{
 
 
     public function update($request, $slug){
-
+        
         $purchase_order = $this->purchase_order_repo->update($request, $slug);
         
         $route = $purchase_order->buffer_status == 1 ? 'dashboard.purchase_order.buffer' : 'dashboard.purchase_order.index'; 

@@ -24,6 +24,11 @@ class TaskController extends Controller{
     }
 
     
+    public function scheduling(){
+        return $this->task->scheduling();
+    }
+
+    
     public function create(){
         return view('dashboard.task.create');
     }

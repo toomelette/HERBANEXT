@@ -16,7 +16,7 @@ class Task extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
-    protected $sortable = ['name', 'description', 'date_from', 'is_scheduled'];
+    protected $sortable = ['name', 'description', 'date_from', 'status'];
     
 	public $timestamps = false;
 
@@ -30,9 +30,10 @@ class Task extends Model{
         'machine_id' => '',
         'name' => '',
         'description' => '',
+        'is_allday' => 1,
         'date_from' => null,
         'date_to' => null,
-        'is_scheduled' => false,
+        'status' => 1,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

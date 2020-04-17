@@ -5,6 +5,24 @@
   }else{
     $list_of_selected_personnels = [];
   }
+  
+  $task_colors = [
+
+    '#00c0ef' => '<a class="text-aqua" href="#"><i class="fa fa-square"></i></a>',
+    '#0073b7' => '<a class="text-blue" href="#"><i class="fa fa-square"></i></a>',
+    '#3c8dbc ' => '<a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>',
+    '#39cccc ' => '<a class="text-teal" href="#"><i class="fa fa-square"></i></a>',
+    '#f39c12 ' => '<a class="text-yellow" href="#"><i class="fa fa-square"></i></a>',
+    '#ff851b ' => '<a class="text-orange" href="#"><i class="fa fa-square"></i></a>',
+    '#00a65a ' => '<a class="text-green" href="#"><i class="fa fa-square"></i></a>',
+    '#01ff70 ' => '<a class="text-lime" href="#"><i class="fa fa-square"></i></a>',
+    '#dd4b39 ' => '<a class="text-red" href="#"><i class="fa fa-square"></i></a>',
+    '#605ca8 ' => '<a class="text-purple" href="#"><i class="fa fa-square"></i></a>',
+    '#f012be ' => '<a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a>',
+    '#777 ' => '<a class="text-muted" href="#"><i class="fa fa-square"></i></a>',
+    '#001f3f ' => '<a class="text-navy" href="#"><i class="fa fa-square"></i></a>',
+
+  ];
 
 ?>
 
@@ -51,6 +69,35 @@
             {!! __form::select_dynamic(
               '6', 'machine_id', 'Machine to be used *', old('machine_id') ? old('machine_id') : $task->machine_id, $global_machines_all, 'machine_id', 'name', $errors->has('machine_id'), $errors->first('machine_id'), 'select2', ''
             ) !!}
+
+            <div class="col-md-12"></div>
+
+            <div class="col-md-12">
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <p class="box-title">Calendar Task Color *</p>
+                </div>
+                <div class="box-body">
+
+                  <div class="col-md-12" style="padding:25px;">
+
+                    @foreach($task_colors as $key => $data)  
+                      <label>
+                        <input type="radio" class="minimal" name="color" value="{{ $key }}" {{ old('color') == $key || $task->color == $key ? 'checked' : '' }}>
+                        &nbsp; {!! $data !!}
+                      </label>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @endforeach
+
+                    @if($errors->has('color'))
+                      <p class="text-danger" style="padding-top:10px;">{{ $errors->first('color') }}</p>
+                    @endif
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
 
             {{-- Personnels --}}
             <div class="col-md-12 no-padding">
