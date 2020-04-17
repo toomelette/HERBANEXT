@@ -105,6 +105,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task = $this->findBySlug($slug);
         $task->date_from = $this->__dataType->date_parse($request->date);
         $task->date_to = $this->__dataType->date_parse($request->date);
+        $task->is_allday = 1;
         $task->status = 2;
         $task->save();
         

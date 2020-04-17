@@ -134,15 +134,11 @@ $(function () {
       }
 
       if(isEmpty(info.end)){
-
         var start_date = info.start.format('Y-MM-D HH:mm:ss');
         var end_date = info.start.format('Y-MM-D HH:mm:ss');
-
       }else{
-
         var start_date = info.start.format('Y-MM-D HH:mm:ss');
         var end_date = info.end.format('Y-MM-D HH:mm:ss');
-
       }
 
       $.ajaxSetup({
@@ -166,7 +162,8 @@ $(function () {
 
 
     droppable : true,
-    drop      : function (date, event, end, allDay) { 
+    displayEventEnd : true,
+    drop      : function (date, allDay) {
 
       var originalEventObject = $(this).data('eventObject')
       var copiedEventObject = $.extend({}, originalEventObject)
@@ -177,24 +174,24 @@ $(function () {
       copiedEventObject.borderColor     = $(this).css('border-color')
 
       var slug = $(this).data('slug')
+      var start_date = date.format('Y-MM-D HH:mm:ss')
 
-      // var start_date = date.start.format('Y-MM-D HH:mm:ss')
-      // var end_date = date.end.format('Y-MM-D HH:mm:ss')
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
 
-      // $.ajaxSetup({
-      //     headers: {
-      //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      //     }
-      // });
-
-      // $.ajax({
-      //     url: "/api/task/drop/" + slug,
-      //     type: "POST",
-      //     data: { date : formatted_date },
-      // });
+      $.ajax({
+        url: "/api/task/drop/" + slug,
+        type: "POST",
+        data: { date : start_date },
+      });
 
       $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
       $(this).remove()
+
+      location.reload();
 
     },
 
