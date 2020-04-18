@@ -34,7 +34,7 @@ class ItemPackMatRepository extends BaseRepository implements ItemPackMatInterfa
     public function store($data, $item, $item_pack_mat_orig){
 
         $item_pack_mat = new ItemPackMat;
-        $item_pack_mat->product_code = $item->product_code;
+        $item_pack_mat->product_code = $item_pack_mat_orig->product_code;
         $item_pack_mat->item_id = $item->item_id;
         $item_pack_mat->item_pack_mat_id = $this->getItemPackMatIdInc();
         $item_pack_mat->item_pack_mat_item_id = $data['item']; 

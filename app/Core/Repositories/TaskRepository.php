@@ -100,6 +100,20 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+    public function updateFinished($slug){
+
+        $task = $this->findBySlug($slug);
+        $task->status = 3;
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
     public function updateDrop($request, $slug){
 
         $task = $this->findBySlug($slug);

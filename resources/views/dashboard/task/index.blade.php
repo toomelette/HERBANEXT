@@ -9,7 +9,7 @@
                       ];
 
   $unscheduled = '<span class="badge bg-red">Unscheduled</span>';
-  $pending = '<span class="badge bg-blue">Pending</span>';
+  $pending = '<span class="badge bg-orange">Pending .. </span>';
   $finished = '<span class="badge bg-green">Finished</span>';
 
 ?>
@@ -46,7 +46,7 @@
             <th>@sortablelink('item.name', 'Product')</th>
             <th>@sortablelink('machine.name', 'Machine')</th>
             <th>@sortablelink('status', 'Status')</th>
-            <th style="width: 150px">Action</th>
+            <th style="width: 270px">Action</th>
           </tr>
           @foreach($tasks as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -65,6 +65,13 @@
               </td>
               <td id="mid-vert">
                 <div class="btn-group">
+                  @if(in_array('dashboard.task.update_finished', $global_user_submenus))
+                    @if($data->status != 3)
+                      <a type="button" class="btn btn-default" id="update_finished_button" data-action="update-finished" data-url="{{ route('dashboard.task.update_finished', $data->slug) }}">
+                        Confirm Finished
+                      </a>
+                    @endif
+                  @endif
                   @if(in_array('dashboard.task.edit', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.task.edit', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
@@ -96,6 +103,10 @@
 
   </section>
 
+  <form id="frm-update-finished" method="POST" style="display: none;">
+    @csrf
+  </form>
+
 @endsection
 
 
@@ -115,6 +126,13 @@
 @section('scripts')
 
   <script type="text/javascript">
+
+    $(document).on("click", "#update_finished_button", function () {
+      if($(this).data("action") == "update-finished"){
+        $("#frm-update-finished").attr("action", $(this).data("url"));
+        $("#frm-update-finished").submit();
+      }
+    });
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('task_delete') !!}

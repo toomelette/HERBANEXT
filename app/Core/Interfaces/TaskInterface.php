@@ -12,7 +12,13 @@ interface TaskInterface {
 
 	public function update($request, $slug);
 
+	public function updateFinished($slug);
+
 	public function updateDrop($request, $slug);
+
+	public function updateResize($request, $slug);
+
+	public function updateEventDrop($request, $slug);
 
 	public function destroy($slug);
 

@@ -94,6 +94,17 @@ class TaskService extends BaseService{
 
 
 
+    public function updateFinished($slug){
+
+        $task = $this->task_repo->updateFinished($slug);
+        
+        $this->event->fire('task.update', $task);
+        return redirect()->route('dashboard.task.index');
+
+    }
+
+
+
     public function destroy($slug){
 
         $task = $this->task_repo->destroy($slug);

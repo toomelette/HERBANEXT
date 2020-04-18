@@ -10,17 +10,17 @@
 
     '#00c0ef' => '<a class="text-aqua" href="#"><i class="fa fa-square"></i></a>',
     '#0073b7' => '<a class="text-blue" href="#"><i class="fa fa-square"></i></a>',
-    '#3c8dbc ' => '<a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>',
-    '#39cccc ' => '<a class="text-teal" href="#"><i class="fa fa-square"></i></a>',
-    '#f39c12 ' => '<a class="text-yellow" href="#"><i class="fa fa-square"></i></a>',
-    '#ff851b ' => '<a class="text-orange" href="#"><i class="fa fa-square"></i></a>',
-    '#00a65a ' => '<a class="text-green" href="#"><i class="fa fa-square"></i></a>',
-    '#01ff70 ' => '<a class="text-lime" href="#"><i class="fa fa-square"></i></a>',
-    '#dd4b39 ' => '<a class="text-red" href="#"><i class="fa fa-square"></i></a>',
-    '#605ca8 ' => '<a class="text-purple" href="#"><i class="fa fa-square"></i></a>',
-    '#f012be ' => '<a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a>',
-    '#777 ' => '<a class="text-muted" href="#"><i class="fa fa-square"></i></a>',
-    '#001f3f ' => '<a class="text-navy" href="#"><i class="fa fa-square"></i></a>',
+    '#3c8dbc' => '<a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>',
+    '#39cccc' => '<a class="text-teal" href="#"><i class="fa fa-square"></i></a>',
+    '#f39c12' => '<a class="text-yellow" href="#"><i class="fa fa-square"></i></a>',
+    '#ff851b' => '<a class="text-orange" href="#"><i class="fa fa-square"></i></a>',
+    '#00a65a' => '<a class="text-green" href="#"><i class="fa fa-square"></i></a>',
+    '#01ff70' => '<a class="text-lime" href="#"><i class="fa fa-square"></i></a>',
+    '#dd4b39' => '<a class="text-red" href="#"><i class="fa fa-square"></i></a>',
+    '#605ca8' => '<a class="text-purple" href="#"><i class="fa fa-square"></i></a>',
+    '#f012be' => '<a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a>',
+    '#777' => '<a class="text-muted" href="#"><i class="fa fa-square"></i></a>',
+    '#001f3f' => '<a class="text-navy" href="#"><i class="fa fa-square"></i></a>',
 
   ];
 
@@ -83,7 +83,7 @@
 
                     @foreach($task_colors as $key => $data)  
                       <label>
-                        <input type="radio" class="minimal" name="color" value="{{ $key }}" {{ old('color') == $key || $task->color == $key ? 'checked' : '' }}>
+                        <input type="radio" class="minimal" name="color" value="{{ $key }}" {{ $task->color == $key ? 'checked' : '' }}>
                         &nbsp; {!! $data !!}
                       </label>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

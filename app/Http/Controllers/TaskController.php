@@ -29,6 +29,11 @@ class TaskController extends Controller{
     }
 
     
+    public function updateFinished($slug){
+        return $this->task->updateFinished($slug);
+    }
+
+    
     public function create(){
         return view('dashboard.task.create');
     }
