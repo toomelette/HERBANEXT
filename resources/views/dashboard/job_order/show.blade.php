@@ -27,48 +27,40 @@
                   <h2 class="box-title">#{{ $key + 1 }}</h2>
                 </div>
                 <div class="box-body">
-
-                  <table class="table table-striped">
+                  <table class="table table-bordered">
                     <tbody>
                         <tr>
                           <td>Reference PO No. :</td>
                           <td>{{ $po_item->po_no }}</td>
-                        </tr>
-                        <tr>
-                          <td>Product Name :</td>
-                          <td>{{ $data->item_name }}</td>
-                        </tr>
-                        <tr>
-                          <td>Date Required :</td>
-                          <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
-                        </tr>
-                        <tr>
-                          <td>Batch Size :</td>
-                          <td>{{ $data->batch_size }}</td>
-                        </tr>
-                        <tr>
-                          <td>Pack Size :</td>
-                          <td>{{ $data->pack_size }}</td>
-                        </tr>
-                        <tr>
                           <td>Lot No :</td>
                           <td>{{ $data->lot_no }}</td>
                         </tr>
                         <tr>
+                          <td>Product Name :</td>
+                          <td>{{ $data->item_name }}</td>
                           <td>Job Order No :</td>
                           <td>{{ $data->jo_no }}</td>
                         </tr>
                         <tr>
+                          <td>Date Required :</td>
+                          <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
                           <td>QTY Required :</td>
                           <td>{{ number_format($data->amount, 3) .' '. $data->unit }}</td>
                         </tr>
                         <tr>
+                          <td>Batch Size :</td>
+                          <td>{{ $data->batch_size }}</td>
                           <td>Theoritical Yield :</td>
                           <td>{{ $data->theo_yield }}</td>
                         </tr>
+                        <tr>
+                          <td>Pack Size :</td>
+                          <td>{{ $data->pack_size }}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
                     </tbody>
                   </table>
-
               </div>
             </div>
           </div>

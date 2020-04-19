@@ -49,7 +49,6 @@
 
 						        	<input type="hidden" name="row[{{ $key }}][jo_id]" id="jo_id" value="{{ $jobOrder[$key]['jo_id'] }}">
 						        	<input type="hidden" name="batch_size" id="batch_size" value="{{ $jobOrder[$key]['batch_size'] }}">
-						        	<input type="hidden" name="batch_size_unit" id="batch_size_unit" value="{{ $jobOrder[$key]['batch_size_unit'] }}">
 						        	<input type="hidden" name="item_type_percent" id="item_type_percent" value="{{ $po_item->item_type_percent }}">
 						        	<input type="hidden" name="unit_type_id" id="unit_type_id" value="{{ $po_item->unit_type_id }}">
 
@@ -131,7 +130,6 @@
 
 						        	<input type="hidden" name="row[{{ $key }}][jo_id]" id="jo_id" value="{{ $data->jo_id }}">
 						        	<input type="hidden" name="batch_size" id="batch_size" value="{{ $data->batch_size }}">
-						        	<input type="hidden" name="batch_size_unit" id="batch_size_unit" value="{{ $data->batch_size_unit }}">
 						        	<input type="hidden" name="item_type_percent" id="item_type_percent" value="{{ $po_item->item_type_percent }}">
 						        	<input type="hidden" name="unit_type_id" id="unit_type_id" value="{{ $po_item->unit_type_id }}">
 
