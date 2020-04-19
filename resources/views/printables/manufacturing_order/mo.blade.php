@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
 </head>
+
 <body onload="window.print();" onafterprint="window.close()">
 
 	<section class="invoice">
@@ -64,6 +65,7 @@
 
           </tbody>
         </table>
+        <p>Note: Any deviation in this production procedure will require Change Control approval prior to implementation.</p>
       </div>
     </div>
 
@@ -72,7 +74,6 @@
     {{-- Parameters --}}
     <div class="row">
       <div class="col-xs-12 table-responsive">
-      <h4>Raw Materials:</h4>
         <table class="table table-bordered">
           <thead>
           <tr>
