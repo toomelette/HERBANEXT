@@ -75,7 +75,7 @@
           <thead>
           <tr>
             <th>Product Code</th>
-            <th>Raw Material</th>
+            <th>Packaging Material</th>
             <th>Required Quantity</th>
             <th>Quantity Issued</th>
           </tr>
@@ -229,7 +229,7 @@
           <thead>
           <tr>
             <th>Product Code</th>
-            <th>Raw Material</th>
+            <th>Packaging Material</th>
             <th>Required Quantity</th>
             <th>Quantity Issued</th>
           </tr>
