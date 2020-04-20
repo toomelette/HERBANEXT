@@ -73,6 +73,8 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:findBySlug:'. $purchase_order->slug .'');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_order_items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_order_items:fetch:*');
 
         $this->session->flash('PURCHASE_ORDER_DELETE_SUCCESS', 'The Purchase Order has been successfully deleted!');
         $this->session->flash('PURCHASE_ORDER_DELETE_SUCCESS_SLUG', $purchase_order->slug);

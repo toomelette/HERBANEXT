@@ -49,17 +49,17 @@
 	        <div class="box-body no-padding">
 	        	<table class="table table-hover">
 			          <tr>
-			            <th>@sortablelink('po_no', 'Reference PO No.')</th>
-			            <th>@sortablelink('jo_no', 'Reference JO No.')</th>
-			            <th>@sortablelink('item_name', 'Product Name')</th>
+			            <th>@sortablelink('jobOrder.po_no', 'Reference PO No.')</th>
+			            <th>@sortablelink('jobOrder.jo_no', 'Reference JO No.')</th>
+			            <th>@sortablelink('jobOrder.item_name', 'Product Name')</th>
 			            <th>@sortablelink('updated_at', 'Date Updated')</th>
 			            <th style="width: 150px">Action</th>
 			          </tr>
 			          @foreach($manufacturing_orders as $data) 
 			            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-			              <td id="mid-vert">{{ $data->po_no }}</td>
-			              <td id="mid-vert">{{ $data->jo_no }}</td>
-			              <td id="mid-vert">{{ $data->item_name }}</td>
+			              <td id="mid-vert">{{ optional($data->jobOrder)->po_no }}</td>
+			              <td id="mid-vert">{{ optional($data->jobOrder)->jo_no }}</td>
+			              <td id="mid-vert">{{ optional($data->jobOrder)->item_name }}</td>
 			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'M d, Y h:i A') }}</td>
 			              <td id="mid-vert">
 			                @if(in_array('dashboard.manufacturing_order.show', $global_user_submenus))

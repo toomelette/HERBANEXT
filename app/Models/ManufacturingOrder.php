@@ -24,21 +24,12 @@ class ManufacturingOrder extends Model{
         'mo_no' => '',
         'master_mo_no' => '',
         'item_id' => '',
-        'item_product_code' => '',
-        'item_name' => '',
-        'item_type_id' => '',
         'po_id' => '',
-        'po_no' => '',
         'jo_id' => '',
-        'jo_no' => '',
-        'lot_no' => '',
         'client' => '',
         'shell_life' => '',
-        'jo_batch_size' => '',
-        'jo_pack_size' => '',
         'processing_date' => null,
         'expired_date' => null,
-        'jo_theo_yield' => '',
         'requested_by' => '',
         'requested_date' => null,
         'status' => '',
@@ -61,10 +52,6 @@ class ManufacturingOrder extends Model{
 
     public function jobOrder() {
         return $this->belongsTo('App\Models\JobOrder','jo_id','jo_id');
-    }
-
-    public function itemType() {
-        return $this->belongsTo('App\Models\ItemType','item_type_id','item_type_id');
     }
 
     public function manufacturingOrderRawMat() {

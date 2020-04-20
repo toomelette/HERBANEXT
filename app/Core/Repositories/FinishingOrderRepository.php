@@ -123,7 +123,7 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
 
         $finishing_order = $this->cache->remember('finishing_orders:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->finishing_order->where('slug', $slug)
-                                         ->with('finishingOrderPackMat')
+                                         ->with('finishingOrderPackMat', 'jobOrder')
                                          ->first();
         }); 
         if(empty($finishing_order)){abort(404);}
@@ -134,13 +134,11 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
 
 
     public function findByJOId($jo_id){
-
+        
         $finishing_order = $this->cache->remember('finishing_orders:findByJOId:' . $jo_id, 240, function() use ($jo_id){
-            return $this->finishing_order->where('jo_id', $jo_id)
-                                         ->with('finishingOrderPackMat')
-                                         ->first();
+            return $this->finishing_order->where('jo_id', $jo_id)->first();
         }); 
-        if(empty($finishing_order)){abort(404);}
+
         return $finishing_order;
 
     }
@@ -152,10 +150,12 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
         return $model->where(function ($model) use ($key) {
                 $model->where('fo_no', 'LIKE', '%'. $key .'%')
                       ->orWhere('master_fo_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('po_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
-                      ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+                      ->orwhereHas('jobOrder', function ($model) use ($key) {
+                        $model->where('jo_no', 'LIKE', '%'. $key .'%')
+                              ->orWhere('po_no', 'LIKE', '%'. $key .'%')
+                              ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
+                              ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+                      });
         });
 
     }
@@ -164,7 +164,8 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'jo_no', 'item_name', 'updated_at', 'slug')
+        return $model->select('jo_id', 'updated_at', 'slug')
+                     ->with('jobOrder')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

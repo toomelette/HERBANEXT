@@ -1,3 +1,16 @@
+<?php
+    
+    function decFilter($amount){
+
+      if ($amount > 0) {
+        return number_format($amount, 3);
+      }
+
+      return '';
+
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,22 +51,22 @@
         <table class="table table-bordered">
           <tbody>
             <tr>
-              <td>Product : {{ $finishing_order->item_name }}</td>
-              <td>Lot No. : {{ $finishing_order->lot_no }}</td>
+              <td>Product : {{ optional($finishing_order->jobOrder)->item_name }}</td>
+              <td>Lot No. : {{ optional($finishing_order->jobOrder)->lot_no }}</td>
               <td>Master MO No. : {{ $finishing_order->master_fo_no }}</td>
               <td>MO No. : {{ $finishing_order->fo_no }}</td>
             </tr>
             <tr>
-              <td>Product Form : {{ optional($finishing_order->itemType)->name }}</td>
-              <td>Product Code : {{ $finishing_order->item_product_code }}</td>
-              <td>Batch Size : {{ $finishing_order->jo_batch_size }}</td>
-              <td>JO No. : {{ $finishing_order->jo_no }}</td>
+              <td>Product Form : {{ optional($finishing_order->jobOrder)->itemType->name }}</td>
+              <td>Product Code : {{ optional($finishing_order->jobOrder)->item_product_code }}</td>
+              <td>Batch Size : {{ optional($finishing_order->jobOrder)->batch_size }}</td>
+              <td>JO No. : {{ optional($finishing_order->jobOrder)->jo_no }}</td>
             </tr>
             <tr>
               <td>Client : {{ $finishing_order->client }}</td>
               <td>Shell Life : {{ $finishing_order->shell_life }}</td>
-              <td>Pack Size : {{ $finishing_order->jo_pack_size }}</td>
-              <td>PO No. : {{ $finishing_order->po_no }}</td>
+              <td>Pack Size : {{ optional($finishing_order->jobOrder)->pack_size }}</td>
+              <td>PO No. : {{ optional($finishing_order->jobOrder)->po_no }}</td>
             </tr>
             <tr>
               <td>Date of Processing : {{ __dataType::date_parse($finishing_order->processing_date, 'm/d/Y') }}</td>
@@ -62,7 +75,7 @@
               <td>Requested By : {{ $finishing_order->requested_by }}</td>
             </tr>
             <tr>
-              <td>Theoritical Yield : {{ $finishing_order->jo_theo_yield }}</td>
+              <td>Theoritical Yield : {{ optional($finishing_order->jobOrder)->theo_yield }}</td>
               <td>Status : {{ $finishing_order->status }}</td>
               <td></td>
               <td></td>
@@ -85,8 +98,8 @@
               <tr>
                 <td>{{ $data->item_product_code }}</td>
                 <td>{{ $data->item_name }}</td>
-                <td>{{ number_format($data->req_qty, 3) .' '. $data->req_qty_unit }}</td>
-                <td>{{ number_format($data->qty_issued, 3) .' '. $data->qty_issued_unit }}</td>
+                <td>{{ decFilter($data->req_qty) .' '. $data->req_qty_unit }}</td>
+                <td>{{ decFilter($data->qty_issued) .' '. $data->qty_issued_unit }}</td>
               </tr>
             @endforeach
           </tbody>
@@ -109,41 +122,13 @@
             @foreach($finishing_order->finishingOrderPackMat as $data)
               <tr>
                 <td>{{ $data->item_product_code }}</td>
-                <td>
-                  @if(isset($data->figure_actual_usage))
-                    {{ number_format($data->figure_actual_usage, 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_regected))
-                    {{ number_format($data->figure_regected , 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_damaged))
-                    {{ number_format($data->figure_damaged  , 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_returns))
-                    {{ number_format($data->figure_returns, 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_samples))
-                    {{ number_format($data->figure_samples, 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_total))
-                    {{ number_format($data->figure_total, 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
-                <td>
-                  @if(isset($data->figure_difference))
-                    {{ number_format($data->figure_difference, 3) .' '. $data->figure_unit }}
-                  @endif
-                </td>
+                <td>{{ decFilter($data->figure_actual_usage) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_regected) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_damaged) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_returns) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_samples) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_total) .' '. $data->figure_unit }}</td>
+                <td>{{ decFilter($data->figure_difference) .' '. $data->figure_unit }}</td>
               </tr>
             @endforeach
           </tbody>
@@ -239,8 +224,8 @@
               <tr>
                 <td>{{ $data->item_product_code }}</td>
                 <td>{{ $data->item_name }}</td>
-                <td>{{ number_format($data->req_qty, 3) .' '. $data->req_qty_unit }}</td>
-                <td>{{ number_format($data->qty_issued, 3) .' '. $data->qty_issued_unit }}</td>
+                <td>{{ decFilter($data->req_qty) .' '. $data->req_qty_unit }}</td>
+                <td>{{ decFilter($data->qty_issued) .' '. $data->qty_issued_unit }}</td>
               </tr>
             @endforeach
           </tbody>

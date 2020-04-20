@@ -56,12 +56,12 @@ return [
     /*
     default anchor class, if value is null none is added
      */
-    'anchor_class'                  => 'text-light-blue',
+    'anchor_class'                  => 'text-muted',
 
     /*
     default active anchor class, if value is null none is added
      */
-    'active_anchor_class'           => 'text-light-blue',
+    'active_anchor_class'           => 'text-muted',
 
     /*
     default sort order anchor class, if value is null none is added

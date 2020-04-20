@@ -21,24 +21,24 @@
             <tbody>
 
               <tr>
-                <td>Product : {{ $finishing_order->item_name }}</td>
-                <td>Lot No. : {{ $finishing_order->lot_no }}</td>
+                <td>Product : {{ optional($finishing_order->jobOrder)->item_name }}</td>
+                <td>Lot No. : {{ optional($finishing_order->jobOrder)->lot_no }}</td>
                 <td>Master FO No. : {{ $finishing_order->master_fo_no }}</td>
                 <td>FO No. : {{ $finishing_order->fo_no }}</td>
               </tr>
 
               <tr>
-                <td>Product Form : {{ optional($finishing_order->itemType)->name }}</td>
-                <td>Product Code : {{ $finishing_order->item_product_code }}</td>
-                <td>Batch Size : {{ $finishing_order->jo_batch_size }}</td>
-                <td>JO No. : {{ $finishing_order->jo_no }}</td>
+                <td>Product Form : {{ optional($finishing_order->jobOrder)->itemType->name }}</td>
+                <td>Product Code : {{ optional($finishing_order->jobOrder)->item_product_code }}</td>
+                <td>Batch Size : {{ optional($finishing_order->jobOrder)->batch_size }}</td>
+                <td>JO No. : {{ optional($finishing_order->jobOrder)->jo_no }}</td>
               </tr>
 
               <tr>
                 <td>Client : {{ $finishing_order->client }}</td>
                 <td>Shell Life : {{ $finishing_order->shell_life }}</td>
-                <td>Pack Size : {{ $finishing_order->jo_pack_size }}</td>
-                <td>PO No. : {{ $finishing_order->po_no }}</td>
+                <td>Pack Size : {{ optional($finishing_order->jobOrder)->pack_size }}</td>
+                <td>PO No. : {{ optional($finishing_order->jobOrder)->po_no }}</td>
               </tr>
 
               <tr>
@@ -49,7 +49,7 @@
               </tr>
 
               <tr>
-                <td>Theoritical Yield : {{ $finishing_order->jo_theo_yield }}</td>
+                <td>Theoritical Yield : {{ optional($finishing_order->jobOrder)->theo_yield }}</td>
                 <td>Status : {{ $finishing_order->status }}</td>
                 <td></td>
                 <td></td>

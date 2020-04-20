@@ -29,24 +29,24 @@
           <tbody>
 
             <tr>
-              <td>Product : {{ $manufacturing_order->item_name }}</td>
-              <td>Lot No. : {{ $manufacturing_order->lot_no }}</td>
+              <td>Product : {{ optional($manufacturing_order->jobOrder)->item_name }}</td>
+              <td>Lot No. : {{ optional($manufacturing_order->jobOrder)->lot_no }}</td>
               <td>Master MO No. : {{ $manufacturing_order->master_mo_no }}</td>
               <td>MO No. : {{ $manufacturing_order->mo_no }}</td>
             </tr>
 
             <tr>
-              <td>Product Form : {{ optional($manufacturing_order->itemType)->name }}</td>
-              <td>Product Code : {{ $manufacturing_order->item_product_code }}</td>
-              <td>Batch Size : {{ $manufacturing_order->jo_batch_size }}</td>
-              <td>JO No. : {{ $manufacturing_order->jo_no }}</td>
+              <td>Product Form : {{ optional($manufacturing_order->jobOrder)->itemType->name }}</td>
+              <td>Product Code : {{ optional($manufacturing_order->jobOrder)->item_product_code }}</td>
+              <td>Batch Size : {{ optional($manufacturing_order->jobOrder)->batch_size }}</td>
+              <td>JO No. : {{ optional($manufacturing_order->jobOrder)->jo_no }}</td>
             </tr>
 
             <tr>
               <td>Client : {{ $manufacturing_order->client }}</td>
               <td>Shell Life : {{ $manufacturing_order->shell_life }}</td>
-              <td>Pack Size : {{ $manufacturing_order->jo_pack_size }}</td>
-              <td>PO No. : {{ $manufacturing_order->po_no }}</td>
+              <td>Pack Size : {{ optional($manufacturing_order->jobOrder)->pack_size }}</td>
+              <td>PO No. : {{ optional($manufacturing_order->jobOrder)->po_no }}</td>
             </tr>
 
             <tr>
@@ -57,7 +57,7 @@
             </tr>
 
             <tr>
-              <td>Theoritical Yield : {{ $manufacturing_order->jo_theo_yield }}</td>
+              <td>Theoritical Yield : {{ optional($manufacturing_order->jobOrder)->theo_yield }}</td>
               <td>Status : {{ $manufacturing_order->status }}</td>
               <td></td>
               <td></td>

@@ -47,12 +47,15 @@ class JobOrderSubscriber extends BaseSubscriber{
 
 
 
-    public function onGenerateFillPost($slug){
+    public function onGenerateFillPost($slug, $jo_id){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:findByJOId:'. $jo_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:findByJOId:'. $jo_id .'');
 
         $this->session->flash('JOB_ORDER_GENERATE_FILL_POST_SUCCESS', 'The Job Order has been successfully posted!');
         $this->session->flash('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG', $slug);

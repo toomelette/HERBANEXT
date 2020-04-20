@@ -23,9 +23,9 @@
 
             @csrf
 
-            {!! __form::textbox('3', '', 'text', 'Product', '', $finishing_order->item_name, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product', '', optional($finishing_order->jobOrder)->item_name, '', '', 'readonly') !!}
 
-            {!! __form::textbox('3', '', 'text', 'Lot No.', '', $finishing_order->lot_no, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Lot No.', '', optional($finishing_order->jobOrder)->lot_no, '', '', 'readonly') !!}
 
             {!! __form::textbox(
               '3', 'master_fo_no', 'text', 'Master FO No. *', 'Master FO No.', old('master_fo_no') ? old('master_fo_no') : $finishing_order->master_fo_no, $errors->has('master_fo_no'), $errors->first('master_fo_no'), ''
@@ -37,16 +37,16 @@
 
             <div class="col-md-12"></div>            
 
-            {!! __form::textbox('3', '', 'text', 'Product Form', '', optional($finishing_order->itemType)->name, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product Form', '', optional($finishing_order->jobOrder)->itemType->name, '', '', 'readonly') !!}
 
-            {!! __form::textbox('3', '', 'text', 'Product Code', '', $finishing_order->item_product_code, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product Code', '', optional($finishing_order->jobOrder)->item_product_code, '', '', 'readonly') !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Batch Size', '', $finishing_order->jo_batch_size, '', '', 'readonly'
+              '3', '', 'text', 'Batch Size', '', optional($finishing_order->jobOrder)->batch_size, '', '', 'readonly'
             ) !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'JO No.', '', $finishing_order->jo_no, '', '', 'readonly'
+              '3', '', 'text', 'JO No.', '', optional($finishing_order->jobOrder)->jo_no, '', '', 'readonly'
             ) !!}
 
             <div class="col-md-12"></div>
@@ -60,10 +60,10 @@
             ) !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Pack Size', '', $finishing_order->jo_pack_size, '', '', 'readonly'
+              '3', '', 'text', 'Pack Size', '', optional($finishing_order->jobOrder)->pack_size, '', '', 'readonly'
             ) !!}
 
-            {!! __form::textbox('3', '', 'text', 'PO No.', '', $finishing_order->po_no, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'PO No.', '', optional($finishing_order->jobOrder)->po_no, '', '', 'readonly') !!}
 
             <div class="col-md-12"></div>
 
@@ -76,7 +76,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', '', 'text', 'Theoritical Yield', '', $finishing_order->jo_theo_yield, '', '', 'readonly'
+              '4', '', 'text', 'Theoritical Yield', '', optional($finishing_order->jobOrder)->theo_yield, '', '', 'readonly'
             ) !!}
 
             <div class="col-md-12"></div>

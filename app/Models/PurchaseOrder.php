@@ -66,7 +66,17 @@ class PurchaseOrder extends Model{
         return $this->hasMany('App\Models\PurchaseOrderItemPackMat','po_id','po_id');
     }
 
+    public function jobOrder() {
+        return $this->hasMany('App\Models\JobOrder','po_id','po_id');
+    }
 
+    public function manufacturingOrder() {
+        return $this->hasMany('App\Models\ManufacturingOrder','po_id','po_id');
+    }
+
+    public function finishingOrder() {
+        return $this->hasMany('App\Models\FinishingOrder','po_id','po_id');
+    }
 
     
 }

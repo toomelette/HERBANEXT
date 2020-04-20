@@ -103,10 +103,21 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
         $manufacturing_order = $this->cache->remember('manufacturing_orders:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->manufacturing_order->where('slug', $slug)
-                                             ->with('manufacturingOrderRawMat')
+                                             ->with('manufacturingOrderRawMat', 'jobOrder')
                                              ->first();
         }); 
         if(empty($manufacturing_order)){abort(404);}
+        return $manufacturing_order;
+
+    }
+
+
+
+    public function findByJOId($jo_id){
+
+        $manufacturing_order = $this->cache->remember('manufacturing_orders:findByJOId:' . $jo_id, 240, function() use ($jo_id){
+            return $this->manufacturing_order->where('jo_id', $jo_id)->first();
+        }); 
         return $manufacturing_order;
 
     }
@@ -134,10 +145,12 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         return $model->where(function ($model) use ($key) {
                 $model->where('mo_no', 'LIKE', '%'. $key .'%')
                       ->orWhere('master_mo_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('po_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
-                      ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+                      ->orwhereHas('jobOrder', function ($model) use ($key) {
+                        $model->where('jo_no', 'LIKE', '%'. $key .'%')
+                              ->orWhere('po_no', 'LIKE', '%'. $key .'%')
+                              ->orWhere('item_product_code', 'LIKE', '%'. $key .'%')
+                              ->orWhere('item_name', 'LIKE', '%'. $key .'%');
+                      });
         });
 
     }
@@ -146,7 +159,8 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'jo_no', 'item_name', 'updated_at', 'slug')
+        return $model->select('jo_id', 'updated_at', 'slug')
+                     ->with('jobOrder')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

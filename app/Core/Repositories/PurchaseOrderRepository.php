@@ -176,10 +176,19 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->purchaseOrderItem()->delete();
         $purchase_order->purchaseOrderItemRawMat()->delete();
         $purchase_order->purchaseOrderItemPackMat()->delete();
+        $purchase_order->jobOrder()->delete();
 
-        foreach ($purchase_order->purchaseOrderItem as $po_item) {
-            $po_item->jobOrder()->delete();
+        foreach ($purchase_order->manufacturingOrder as $mo) {
+            $mo->manufacturingOrderRawMat()->delete();
         }
+
+        $purchase_order->manufacturingOrder()->delete();
+
+        foreach ($purchase_order->finishingOrder as $fo) {
+            $fo->finishingOrderPackMat()->delete();
+        }
+
+        $purchase_order->finishingOrder()->delete();
 
         return $purchase_order;
 

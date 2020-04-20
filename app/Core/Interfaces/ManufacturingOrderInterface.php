@@ -13,5 +13,7 @@ interface ManufacturingOrderInterface {
 	public function updateFillUp($request, $slug, $total_weight);
 
 	public function findBySlug($slug);
+
+	public function findByJOId($jo_id);
 	
 }

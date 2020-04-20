@@ -46,7 +46,9 @@ class ManufacturingOrderRawMatRepository extends BaseRepository implements Manuf
         $mo_raw_mat->req_qty = $this->__dataType->string_to_num($data['req_qty']);
         $mo_raw_mat->req_qty_unit = $data['req_qty_unit'];
         if (isset($data['req_qty_is_included']) && $data['req_qty_is_included'] == 'true') {
-            $mo_raw_mat->req_qty_is_included = $this->__dataType->string_to_boolean($data['req_qty_is_included']);
+            $mo_raw_mat->req_qty_is_included = true;
+        }else{
+            $mo_raw_mat->req_qty_is_included = false;
         }
         $mo_raw_mat->batch_no = $data['batch_no'];
         $mo_raw_mat->weighed_by = $data['weighed_by'];

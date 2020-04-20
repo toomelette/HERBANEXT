@@ -25,6 +25,8 @@ class JobOrder extends Model{
         'po_no' => '',
         'lot_no' => '',
         'item_name' => '',
+        'item_product_code' => '',
+        'item_type_id' => '',
         'date' => null,
         'batch_size' => '',
         'pack_size' => '',
@@ -48,6 +50,9 @@ class JobOrder extends Model{
         return $this->belongsTo('App\Models\Item','item_id','item_id');
     }
 
+    public function itemType() {
+        return $this->belongsTo('App\Models\ItemType','item_type_id','item_type_id');
+    }
 
     public function purchaseOrder() {
         return $this->belongsTo('App\Models\purchaseOrder','po_id','po_id');

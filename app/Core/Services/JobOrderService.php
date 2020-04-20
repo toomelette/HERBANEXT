@@ -85,21 +85,26 @@ class JobOrderService extends BaseService{
             foreach ($request->row as $data) {
 
                 $job_order = $this->job_order_repo->updateGenerateFillPost($data);
-                $manufacturing_order = $this->manufacturing_order_repo->store($job_order);
-                $finishing_order = $this->finishing_order_repo->store($job_order);
 
-                foreach ($job_order->item->itemRawMat as $data_item_raw_mat) {
-                    $this->mo_raw_mat_repo->store($manufacturing_order, $data_item_raw_mat);
+                if (empty($this->manufacturing_order_repo->findByJOId($job_order->jo_id))) {
+                    $manufacturing_order = $this->manufacturing_order_repo->store($job_order);
+                    foreach ($job_order->item->itemRawMat as $data_item_raw_mat) {
+                        $this->mo_raw_mat_repo->store($manufacturing_order, $data_item_raw_mat);
+                    }
                 }
 
-                foreach ($job_order->item->itemPackMat as $data_item_pack_mat) {
-                    $this->fo_pack_mat_repo->store($finishing_order, $data_item_pack_mat);
+                if (empty($this->finishing_order_repo->findByJOId($job_order->jo_id))) {
+                    $finishing_order = $this->finishing_order_repo->store($job_order);
+                    foreach ($job_order->item->itemPackMat as $data_item_pack_mat) {
+                        $this->fo_pack_mat_repo->store($finishing_order, $data_item_pack_mat);
+                    }
                 }
+
+                $this->event->fire('job_order.generate_fill_post', [$slug, $job_order->jo_id]);
 
             }
         }
-
-        $this->event->fire('job_order.generate_fill_post', $slug);
+        
         return redirect()->route('dashboard.job_order.create');
 
     }

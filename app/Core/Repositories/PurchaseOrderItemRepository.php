@@ -124,7 +124,11 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
-                $model->where('po_no', 'LIKE', '%'. $key .'%');
+                $model->where('po_no', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('item', function ($model) use ($key) {
+                        $model->where('name', 'LIKE', '%'. $key .'%')
+                              ->orWhere('product_code', 'LIKE', '%'. $key .'%');
+                      });
         });
 
     }

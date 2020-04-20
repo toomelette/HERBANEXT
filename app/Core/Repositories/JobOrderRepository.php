@@ -39,6 +39,8 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         $job_order->po_id = $purchase_order_item->po_id;
         $job_order->po_no = $purchase_order_item->po_no;
         $job_order->item_name = optional($purchase_order_item->item)->name;
+        $job_order->item_product_code = optional($purchase_order_item->item)->product_code;
+        $job_order->item_type_id = optional($purchase_order_item->item)->item_type_id;
         $job_order->batch_size = optional($purchase_order_item->item)->batch_size;
         $job_order->amount = $purchase_order_item->amount;
         $job_order->unit = $purchase_order_item->unit;
@@ -68,11 +70,6 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         $job_order->ip_updated = request()->ip();
         $job_order->user_updated = $this->auth->user()->user_id;
         $job_order->save();
-
-        $job_order->manufacturingOrder()->delete();
-        $job_order->manufacturingOrderRawMat()->delete();
-        $job_order->finishingOrder()->delete();
-        $job_order->finishingOrderPackMat()->delete();
 
         return $job_order;
 

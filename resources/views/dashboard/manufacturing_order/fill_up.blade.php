@@ -23,9 +23,9 @@
 
             @csrf
 
-            {!! __form::textbox('3', '', 'text', 'Product', '', $manufacturing_order->item_name, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product', '', optional($manufacturing_order->jobOrder)->item_name, '', '', 'readonly') !!}
 
-            {!! __form::textbox('3', '', 'text', 'Lot No.', '', $manufacturing_order->lot_no, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Lot No.', '', optional($manufacturing_order->jobOrder)->lot_no, '', '', 'readonly') !!}
 
             {!! __form::textbox(
               '3', 'master_mo_no', 'text', 'Master MO No. *', 'Master MO No.', old('master_mo_no') ? old('master_mo_no') : $manufacturing_order->master_mo_no, $errors->has('master_mo_no'), $errors->first('master_mo_no'), ''
@@ -37,16 +37,16 @@
 
             <div class="col-md-12"></div>            
 
-            {!! __form::textbox('3', '', 'text', 'Product Form', '', optional($manufacturing_order->itemType)->name, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product Form', '', optional($manufacturing_order->jobOrder)->itemType->name, '', '', 'readonly') !!}
 
-            {!! __form::textbox('3', '', 'text', 'Product Code', '', $manufacturing_order->item_product_code, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'Product Code', '', optional($manufacturing_order->jobOrder)->item_product_code, '', '', 'readonly') !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Batch Size', '', $manufacturing_order->jo_batch_size, '', '', 'readonly'
+              '3', '', 'text', 'Batch Size', '', optional($manufacturing_order->jobOrder)->batch_size, '', '', 'readonly'
             ) !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'JO No.', '', $manufacturing_order->jo_no, '', '', 'readonly'
+              '3', '', 'text', 'JO No.', '', optional($manufacturing_order->jobOrder)->jo_no, '', '', 'readonly'
             ) !!}
 
             <div class="col-md-12"></div>
@@ -60,10 +60,10 @@
             ) !!}
 
             {!! __form::textbox(
-              '3', '', 'text', 'Pack Size', '', $manufacturing_order->jo_pack_size, '', '', 'readonly'
+              '3', '', 'text', 'Pack Size', '', optional($manufacturing_order->jobOrder)->pack_size, '', '', 'readonly'
             ) !!}
 
-            {!! __form::textbox('3', '', 'text', 'PO No.', '', $manufacturing_order->po_no, '', '', 'readonly') !!}
+            {!! __form::textbox('3', '', 'text', 'PO No.', '', optional($manufacturing_order->jobOrder)->po_no, '', '', 'readonly') !!}
 
             <div class="col-md-12"></div>
 
@@ -76,7 +76,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', '', 'text', 'Theoritical Yield', '', $manufacturing_order->jo_theo_yield, '', '', 'readonly'
+              '4', '', 'text', 'Theoritical Yield', '', optional($manufacturing_order->jobOrder)->theo_yield, '', '', 'readonly'
             ) !!}
 
             <div class="col-md-12"></div>
@@ -141,7 +141,7 @@
                         <div class="form-group">
                           <div class="col-md-1" style="margin-top:5px;">
                             <label>
-                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ isset($value['req_qty_is_included']) && $value['req_qty_is_included'] == 'true'? 'checked' : '' }}>
+                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ isset($value['req_qty_is_included']) && $value['req_qty_is_included'] == "true" ? 'checked' : '' }}>
                             </label>
                           </div>
                           <div class="col-md-10">
@@ -207,7 +207,7 @@
                         <div class="form-group">
                           <div class="col-md-1" style="margin-top:5px;">
                             <label>
-                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ $data->req_qty_is_included == 1 ? 'checked' : '' }}>
+                              <input type="checkbox" class="minimal type" name="row[{{ $key }}][req_qty_is_included]" value="true" {{ $data->req_qty_is_included == true ? 'checked' : '' }}>
                             </label>
                           </div>
                           <div class="col-md-10">
