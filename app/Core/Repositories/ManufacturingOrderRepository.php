@@ -50,17 +50,8 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         $manufacturing_order->slug = $this->str->random(16);
         $manufacturing_order->mo_id = $this->getMOId();
         $manufacturing_order->item_id = $job_order->item_id;
-        $manufacturing_order->item_product_code = optional($job_order->item)->product_code;
-        $manufacturing_order->item_type_id = optional($job_order->item)->item_type_id;
-        $manufacturing_order->item_name = $job_order->item_name;
         $manufacturing_order->po_id = $job_order->po_id;
-        $manufacturing_order->po_no = $job_order->po_no;
         $manufacturing_order->jo_id = $job_order->jo_id;
-        $manufacturing_order->jo_no = $job_order->jo_no;
-        $manufacturing_order->lot_no = $job_order->lot_no;
-        $manufacturing_order->jo_batch_size = $job_order->batch_size;
-        $manufacturing_order->jo_pack_size = $job_order->pack_size;
-        $manufacturing_order->jo_theo_yield = $job_order->theo_yield;
         $manufacturing_order->created_at = $this->carbon->now();
         $manufacturing_order->updated_at = $this->carbon->now();
         $manufacturing_order->ip_created = request()->ip();

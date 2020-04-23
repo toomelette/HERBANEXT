@@ -50,17 +50,8 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
         $finishing_order->slug = $this->str->random(16);
         $finishing_order->fo_id = $this->getFOId();
         $finishing_order->item_id = $job_order->item_id;
-        $finishing_order->item_product_code = optional($job_order->item)->product_code;
-        $finishing_order->item_type_id = optional($job_order->item)->item_type_id;
-        $finishing_order->item_name = $job_order->item_name;
         $finishing_order->po_id = $job_order->po_id;
-        $finishing_order->po_no = $job_order->po_no;
         $finishing_order->jo_id = $job_order->jo_id;
-        $finishing_order->jo_no = $job_order->jo_no;
-        $finishing_order->lot_no = $job_order->lot_no;
-        $finishing_order->jo_batch_size = $job_order->batch_size;
-        $finishing_order->jo_pack_size = $job_order->pack_size;
-        $finishing_order->jo_theo_yield = $job_order->theo_yield;
         $finishing_order->created_at = $this->carbon->now();
         $finishing_order->updated_at = $this->carbon->now();
         $finishing_order->ip_created = request()->ip();

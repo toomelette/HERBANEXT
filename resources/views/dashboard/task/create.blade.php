@@ -105,9 +105,9 @@
                   <select name="personnels[]" id="personnels" class="form-control" multiple="multiple">
                     @foreach($global_personnels_all as $data)
                       @if(old('personnels'))
-                          <option value="{{ $data->personnel_id }}" {!! in_array($data->personnel_id, old('personnels')) ? 'selected' : '' !!}>{{ $data->fullname }}</option>
+                          <option value="{{ $data->personnel_id }}" style="padding:8px;" {!! in_array($data->personnel_id, old('personnels')) ? 'selected' : '' !!}>{{ $data->fullname }}</option>
                       @else
-                          <option value="{{ $data->personnel_id }}" style="padding:8px;">{{ $data->fullname }}</option>
+                          <option value="{{ $data->personnel_id }}" style="padding:8px;" style="padding:8px;">{{ $data->fullname }}</option>
                       @endif
                     @endforeach
                   </select>
