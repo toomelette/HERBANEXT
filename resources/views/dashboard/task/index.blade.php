@@ -46,7 +46,7 @@
             <th>@sortablelink('item.name', 'Product')</th>
             <th>@sortablelink('machine.name', 'Machine')</th>
             <th>@sortablelink('status', 'Status')</th>
-            <th style="width: 270px">Action</th>
+            <th>Action</th>
           </tr>
           @foreach($tasks as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
