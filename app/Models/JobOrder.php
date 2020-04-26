@@ -85,6 +85,11 @@ class JobOrder extends Model{
     }
 
 
+    public function deliveryJobOrder() {
+        return $this->hasOne('App\Models\DeliveryJobOrder','jo_id','jo_id');
+    }
+
+
 
 
     

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Task;
+namespace App\Http\Requests\Delivery;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskFilterRequest extends FormRequest{
+class DeliveryFilterRequest extends FormRequest{
 
 
 

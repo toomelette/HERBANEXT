@@ -105,6 +105,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/task/scheduling', 'TaskController@scheduling')->name('task.scheduling');
 	Route::post('/task/update_finished/{slug}', 'TaskController@updateFinished')->name('task.update_finished');
 	Route::resource('task', 'TaskController');
+
+
+	/** Delivery **/
+	Route::resource('delivery', 'DeliveryController');
 	
 });
 

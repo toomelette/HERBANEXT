@@ -103,9 +103,24 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
             return $this->job_order->where('jo_id', $jo_id)->first();
         });
         
-        if(empty($job_order)){
-            abort(404);
-        }
+        if(empty($job_order)){abort(404);}
+        
+        return $job_order;
+
+    }
+
+
+
+
+
+
+    public function getByDeliveryStatus($int){
+
+        $job_order = $this->cache->remember('job_orders:getByDeliveryStatus:' . $int, 240, function() use ($int){
+            return $this->job_order->select('jo_id', 'jo_no', 'item_name')
+                                   ->where('delivery_status', $int)
+                                   ->get();
+        });
         
         return $job_order;
 
@@ -118,7 +133,6 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
     public function getJOId(){
 
         $id = 'JO10001';
-
         $job_order = $this->job_order->select('jo_id')->orderBy('jo_id', 'desc')->first();
 
         if($job_order != null){
