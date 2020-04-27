@@ -47,15 +47,17 @@
 
                 <div class="box-body">
                   <select name="job_orders[]" id="job_orders" class="form-control" multiple="multiple">
-                    @foreach($global_job_orders_for_delivery as $data)
+                    @foreach($global_job_orders_all as $data)
                       @if(old('job_orders'))
                           <option value="{{ $data->jo_id }}" style="padding:8px;" {!! in_array($data->jo_id, old('job_orders')) ? 'selected' : '' !!}>
                             {{ $data->jo_no .' - '. $data->item_name }}
                           </option>
                       @else
+                        @if($data->delivery_status == 1)
                           <option value="{{ $data->jo_id }}" style="padding:8px;" style="padding:8px;">
                             {{ $data->jo_no .' - '. $data->item_name }}<br>
                           </option>
+                        @endif
                       @endif
                     @endforeach
                   </select>

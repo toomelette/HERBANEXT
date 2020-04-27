@@ -12,6 +12,6 @@ interface JobOrderInterface {
 
 	public function updateDeliveryStatus($jo_id, $int);
 
-	public function getByDeliveryStatus($int);
+	public function getAll();
 	
 }

@@ -10,9 +10,9 @@ interface DeliveryInterface {
 
 	public function store($request);
 
-	public function update($request, $slug);
+	public function update($request, $delivery);
 
-	public function destroy($slug);
+	public function destroy($delivery);
 
 	public function findBySlug($slug);
 	

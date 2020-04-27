@@ -114,11 +114,11 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-    public function getByDeliveryStatus($int){
+    public function getAll(){
 
-        $job_order = $this->cache->remember('job_orders:getByDeliveryStatus:' . $int, 240, function() use ($int){
-            return $this->job_order->select('jo_id', 'jo_no', 'item_name')
-                                   ->where('delivery_status', $int)
+        $job_order = $this->cache->remember('job_orders:getAll', 240, function() use ($array){
+            return $this->job_order->select('jo_id', 'jo_no', 'item_name', 'delivery_status')
+                                   ->orderBy('updated_at', 'asc')
                                    ->get();
         });
         

@@ -29,9 +29,9 @@ class JobOrderComposer{
 
     public function compose($view){
 
-        $job_orders = $this->job_order_repo->getByDeliveryStatus(1);
+        $job_orders = $this->job_order_repo->getAll();
         
-    	$view->with('global_job_orders_for_delivery', $job_orders);
+    	$view->with('global_job_orders_all', $job_orders);
 
     }
 

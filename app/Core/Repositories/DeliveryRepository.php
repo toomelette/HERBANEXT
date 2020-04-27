@@ -76,9 +76,8 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
 
 
-    public function update($request, $slug){
+    public function update($request, $delivery){
 
-        $delivery = $this->findBySlug($slug);
         $delivery->delivery_code = $request->delivery_code;
         $delivery->description = $request->description;
         $delivery->date = $this->__dataType::date_parse($request->date);
@@ -96,9 +95,8 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
 
 
-    public function destroy($slug){
-
-        $delivery = $this->findBySlug($slug);
+    public function destroy($delivery){
+        
         $delivery->delete();
         $delivery->deliveryJobOrder()->delete();
         return $delivery;
