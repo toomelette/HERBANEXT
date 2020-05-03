@@ -51,7 +51,6 @@
             {{-- Personnels --}}
             <div class="col-md-12 no-padding">
               <div class="box box-solid">
-                  
                 <div class="box-header with-border">
                   <h2 class="box-title">Job Orders</h2>
                   <div class="pull-right">
@@ -68,9 +67,11 @@
                         </option>
                       @else
                         @if($data->delivery_status != 1)
-                          <option value="{{ $data->jo_id }}" style="padding:8px;" {!! in_array($data->jo_id, $list_of_selected_jo) ? 'selected' : '' !!}>
-                            {{ $data->jo_no .' - '. $data->item_name }}
-                          </option>
+                          @if(in_array($data->jo_id, $list_of_selected_jo))
+                            <option value="{{ $data->jo_id }}" style="padding:8px;" selected>
+                              {{ $data->jo_no .' - '. $data->item_name }}
+                            </option>
+                          @endif
                         @else
                           <option value="{{ $data->jo_id }}" style="padding:8px;">
                             {{ $data->jo_no .' - '. $data->item_name }}

@@ -22,7 +22,7 @@ class PurchaseOrderFormRequest extends FormRequest{
 
         $rules = [
             
-            'po_no'=>'required|string|max:11',
+            'po_no'=>'required|string|max:45',
             'buffer_status'=>'sometimes|required|string|max:5',
             'bill_to_name'=>'required|string|max:255',
             'bill_to_company'=>'required|string|max:255',

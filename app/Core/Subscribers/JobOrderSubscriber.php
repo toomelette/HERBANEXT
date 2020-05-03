@@ -38,6 +38,7 @@ class JobOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
 
         $this->session->flash('JOB_ORDER_GENERATE_SUCCESS', 'The Job Order has been successfully generated!');
         $this->session->flash('JOB_ORDER_GENERATE_SUCCESS_SLUG', $slug);
@@ -52,6 +53,7 @@ class JobOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_orders:findByJOId:'. $jo_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:fetch:*');

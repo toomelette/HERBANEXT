@@ -44,7 +44,8 @@
             <th>Action</th>
           </tr>
           @foreach($deliveries as $data) 
-            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} > <td id="mid-vert">{{ $data->delivery_code }}</td>
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} > 
+              <td id="mid-vert">{{ $data->delivery_code }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ __dataType::date_parse($data->date, 'F d, Y') }}</td>
               <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>

@@ -25,7 +25,7 @@ class FinishingOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:finishing_orders:findBySlug:'. $fo->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $fo->jo_id .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
 
         $this->session->flash('FO_FILL_UP_POST_SUCCESS', 'The FO has been successfully posted!');
         $this->session->flash('FO_FILL_UP_POST_SUCCESS_SLUG', $fo->slug);
