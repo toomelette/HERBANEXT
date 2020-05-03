@@ -12,6 +12,8 @@ interface DeliveryInterface {
 
 	public function update($request, $delivery);
 
+	public function updateDelivered($slug);
+
 	public function destroy($delivery);
 
 	public function findBySlug($slug);

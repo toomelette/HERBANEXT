@@ -21,7 +21,7 @@ class DeliveryFormRequest extends FormRequest{
             'delivery_code' => 'required|string|max:45',
             'description' => 'nullable|string|max:255',
             'date'=>'required|date_format:"m/d/Y"',
-            'job_orders' => 'nullable|array',
+            'po_items' => 'nullable|array',
 
         ];
 

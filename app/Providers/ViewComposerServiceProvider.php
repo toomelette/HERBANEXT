@@ -63,9 +63,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.task.edit'], 'App\Core\ViewComposers\MachineComposer');
 
 
-        // Delivery
+        // PO Items
         View::composer(['dashboard.delivery.create',
-                        'dashboard.delivery.edit'], 'App\Core\ViewComposers\JobOrderComposer');
+                        'dashboard.delivery.edit'], 'App\Core\ViewComposers\PurchaseOrderItemComposer');
         
     }
 

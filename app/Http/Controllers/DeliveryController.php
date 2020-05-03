@@ -43,6 +43,11 @@ class DeliveryController extends Controller{
         return $this->delivery->update($request, $slug);
     }
 
+    
+    public function confirmDelivered($slug){
+        return $this->delivery->confirmDelivered($slug);
+    }
+
 
     public function show($slug){
         return $this->delivery->show($slug);

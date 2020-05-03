@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DeliveryJobOrder extends Model{
+class DeliveryItem extends Model{
 
 
 
-    protected $table = 'delivery_job_orders';    
+    protected $table = 'delivery_items';    
 	public $timestamps = false;
  
 
@@ -16,14 +16,14 @@ class DeliveryJobOrder extends Model{
     protected $attributes = [
 
         'delivery_id' => '',
-        'jo_id' => '',
+        'po_item_id' => '',
     ];
 
 
 
     /** RELATIONSHIPS **/
-    public function jobOrder() {
-        return $this->belongsTo('App\Models\JobOrder','jo_id','jo_id');
+    public function purchaseOrderItem() {
+        return $this->belongsTo('App\Models\PurchaseOrderItem','po_item_id','po_item_id');
     }
 
     public function delivery() {

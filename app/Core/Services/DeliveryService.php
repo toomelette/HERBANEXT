@@ -4,8 +4,8 @@ namespace App\Core\Services;
 
 
 use App\Core\Interfaces\DeliveryInterface;
-use App\Core\Interfaces\DeliveryJobOrderInterface;
-use App\Core\Interfaces\JobOrderInterface;
+use App\Core\Interfaces\DeliveryItemInterface;
+use App\Core\Interfaces\PurchaseOrderItemInterface;
 use App\Core\BaseClasses\BaseService;
 
 
@@ -14,16 +14,16 @@ class DeliveryService extends BaseService{
 
 
     protected $delivery_repo;
-    protected $delivery_jo_repo;
-    protected $jo_repo;
+    protected $delivery_item_repo;
+    protected $po_item_repo;
 
 
 
-    public function __construct(DeliveryInterface $delivery_repo, DeliveryJobOrderInterface $delivery_jo_repo, JobOrderInterface $jo_repo){
+    public function __construct(DeliveryInterface $delivery_repo, DeliveryItemInterface $delivery_item_repo, PurchaseOrderItemInterface $po_item_repo){
 
         $this->delivery_repo = $delivery_repo;
-        $this->delivery_jo_repo = $delivery_jo_repo;
-        $this->jo_repo = $jo_repo;
+        $this->delivery_item_repo = $delivery_item_repo;
+        $this->po_item_repo = $po_item_repo;
         parent::__construct();
 
     }
@@ -44,11 +44,11 @@ class DeliveryService extends BaseService{
 
         $delivery = $this->delivery_repo->store($request);
 
-        if(!empty($request->job_orders)){
-            foreach ($request->job_orders as $data) {
-                $this->delivery_jo_repo->store($delivery->delivery_id, $data);
-                $this->jo_repo->updateDeliveryStatus($data, 2);
-                $this->event->fire('delivery.flush_jo', $data);
+        if(!empty($request->po_items)){
+            foreach ($request->po_items as $data) {
+                $this->delivery_item_repo->store($delivery->delivery_id, $data);
+                $this->po_item_repo->updateDeliveryStatus($data, 2);
+                $this->event->fire('delivery.flush_po_item', $data);
             }
         }
 
@@ -81,20 +81,20 @@ class DeliveryService extends BaseService{
 
         $delivery = $this->delivery_repo->findbySlug($slug);
 
-        if (!empty($delivery->deliveryJobOrder)) {
-            foreach ($delivery->deliveryJobOrder as $data_djo) {
-                $this->jo_repo->updateDeliveryStatus($data_djo->jo_id, 1);
-                $this->event->fire('delivery.flush_jo', $data_djo->jo_id);
+        if (!empty($delivery->deliveryItem)) {
+            foreach ($delivery->deliveryItem as $data) {
+                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 1);
+                $this->event->fire('delivery.flush_po_item', $data->po_item_id);
             }  
         }
 
         $this->delivery_repo->update($request, $delivery);
 
-        if(!empty($request->job_orders)){
-            foreach ($request->job_orders as $data) {
-                $this->delivery_jo_repo->store($delivery->delivery_id, $data);
-                $this->jo_repo->updateDeliveryStatus($data, 2);
-                $this->event->fire('delivery.flush_jo', $data);
+        if(!empty($request->po_items)){
+            foreach ($request->po_items as $data) {
+                $this->delivery_item_repo->store($delivery->delivery_id, $data);
+                $this->po_item_repo->updateDeliveryStatus($data, 2);
+                $this->event->fire('delivery.flush_po_item', $data);
             }
         }
         
@@ -105,14 +105,26 @@ class DeliveryService extends BaseService{
 
 
 
+    public function confirmDelivered($slug){
+
+        $delivery = $this->delivery_repo->updateDelivered($slug);
+
+        $this->event->fire('delivery.update', $delivery);
+        return redirect()->back();
+
+    }
+
+
+
+
     public function destroy($slug){
 
         $delivery = $this->delivery_repo->findbySlug($slug);
 
-        if (!empty($delivery->deliveryJobOrder)) {
-            foreach ($delivery->deliveryJobOrder as $data_djo) {
-                $this->jo_repo->updateDeliveryStatus($data_djo->jo_id, 1);
-                $this->event->fire('delivery.flush_jo', $data_djo->jo_id);
+        if (!empty($delivery->deliveryItem)) {
+            foreach ($delivery->deliveryItem as $data) {
+                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 1);
+                $this->event->fire('delivery.flush_po_item', $data->po_item_id);
             }  
         }
 

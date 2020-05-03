@@ -108,6 +108,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** Delivery **/
+	Route::post('/delivery/confirm_delivered/{slug}', 'DeliveryController@confirmDelivered')->name('delivery.confirm_delivered');
 	Route::resource('delivery', 'DeliveryController');
 	
 });

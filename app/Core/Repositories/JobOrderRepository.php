@@ -79,23 +79,6 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-    public function updateDeliveryStatus($jo_id, $int){
-
-        $job_order = $this->findByJoId($jo_id);
-        $job_order->delivery_status = $int;
-        $job_order->updated_at = $this->carbon->now();
-        $job_order->ip_updated = request()->ip();
-        $job_order->user_updated = $this->auth->user()->user_id;
-        $job_order->save();
-
-        return $job_order;
-
-    }
-
-
-
-
-
 
     public function findByJoId($jo_id){
 

@@ -85,7 +85,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
         $delivery->ip_updated = request()->ip();
         $delivery->user_updated = $this->auth->user()->user_id;
         $delivery->save();
-        $delivery->deliveryJobOrder()->delete();
+        $delivery->deliveryItem()->delete();
         
         return $delivery;
 
@@ -98,7 +98,21 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
     public function destroy($delivery){
         
         $delivery->delete();
-        $delivery->deliveryJobOrder()->delete();
+        $delivery->deliveryItem()->delete();
+        return $delivery;
+
+    }
+
+
+
+
+
+    public function updateDelivered($slug){
+
+        $delivery = $this->findBySlug($slug);
+        $delivery->is_delivered = 1;
+        $delivery->save();
+        
         return $delivery;
 
     }
@@ -139,7 +153,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('delivery_code', 'description', 'date', 'updated_at', 'slug')
+        return $model->select('delivery_code', 'description', 'date', 'is_delivered', 'updated_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

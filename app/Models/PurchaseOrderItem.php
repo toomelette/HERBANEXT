@@ -35,6 +35,7 @@ class PurchaseOrderItem extends Model{
         'item_price' => 0.00,
         'line_price' => 0.00,
         'is_generated' => false,
+        'delivery_status' => 1,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -43,6 +44,34 @@ class PurchaseOrderItem extends Model{
         'user_updated' => '',
 
     ];
+
+
+
+
+    public function isReadyForDelivery(){
+
+        if (!$this->jobOrder->isEmpty()) {
+
+            $count_total = 0;
+            $count_rfd = 0;
+
+            foreach($this->jobOrder as $jo) {
+                $count_total = $count_total + 1;
+                if ($jo->delivery_status == 1) {
+                    $count_rfd = $count_rfd + 1;     
+                }
+            }
+
+            if ($count_total == $count_rfd) {
+                return true;
+            }
+            
+        }
+
+        return false;
+
+    }
+
 
 
 
@@ -66,7 +95,6 @@ class PurchaseOrderItem extends Model{
     public function jobOrder() {
         return $this->hasMany('App\Models\JobOrder','po_item_id','po_item_id');
     }
-
 
     
 }

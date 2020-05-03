@@ -69,7 +69,7 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\DeliveryInterface', 'App\Core\Repositories\DeliveryRepository');
 
-		$this->app->bind('App\Core\Interfaces\DeliveryJobOrderInterface', 'App\Core\Repositories\DeliveryJobOrderRepository');
+		$this->app->bind('App\Core\Interfaces\DeliveryItemInterface', 'App\Core\Repositories\DeliveryItemRepository');
 		
 		
 	}

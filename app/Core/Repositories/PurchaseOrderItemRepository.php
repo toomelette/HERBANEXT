@@ -71,6 +71,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
         $po_item->unit = $data['unit'];
         $po_item->item_price = $item->price;
         $po_item->line_price = $line_price;
+        $po_item->delivery_status = 1;
         $po_item->created_at = $this->carbon->now();
         $po_item->updated_at = $this->carbon->now();
         $po_item->ip_created = request()->ip();
@@ -104,10 +105,43 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
 
 
+    public function updateDeliveryStatus($po_item_id, $int){
+
+        $po_item = $this->findByPOItemId($po_item_id);
+        $po_item->delivery_status = $int;
+        $po_item->updated_at = $this->carbon->now();
+        $po_item->ip_updated = request()->ip();
+        $po_item->user_updated = $this->auth->user()->user_id;
+        $po_item->save();
+
+        return $po_item;
+
+    }
+
+
+
+
+
     public function findBySlug($slug){
 
         $po_item = $this->cache->remember('purchase_order_items:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->po_item->where('slug', $slug)->with('jobOrder')->first();
+        }); 
+        
+        if(empty($po_item)){ abort(404); }
+
+        return $po_item;
+
+    }
+
+
+
+
+
+    public function findByPOItemId($po_item_id){
+
+        $po_item = $this->cache->remember('purchase_order_items:findByPOItemId:' . $po_item_id, 240, function() use ($po_item_id){
+            return $this->po_item->where('po_item_id', $po_item_id)->first();
         }); 
         
         if(empty($po_item)){ abort(404); }
@@ -146,6 +180,24 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
+
+    }
+
+
+
+
+
+
+    public function getAll(){
+
+        $po_items = $this->cache->remember('purchase_order_items:getAll', 240, function(){
+            return $this->po_item->select('po_id', 'po_item_id', 'po_no', 'item_id', 'delivery_status')
+                                 ->with('purchaseOrder', 'item')
+                                 ->orderBy('updated_at', 'asc')
+                                 ->get();
+        });
+        
+        return $po_items;
 
     }
 

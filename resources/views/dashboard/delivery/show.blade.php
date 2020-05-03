@@ -33,22 +33,22 @@
         <div class="col-xs-12 table-responsive">
           <table class="table table-bordered">
             <thead>
-            <tr>
-              <th>PO No</th>
-              <th>JO No.</th>
-              <th>Lot No.</th>
-              <th>Product Code</th>
-              <th>Product Name</th>
-            </tr>
+              <tr>
+                <th>PO No</th>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Amount</th>
+              </tr>
             </thead>
             <tbody>
-              @foreach($delivery->deliveryJobOrder as $data)
+              @foreach($delivery->deliveryItem as $data)
                 <tr>
-                  <td>{{ $data->jobOrder->po_no }}</td>
-                  <td>{{ $data->jobOrder->jo_no }}</td>
-                  <td>{{ $data->jobOrder->lot_no }}</td>
-                  <td>{{ $data->jobOrder->item_product_code }}</td>
-                  <td>{{ $data->jobOrder->item_name }}</td>
+                  <td>{{ optional($data->purchaseOrderItem)->po_no }}</td>
+                  <td>{{ optional($data->purchaseOrderItem->item)->product_code }}</td>
+                  <td>{{ optional($data->purchaseOrderItem->item)->name }}</td>
+                  <td>
+                    {{ optional($data->purchaseOrderItem)->amount .' '. optional($data->purchaseOrderItem)->unit }}
+                  </td>
                 </tr>
               @endforeach
             </tbody>

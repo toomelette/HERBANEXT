@@ -39,27 +39,47 @@
               <div class="box box-solid">
                   
                 <div class="box-header with-border">
-                  <h2 class="box-title">Job Orders</h2>
+                  <h2 class="box-title">Purchase Order Items</h2>
                   <div class="pull-right">
-                    <button class="btn btn-danger btn-sm" id="deselect_job_orders">Deselect All</button>
+                    <button class="btn btn-danger btn-sm" id="deselect_po_items">Deselect All</button>
                   </div> 
                 </div>
 
                 <div class="box-body">
-                  <select name="job_orders[]" id="job_orders" class="form-control" multiple="multiple">
-                    @foreach($global_job_orders_all as $data)
-                      @if(old('job_orders'))
-                          <option value="{{ $data->jo_id }}" style="padding:8px;" {!! in_array($data->jo_id, old('job_orders')) ? 'selected' : '' !!}>
-                            {{ $data->jo_no .' - '. $data->item_name }}
-                          </option>
+                  <select name="po_items[]" id="po_items" class="form-control" multiple="multiple">
+
+                    @foreach($global_po_items_all as $data)
+
+                      @if(old('po_items'))
+
+                        <option value="{{ $data->po_item_id }}" 
+                                style="padding:8px;" 
+                                {!! in_array($data->po_item_id, old('po_items')) ? 'selected' : '' !!}>
+                          {{ $data->po_no .' - '. optional($data->item)->name }}
+                        </option>
+
                       @else
+
                         @if($data->delivery_status == 1)
-                          <option value="{{ $data->jo_id }}" style="padding:8px;" style="padding:8px;">
-                            {{ $data->jo_no .' - '. $data->item_name }}<br>
-                          </option>
+
+                          @if(optional($data->purchaseOrder)->type == 1 && $data->isReadyForDelivery() == true)
+                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
+                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
+                            </option>
+                          @endif
+                        
+                          @if(optional($data->purchaseOrder)->type == 2)
+                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
+                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
+                            </option>
+                          @endif
+                          
                         @endif
+
                       @endif
+
                     @endforeach
+
                   </select>
                 </div>
 
@@ -95,12 +115,12 @@
 
     {{-- Multi Select --}}
 
-    $('#deselect_job_orders').click(function(){
-      $('#job_orders').multiSelect('deselect_all');
+    $('#deselect_po_items').click(function(){
+      $('#po_items').multiSelect('deselect_all');
       return false;
     });
 
-    $('#job_orders').multiSelect({
+    $('#po_items').multiSelect({
 
       selectableHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",
       selectionHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",

@@ -51,6 +51,13 @@
               <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
+                  @if(in_array('dashboard.delivery.confirm_delivered', $global_user_submenus))
+                    @if($data->is_delivered != 1)
+                      <a type="button" class="btn btn-success" id="confirm_delivered_button" data-action="confirm-delivered" data-url="{{ route('dashboard.delivery.confirm_delivered', $data->slug) }}">
+                        Confirm Delivered
+                      </a>
+                    @endif
+                  @endif
                   @if(in_array('dashboard.delivery.show', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.delivery.show', $data->slug) }}">
                       <i class="fa fa-print"></i>
@@ -87,7 +94,7 @@
 
   </section>
 
-  <form id="frm-update-finished" method="POST" style="display: none;">
+  <form id="frm-confirm-delivered" method="POST" style="display: none;">
     @csrf
   </form>
 
@@ -111,10 +118,10 @@
 
   <script type="text/javascript">
 
-    $(document).on("click", "#update_finished_button", function () {
-      if($(this).data("action") == "update-finished"){
-        $("#frm-update-finished").attr("action", $(this).data("url"));
-        $("#frm-update-finished").submit();
+    $(document).on("click", "#confirm_delivered_button", function () {
+      if($(this).data("action") == "confirm-delivered"){
+        $("#frm-confirm-delivered").attr("action", $(this).data("url"));
+        $("#frm-confirm-delivered").submit();
       }
     });
 
