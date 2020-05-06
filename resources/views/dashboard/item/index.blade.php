@@ -79,7 +79,7 @@
                 ?> 
 
                 @foreach($data->purchaseOrderItem as $data_po_item)
-                  @if ($data_po_item->purchaseOrder->process_status != 5)
+                  @if (optional($data_po_item->purchaseOrder)->process_status != 5)
                       <?php 
                         $amount += $data_po_item->amount;
                       ?>

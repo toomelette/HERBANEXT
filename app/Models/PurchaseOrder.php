@@ -22,7 +22,6 @@ class PurchaseOrder extends Model{
 
 
 
-
     protected $attributes = [
 
         'slug' => '',
@@ -52,6 +51,25 @@ class PurchaseOrder extends Model{
 
 
 
+    public function displayProcessStatus(){
+
+        $string = '';
+
+        if ($this->process_status == 1) {
+            $string = '<span class="badge bg-yellow">PENDING..</span>';
+        }elseif($this->process_status == 2){
+            $string = '<span class="badge bg-orange">MANUFACTURING..</span>';
+        }elseif($this->process_status == 3){
+            $string = '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>';
+        }elseif($this->process_status == 4){
+            $string = '<span class="badge bg-green">DELIVERED</span>';
+        }
+
+        return $string;
+
+    }
+
+
 
     /** RELATIONSHIPS **/
     public function purchaseOrderItem() {
@@ -78,5 +96,6 @@ class PurchaseOrder extends Model{
         return $this->hasMany('App\Models\FinishingOrder','po_id','po_id');
     }
 
+    
     
 }

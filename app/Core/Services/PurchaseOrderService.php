@@ -36,12 +36,9 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
     public function fetch($request){
 
         $purchase_orders = $this->purchase_order_repo->fetch($request);
-
         $request->flash();
         return view('dashboard.purchase_order.index')->with('purchase_orders', $purchase_orders);
 
@@ -49,19 +46,13 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
     public function fetchBuffer($request){
 
         $purchase_orders = $this->purchase_order_repo->fetchBuffer($request);
-
         $request->flash();
         return view('dashboard.purchase_order.buffer')->with('purchase_orders', $purchase_orders);
 
     }
-
-
-
 
 
 
@@ -88,7 +79,6 @@ class PurchaseOrderService extends BaseService{
 
                 $line_price = $item->price * $converted_amount;
                 $po_item = $this->purchase_order_item_repo->store($data, $item, $purchase_order, $line_price);
-
                 $subtotal_price += $line_price;
 
                 foreach ($item->itemRawMat as $data_irm) {
@@ -104,13 +94,9 @@ class PurchaseOrderService extends BaseService{
         }
 
         $vat_rounded_off = $this->__dataType->string_to_num($request->vat) / 100;   
-
         $vatable = $subtotal_price * $vat_rounded_off;
-        
         $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
-
         $total_price = $subtotal_price + $vatable;
-
         $total_price = $total_price - $freight_fee;
 
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
@@ -119,9 +105,6 @@ class PurchaseOrderService extends BaseService{
         return redirect()->back();
 
     }
-
-
-
 
 
 
@@ -134,18 +117,12 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
-
     public function show($slug){
 
         $purchase_order = $this->purchase_order_repo->findbySlug($slug);
         return view('dashboard.purchase_order.show')->with('purchase_order', $purchase_order);
 
     }
-
-
-
 
 
 
@@ -158,15 +135,10 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
-
     public function update($request, $slug){
         
         $purchase_order = $this->purchase_order_repo->update($request, $slug);
-        
         $route = $purchase_order->buffer_status == 1 ? 'dashboard.purchase_order.buffer' : 'dashboard.purchase_order.index'; 
-
         $this->event->fire('purchase_order.update', $purchase_order);
         return redirect()->route($route);
 
@@ -174,13 +146,9 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
-
     public function destroy($slug){
 
         $purchase_order = $this->purchase_order_repo->destroy($slug);
-
         $this->event->fire('purchase_order.destroy', $purchase_order);
         return redirect()->back();
 
@@ -188,31 +156,23 @@ class PurchaseOrderService extends BaseService{
 
 
 
-
-
     public function toProcess($slug){
 
-        $purchase_order = $this->purchase_order_repo->toProcess($slug);
-
-        $this->event->fire('purchase_order.toProcess', $purchase_order);
+        $purchase_order = $this->purchase_order_repo->updateType($slug, 1);
+        $this->event->fire('purchase_order.update_type', $purchase_order);
         return redirect()->back();
 
     }
-
-
 
 
 
     public function toBuffer($slug){
 
-        $purchase_order = $this->purchase_order_repo->toBuffer($slug);
-
-        $this->event->fire('purchase_order.toBuffer', $purchase_order);
+        $purchase_order = $this->purchase_order_repo->updateType($slug, 2);
+        $this->event->fire('purchase_order.update_type', $purchase_order);
         return redirect()->back();
 
     }
-
-
 
 
 

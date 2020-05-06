@@ -18,9 +18,9 @@ interface PurchaseOrderInterface {
 
 	public function destroy($slug);
 
-	public function toProcess($slug);
+	public function updateType($slug, $int);
 
-	public function toBuffer($slug);
+	public function updateProcessStatus($slug, $int);
 
 	public function findBySlug($slug);
 

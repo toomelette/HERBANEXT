@@ -25,8 +25,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -54,8 +52,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         return $purchase_orders;
 
     }
-
-
 
 
 
@@ -89,8 +85,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
     public function store($request){
 
         $purchase_order = new PurchaseOrder;
@@ -103,8 +97,21 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
-        $purchase_order->process_status = $request->type == '2' ? 3 : 1;
-        $purchase_order->type = $request->type;
+        
+        // for process
+        if ($request->type == '1') {
+            $purchase_order->process_status = 1;
+            $purchase_order->type = 1;
+        // for delivery
+        }elseif($request->type == '2'){
+            $purchase_order->process_status = 3;
+            $purchase_order->type = 1;
+        // for buffer
+        }elseif($request->type == '3'){
+            $purchase_order->process_status = 1;
+            $purchase_order->type = 2;
+        }
+
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
@@ -122,8 +129,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
     public function update($request, $slug){
 
         $purchase_order = $this->findBySlug($slug);
@@ -134,7 +139,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
-        $purchase_order->process_status = $request->type == '2' ? 3 : 1;
         $purchase_order->type = $request->type;
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
@@ -150,8 +154,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
     public function updatePrices($purchase_order, $subtotal_price, $total_price){
         
         $purchase_order->subtotal_price = $subtotal_price;
@@ -159,13 +161,11 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
-        $purchase_order->save();
-        
+        $purchase_order->save();   
+
         return $purchase_order;
 
     }
-
-
 
 
 
@@ -196,12 +196,10 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
-    public function toProcess($slug){
+    public function updateType($slug, $int){
 
         $purchase_order = $this->findBySlug($slug);
-        $purchase_order->type = 1;
+        $purchase_order->type = $int;
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
@@ -213,12 +211,10 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
-    public function toBuffer($slug){
+    public function updateProcessStatus($slug, $int){
 
         $purchase_order = $this->findBySlug($slug);
-        $purchase_order->type = 3;
+        $purchase_order->process_status = $int;
         $purchase_order->updated_at = $this->carbon->now();
         $purchase_order->ip_updated = request()->ip();
         $purchase_order->user_updated = $this->auth->user()->user_id;
@@ -227,8 +223,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         return $purchase_order;
 
     }
-
-
 
 
 
@@ -250,9 +244,6 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
-
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
@@ -269,26 +260,22 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
     public function populate($model, $entries){
 
         return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'type', 'created_at','process_status', 'slug')
-                     ->whereIn('type', [1,2])
+                     ->where('type', 1)
                      ->orderBy('updated_at', 'desc')
                      ->sortable()
                      ->paginate($entries);
 
     }
-
-
 
 
 
     public function populateBuffer($model, $entries){
 
         return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'created_at', 'slug')
-                     ->where('type', 3)
+                     ->where('type', 2)
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -297,28 +284,21 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
-
-
-
     public function getPOIdInc(){
 
         $id = 'PO10001';
-
         $purchase_order = $this->purchase_order->select('po_id')->orderBy('po_id', 'desc')->first();
 
         if($purchase_order != null){
-
             if($purchase_order->po_id != null){
                 $num = str_replace('PO', '', $purchase_order->po_id) + 1;
                 $id = 'PO' . $num;
             }
-        
         }
         
         return $id;
         
     }
-
 
 
 

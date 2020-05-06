@@ -67,7 +67,7 @@
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
-            <th style="width: 300px">Action</th>
+            <th style="width: 350px">Action</th>
           </tr>
           @foreach($purchase_orders as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -88,12 +88,12 @@
                 <div class="btn-group">
                   @if(in_array('dashboard.purchase_order.to_process', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="process_button" data-action="process" data-url="{{ route('dashboard.purchase_order.to_process', $data->slug) }}">
-                      Add to Process &nbsp;<i class="fa fa-plus"></i>
+                      Process &nbsp;<i class="fa fa-plus"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.purchase_order.show', $data->slug) }}">
-                      <i class="fa fa-info-circle"></i>
+                      <i class="fa fa-print"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.purchase_order.edit', $global_user_submenus))
@@ -133,6 +133,10 @@
     @csrf
   </form>
 
+  <form id="frm-delivery" method="POST" style="display: none;">
+    @csrf
+  </form>
+
 @endsection
 
 
@@ -169,6 +173,13 @@
       }
     });
 
+    $(document).on("click", "#delivery_button", function () {
+      if($(this).data("action") == "delivery"){
+        $("#frm-delivery").attr("action", $(this).data("url"));
+        $("#frm-delivery").submit();
+      }
+    });
+
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('po_delete') !!}
 
@@ -183,8 +194,8 @@
     @endif
 
     {{-- BUFFER PROCESS TOAST --}}
-    @if(Session::has('PURCHASE_ORDER_TO_PROCESS_SUCCESS'))
-      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_PROCESS_SUCCESS')) !!}
+    @if(Session::has('PURCHASE_ORDER_TO_UPDATE_TYPE_SUCCESS'))
+      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_UPDATE_TYPE_SUCCESS')) !!}
     @endif
 
   </script>

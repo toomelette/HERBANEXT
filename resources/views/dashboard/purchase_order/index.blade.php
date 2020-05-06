@@ -9,15 +9,8 @@
 
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
-
+                        
                       ];
-
-  $list_of_status = [
-                    1 => '<span class="badge bg-yellow">PENDING..</span>',
-                    2 => '<span class="badge bg-orange">MANUFACTURING..</span>',
-                    3 => '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>',
-                    5 => '<span class="badge bg-green">DELIVERED</span>',
-                  ];
 
 ?>
 
@@ -68,45 +61,47 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
+
         <table class="table table-hover">
+
           <tr>
             <th>@sortablelink('po_no', 'PO No.')</th>
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
             <th>@sortablelink('status', 'Status')</th>
-            <th style="width: 300px">Action</th>
+            <th style="width: 350px">Action</th>
           </tr>
+
           @foreach($purchase_orders as $data) 
+
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+
               <td id="mid-vert">{{ $data->po_no }}</td>
+
               <td id="mid-vert">
                 <b>{{ $data->bill_to_name }}</b><br>
                 {{ $data->bill_to_company }}<br>
                 {{ $data->bill_to_address }}<br>
               </td>
+
               <td id="mid-vert">
                 <b>{{ $data->ship_to_name }}</b><br>
                 {{ $data->ship_to_company }}<br>
                 {{ $data->ship_to_address }}<br>
               </td>
+
               <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'M d, Y g:i A') }}</td>
 
               <td id="mid-vert">
-
-                @foreach ($list_of_status as $key => $value)
-                  @if ($key == $data->process_status)
-                      {!! $value !!}
-                  @endif
-                @endforeach
-
+                {!! $data->displayProcessStatus() !!}
               </td>
 
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.purchase_order.to_buffer', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="buffer_button" data-action="buffer" data-url="{{ route('dashboard.purchase_order.to_buffer', $data->slug) }}">
-                      Add to Buffer &nbsp;<i class="fa fa-plus"></i>
+                      Buffer &nbsp;<i class="fa fa-plus"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.purchase_order.show', $global_user_submenus))
@@ -128,8 +123,11 @@
               </td>
 
             </tr>
+
             @endforeach
+
           </table>
+
       </div>
 
       @if($purchase_orders->isEmpty())
@@ -148,6 +146,10 @@
   </section>
 
   <form id="frm-buffer" method="POST" style="display: none;">
+    @csrf
+  </form>
+
+  <form id="frm-delivery" method="POST" style="display: none;">
     @csrf
   </form>
 
@@ -187,6 +189,13 @@
       }
     });
 
+    $(document).on("click", "#delivery_button", function () {
+      if($(this).data("action") == "delivery"){
+        $("#frm-delivery").attr("action", $(this).data("url"));
+        $("#frm-delivery").submit();
+      }
+    });
+
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('po_delete') !!}
 
@@ -201,8 +210,8 @@
     @endif
 
     {{-- TO BUFFER TOAST --}}
-    @if(Session::has('PURCHASE_ORDER_TO_BUFFER_SUCCESS'))
-      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_BUFFER_SUCCESS')) !!}
+    @if(Session::has('PURCHASE_ORDER_TO_UPDATE_TYPE_SUCCESS'))
+      {!! __js::toast(Session::get('PURCHASE_ORDER_TO_UPDATE_TYPE_SUCCESS')) !!}
     @endif
 
   </script>
