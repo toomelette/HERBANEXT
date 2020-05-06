@@ -57,7 +57,6 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-
     public function updateGenerateFillPost($data){
 
         $job_order = $this->findByJoId($data['jo_id']);
@@ -66,6 +65,22 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         $job_order->lot_no = $data['lot_no'];
         $job_order->pack_size = $data['pack_size'];
         $job_order->theo_yield = $data['theo_yield'];
+        $job_order->updated_at = $this->carbon->now();
+        $job_order->ip_updated = request()->ip();
+        $job_order->user_updated = $this->auth->user()->user_id;
+        $job_order->save();
+
+        return $job_order;
+
+    }
+
+
+
+
+    public function updateIsReady($jo_id, $bool){
+
+        $job_order = $this->findByJoId($jo_id);
+        $job_order->is_ready = $bool;
         $job_order->updated_at = $this->carbon->now();
         $job_order->ip_updated = request()->ip();
         $job_order->user_updated = $this->auth->user()->user_id;

@@ -71,7 +71,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
         $po_item->unit = $data['unit'];
         $po_item->item_price = $item->price;
         $po_item->line_price = $line_price;
-        $po_item->delivery_status = 1;
+        $po_item->delivery_status = 0;
         $po_item->created_at = $this->carbon->now();
         $po_item->updated_at = $this->carbon->now();
         $po_item->ip_created = request()->ip();

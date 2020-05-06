@@ -2,6 +2,7 @@
  
 namespace App\Core\Services;
 
+use App\Core\Interfaces\PurchaseOrderInterface;
 use App\Core\Interfaces\PurchaseOrderItemInterface;
 use App\Core\Interfaces\JobOrderInterface;
 use App\Core\Interfaces\ManufacturingOrderInterface;
@@ -14,6 +15,7 @@ use App\Core\BaseClasses\BaseService;
 class JobOrderService extends BaseService{
 
 
+    protected $po_repo;
     protected $po_item_repo;
     protected $job_order_repo;
     protected $manufacturing_order_repo;
@@ -22,8 +24,9 @@ class JobOrderService extends BaseService{
     protected $fo_pack_mat_repo;
 
 
-    public function __construct(PurchaseOrderItemInterface $po_item_repo, JobOrderInterface $job_order_repo, ManufacturingOrderInterface $manufacturing_order_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo, FinishingOrderInterface $finishing_order_repo, FinishingOrderPackMatInterface $fo_pack_mat_repo){
+    public function __construct(PurchaseOrderInterface $po_repo, PurchaseOrderItemInterface $po_item_repo, JobOrderInterface $job_order_repo, ManufacturingOrderInterface $manufacturing_order_repo, ManufacturingOrderRawMatInterface $mo_raw_mat_repo, FinishingOrderInterface $finishing_order_repo, FinishingOrderPackMatInterface $fo_pack_mat_repo){
 
+        $this->po_repo = $po_repo;
         $this->po_item_repo = $po_item_repo;
         $this->job_order_repo = $job_order_repo;
         $this->manufacturing_order_repo = $manufacturing_order_repo;
@@ -41,7 +44,6 @@ class JobOrderService extends BaseService{
     public function fetchPurchaseOrderItem($request){
 
         $po_items = $this->po_item_repo->fetch($request);
-
         $request->flash();
         return view('dashboard.job_order.create')->with('po_items', $po_items);
 
@@ -53,6 +55,8 @@ class JobOrderService extends BaseService{
     public function generate($request, $slug){
 
         $po_item = $this->po_item_repo->findbySlug($slug);
+        $po = $this->po_repo->updateProcessStatus($po_item->purchaseOrder->slug, 2);
+        
         $this->po_item_repo->generate($po_item);
 
         for ($i=0; $i < $request->no_of_batch; $i++) { 
@@ -67,14 +71,12 @@ class JobOrderService extends BaseService{
 
 
 
-
     public function generateFill($slug){
 
         $po_item = $this->po_item_repo->findbySlug($slug);
         return view('dashboard.job_order.generate_fill')->with('po_item', $po_item);
 
     }
-
 
 
 

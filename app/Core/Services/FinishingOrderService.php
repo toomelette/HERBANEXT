@@ -3,6 +3,7 @@
 namespace App\Core\Services;
 
 
+use App\Core\Interfaces\PurchaseOrderInterface;
 use App\Core\Interfaces\JobOrderInterface;
 use App\Core\Interfaces\FinishingOrderInterface;
 use App\Core\Interfaces\FinishingOrderPackMatInterface;
@@ -12,13 +13,15 @@ use App\Core\BaseClasses\BaseService;
 class FinishingOrderService extends BaseService{
 
 
+    protected $po_repo;
     protected $jo_repo;
     protected $fo_repo;
     protected $fo_pack_mat_repo;
 
 
 
-    public function __construct(JobOrderInterface $jo_repo,FinishingOrderInterface $fo_repo, FinishingOrderPackMatInterface $fo_pack_mat_repo){
+    public function __construct(PurchaseOrderInterface $po_repo, JobOrderInterface $jo_repo, FinishingOrderInterface $fo_repo, FinishingOrderPackMatInterface $fo_pack_mat_repo){
+        $this->po_repo = $po_repo;
         $this->jo_repo = $jo_repo;
         $this->fo_repo = $fo_repo;
         $this->fo_pack_mat_repo = $fo_pack_mat_repo;
@@ -57,7 +60,8 @@ class FinishingOrderService extends BaseService{
         }
         
         $fo = $this->fo_repo->updateFillUp($request, $slug);
-        $jo = $this->jo_repo->updateDeliveryStatus($fo->jo_id, 1);
+        $jo = $this->jo_repo->updateIsReady($fo->jo_id, 1);
+        $po = $this->po_repo->updateProcessStatus($jo->purchaseOrder->slug, 3);
         $this->event->fire('finishing_order.fill_up_post', $fo);
         return redirect()->route('dashboard.finishing_order.index');
 
@@ -76,10 +80,6 @@ class FinishingOrderService extends BaseService{
         $finishing_order = $this->fo_repo->findBySlug($slug);
         return view('printables.finishing_order.fo')->with('finishing_order', $finishing_order);
     }
-
-
-
-
 
 
 

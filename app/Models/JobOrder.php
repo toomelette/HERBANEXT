@@ -33,7 +33,7 @@ class JobOrder extends Model{
         'theo_yield' => '',
         'amount' => 0.00,
         'unit' => '',
-        'delivery_status' => 0,
+        'is_ready' => 0,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

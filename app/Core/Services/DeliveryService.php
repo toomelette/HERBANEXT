@@ -83,7 +83,7 @@ class DeliveryService extends BaseService{
 
         if (!empty($delivery->deliveryItem)) {
             foreach ($delivery->deliveryItem as $data) {
-                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 1);
+                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 0);
                 $this->event->fire('delivery.flush_po_item', $data->po_item_id);
             }  
         }
@@ -123,7 +123,7 @@ class DeliveryService extends BaseService{
 
         if (!empty($delivery->deliveryItem)) {
             foreach ($delivery->deliveryItem as $data) {
-                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 1);
+                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 0);
                 $this->event->fire('delivery.flush_po_item', $data->po_item_id);
             }  
         }

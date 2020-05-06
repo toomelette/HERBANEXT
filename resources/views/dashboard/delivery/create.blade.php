@@ -47,9 +47,8 @@
 
                 <div class="box-body">
                   <select name="po_items[]" id="po_items" class="form-control" multiple="multiple">
-
+                    
                     @foreach($global_po_items_all as $data)
-
                       @if(old('po_items'))
 
                         <option value="{{ $data->po_item_id }}" 
@@ -60,20 +59,10 @@
 
                       @else
 
-                        @if($data->delivery_status == 1)
-
-                          @if(optional($data->purchaseOrder)->type == 1 && $data->isReadyForDelivery() == true)
-                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
-                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
-                            </option>
-                          @endif
-                        
-                          @if(optional($data->purchaseOrder)->type == 2)
-                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
-                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
-                            </option>
-                          @endif
-                          
+                        @if($data->isReadyForDelivery() == true)
+                          <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
+                            {{ $data->po_no .' - '. optional($data->item)->name }}<br>
+                          </option>
                         @endif
 
                       @endif

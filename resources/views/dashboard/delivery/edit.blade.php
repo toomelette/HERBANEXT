@@ -73,29 +73,19 @@
 
                       @else
 
-                        @if(optional($data->purchaseOrder)->type == 1 && $data->isReadyForDelivery() == true)
+                        @if($data->isOnTheWayToClient() == true)
 
                           @if(in_array($data->po_item_id, $list_of_selected_jo))
                             <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;" selected>
                               {{ $data->po_no .' - '. optional($data->item)->name }}<br>
                             </option>
-                          @elseif($data->delivery_status == 1)
-                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
-                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
-                            </option>
                           @endif
 
-                        @elseif(optional($data->purchaseOrder)->type == 2)
-
-                          @if(in_array($data->po_item_id, $list_of_selected_jo))
-                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;" selected>
-                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
-                            </option>
-                          @elseif($data->delivery_status == 1)
-                            <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
-                              {{ $data->po_no .' - '. optional($data->item)->name }}<br>
-                            </option>
-                          @endif
+                        @elseif($data->isReadyForDelivery() == true)
+                          
+                          <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
+                            {{ $data->po_no .' - '. optional($data->item)->name }}<br>
+                          </option>
 
                         @endif
 

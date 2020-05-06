@@ -70,6 +70,13 @@ class PurchaseOrder extends Model{
     }
 
 
+    // private function isCompleted(){
+
+    //     $this->
+
+    // }
+
+
 
     /** RELATIONSHIPS **/
     public function purchaseOrderItem() {

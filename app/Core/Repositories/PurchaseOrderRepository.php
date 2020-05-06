@@ -102,7 +102,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         if ($request->type == '1') {
             $purchase_order->process_status = 1;
             $purchase_order->type = 1;
-        // for delivery
+        // subject for delivery
         }elseif($request->type == '2'){
             $purchase_order->process_status = 3;
             $purchase_order->type = 1;

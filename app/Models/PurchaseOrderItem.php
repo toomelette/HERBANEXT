@@ -50,22 +50,45 @@ class PurchaseOrderItem extends Model{
 
     public function isReadyForDelivery(){
 
-        if (!$this->jobOrder->isEmpty()) {
+        if($this->purchaseOrder->process_status == 3 && $this->delivery_status == 0){
 
-            $count_total = 0;
-            $count_rfd = 0;
+            if (!$this->jobOrder->isEmpty()) {
 
-            foreach($this->jobOrder as $jo) {
-                $count_total = $count_total + 1;
-                if ($jo->delivery_status == 1) {
-                    $count_rfd = $count_rfd + 1;     
+                $count_total = 0;
+                $count_rfd = 0;
+
+                foreach($this->jobOrder as $jo) {
+                    $count_total = $count_total + 1;
+                    if ($jo->is_ready == 1) {
+                        $count_rfd = $count_rfd + 1;     
+                    }
                 }
+
+                if ($count_total == $count_rfd) {
+
+                    return true;
+                    
+                }
+
+                return false;
+                
             }
 
-            if ($count_total == $count_rfd) {
-                return true;
-            }
-            
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+
+
+
+    public function isOnTheWayToClient(){
+
+        if($this->purchaseOrder->process_status == 3 && $this->delivery_status == 2){
+            return true;
         }
 
         return false;
