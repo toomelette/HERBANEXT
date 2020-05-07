@@ -262,7 +262,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'type', 'created_at','process_status', 'slug')
+        return $model->select('po_id', 'po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'type', 'created_at','process_status', 'slug')
                      ->where('type', 1)
                      ->orderBy('updated_at', 'desc')
                      ->sortable()

@@ -44,8 +44,18 @@ class DeliveryController extends Controller{
     }
 
     
-    public function confirmDelivered($slug){
-        return $this->delivery->confirmDelivered($slug);
+    public function confirmDelivery($slug){
+        return $this->delivery->confirmDelivery($slug);
+    }
+
+    
+    public function confirmDeliveredPost($po_item_id){
+        return $this->delivery->confirmDeliveredPost($po_item_id);
+    }
+
+    
+    public function confirmReturnedPost($po_item_id){
+        return $this->delivery->confirmReturnedPost($po_item_id);
     }
 
 

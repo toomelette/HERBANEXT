@@ -40,23 +40,24 @@
             <th>@sortablelink('delivery_code', 'Delivery Code')</th>
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('date', 'Delivery Date')</th>
+            <th>@sortablelink('', 'Delivery Status')</th>
             <th>@sortablelink('updated_at', 'Last Updated')</th>
-            <th>Action</th>
+            <th style="width:300px;:">Action</th>
           </tr>
           @foreach($deliveries as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} > 
               <td id="mid-vert">{{ $data->delivery_code }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ __dataType::date_parse($data->date, 'F d, Y') }}</td>
+              <td id="mid-vert">{!! $data->displayDeliveryStatus() !!}</td>
+
               <td id="mid-vert">{{ $data->updated_at->diffForHumans() }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  @if(in_array('dashboard.delivery.confirm_delivered', $global_user_submenus))
-                    @if($data->is_delivered != 1)
-                      <a type="button" class="btn btn-success" id="confirm_delivered_button" data-action="confirm-delivered" data-url="{{ route('dashboard.delivery.confirm_delivered', $data->slug) }}">
-                        Confirm Delivered
-                      </a>
-                    @endif
+                  @if(in_array('dashboard.delivery.confirm_delivery', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.delivery.confirm_delivery', $data->slug) }}">
+                      Delivery Items
+                    </a>
                   @endif
                   @if(in_array('dashboard.delivery.show', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.delivery.show', $data->slug) }}">
@@ -94,10 +95,6 @@
 
   </section>
 
-  <form id="frm-confirm-delivered" method="POST" style="display: none;">
-    @csrf
-  </form>
-
 @endsection
 
 
@@ -117,13 +114,6 @@
 @section('scripts')
 
   <script type="text/javascript">
-
-    $(document).on("click", "#confirm_delivered_button", function () {
-      if($(this).data("action") == "confirm-delivered"){
-        $("#frm-confirm-delivered").attr("action", $(this).data("url"));
-        $("#frm-confirm-delivered").submit();
-      }
-    });
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('delivery_delete') !!}

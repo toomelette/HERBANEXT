@@ -60,9 +60,11 @@ class PurchaseOrder extends Model{
         }elseif($this->process_status == 2){
             $string = '<span class="badge bg-orange">MANUFACTURING..</span>';
         }elseif($this->process_status == 3){
-            $string = '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>';
-        }elseif($this->process_status == 4){
-            $string = '<span class="badge bg-green">DELIVERED</span>';
+            if ($this->isDeliveryCompleted() == true) {
+                $string = '<span class="badge bg-green">DELIVERED</span>';
+            }else{
+                $string = '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>';
+            }
         }
 
         return $string;
@@ -70,11 +72,32 @@ class PurchaseOrder extends Model{
     }
 
 
-    // private function isCompleted(){
 
-    //     $this->
+    public function isDeliveryCompleted(){
 
-    // }
+        if (!$this->purchaseOrderItem->isEmpty()) {
+
+            $count_total = 0;
+            $count_completed = 0;
+
+            foreach($this->purchaseOrderItem as $po_item) {
+                $count_total = $count_total + 1;
+                if ($po_item->delivery_status == 4) {
+                    $count_completed = $count_completed + 1;     
+                }
+            }
+
+            if ($count_total == $count_completed) {
+                return true;
+            }
+
+            return false;
+            
+        }
+
+        return false;
+
+    }
 
 
 

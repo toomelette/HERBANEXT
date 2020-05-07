@@ -105,15 +105,32 @@ class DeliveryService extends BaseService{
 
 
 
-    public function confirmDelivered($slug){
+    public function confirmDelivery($slug){
 
-        $delivery = $this->delivery_repo->updateDelivered($slug);
-
-        $this->event->fire('delivery.update', $delivery);
-        return redirect()->back();
+        $delivery = $this->delivery_repo->findbySlug($slug);
+        return view('dashboard.delivery.confirm_delivery')->with('delivery', $delivery);
 
     }
 
+
+
+    public function confirmDeliveredPost($po_item_id){
+
+        $po_item =  $this->po_item_repo->updateDeliveryStatus($po_item_id, 4);
+        $this->event->fire('delivery.confirm_delivered', $po_item);
+        return redirect()->back();
+    
+    }
+
+
+
+    public function confirmReturnedPost($po_item_id){
+
+        $po_item = $this->po_item_repo->updateDeliveryStatus($po_item_id, 3);
+        $this->event->fire('delivery.confirm_returned', $po_item);
+        return redirect()->back();
+
+    }
 
 
 

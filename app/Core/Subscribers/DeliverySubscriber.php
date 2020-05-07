@@ -26,6 +26,8 @@ class DeliverySubscriber extends BaseSubscriber{
         $events->listen('delivery.store', 'App\Core\Subscribers\DeliverySubscriber@onStore');
         $events->listen('delivery.update', 'App\Core\Subscribers\DeliverySubscriber@onUpdate');
         $events->listen('delivery.destroy', 'App\Core\Subscribers\DeliverySubscriber@onDestroy');
+        $events->listen('delivery.confirm_delivered', 'App\Core\Subscribers\DeliverySubscriber@confirmDelivered');
+        $events->listen('delivery.confirm_returned', 'App\Core\Subscribers\DeliverySubscriber@confirmReturned');
         $events->listen('delivery.flush_po_item', 'App\Core\Subscribers\DeliverySubscriber@onFlushPOItem');
 
     }
@@ -67,6 +69,32 @@ class DeliverySubscriber extends BaseSubscriber{
 
         $this->session->flash('DELIVERY_DELETE_SUCCESS', 'The Delivery has been successfully deleted!');
         $this->session->flash('DELIVERY_DELETE_SUCCESS_SLUG', $delivery->slug);
+
+    }
+
+
+
+    public function confirmDelivered($po_item){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $po_item->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findByPOItemId:'. $po_item->po_item_id .'');
+
+        $this->session->flash('DELIVERY_PO_ITEM_UPDATE_DELIVERY_STATUS_SUCCESS', 'The Delivery Item has been successfully confirmed!');
+
+    }
+
+
+
+    public function confirmReturned($po_item){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $po_item->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findByPOItemId:'. $po_item->po_item_id .'');
+
+        $this->session->flash('DELIVERY_PO_ITEM_UPDATE_DELIVERY_STATUS_SUCCESS', 'The Delivery Item has been successfully confirmed!');
 
     }
 

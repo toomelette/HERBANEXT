@@ -70,7 +70,7 @@
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
             <th>@sortablelink('status', 'Status')</th>
-            <th style="width: 350px">Action</th>
+            <th style="width: 250px">Action</th>
           </tr>
 
           @foreach($purchase_orders as $data) 

@@ -124,7 +124,9 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
     public function findBySlug($slug){
 
         $delivery = $this->cache->remember('deliveries:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->delivery->where('slug', $slug)->first();
+            return $this->delivery->where('slug', $slug)
+                                  ->with('deliveryItem')
+                                  ->first();
         }); 
         
         if(empty($delivery)){
@@ -153,7 +155,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('delivery_code', 'description', 'date', 'is_delivered', 'updated_at', 'slug')
+        return $model->select('delivery_id', 'delivery_code', 'description', 'date', 'is_delivered', 'updated_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

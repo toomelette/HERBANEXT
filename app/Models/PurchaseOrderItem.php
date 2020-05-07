@@ -65,9 +65,7 @@ class PurchaseOrderItem extends Model{
                 }
 
                 if ($count_total == $count_rfd) {
-
                     return true;
-                    
                 }
 
                 return false;
@@ -92,6 +90,32 @@ class PurchaseOrderItem extends Model{
         }
 
         return false;
+
+    }
+
+
+
+    public function displayAmount(){
+
+        return number_format($this->amount, 3) .' '. $this->unit;
+
+    }
+
+
+
+    public function displayDeliveryConfirmStatus(){
+
+        $string = '';
+
+        if ($this->delivery_status == 3) {
+            $string = '<span class="badge bg-red">Returned</span>';
+        }elseif($this->delivery_status == 4){
+            $string = '<span class="badge bg-green">Delivered</span>';
+        }else{
+            $string = '<span class="badge bg-orange">Pending .. </span>';
+        }
+
+        return $string;
 
     }
 
