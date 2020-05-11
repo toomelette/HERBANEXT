@@ -53,7 +53,7 @@
 			            <th>@sortablelink('item.name', 'name')</th>
 			            <th>@sortablelink('amount', 'amount')</th>
 			            <th>@sortablelink('updated_at', 'Date')</th>
-			            <th>@sortablelink('is_generated', 'Generated')</th>
+			            <th>@sortablelink('delivery_status', 'Delivery Status')</th>
 			            <th style="width: 150px">Action</th>
 			          </tr>
 			          @foreach($po_items as $data) 
@@ -67,11 +67,11 @@
 			                  {{ number_format($data->amount) }} {{ $data->unit }}
 			                @endif
 			              </td>
-			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'M d, Y h:i A') }}</td>
+			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
 			              <td id="mid-vert">
-			                  @if($data->is_generated == false)
+			                  @if($data->isReadyForDelivery() == false)
 			                    <span class="badge bg-red"><i class="fa fa-fw fa-times"></i></span>
-			                  @elseif($data->is_generated == true)
+			                  @elseif($data->isReadyForDelivery() == true)
 			                  	<span class="badge bg-green"><i class="fa fa-fw fa-check"></i></span>
 			                  @endif
 			              </td>

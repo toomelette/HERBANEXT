@@ -94,7 +94,7 @@
               <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'M d, Y g:i A') }}</td>
 
               <td id="mid-vert">
-                {!! $data->displayProcessStatus() !!}
+                {!! $data->displayProcessStatusSpan() !!}
               </td>
 
               <td id="mid-vert">

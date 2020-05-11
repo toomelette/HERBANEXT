@@ -63,6 +63,11 @@ class DeliveryController extends Controller{
         return $this->delivery->show($slug);
     }
 
+
+    public function print($slug){
+        return $this->delivery->print($slug);
+    }
+
     
     public function destroy($slug){
         return $this->delivery->destroy($slug);

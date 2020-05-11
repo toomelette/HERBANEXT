@@ -173,9 +173,10 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
     public function populate($model, $entries){
 
-        return $model->select('po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
+        return $model->select('po_id', 'po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
                      ->whereHas('purchaseOrder', function($query) {
-                        $query->where('type', 1);
+                        $query->where('type', 1)
+                              ->orWhereIn('type', [1,2]);
                      })
                      ->sortable()
                      ->orderBy('updated_at', 'desc')

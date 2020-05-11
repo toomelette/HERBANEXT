@@ -51,7 +51,7 @@ class PurchaseOrder extends Model{
 
 
 
-    public function displayProcessStatus(){
+    public function displayProcessStatusSpan(){
 
         $string = '';
 
@@ -64,6 +64,28 @@ class PurchaseOrder extends Model{
                 $string = '<span class="badge bg-green">DELIVERED</span>';
             }else{
                 $string = '<span class="badge bg-blue">SUBJECT FOR DELIVERY..</span>';
+            }
+        }
+
+        return $string;
+
+    }
+
+
+
+    public function displayProcessStatusText(){
+
+        $string = '';
+
+        if ($this->process_status == 1) {
+            $string = 'PENDING';
+        }elseif($this->process_status == 2){
+            $string = 'MANUFACTURING';
+        }elseif($this->process_status == 3){
+            if ($this->isDeliveryCompleted() == true) {
+                $string = 'DELIVERED';
+            }else{
+                $string = 'SUBJECT FOR DELIVERY';
             }
         }
 

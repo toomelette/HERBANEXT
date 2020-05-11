@@ -35,6 +35,8 @@
             <thead>
               <tr>
                 <th>PO No</th>
+                <th>Bill to</th>
+                <th>Ship to</th>
                 <th>Product Code</th>
                 <th>Product Name</th>
                 <th>Amount</th>
@@ -44,6 +46,19 @@
               @foreach($delivery->deliveryItem as $data)
                 <tr>
                   <td>{{ optional($data->purchaseOrderItem)->po_no }}</td>
+
+                  <td id="mid-vert">
+                    <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_name }}</b><br>
+                    {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_company }}<br>
+                    {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_address }}<br>
+                  </td>
+
+                  <td id="mid-vert">
+                    <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_name }}</b><br>
+                    {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_company }}<br>
+                    {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_address }}<br>
+                  </td>
+
                   <td>{{ optional($data->purchaseOrderItem->item)->product_code }}</td>
                   <td>{{ optional($data->purchaseOrderItem->item)->name }}</td>
                   <td>
@@ -57,11 +72,11 @@
 
       </div>
 
-     {{--  <div class="row no-print">
+      <div class="row no-print">
         <div class="col-xs-12">
           <a href="{{ route('dashboard.delivery.print', $delivery->slug) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
         </div>
-      </div> --}}
+      </div>
 
     </div>
   </div>

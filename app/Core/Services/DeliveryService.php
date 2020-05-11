@@ -77,6 +77,15 @@ class DeliveryService extends BaseService{
 
 
 
+    public function print($slug){
+
+        $delivery = $this->delivery_repo->findbySlug($slug);
+        return view('printables.delivery.delivery_report')->with('delivery', $delivery);
+
+    }
+
+
+
     public function update($request, $slug){
 
         $delivery = $this->delivery_repo->findbySlug($slug);

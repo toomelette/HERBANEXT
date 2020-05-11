@@ -25,7 +25,6 @@
               <span class="pull-right" style="font-size:30px;">Purchase Order Form</span>
             </h2>
           </div>
-
         </div>
 
         <div class="row invoice-info">
@@ -50,6 +49,7 @@
           <div class="col-sm-4 invoice-col">
             <b>PO Number:</b> {{ $purchase_order->po_no }}<br>
             <b>Date:</b> {{ __dataType::date_parse($purchase_order->created_at, 'm/d/Y') }}<br>
+            <b>Process Status: </b>{!! $purchase_order->displayProcessStatusText() !!}<br>
           </div>
 
         </div>
