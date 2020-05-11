@@ -119,6 +119,8 @@ class LoginController extends Controller{
             $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
             $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
+            $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
+
             return redirect('/');
 
         }
