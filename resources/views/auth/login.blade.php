@@ -38,7 +38,7 @@
 
 </head>
 
-<body class="hold-transition login-page" style="background-color: #f5f5f5; zoom:107%;">
+<body class="hold-transition login-page" style="background-color: #ecf0f5; zoom:107%;">
 
 	<div class="login-box">
 	  <div class="login-logo">
