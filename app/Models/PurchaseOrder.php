@@ -16,7 +16,7 @@ class PurchaseOrder extends Model{
 
     public $sortable = ['po_no', 'bill_to_name', 'ship_to_name', 'total_price'];
 
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['date_required', 'created_at', 'updated_at'];
     
 	public $timestamps = false;
 
@@ -27,6 +27,7 @@ class PurchaseOrder extends Model{
         'slug' => '',
         'po_id' => '',
         'po_no' => '',
+        'date_required' => null,
         'bill_to_name' => '',
         'bill_to_company' => '',
         'bill_to_address' => '',

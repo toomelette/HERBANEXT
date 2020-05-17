@@ -27,8 +27,12 @@
               <div class="box-body">
 
                 {!! __form::textbox(
-                  '12', 'po_no', 'text', 'PO Number *', 'PO Number', old('po_no'), $errors->has('po_no'), $errors->first('po_no'), ''
+                  '6', 'po_no', 'text', 'PO Number *', 'PO Number', old('po_no'), $errors->has('po_no'), $errors->first('po_no'), ''
                 ) !!}  
+
+                {!! __form::datepicker(
+                  '6', 'date_required',  'Date Required *', old('date_required'), $errors->has('date_required'), $errors->first('date_required')
+                ) !!}
 
               </div>
             </div>

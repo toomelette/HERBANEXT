@@ -90,6 +90,7 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
         $purchase_order = new PurchaseOrder;
         $purchase_order->po_id = $this->getPOIdInc();
         $purchase_order->po_no = $request->po_no;
+        $purchase_order->date_required = $this->__dataType->date_parse($request->date_required);
         $purchase_order->slug = $this->str->random(16);
         $purchase_order->bill_to_name = $request->bill_to_name;
         $purchase_order->bill_to_company = $request->bill_to_company;
@@ -133,13 +134,13 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
         $purchase_order = $this->findBySlug($slug);
         $purchase_order->po_no = $request->po_no;
+        $purchase_order->date_required = $this->__dataType->date_parse($request->date_required);
         $purchase_order->bill_to_name = $request->bill_to_name;
         $purchase_order->bill_to_company = $request->bill_to_company;
         $purchase_order->bill_to_address = $request->bill_to_address;
         $purchase_order->ship_to_name = $request->ship_to_name;
         $purchase_order->ship_to_company = $request->ship_to_company;
         $purchase_order->ship_to_address = $request->ship_to_address;
-        $purchase_order->type = $request->type;
         $purchase_order->vat = $this->__dataType->string_to_num($request->vat);
         $purchase_order->freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         $purchase_order->instructions = $request->instructions;
