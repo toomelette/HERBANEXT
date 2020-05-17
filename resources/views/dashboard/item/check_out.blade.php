@@ -48,6 +48,10 @@
             '3', 'unit', 'Standard Unit *', old('unit'), [], $errors->has('unit'), $errors->first('unit'), '', ''
           ) !!}
 
+          {!! __form::textbox(
+           '6', 'remarks', 'text', 'Remarks', 'Batch Code', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+          ) !!} 
+
         </div>
 
         <div class="box-footer">

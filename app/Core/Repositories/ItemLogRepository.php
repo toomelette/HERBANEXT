@@ -98,6 +98,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     	$item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
     	$item_log->balance_before_transaction = $item->current_balance;
+        $item_log->remarks = $request->remarks;
         $item_log->datetime = $this->carbon->now();
         $item_log->ip_address = request()->ip();
         $item_log->user_id = $this->auth->user()->user_id;
@@ -122,6 +123,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
         $item_log->amount = $this->__dataType->string_to_num($request->amount);
         $item_log->unit = $request->unit;
         $item_log->balance_before_transaction = $item->current_balance;
+        $item_log->remarks = $request->remarks;
         $item_log->datetime = $this->carbon->now();
         $item_log->ip_address = request()->ip();
         $item_log->user_id = $this->auth->user()->user_id;
@@ -175,7 +177,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'user_id', 'datetime')
+        return $model->select('product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
                      ->with('item', 'user')
                      ->sortable()
                      ->orderBy('datetime', 'desc')
@@ -189,7 +191,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populateByItem($model, $entries, $item_id){
 
-        return $model->select('transaction_type', 'amount', 'unit', 'user_id', 'datetime')
+        return $model->select('transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
                      ->with('user')
                      ->where('item_id', $item_id)
                      ->sortable()

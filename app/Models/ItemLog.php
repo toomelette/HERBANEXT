@@ -13,7 +13,7 @@ class ItemLog extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public $sortable = ['product_code', 'transaction_type', 'amount', 'unit', 'datetime'];
+    public $sortable = ['product_code', 'transaction_type', 'amount', 'unit', 'datetime', 'remarks'];
     
 	public $timestamps = false;
 
@@ -28,6 +28,7 @@ class ItemLog extends Model{
         'amount' => 0.000,
         'unit' => '',
         'balance_before_transaction' => 0.000,
+        'remarks' => '',
         'datetime' => null,
         'ip_address' => '',
         'user_id' => '',

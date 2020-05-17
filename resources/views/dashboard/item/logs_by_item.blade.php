@@ -50,6 +50,7 @@
             <tr>
               <th>@sortablelink('transaction_type', 'Transaction Type')</th>
               <th>@sortablelink('amount', 'Amount')</th>
+              <th>@sortablelink('remarks', 'Remarks')</th>
               <th>@sortablelink('user.name', 'User Updated')</th>
               <th>@sortablelink('datetime', 'Date')</th>
             </tr>
@@ -59,18 +60,19 @@
                 <td id="mid-vert">
                   @if(optional($data->item)->unit != 'PCS')
                     @if($data->transaction_type == 1)
-                      <span class="text-green">{{ number_format($data->amount, 3) }} {{ $data->unit }}<span>
+                      <span class="text-green">{{ number_format($data->amount, 3) }} {{ $data->unit }}</span>
                     @else
-                      <span class="text-red">{{ number_format($data->amount, 3) }} {{ $data->unit }}<span>
+                      <span class="text-red">{{ number_format($data->amount, 3) }} {{ $data->unit }}</span>
                     @endif
                   @else
                     @if($data->transaction_type == 1)
-                      <span class="text-green">{{ number_format($data->amount) }} {{ $data->unit }}<span>
+                      <span class="text-green">{{ number_format($data->amount) }} {{ $data->unit }}</span>
                     @else
-                      <span class="text-red">{{ number_format($data->amount) }} {{ $data->unit }}<span>
+                      <span class="text-red">{{ number_format($data->amount) }} {{ $data->unit }}</span>
                     @endif
                   @endif
                 </td>
+                <td id="mid-vert">{{ $data->remarks }}</td>
                 <td id="mid-vert">{{ optional($data->user)->username }}</td>
                 <td id="mid-vert">{{ __dataType::date_parse($data->datetime, 'M d, Y g:i A') }}</td>
               </tr>

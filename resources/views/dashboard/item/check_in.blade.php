@@ -54,6 +54,10 @@
             '3', 'expiry_date',  'Expiry Date *', old('expiry_date'), $errors->has('expiry_date'), $errors->first('expiry_date')
           ) !!}
 
+          {!! __form::textbox(
+           '6', 'remarks', 'text', 'Remarks', 'Batch Code', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+          ) !!}   
+
         </div>
 
         <div class="box-footer">
