@@ -27,7 +27,7 @@ class ManufacturingOrderFillRequest extends FormRequest{
             'master_mo_no'=>'required|string|max:45',
             'mo_no'=>'required|string|max:45',
             'client'=>'required|string|max:255',
-            'shell_life'=>'required|string|max:255',
+            'shelf_life'=>'required|string|max:255',
             'processing_date'=>'required|date_format:"m/d/Y"',
             'expired_date'=>'required|date_format:"m/d/Y"',
             'requested_date'=>'required|date_format:"m/d/Y"',

@@ -56,7 +56,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '3', 'shell_life', 'text', 'Shell Life *', 'Shell Life', old('shell_life') ? old('shell_life') : $manufacturing_order->shell_life, $errors->has('shell_life'), $errors->first('shell_life'), ''
+              '3', 'shelf_life', 'text', 'Shelf Life *', 'Shelf Life', old('shelf_life') ? old('shelf_life') : $manufacturing_order->shelf_life, $errors->has('shelf_life'), $errors->first('shelf_life'), ''
             ) !!}
 
             {!! __form::textbox(

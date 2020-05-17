@@ -44,7 +44,7 @@
 
             <tr>
               <td>Client : {{ $manufacturing_order->client }}</td>
-              <td>Shell Life : {{ $manufacturing_order->shell_life }}</td>
+              <td>Shelf Life : {{ $manufacturing_order->shelf_life }}</td>
               <td>Pack Size : {{ optional($manufacturing_order->jobOrder)->pack_size }}</td>
               <td>PO No. : {{ optional($manufacturing_order->jobOrder)->po_no }}</td>
             </tr>

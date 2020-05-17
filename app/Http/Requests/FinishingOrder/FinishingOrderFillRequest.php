@@ -25,7 +25,7 @@ class FinishingOrderFillRequest extends FormRequest{
             'master_fo_no'=>'required|string|max:45',
             'fo_no'=>'required|string|max:45',
             'client'=>'required|string|max:255',
-            'shell_life'=>'required|string|max:255',
+            'shelf_life'=>'required|string|max:255',
             'processing_date'=>'required|date_format:"m/d/Y"',
             'expired_date'=>'required|date_format:"m/d/Y"',
             'requested_date'=>'required|date_format:"m/d/Y"',

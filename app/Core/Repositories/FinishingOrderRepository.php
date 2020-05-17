@@ -70,7 +70,7 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
 
         $finishing_order = $this->findByJOId($jo_id);
         $finishing_order->client = $request->client;
-        $finishing_order->shell_life = $request->shell_life;
+        $finishing_order->shelf_life = $request->shelf_life;
         $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
         $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
         $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
@@ -93,7 +93,7 @@ class FinishingOrderRepository extends BaseRepository implements FinishingOrderI
         $finishing_order->master_fo_no = $request->master_fo_no;
         $finishing_order->fo_no = $request->fo_no;
         $finishing_order->client = $request->client;
-        $finishing_order->shell_life = $request->shell_life;
+        $finishing_order->shelf_life = $request->shelf_life;
         $finishing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
         $finishing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
         $finishing_order->requested_date = $this->__dataType->date_parse($request->requested_date);

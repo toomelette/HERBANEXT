@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <td>Client : {{ $finishing_order->client }}</td>
-              <td>Shell Life : {{ $finishing_order->shell_life }}</td>
+              <td>Shelf Life : {{ $finishing_order->shelf_life }}</td>
               <td>Pack Size : {{ optional($finishing_order->jobOrder)->pack_size }}</td>
               <td>PO No. : {{ optional($finishing_order->jobOrder)->po_no }}</td>
             </tr>
@@ -191,7 +191,7 @@
             </tr>
             <tr>
               <td>Client : {{ $finishing_order->client }}</td>
-              <td>Shell Life : {{ $finishing_order->shell_life }}</td>
+              <td>Shelf Life : {{ $finishing_order->shelf_life }}</td>
               <td>Pack Size : {{ $finishing_order->jo_pack_size }}</td>
               <td>PO No. : {{ $finishing_order->po_no }}</td>
             </tr>

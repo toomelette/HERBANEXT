@@ -27,7 +27,7 @@ class ManufacturingOrder extends Model{
         'po_id' => '',
         'jo_id' => '',
         'client' => '',
-        'shell_life' => '',
+        'shelf_life' => '',
         'processing_date' => null,
         'expired_date' => null,
         'requested_by' => '',

@@ -72,7 +72,7 @@ class ManufacturingOrderRepository extends BaseRepository implements Manufacturi
         $manufacturing_order->master_mo_no = $request->master_mo_no;
         $manufacturing_order->mo_no = $request->mo_no;
         $manufacturing_order->client = $request->client;
-        $manufacturing_order->shell_life = $request->shell_life;
+        $manufacturing_order->shelf_life = $request->shelf_life;
         $manufacturing_order->processing_date = $this->__dataType->date_parse($request->processing_date);
         $manufacturing_order->expired_date = $this->__dataType->date_parse($request->expired_date);
         $manufacturing_order->requested_date = $this->__dataType->date_parse($request->requested_date);
