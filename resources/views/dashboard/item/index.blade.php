@@ -57,42 +57,8 @@
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->product_code }}</td>
               <td id="mid-vert">{{ $data->name }}</td>
-              <td id="mid-vert">
-                  @if($data->min_req_qty > $data->current_balance)
-                    @if($data->unit != 'PCS')
-                      <span class="text-red">{{ number_format($data->current_balance, 3) }} {{ $data->unit }}<span>
-                    @else
-                      <span class="text-red">{{ number_format($data->current_balance) }} {{ $data->unit }}<span>
-                    @endif
-                  @else
-                    @if($data->unit != 'PCS')
-                      <span class="text-green">{{ number_format($data->current_balance, 3) }} {{ $data->unit }}<span>
-                    @else
-                      <span class="text-green">{{ number_format($data->current_balance) }} {{ $data->unit }}<span>
-                    @endif
-                  @endif
-              </td>
-              <td id="mid-vert">
-
-                <?php 
-                  $amount = 0.00;
-                ?> 
-
-                @foreach($data->purchaseOrderItem as $data_po_item)
-                  @if (optional($data_po_item->purchaseOrder)->process_status != 5)
-                      <?php 
-                        $amount += $data_po_item->amount;
-                      ?>
-                  @endif
-                @endforeach
-
-                @if($data->unit != 'PCS')
-                  <span class="text-yellow">{{ number_format($amount, 3) }} {{ $data->unit }}<span>
-                @else
-                  <span class="text-yellow">{{ number_format($amount) }} {{ $data->unit }}<span>
-                @endif
-
-              </td>
+              <td id="mid-vert">{!! $data->displayCurrentBalance() !!}</td>
+              <td id="mid-vert">{!! $data->displayPendingCheckout() !!}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.item.check_in', $global_user_submenus))

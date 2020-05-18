@@ -44,6 +44,27 @@ class Task extends Model{
     ];
 
 
+
+
+    public function displayStatusSpan(){
+
+        $span = '';
+
+        if ($this->status == 1) {
+            $span = '<span class="badge bg-red">Unscheduled</span>';
+        }elseif ($this->status == 2) {
+            $span = '<span class="badge bg-orange">Pending .. </span>';
+        }elseif ($this->status == 3) {
+            $span = '<span class="badge bg-green">Finished</span>';
+        }
+
+        return $span;
+
+    }
+
+
+
+
     // Relationships
     public function item() {
         return $this->belongsTo('App\Models\Item','item_id','item_id');

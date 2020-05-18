@@ -8,10 +8,6 @@
                         'direction' => Request::get('direction'),
                       ];
 
-  $unscheduled = '<span class="badge bg-red">Unscheduled</span>';
-  $pending = '<span class="badge bg-orange">Pending .. </span>';
-  $finished = '<span class="badge bg-green">Finished</span>';
-
 ?>
 
 @extends('layouts.admin-master')
@@ -54,15 +50,7 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ optional($data->item)->name }}</td>
               <td id="mid-vert">{{ optional($data->machine)->name }}</td>
-              <td id="mid-vert">
-                @if($data->status == 1)
-                  {!! $unscheduled !!}
-                @elseif($data->status == 2)
-                  {!! $pending !!}
-                @elseif($data->status == 3)
-                  {!! $finished !!}
-                @endif
-              </td>
+              <td id="mid-vert">{!! $data->displayStatusSpan() !!}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.task.update_finished', $global_user_submenus))

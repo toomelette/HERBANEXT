@@ -60,21 +60,10 @@
 			            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
 			              <td id="mid-vert">{{ $data->po_no }}</td>
 			              <td id="mid-vert">{{ optional($data->item)->name }}</td>
-			              <td id="mid-vert">
-			                @if($data->unit != 'PCS')
-			                  {{ number_format($data->amount, 3) }} {{ $data->unit }}
-			                @else
-			                  {{ number_format($data->amount) }} {{ $data->unit }}
-			                @endif
-			              </td>
+			              <td id="mid-vert">{!! $data->displayAmount() !!}</td>
 			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
-			              <td id="mid-vert">
-			                  @if($data->isReadyForDelivery() == false)
-			                    <span class="badge bg-red"><i class="fa fa-fw fa-times"></i></span>
-			                  @elseif($data->isReadyForDelivery() == true)
-			                  	<span class="badge bg-green"><i class="fa fa-fw fa-check"></i></span>
-			                  @endif
-			              </td>
+			              <td id="mid-vert">{!! $data->isReadyForDeliverySpan() !!}</td>
+
 			              <td id="mid-vert">
 			              	@if ($data->is_generated == false)
 			                  @if(in_array('dashboard.job_order.generate', $global_user_submenus))
@@ -95,6 +84,7 @@
 			                  @endif
 			              	@endif
 			              </td>
+			              
 			            </tr>
 			            @endforeach
 			          </table>

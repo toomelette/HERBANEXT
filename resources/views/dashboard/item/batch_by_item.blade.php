@@ -52,20 +52,8 @@
             @foreach($batches as $data) 
               <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
                 <td id="mid-vert">{{ $data->batch_code }}</td>
-                <td id="mid-vert">
-                  @if($data->unit != 'PCS')
-                    {{ number_format($data->amount, 3) }} {{ $data->unit }}
-                  @else
-                    {{ number_format($data->amount, 0) }} {{ $data->unit }}
-                  @endif
-                </td>
-                <td id="mid-vert">
-                  @if($data->expiry_date <= Carbon::now()->format('Y-m-d'))
-                    <span class="text-red">{{ __dataType::date_parse($data->expiry_date, 'M d,Y') }}<span>
-                  @else
-                    {{ __dataType::date_parse($data->expiry_date, 'M d, Y') }}
-                  @endif
-                </td>
+                <td id="mid-vert">{{ $data->displayAmount() }}</td>
+                <td id="mid-vert">{!! $data->displayExpiryStatusSpan() !!} </td>
               </tr>
               @endforeach
             </table>

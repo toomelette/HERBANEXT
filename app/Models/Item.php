@@ -50,6 +50,59 @@ class Item extends Model{
 
 
 
+    public function displayCurrentBalance(){
+
+        $txt = '';
+
+        if ($this->min_req_qty > $this->current_balance) {
+                
+            if ($this->unit != 'PCS') {
+                $txt = '<span class="text-red">'. number_format($this->current_balance, 3) .' '. $this->unit .'<span>';
+            }else{
+                $txt = '<span class="text-red">'. number_format($this->current_balance) .' '. $this->unit .'<span>';
+            }
+
+        }else{
+
+            if ($this->unit != 'PCS') {
+                $txt = '<span class="text-green">'. number_format($this->current_balance, 3) .' '. $this->unit .'<span>';
+            }else{
+                $txt = '<span class="text-green">'. number_format($this->current_balance) .' '. $this->unit .'<span>';
+            }
+
+        }
+
+        return $txt;
+
+    }
+
+
+
+
+    public function displayPendingCheckout(){
+
+        $txt = '';
+        $amount = 0.00;
+
+        foreach ($this->purchaseOrderItem as $data) {
+            if (optional($data->purchaseOrder)->process_status != 5) {
+                $amount += $data->amount;
+            }
+        }
+
+        if ($this->unit != 'PCS') {
+            $txt = '<span class="text-yellow">'. number_format($amount, 3) .' '. $this->unit .'<span>';
+        }else{
+            $txt = '<span class="text-yellow">'. number_format($amount) .' '. $this->unit .'<span>';
+        }
+
+        return $txt;
+
+    }
+
+
+
+
 
     /** RELATIONSHIPS **/
     public function itemBatch() {

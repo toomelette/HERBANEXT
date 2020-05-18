@@ -38,6 +38,31 @@ class ItemLog extends Model{
 
 
 
+    public function displayAmount(){
+
+        $txt = '';
+
+        if (optional($this->item)->unit != 'PCS') {
+            if ($this->transaction_type == 1) {
+                $txt = '<span class="text-green">'. number_format($this->amount, 3) .' '. $this->unit .'</span>';
+            }else{
+                $txt = '<span class="text-red">'. number_format($this->amount, 3) .' '. $this->unit .'</span>';
+            }
+        }else{
+            if ($this->transaction_type == 1) {
+                $txt = '<span class="text-green">'. number_format($this->amount) .' '. $this->unit .'</span>';
+            }else{
+                $txt = '<span class="text-red">'. number_format($this->amount) .' '. $this->unit .'</span>';
+            }
+        }
+
+        return $txt;
+
+    }
+
+
+
+
 
     /** RELATIONSHIPS **/
     public function item() {

@@ -83,6 +83,23 @@ class PurchaseOrderItem extends Model{
 
 
 
+    public function isReadyForDeliverySpan(){
+
+        $span = '';
+
+        if($this->isReadyForDelivery() == false){
+            $span = '<span class="badge bg-red"><i class="fa fa-fw fa-times"></i></span>';
+        }elseif ($this->isReadyForDelivery() == true) {
+            $span = '<span class="badge bg-green"><i class="fa fa-fw fa-check"></i></span>';
+        }
+
+        return $span;
+
+    }
+
+
+
+
     public function isOnTheWayToClient(){
 
         if($this->purchaseOrder->process_status == 3 && $this->delivery_status == 2){
@@ -97,7 +114,15 @@ class PurchaseOrderItem extends Model{
 
     public function displayAmount(){
 
-        return number_format($this->amount, 3) .' '. $this->unit;
+        $txt = '';
+
+        if ($this->unit != 'PCS') {
+            $txt = number_format($this->amount, 3) .' '. $this->unit;
+        }else{
+            $txt = number_format($this->amount) .' '. $this->unit;
+        }
+
+        return $txt;
 
     }
 
@@ -142,6 +167,8 @@ class PurchaseOrderItem extends Model{
     public function jobOrder() {
         return $this->hasMany('App\Models\JobOrder','po_item_id','po_item_id');
     }
+
+    
 
     
 }
