@@ -155,6 +155,32 @@
     @endif
 
 
+    {{-- Batch About to expire toast --}}
+    @foreach ($global_item_batches_all as $data)
+
+      @if ($data->isAboutToExpire() == true)
+
+        @php  
+          $txt = $data->item->name .' Batch '. $data->batch_code .' is about to expire in '. $data->expiry_date->format('F d,Y');
+        @endphp
+
+        $.toast({
+          text: "{{ $txt }}",
+          showHideTransition: "slide",
+          allowToastClose: true,
+          hideAfter: false,
+          loader: false,
+          position: "top-right",
+          bgColor: "#444",
+          textColor: "white",
+          textAlign: "left",
+        });
+
+      @endif
+
+    @endforeach
+
+
   </script>
     
 @endsection

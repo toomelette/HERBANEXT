@@ -56,6 +56,23 @@ class ItemBatch extends Model{
 
 
 
+    public function isAboutToExpire(){
+
+        if ($this->expiry_date <= Carbon::now()->format('Y-m-d')) {
+            return false;
+        }elseif ($this->expiry_date->subMonths(6) <= Carbon::now()->format('Y-m-d')) {
+            if ($this->amount > 0) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
+
+
     public function displayExpiryStatusSpan(){
 
         $span = '';

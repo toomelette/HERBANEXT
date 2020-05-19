@@ -145,6 +145,22 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
+    public function getAll(){
+
+        $item_batches = $this->cache->remember('item_batches:getAll', 240, function(){
+            return $this->item_batch->select('item_id', 'batch_code', 'amount', 'expiry_date')
+                                    ->with('item')
+                                    ->get();
+        });
+        
+        return $item_batches;
+
+    }
+
+
+
+
+
     public function getBatchIdInc(){
 
         $id = 'B10001';

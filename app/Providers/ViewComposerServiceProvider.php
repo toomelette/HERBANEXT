@@ -67,6 +67,10 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.delivery.create',
                         'dashboard.delivery.edit'], 'App\Core\ViewComposers\PurchaseOrderItemComposer');
         
+
+        // ITEM BATCHES
+        View::composer(['dashboard.item.index'], 'App\Core\ViewComposers\ItemBatchComposer');
+        
     }
 
     

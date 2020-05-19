@@ -43,6 +43,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getPackMats');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByItemId:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
 
@@ -79,6 +80,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getPackMats');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:getByItemId:'. $item->item_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
 
@@ -97,6 +99,7 @@ class ItemSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
 
@@ -116,6 +119,7 @@ class ItemSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
         
