@@ -4,7 +4,7 @@ namespace App\Core\Interfaces;
  
 
 
-interface PersonnelInterface {
+interface SupplierInterface {
 
 	public function fetch($request);
 

@@ -115,6 +115,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/delivery/confirm_returned_post/{po_item_id}', 'DeliveryController@confirmReturnedPost')
 	->name('delivery.confirm_returned_post');
 	Route::resource('delivery', 'DeliveryController');
+
+
+	/** Suppliers **/
+	Route::resource('supplier', 'SupplierController');
 	
 });
 

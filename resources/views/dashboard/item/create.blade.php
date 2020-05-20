@@ -42,8 +42,14 @@
               @csrf    
 
               {!! __form::textbox(
-                '12', 'product_code', 'text', 'Product Code *', 'Product Code', old('product_code'), $errors->has('product_code'), $errors->first('product_code'), ''
+                '6', 'product_code', 'text', 'Product Code *', 'Product Code', old('product_code'), $errors->has('product_code'), $errors->first('product_code'), ''
               ) !!}
+
+              {!! __form::select_dynamic(
+                '6', 'supplier_id', 'Supplier *', old('supplier_id'), $global_suppliers_all, 'supplier_id', 'name', $errors->has('supplier_id'), $errors->first('supplier_id'), 'select2', ''
+              ) !!}
+
+              <div class="col-md-12"></div>
 
               {!! __form::select_dynamic(
                 '6', 'item_category_id', 'Category *', old('item_category_id'), $global_item_categories_all, 'item_category_id', 'name', $errors->has('item_category_id'), $errors->first('item_category_id'), 'select2', ''

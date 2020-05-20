@@ -43,6 +43,10 @@ class ItemRepository extends BaseRepository implements ItemInterface {
             if(isset($request->cat)){
                 $item->whereItemCategoryId($request->cat);
             }
+            
+            if(isset($request->s)){
+                $item->whereSupplierId($request->s);
+            }
 
             return $this->populate($item, $entries);
 
@@ -62,6 +66,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         $item->slug = $this->str->random(16);
         $item->item_id = $this->getItemIdInc();
         $item->product_code = $request->product_code;
+        $item->supplier_id = $request->supplier_id;
         $item->item_category_id = $request->item_category_id;
         $item->item_type_id = $request->item_type_id;
         $item->name = $request->name;
@@ -93,6 +98,7 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
         $item = $this->findBySlug($slug);
         $item->product_code = $request->product_code;
+        $item->supplier_id = $request->supplier_id;
         $item->item_category_id = $request->item_category_id;
         $item->item_type_id = $request->item_type_id;
         $item->name = $request->name;

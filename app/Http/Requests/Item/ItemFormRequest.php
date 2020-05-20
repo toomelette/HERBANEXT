@@ -23,6 +23,7 @@ class ItemFormRequest extends FormRequest{
         $rules = [
             
             'product_code'=>'required|string|max:45',
+            'supplier_id'=>'required|string|max:11',
             'item_category_id'=>'required|string|max:11',
             'item_type_id'=>'required|string|max:11',
             'name'=>'required|string|max:255',

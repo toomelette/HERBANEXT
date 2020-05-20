@@ -132,25 +132,6 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
 
 
-    // public function findByPersonnelId($personnel_id){
-
-    //     $personnel = $this->cache->remember('personnels:findByPersonnelId:' . $personnel_id, 240, function() use ($personnel_id){
-    //         return $this->personnel->where('personnel_id', $personnel_id)->first();
-    //     });
-        
-    //     if(empty($personnel)){
-    //         abort(404);
-    //     }
-        
-    //     return $personnel;
-
-    // }
-
-
-
-
-
-
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

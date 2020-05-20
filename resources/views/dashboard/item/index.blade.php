@@ -31,6 +31,10 @@
           '4', 'cat', 'Categories', old('cat'), $global_item_categories_all, 'item_category_id', 'name', 'submit_item_filter', 'select2', 'style="width:100%;"'
         ) !!}
 
+        {!! __form::select_dynamic_for_filter(
+          '4', 's', 'Supplier', old('s'), $global_suppliers_all, 'supplier_id', 'name', 'submit_item_filter', 'select2', 'style="width:100%;"'
+        ) !!}
+
       {!! __html::filter_close('submit_item_filter') !!}
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
@@ -171,7 +175,7 @@
           hideAfter: false,
           loader: false,
           position: "top-right",
-          bgColor: "#444",
+          bgColor: "#800000",
           textColor: "white",
           textAlign: "left",
         });

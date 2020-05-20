@@ -26,6 +26,7 @@ class Item extends Model{
         'slug' => '',
         'item_id' => '',
         'product_code' => '',
+        'supplier_id' => '',
         'item_category_id' => '',
         'item_type_id' => '',
         'unit_type_id' => '',
@@ -137,6 +138,11 @@ class Item extends Model{
 
     public function itemPackMat() {
         return $this->hasMany('App\Models\ItemPackMat','item_id','item_id');
+    }
+
+
+    public function supplier() {
+        return $this->belongsTo('App\Models\Supplier','supplier_id','supplier_id');
     }
 
 
