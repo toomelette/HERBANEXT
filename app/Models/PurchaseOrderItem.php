@@ -50,7 +50,7 @@ class PurchaseOrderItem extends Model{
 
     public function isReadyForDelivery(){
 
-        if($this->purchaseOrder->process_status == 3 && $this->delivery_status == 0){
+        if($this->delivery_status == 0){
 
             if (!$this->jobOrder->isEmpty()) {
 
