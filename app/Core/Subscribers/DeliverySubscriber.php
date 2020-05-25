@@ -29,6 +29,7 @@ class DeliverySubscriber extends BaseSubscriber{
         $events->listen('delivery.confirm_delivered', 'App\Core\Subscribers\DeliverySubscriber@confirmDelivered');
         $events->listen('delivery.confirm_returned', 'App\Core\Subscribers\DeliverySubscriber@confirmReturned');
         $events->listen('delivery.flush_po_item', 'App\Core\Subscribers\DeliverySubscriber@onFlushPOItem');
+        $events->listen('delivery.flush_jo', 'App\Core\Subscribers\DeliverySubscriber@onFlushJO');
 
     }
 
@@ -39,6 +40,7 @@ class DeliverySubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
 
         $this->session->flash('DELIVERY_CREATE_SUCCESS', 'The Delivery has been successfully created!');
 
@@ -52,6 +54,7 @@ class DeliverySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:findBySlug:'. $delivery->slug .'');
 
         $this->session->flash('DELIVERY_UPDATE_SUCCESS', 'The Delivery has been successfully updated!');
@@ -65,6 +68,7 @@ class DeliverySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:findBySlug:'. $delivery->slug .'');
 
         $this->session->flash('DELIVERY_DELETE_SUCCESS', 'The Delivery has been successfully deleted!');
@@ -78,6 +82,7 @@ class DeliverySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $po_item->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findByPOItemId:'. $po_item->po_item_id .'');
 
@@ -91,6 +96,7 @@ class DeliverySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $po_item->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findByPOItemId:'. $po_item->po_item_id .'');
 
@@ -103,6 +109,14 @@ class DeliverySubscriber extends BaseSubscriber{
     public function onFlushPOItem($po_item_id){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findByPOItemId:'. $po_item_id .'');
+
+    }
+
+
+
+    public function onFlushJO($jo_id){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo_id .'');
 
     }
 

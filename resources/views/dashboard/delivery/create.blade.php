@@ -34,7 +34,7 @@
 
             <div class="col-md-12"></div>
 
-            {{-- Personnels --}}
+            {{-- PO Items --}}
             <div class="col-md-12 no-padding">
               <div class="box box-solid">
                   
@@ -49,19 +49,69 @@
                   <select name="po_items[]" id="po_items" class="form-control" multiple="multiple">
                     
                     @foreach($global_po_items_all as $data)
+
                       @if(old('po_items'))
 
-                        <option value="{{ $data->po_item_id }}" 
-                                style="padding:8px;" 
-                                {!! in_array($data->po_item_id, old('po_items')) ? 'selected' : '' !!}>
-                          {{ $data->po_no .' - '. optional($data->item)->name }}
-                        </option>
+                        @if($data->isReadyForDelivery() == true)
+                          <option value="{{ $data->po_item_id }}" 
+                                  style="padding:8px;" 
+                                  {!! in_array($data->po_item_id, old('po_items')) ? 'selected' : '' !!}>
+                            {{ 'PO No.: '.$data->po_no .' | Product Name: '. optional($data->item)->name }}
+                          </option>
+                        @endif
 
                       @else
 
                         @if($data->isReadyForDelivery() == true)
                           <option value="{{ $data->po_item_id }}" style="padding:8px;" style="padding:8px;">
-                            {{ $data->po_no .' - '. optional($data->item)->name }}<br>
+                          {{ 'PO No.: '.$data->po_no .' | Product Name: '. optional($data->item)->name }}
+                          </option>
+                        @endif
+
+                      @endif
+
+                    @endforeach
+
+                  </select>
+                </div>
+
+              </div>            
+            </div>
+
+
+
+            <div class="col-md-12"></div>
+
+            {{-- Job Orders --}}
+            <div class="col-md-12 no-padding">
+              <div class="box box-solid">
+                  
+                <div class="box-header with-border">
+                  <h2 class="box-title">Job Orders</h2>
+                  <div class="pull-right">
+                    <button class="btn btn-danger btn-sm" id="deselect_jo">Deselect All</button>
+                  </div> 
+                </div>
+
+                <div class="box-body">
+                  <select name="jo[]" id="jo" class="form-control" multiple="multiple">
+                    
+                    @foreach($global_job_orders_all as $data)
+                      @if(old('jo'))
+
+                        @if($data->delivery_status == 1)
+                          <option value="{{ $data->jo_id }}" 
+                                  style="padding:8px;" 
+                                  {!! in_array($data->jo_id, old('jo')) ? 'selected' : '' !!}>
+                            {{ 'Batch No.: '.$data->lot_no .' | Product Name: '. optional($data->purchaseOrderItem->item)->name }}
+                          </option>
+                        @endif
+
+                      @else
+
+                        @if($data->delivery_status == 1)
+                          <option value="{{ $data->jo_id }}" style="padding:8px;" style="padding:8px;">
+                          {{ 'Batch No.: '.$data->lot_no .' | Product Name: '. optional($data->purchaseOrderItem->item)->name }}
                           </option>
                         @endif
 
@@ -102,7 +152,7 @@
     @endif
 
 
-    {{-- Multi Select --}}
+    {{-- Multi Select PO Item --}}
 
     $('#deselect_po_items').click(function(){
       $('#po_items').multiSelect('deselect_all');
@@ -110,6 +160,58 @@
     });
 
     $('#po_items').multiSelect({
+
+      selectableHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",
+      selectionHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",
+
+      afterInit: function(ms){
+
+        var that = 
+            this,
+            $selectableSearch = that.$selectableUl.prev(),
+            $selectionSearch = that.$selectionUl.prev(),
+            selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+            selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+        .on('keydown', function(e){
+          if (e.which === 40){
+            that.$selectableUl.focus();
+            return false;
+          }
+        });
+
+        that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+        .on('keydown', function(e){
+          if (e.which == 40){
+            that.$selectionUl.focus();
+            return false;
+          }
+        });
+
+      },
+
+      afterSelect: function(){
+        this.qs1.cache();
+        this.qs2.cache();
+      },
+
+      afterDeselect: function(){
+        this.qs1.cache();
+        this.qs2.cache();
+      }
+
+    });
+
+
+    {{-- Multi Select Job Orders --}}
+
+    $('#deselect_jo').click(function(){
+      $('#jo').multiSelect('deselect_all');
+      return false;
+    });
+
+    $('#jo').multiSelect({
 
       selectableHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",
       selectionHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Search ..'>",

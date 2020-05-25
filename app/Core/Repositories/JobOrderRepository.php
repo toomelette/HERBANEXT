@@ -77,10 +77,10 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
-    public function updateIsReady($jo_id, $bool){
+    public function updateDeliveryStatus($jo_id, $int){
 
         $job_order = $this->findByJoId($jo_id);
-        $job_order->is_ready = $bool;
+        $job_order->delivery_status = $int;
         $job_order->updated_at = $this->carbon->now();
         $job_order->ip_updated = request()->ip();
         $job_order->user_updated = $this->auth->user()->user_id;
@@ -115,7 +115,8 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
     public function getAll(){
 
         $job_order = $this->cache->remember('job_orders:getAll', 240, function(){
-            return $this->job_order->select('jo_id', 'jo_no', 'item_name', 'delivery_status')
+            return $this->job_order->select('po_item_id', 'jo_id', 'lot_no', 'delivery_status')
+                                   ->with('purchaseOrderItem')
                                    ->orderBy('updated_at', 'asc')
                                    ->get();
         });

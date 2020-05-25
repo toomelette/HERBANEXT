@@ -52,6 +52,20 @@ class PurchaseOrder extends Model{
 
 
 
+    // Type 
+
+    //     1 = For Process
+    //     2 = Buffer
+
+    // Process Status
+
+    //     1 = Pending
+    //     2 = Manufacturing
+    //     3 = Subject For Delivery
+    //     4 = Completed
+
+
+
     public function displayProcessStatusSpan(){
 
         $string = '';
@@ -98,7 +112,9 @@ class PurchaseOrder extends Model{
 
     public function isDeliveryCompleted(){
 
-        if (!$this->purchaseOrderItem->isEmpty()) {
+        $bool = false;
+
+        if (!$this->purchaseOrderItem->isEmpty() && $this->jobOrder->isEmpty()) {
 
             $count_total = 0;
             $count_completed = 0;
@@ -111,14 +127,28 @@ class PurchaseOrder extends Model{
             }
 
             if ($count_total == $count_completed) {
-                return true;
+                $bool = true;
             }
 
-            return false;
-            
+        }elseif(!$this->jobOrder->isEmpty()){
+
+            $count_total = 0;
+            $count_completed = 0;
+
+            foreach($this->jobOrder as $jo) {
+                $count_total = $count_total + 1;
+                if ($jo->delivery_status == 4) {
+                    $count_completed = $count_completed + 1;     
+                }
+            }
+
+            if ($count_total == $count_completed) {
+                $bool = true;
+            }
+
         }
 
-        return false;
+        return $bool;
 
     }
 

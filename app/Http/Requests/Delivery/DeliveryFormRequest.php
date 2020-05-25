@@ -22,6 +22,7 @@ class DeliveryFormRequest extends FormRequest{
             'description' => 'nullable|string|max:255',
             'date'=>'required|date_format:"m/d/Y"',
             'po_items' => 'nullable|array',
+            'jo' => 'nullable|array',
 
         ];
 

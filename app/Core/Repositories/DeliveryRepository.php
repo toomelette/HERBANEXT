@@ -86,6 +86,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
         $delivery->user_updated = $this->auth->user()->user_id;
         $delivery->save();
         $delivery->deliveryItem()->delete();
+        $delivery->deliveryJO()->delete();
         
         return $delivery;
 
@@ -99,6 +100,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
         
         $delivery->delete();
         $delivery->deliveryItem()->delete();
+        $delivery->deliveryJO()->delete();
         return $delivery;
 
     }

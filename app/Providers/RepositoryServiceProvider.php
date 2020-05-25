@@ -71,6 +71,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\DeliveryItemInterface', 'App\Core\Repositories\DeliveryItemRepository');
 
+		$this->app->bind('App\Core\Interfaces\DeliveryJOInterface', 'App\Core\Repositories\DeliveryJORepository');
+
 		$this->app->bind('App\Core\Interfaces\SupplierInterface', 'App\Core\Repositories\SupplierRepository');
 		
 		

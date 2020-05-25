@@ -60,7 +60,8 @@ class FinishingOrderService extends BaseService{
         }
         
         $fo = $this->fo_repo->updateFillUp($request, $slug);
-        $jo = $this->jo_repo->updateIsReady($fo->jo_id, 1);
+        $jo = $this->jo_repo->updateDeliveryStatus($fo->jo_id, 1);
+        $po = $this->po_repo->updateProcessStatus($jo->purchaseOrder->slug, 3);
         $this->event->fire('finishing_order.fill_up_post', $fo);
         return redirect()->route('dashboard.finishing_order.index');
 

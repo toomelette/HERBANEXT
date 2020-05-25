@@ -77,6 +77,12 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.item.edit',
                         'dashboard.item.index'], 'App\Core\ViewComposers\SupplierComposer');
         
+
+        // JOB ORDER
+        View::composer(['dashboard.delivery.create',
+                        'dashboard.delivery.edit'], 'App\Core\ViewComposers\JobOrderComposer');
+        
+        
     }
 
     

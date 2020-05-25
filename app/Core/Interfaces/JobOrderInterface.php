@@ -10,7 +10,7 @@ interface JobOrderInterface {
 
 	public function updateGenerateFillPost($data);
 
-	public function updateIsReady($jo_id, $bool);
+	public function updateDeliveryStatus($jo_id, $int);
 
 	public function getAll();
 	

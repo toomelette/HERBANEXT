@@ -79,5 +79,12 @@ class Delivery extends Model{
     }
 
 
+
+    /** RELATIONSHIPS **/
+    public function deliveryJO() {
+        return $this->hasMany('App\Models\DeliveryJO','delivery_id','delivery_id');
+    }
+
+
     
 }

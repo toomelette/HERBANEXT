@@ -33,7 +33,7 @@ class JobOrder extends Model{
         'theo_yield' => '',
         'amount' => 0.00,
         'unit' => '',
-        'is_ready' => 0,
+        'delivery_status' => '0',
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -43,6 +43,16 @@ class JobOrder extends Model{
 
 
     ];
+
+
+
+    // Delivery Status
+
+    //     0 = Not Ready 
+    //     1 = Ready for Delivery 
+    //     2 = On the way to client 
+    //     3 = Returned 
+    //     4 = Completed
 
 
 

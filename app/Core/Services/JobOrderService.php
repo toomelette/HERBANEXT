@@ -56,8 +56,6 @@ class JobOrderService extends BaseService{
 
         $po_item = $this->po_item_repo->findbySlug($slug);
         $po = $this->po_repo->updateProcessStatus($po_item->purchaseOrder->slug, 2);
-        
-        $this->po_item_repo->generate($po_item);
 
         for ($i=0; $i < $request->no_of_batch; $i++) { 
             $this->job_order_repo->store($po_item);

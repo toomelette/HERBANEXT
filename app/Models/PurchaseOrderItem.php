@@ -46,11 +46,19 @@ class PurchaseOrderItem extends Model{
     ];
 
 
+    // Delivery Status
+
+    //     0 = Not Ready 
+    //     1 = Ready for Delivery 
+    //     2 = On the way to client 
+    //     3 = Returned 
+    //     4 = Completed
+
 
 
     public function isReadyForDelivery(){
 
-        if($this->delivery_status == 0){
+        if($this->delivery_status == 0 && $this->is_generated == 0){
 
             if (!$this->jobOrder->isEmpty()) {
 
@@ -59,7 +67,7 @@ class PurchaseOrderItem extends Model{
 
                 foreach($this->jobOrder as $jo) {
                     $count_total = $count_total + 1;
-                    if ($jo->is_ready == 1) {
+                    if ($jo->delivery_status >= 1) {
                         $count_rfd = $count_rfd + 1;     
                     }
                 }

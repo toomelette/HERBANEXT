@@ -88,23 +88,6 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
 
 
-
-    public function generate($po_item){
-
-        $po_item->purchaseOrder->process_status = 2;
-        $po_item->purchaseOrder->save();
-
-        $po_item->is_generated = true;
-        $po_item->save();
- 
-        return $po_item;
-
-    }
-
-
-
-
-
     public function updateDeliveryStatus($po_item_id, $int){
 
         $po_item = $this->findByPOItemId($po_item_id);
@@ -173,7 +156,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
     public function populate($model, $entries){
 
-        return $model->select('po_id', 'po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
+        return $model->select('po_id', 'po_item_id', 'po_no', 'item_id', 'amount', 'unit', 'updated_at', 'is_generated', 'slug')
                      ->whereHas('purchaseOrder', function($query) {
                         $query->where('type', 1)
                               ->orWhereIn('type', [1,2]);
@@ -192,7 +175,7 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
     public function getAll(){
 
         $po_items = $this->cache->remember('purchase_order_items:getAll', 240, function(){
-            return $this->po_item->select('po_id', 'po_item_id', 'po_no', 'item_id', 'delivery_status')
+            return $this->po_item->select('po_id', 'po_item_id', 'po_no', 'item_id', 'delivery_status', 'is_generated')
                                  ->with('purchaseOrder', 'item')
                                  ->orderBy('updated_at', 'asc')
                                  ->get();
