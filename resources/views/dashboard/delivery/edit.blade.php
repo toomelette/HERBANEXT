@@ -12,6 +12,27 @@
     $list_of_selected_jo = [];
   }
 
+
+
+  function checkboxVal($old_value, $bool_string, $value, $bool){
+
+    $txt = '';
+
+    if (isset($old_value)) {
+      if ($old_value == $bool_string) {
+        $txt = 'checked';
+      }
+    }else{
+      if ($value == $bool) {
+        $txt = 'checked';
+      }
+    }
+
+    return $txt;
+
+  }
+
+
 ?>
 
 @extends('layouts.admin-master')
@@ -39,6 +60,22 @@
             @csrf    
 
             <input name="_method" value="PUT" type="hidden">
+
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>Type *</span><br>
+                <label>
+                  <input type="checkbox" class="minimal is_organic" name="is_organic" value="true" {{ checkboxVal(old('is_organic'), 'true', $delivery->is_organic, true) }}>
+                  Organic
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" class="minimal is_organic" name="is_organic" value="false" {{ checkboxVal(old('is_organic'), 'false', $delivery->is_organic, false) }}>
+                  Non Organic
+                </label><br>
+                <small class="text-danger">{{ $errors->first('is_organic') }}</small>
+              </div>
+            </div>
 
             {!! __form::textbox(
               '3', 'delivery_code', 'text', 'Delivery Code *', 'Delivery Code', old('delivery_code') ? old('delivery_code') : $delivery->delivery_code, $errors->has('delivery_code'), $errors->first('delivery_code'), ''
@@ -203,6 +240,12 @@
 @section('scripts')
 
   <script type="text/javascript">
+
+
+    $('.is_organic').on('ifChecked', function(event){
+      $('.is_organic').not(this).iCheck('uncheck');
+    });
+
 
     {{-- Multi Select PO Items--}}
 

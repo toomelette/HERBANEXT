@@ -57,6 +57,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
         $delivery = new Delivery;
         $delivery->delivery_id = $this->getDeliveryIdInc();
         $delivery->slug = $this->str->random(16);
+        $delivery->is_organic = $this->__dataType->string_to_boolean($request->is_organic);
         $delivery->delivery_code = $request->delivery_code;
         $delivery->description = $request->description;
         $delivery->date = $this->__dataType::date_parse($request->date);
@@ -77,7 +78,8 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
 
     public function update($request, $delivery){
-
+        
+        $delivery->is_organic = $this->__dataType->string_to_boolean($request->is_organic);
         $delivery->delivery_code = $request->delivery_code;
         $delivery->description = $request->description;
         $delivery->date = $this->__dataType::date_parse($request->date);

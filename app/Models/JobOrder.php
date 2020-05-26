@@ -56,6 +56,24 @@ class JobOrder extends Model{
 
 
 
+    public function displayDeliveryConfirmStatus(){
+
+        $string = '';
+
+        if ($this->delivery_status == 3) {
+            $string = '<span class="badge bg-red">Returned</span>';
+        }elseif($this->delivery_status == 4){
+            $string = '<span class="badge bg-green">Delivered</span>';
+        }else{
+            $string = '<span class="badge bg-orange">Pending .. </span>';
+        }
+
+        return $string;
+
+    }
+
+
+
     /** RELATIONSHIPS **/
     public function item() {
         return $this->belongsTo('App\Models\Item','item_id','item_id');

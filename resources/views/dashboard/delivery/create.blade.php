@@ -20,6 +20,28 @@
                   
             @csrf    
 
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>Type *</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal is_organic" 
+                         name="is_organic" 
+                         value="true" {{ old('is_organic') == "true" ? 'checked' : '' }}>
+                  Organic
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal is_organic" 
+                         name="is_organic" 
+                         value="false" {{ old('is_organic') == "false" ? 'checked' : '' }}>
+                  Non Organic
+                </label><br>
+                <small class="text-danger">{{ $errors->first('is_organic') }}</small>
+              </div>
+            </div>
+
             {!! __form::textbox(
               '3', 'delivery_code', 'text', 'Delivery Code *', 'Delivery Code', old('delivery_code'), $errors->has('delivery_code'), $errors->first('delivery_code'), ''
             ) !!}
@@ -150,6 +172,11 @@
     @if(Session::has('DELIVERY_CREATE_SUCCESS'))
       {!! __js::toast(Session::get('DELIVERY_CREATE_SUCCESS')) !!}
     @endif
+
+
+    $('.is_organic').on('ifChecked', function(event){
+      $('.is_organic').not(this).iCheck('uncheck');
+    });
 
 
     {{-- Multi Select PO Item --}}

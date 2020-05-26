@@ -18,6 +18,7 @@ class DeliveryFormRequest extends FormRequest{
 
         return [
 
+            'is_organic' => 'required|string|max:5',
             'delivery_code' => 'required|string|max:45',
             'description' => 'nullable|string|max:255',
             'date'=>'required|date_format:"m/d/Y"',

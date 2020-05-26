@@ -31,6 +31,7 @@
 
       <div class="row">
         <div class="col-xs-12 table-responsive">
+          <h3>Purchase Order Items</h3>
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -62,7 +63,7 @@
                   <td>{{ optional($data->purchaseOrderItem->item)->product_code }}</td>
                   <td>{{ optional($data->purchaseOrderItem->item)->name }}</td>
                   <td>
-                    {{ optional($data->purchaseOrderItem)->amount .' '. optional($data->purchaseOrderItem)->unit }}
+                    {{ number_format(optional($data->purchaseOrderItem)->amount, 3) .' '. optional($data->purchaseOrderItem)->unit }}
                   </td>
                 </tr>
               @endforeach
@@ -71,6 +72,53 @@
         </div>
 
       </div>
+
+
+
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <h3>Job Orders</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>PO No</th>
+                <th>Bill to</th>
+                <th>Ship to</th>
+                <th>Batch No</th>
+                <th>Product Name</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($delivery->deliveryJO as $data)
+                <tr>
+                  <td>{{ optional($data->jobOrder)->po_no }}</td>
+
+                  <td id="mid-vert">
+                    <b>{{ optional($data->jobOrder)->purchaseOrder->bill_to_name }}</b><br>
+                    {{ optional($data->jobOrder)->purchaseOrder->bill_to_company }}<br>
+                    {{ optional($data->jobOrder)->purchaseOrder->bill_to_address }}<br>
+                  </td>
+
+                  <td id="mid-vert">
+                    <b>{{ optional($data->jobOrder)->purchaseOrder->ship_to_name }}</b><br>
+                    {{ optional($data->jobOrder)->purchaseOrder->ship_to_company }}<br>
+                    {{ optional($data->jobOrder)->purchaseOrder->ship_to_address }}<br>
+                  </td>
+
+                  <td>{{ optional($data->jobOrder)->lot_no }}</td>
+                  <td>{{ optional($data->jobOrder->item)->name }}</td>
+                  <td>
+                    {{ number_format(optional($data->jobOrder)->amount, 3) .' '. optional($data->jobOrder)->unit }}
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
 
       <div class="row no-print">
         <div class="col-xs-12">

@@ -151,20 +151,40 @@ class DeliveryService extends BaseService{
 
 
 
-    public function confirmDeliveredPost($po_item_id){
+    public function confirmDeliveredPost($type, $id){
 
-        $po_item =  $this->po_item_repo->updateDeliveryStatus($po_item_id, 4);
-        $this->event->fire('delivery.confirm_delivered', $po_item);
+        if (isset($type)) {
+                
+            if ($type == 'POI') {
+                $po_item =  $this->po_item_repo->updateDeliveryStatus($id, 4);
+                $this->event->fire('delivery.confirm_delivered_po_item', $po_item);
+            }elseif($type == 'JO'){
+                $jo = $this->jo_repo->updateDeliveryStatus($id, 4);
+                $this->event->fire('delivery.confirm_delivered_jo', $jo);
+            }
+
+        }
+
         return redirect()->back();
     
     }
 
 
 
-    public function confirmReturnedPost($po_item_id){
+    public function confirmReturnedPost($type, $id){
 
-        $po_item = $this->po_item_repo->updateDeliveryStatus($po_item_id, 3);
-        $this->event->fire('delivery.confirm_returned', $po_item);
+        if (isset($type)) {
+
+            if ($type == 'POI') {
+                $po_item = $this->po_item_repo->updateDeliveryStatus($id, 3);
+                $this->event->fire('delivery.confirm_returned_po_item', $po_item); 
+            }elseif($type == 'JO'){
+                $jo = $this->jo_repo->updateDeliveryStatus($id, 3);
+                $this->event->fire('delivery.confirm_delivered_jo', $jo);
+            }
+
+        }
+
         return redirect()->back();
 
     }
