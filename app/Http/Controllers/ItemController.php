@@ -6,7 +6,9 @@ use App\Core\Services\ItemService;
 use App\Http\Requests\Item\ItemFormRequest;
 use App\Http\Requests\Item\ItemFilterRequest;
 use App\Http\Requests\Item\ItemCheckInFormRequest;
+use App\Http\Requests\Item\ItemCheckInExistingBatchFormRequest;
 use App\Http\Requests\Item\ItemCheckOutFormRequest;
+use App\Http\Requests\Item\ItemCheckOutByBatchFormRequest;
 use App\Http\Requests\Item\ItemLogsFilterRequest;
 use App\Http\Requests\Item\ItemBatchByItemFilterRequest;
 use App\Http\Requests\Item\ItemLogsByItemFilterRequest;
@@ -88,9 +90,27 @@ class ItemController extends Controller{
     
 
 
+    public function checkInExistingBatch($slug){
+        
+        //return $this->item->checkInExistingBatch($slug);
+
+    }
+
+    
+
+
     public function checkInPost(ItemCheckInFormRequest $request, $slug){
 
         return $this->item->checkInPost($request, $slug);
+
+    }
+
+    
+
+
+    public function checkInExistingBatchPost(ItemCheckInExistingBatchFormRequest $request, $slug){
+
+        //return $this->item->checkInExistingBatchPost($request, $slug);
 
     }
 
@@ -106,9 +126,27 @@ class ItemController extends Controller{
     
 
 
+    public function checkOutByBatch($slug){
+        
+        // return $this->item->checkOutByBatch($slug);
+
+    }
+
+    
+
+
     public function checkOutPost(ItemCheckOutFormRequest $request, $slug){
 
         return $this->item->checkOutPost($request, $slug);
+
+    }
+
+    
+
+
+    public function checkOutByBatchPost(ItemCheckOutByBatchFormRequest $request, $slug){
+
+        // return $this->item->checkOutByBatchPost($request, $slug);
 
     }
 

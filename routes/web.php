@@ -45,8 +45,16 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** ITEMS **/	
 	Route::get('/item/check_in/{slug}', 'ItemController@checkIn')->name('item.check_in');
 	Route::post('/item/check_in/{slug}', 'ItemController@checkInPost')->name('item.check_in_post');
+	Route::get('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatch')
+	->name('item.check_in_existing_batch');
+	Route::post('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatchPost')
+	->name('item.check_in_existing_batch_post');
+
 	Route::get('/item/check_out/{slug}', 'ItemController@checkOut')->name('item.check_out');
 	Route::post('/item/check_out/{slug}', 'ItemController@checkOutPost')->name('item.check_out_post');
+	Route::get('/item/check_out_by_batch/{slug}', 'ItemController@checkOutByBatch')->name('item.check_out_by_batch');
+	Route::post('/item/check_out_by_batch/{slug}', 'ItemController@checkOutByBatchPost')->name('item.check_out_by_batch_post');
+
 	Route::get('/item/{slug}/batches', 'ItemController@fetchBatchByItem')->name('item.fetch_batch_by_item');
 	Route::get('/item/{slug}/logs', 'ItemController@fetchLogsByItem')->name('item.fetch_logs_by_item');
 	Route::get('/item/logs', 'ItemController@logs')->name('item.logs');
