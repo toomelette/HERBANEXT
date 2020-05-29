@@ -90,15 +90,6 @@ class ItemController extends Controller{
     
 
 
-    public function checkInExistingBatch($slug){
-        
-        //return $this->item->checkInExistingBatch($slug);
-
-    }
-
-    
-
-
     public function checkInPost(ItemCheckInFormRequest $request, $slug){
 
         return $this->item->checkInPost($request, $slug);
@@ -108,9 +99,18 @@ class ItemController extends Controller{
     
 
 
+    public function checkInExistingBatch($slug){
+        
+        return $this->item->checkInExistingBatch($slug);
+
+    }
+
+    
+
+
     public function checkInExistingBatchPost(ItemCheckInExistingBatchFormRequest $request, $slug){
 
-        //return $this->item->checkInExistingBatchPost($request, $slug);
+        return $this->item->checkInExistingBatchPost($request, $slug);
 
     }
 
@@ -126,15 +126,6 @@ class ItemController extends Controller{
     
 
 
-    public function checkOutByBatch($slug){
-        
-        // return $this->item->checkOutByBatch($slug);
-
-    }
-
-    
-
-
     public function checkOutPost(ItemCheckOutFormRequest $request, $slug){
 
         return $this->item->checkOutPost($request, $slug);
@@ -144,9 +135,18 @@ class ItemController extends Controller{
     
 
 
+    public function checkOutByBatch($slug){
+        
+        return $this->item->checkOutByBatch($slug);
+
+    }
+
+    
+
+
     public function checkOutByBatchPost(ItemCheckOutByBatchFormRequest $request, $slug){
 
-        // return $this->item->checkOutByBatchPost($request, $slug);
+        return $this->item->checkOutByBatchPost($request, $slug);
 
     }
 

@@ -10,6 +10,14 @@ interface ItemBatchInterface {
 
 	public function store($request, $item);
 
-	public function updateCheckOut($batch_code, $amount);
+	public function updateCheckIn($batch_code, $amount);
+
+	public function updateCheckOut($batch_id, $amount);
+
+	public function updateCheckOutByBatchCode($batch_code, $amount);
+
+	public function getAll();
+
+	public function getByItemId($item_id);
 		
 }

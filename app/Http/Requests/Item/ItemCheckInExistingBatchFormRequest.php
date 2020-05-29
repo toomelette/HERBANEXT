@@ -22,7 +22,9 @@ class ItemCheckInExistingBatchFormRequest extends FormRequest{
 
         return [
 
-            
+            'batch_code'=>'required|string|max:45',
+            'amount'=>'required|string|max:21',
+            'unit'=>'required|string|max:11',
             
         ];
 

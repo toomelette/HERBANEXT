@@ -65,15 +65,25 @@
               <td id="mid-vert">{!! $data->displayPendingCheckout() !!}</td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  @if(in_array('dashboard.item.check_in', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_in', $data->slug) }}">
-                       Check-In
+                  @if(in_array('dashboard.item.check_in', $global_user_submenus) || in_array('dashboard.item.check_in_existing_batch', $global_user_submenus))
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="check_in_button" 
+                       data-action="check_in" 
+                       data-ci="{{ route('dashboard.item.check_in', $data->slug) }}"
+                       data-cieb="{{ route('dashboard.item.check_in_existing_batch', $data->slug) }}">
+                      Check in
                     </a>
                   @endif
 
-                  @if(in_array('dashboard.item.check_out', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="checkin_button" href="{{ route('dashboard.item.check_out', $data->slug) }}">
-                       Check-Out
+                  @if(in_array('dashboard.item.check_out', $global_user_submenus) || in_array('dashboard.item.check_out_by_batch', $global_user_submenus))
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="check_out_button" 
+                       data-action="check_out" 
+                       data-co="{{ route('dashboard.item.check_out', $data->slug) }}"
+                       data-cobb="{{ route('dashboard.item.check_out_by_batch', $data->slug) }}">
+                      Check out
                     </a>
                   @endif
 
@@ -133,6 +143,56 @@
 
   {!! __html::modal_delete('item_delete') !!} 
 
+  {{-- CHECK IN --}}
+  <div class="modal fade" id="check_in_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"><i class="fa fa-refresh "></i> Options</h4>
+        </div>
+        <div class="modal-body" id="check_in_modal_body">
+          <a id="check_in_redirect" type="button" class="btn btn-success btn-block">
+            Check in New Batch
+          </a>
+          <a id="check_in_redirect_eb" type="button" class="btn btn-success btn-block">
+            Check in to Existing Batch
+          </a>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- CHECK OUT --}}
+  <div class="modal fade" id="check_out_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"><i class="fa fa-refresh "></i> Options</h4>
+        </div>
+        <div class="modal-body" id="check_out_modal_body">
+          <a id="check_out_redirect" type="button" class="btn btn-success btn-block">
+            Default Check out (First in - First Out)
+          </a>
+          <a id="check_out_redirect_bb" type="button" class="btn btn-success btn-block">
+            Check out specific batch
+          </a>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection 
 
 
@@ -142,6 +202,25 @@
 @section('scripts')
 
   <script type="text/javascript">
+    
+
+    $(document).on("click", "#check_in_button", function () {
+      if($(this).data("action") == "check_in"){
+        $("#check_in_modal").modal("show");
+        $("#check_in_modal_body #check_in_redirect").attr("href", $(this).data("ci"));
+        $("#check_in_modal_body #check_in_redirect_eb").attr("href", $(this).data("cieb"));
+      }
+    });
+    
+
+    $(document).on("click", "#check_out_button", function () {
+      if($(this).data("action") == "check_out"){
+        $("#check_out_modal").modal("show");
+        $("#check_out_modal_body #check_out_redirect").attr("href", $(this).data("co"));
+        $("#check_out_modal_body #check_out_redirect_bb").attr("href", $(this).data("cobb"));
+      }
+    });
+
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('item_delete') !!}
@@ -172,9 +251,9 @@
           text: "{{ $txt }}",
           showHideTransition: "slide",
           allowToastClose: true,
-          hideAfter: false,
+          hideAfter: 3000,
           loader: false,
-          position: "top-right",
+          position: "bottom-right",
           bgColor: "#800000",
           textColor: "white",
           textAlign: "left",

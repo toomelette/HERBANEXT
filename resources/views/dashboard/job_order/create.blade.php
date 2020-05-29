@@ -114,14 +114,13 @@
 
 @section('modals')
 
-    {{-- DV CREATE SUCCESS --}}
 	@if(Session::has('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'))
 
 		{!! __html::modal_print(
 	      'jo_generate_fill_post', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS'), route('dashboard.job_order.show', Session::get('JOB_ORDER_GENERATE_FILL_POST_SUCCESS_SLUG'))
 	    ) !!}
 
-	 @endif
+	@endif
 
 	<div class="modal fade" id="generate" data-backdrop="static">
 		<div class="modal-dialog">

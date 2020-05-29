@@ -83,6 +83,24 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
+    public function updateCheckIn($batch_code, $amount){
+
+        $item_batch = $this->findByBatchCode($batch_code);
+        $item_batch->amount = $item_batch->amount + $amount;
+        $item_batch->updated_at = $this->carbon->now();
+        $item_batch->ip_updated = request()->ip();
+        $item_batch->user_updated = $this->auth->user()->user_id;
+        $item_batch->save();
+
+        return $item_batch;
+
+    }
+
+
+
+
+
+
     public function updateCheckOut($batch_id, $amount){
 
         $item_batch = $this->findByBatchId($batch_id);
@@ -100,9 +118,43 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
+
+    public function updateCheckOutByBatchCode($batch_code, $amount){
+
+        $item_batch = $this->findByBatchCode($batch_code);
+        $item_batch->amount = $item_batch->amount - $amount;
+        $item_batch->updated_at = $this->carbon->now();
+        $item_batch->ip_updated = request()->ip();
+        $item_batch->user_updated = $this->auth->user()->user_id;
+        $item_batch->save();
+
+        return $item_batch;
+
+    }
+
+
+
+
+
     public function findByBatchId($batch_id){
 
         $item_batch = $this->item_batch->where('batch_id', $batch_id)->first();
+        
+        if(empty($item_batch)){
+            abort(404);
+        }
+
+        return $item_batch;
+
+    }
+
+
+
+
+
+    public function findByBatchCode($batch_code){
+
+        $item_batch = $this->item_batch->where('batch_code', $batch_code)->first();
         
         if(empty($item_batch)){
             abort(404);
@@ -150,6 +202,23 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
         $item_batches = $this->cache->remember('item_batches:getAll', 240, function(){
             return $this->item_batch->select('item_id', 'batch_code', 'amount', 'expiry_date')
                                     ->with('item')
+                                    ->get();
+        });
+        
+        return $item_batches;
+
+    }
+
+
+
+
+
+
+    public function getByItemId($item_id){
+
+        $item_batches = $this->cache->remember('item_batches:getByItemId:'.$item_id, 240, function() use ($item_id){
+            return $this->item_batch->select('batch_code')
+                                    ->where('item_id', $item_id)
                                     ->get();
         });
         
