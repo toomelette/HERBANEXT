@@ -42,7 +42,7 @@
             <th>@sortablelink('item.name', 'Product')</th>
             <th>@sortablelink('machine.name', 'Machine')</th>
             <th>@sortablelink('status', 'Status')</th>
-            <th>Action</th>
+            <th style="width:390px;">Action</th>
           </tr>
           @foreach($tasks as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -59,6 +59,11 @@
                         Confirm Finished
                       </a>
                     @endif
+                  @endif
+                  @if(in_array('dashboard.task.rate_personnel', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.task.rate_personnel', $data->slug) }}">
+                      Personnel Ratings
+                    </a>
                   @endif
                   @if(in_array('dashboard.task.edit', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.task.edit', $data->slug) }}">

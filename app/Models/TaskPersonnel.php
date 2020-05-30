@@ -19,9 +19,9 @@ class TaskPersonnel extends Model{
         'task_id' => '',
         'personnel_id' => '',
         'task_personnel_id' => '',
+        'rating' => 0,
 
     ];
-
 
 
     /** RELATIONSHIPS **/

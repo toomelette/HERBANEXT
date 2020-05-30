@@ -151,7 +151,7 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('firstname', 'middlename', 'lastname', 'position', 'slug')
+        return $model->select('personnel_id', 'firstname', 'middlename', 'lastname', 'position', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

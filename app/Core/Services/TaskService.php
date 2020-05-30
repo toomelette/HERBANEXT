@@ -115,4 +115,24 @@ class TaskService extends BaseService{
 
 
 
+    public function ratePersonnel($slug){
+
+        $task = $this->task_repo->findbySlug($slug);
+        return view('dashboard.task.rate_personnel')->with('task', $task);
+
+    }
+
+
+
+    public function ratePersonnelPost($request, $task_personnel_id){
+
+        $task_personnel = $this->task_personnel_repo->updateRating($task_personnel_id, $request->rating);
+
+        $this->event->fire('task.rate_personnel', $task_personnel);
+        return redirect()->back();
+
+    }
+
+
+
 }

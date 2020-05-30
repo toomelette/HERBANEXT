@@ -43,8 +43,41 @@ class Personnel extends Model{
 
 
 
+
     public function getFullNameAttribute(){
         return ucfirst($this->firstname) .' '. strtoupper(substr($this->middlename, 0, 1)) .'. '. ucfirst($this->lastname);
+    }
+
+
+
+    public function aveRating(){
+
+        $ave = 0;
+
+        if (!$this->taskPersonnel->isEmpty()) {
+                
+            $total = 0;
+            $num_of_records = 0;
+
+            foreach ($this->taskPersonnel as $data) {
+
+                $total += $data->rating;
+                $num_of_records += 1;
+            }
+
+            $ave = $total / $num_of_records;
+
+        }
+
+        return number_format($ave, 2);
+
+    }
+
+
+
+    // RELATIONSHIPS
+    public function taskPersonnel() {
+        return $this->hasMany('App\Models\TaskPersonnel','personnel_id','personnel_id');
     }
 
 

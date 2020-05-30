@@ -29,6 +29,7 @@ class TaskSubscriber extends BaseSubscriber{
         $events->listen('task.drop', 'App\Core\Subscribers\TaskSubscriber@onDrop');
         $events->listen('task.resize', 'App\Core\Subscribers\TaskSubscriber@onResize');
         $events->listen('task.event_drop', 'App\Core\Subscribers\TaskSubscriber@onEventDrop');
+        $events->listen('task.rate_personnel', 'App\Core\Subscribers\TaskSubscriber@onRatePersonnel');
 
     }
 
@@ -111,6 +112,15 @@ class TaskSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:findBySlug:'. $task->slug .'');
+
+    }
+
+
+
+    public function onRatePersonnel($task_personnel){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:task_personnel:findByTaskPersonnelId:'. $task_personnel->task_personnel_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:findBySlug:'. optional($task_personnel->task)->slug .'');
 
     }
 

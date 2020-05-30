@@ -37,6 +37,39 @@ class TaskPersonnelRepository extends BaseRepository implements TaskPersonnelInt
 
 
 
+    public function updateRating($task_personnel_id, $rating){
+        $task_personnel = $this->findByTaskPersonnelId($task_personnel_id);
+        $task_personnel->rating = $rating;
+        $task_personnel->save();
+        return $task_personnel;
+
+    }
+
+
+
+
+
+    public function findByTaskPersonnelId($task_personnel_id){
+
+        $task_personnel = $this->cache->remember('task_personnel:findByTaskPersonnelId:' . $task_personnel_id, 240, 
+
+            function() use ($task_personnel_id){
+
+                return $this->task_personnel->where('task_personnel_id', $task_personnel_id)     
+                                            ->first();
+
+            }); 
+        
+        if(empty($task_personnel)){
+            abort(404);
+        }
+
+        return $task_personnel;
+
+    }
+
+
+
     public function getTaskPersonnelIdInc(){
 
         $id = 'TP100001';

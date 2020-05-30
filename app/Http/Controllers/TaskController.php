@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Core\Services\TaskService;
 use App\Http\Requests\Task\TaskFormRequest;
 use App\Http\Requests\Task\TaskFilterRequest;
+use App\Http\Requests\Task\TaskRatePersonnelFormRequest;
 
 
 class TaskController extends Controller{
@@ -56,6 +57,16 @@ class TaskController extends Controller{
     
     public function destroy($slug){
         return $this->task->destroy($slug);
+    }
+
+    
+    public function ratePersonnel($slug){
+        return $this->task->ratePersonnel($slug);
+    }
+
+    
+    public function ratePersonnelPost(TaskRatePersonnelFormRequest $request, $task_personnel_id){
+        return $this->task->ratePersonnelPost($request, $task_personnel_id);
     }
 
 
