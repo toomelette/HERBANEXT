@@ -47,6 +47,11 @@ class MachineController extends Controller{
     public function destroy($slug){
         return $this->machine->destroy($slug);
     }
+ 
+
+    public function maintenance($slug){
+        return $this->machine->maintenance($slug);
+    }
 
 
 }

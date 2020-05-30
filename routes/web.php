@@ -106,7 +106,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MACHINES **/
+	Route::get('/machine/maintenance/{slug}', 'MachineController@maintenance')
+	->name('machine.maintenance');
 	Route::resource('machine', 'MachineController');
+
+
+	/** MACHINE MAINTENANCE **/
+	Route::resource('machine_maintenance', 'MachineMaintenanceController');
 
 
 	/** TASKS **/

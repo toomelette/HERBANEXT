@@ -73,5 +73,14 @@ class MachineService extends BaseService{
 
 
 
+    public function maintenance($slug){
+
+        $machine = $this->machine_repo->findbySlug($slug);
+        return view('dashboard.machine.maintenance')->with('machine', $machine);
+
+    }
+
+
+
 
 }

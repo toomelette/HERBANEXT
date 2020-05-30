@@ -43,7 +43,7 @@
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('description', 'Description')</th>
-            <th style="width: 150px">Action</th>
+            <th style="width: 250px">Action</th>
           </tr>
           @foreach($machines as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -51,6 +51,11 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
+                  @if(in_array('dashboard.machine.maintenance', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="maintenance_button" href="{{ route('dashboard.machine.maintenance', $data->slug) }}">
+                      <i class="fa fa-gear"></i> Maintenance
+                    </a>
+                  @endif
                   @if(in_array('dashboard.machine.edit', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.machine.edit', $data->slug) }}">
                       <i class="fa fa-pencil"></i>

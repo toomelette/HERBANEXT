@@ -19,7 +19,7 @@
       @include('layouts.admin-topnav')
       @include('layouts.admin-sidenav') 
 
-      <div class="content-wrapper" style="height:500em;"> 
+      <div class="content-wrapper"> 
         @yield('content')
       </div>
 

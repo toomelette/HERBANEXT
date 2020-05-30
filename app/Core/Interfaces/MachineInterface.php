@@ -16,8 +16,6 @@ interface MachineInterface {
 
 	public function findBySlug($slug);
 
-	// public function findByPersonnelId($menu_id);
-
 	public function getAll();
 		
 }

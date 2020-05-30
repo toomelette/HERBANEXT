@@ -41,15 +41,19 @@
           @csrf  
 
           {!! __form::select_dynamic(
-            '3', 'batch_code', 'Batch Code *', old('batch_code'), $item_batches, 'batch_code', 'batch_code', $errors->has('batch_code'), $errors->first('batch_code'), 'select2', ''
+            '4', 'batch_code', 'Batch Code *', old('batch_code'), $item_batches, 'batch_code', 'batch_code', $errors->has('batch_code'), $errors->first('batch_code'), 'select2', ''
           ) !!}       
 
           {!! __form::textbox_numeric(
-            '3', 'amount', 'text', 'Amount *', 'Amount', old('amount'), $errors->has('amount'), $errors->first('amount'), ''
+            '4', 'amount', 'text', 'Amount *', 'Amount', old('amount'), $errors->has('amount'), $errors->first('amount'), ''
           ) !!}
 
           {!! __form::select_static(
-            '3', 'unit', 'Standard Unit *', old('unit'), [], $errors->has('unit'), $errors->first('unit'), '', ''
+            '4', 'unit', 'Standard Unit *', old('unit'), [], $errors->has('unit'), $errors->first('unit'), '', ''
+          ) !!} 
+
+          {!! __form::textbox(
+           '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}     
 
         </div>

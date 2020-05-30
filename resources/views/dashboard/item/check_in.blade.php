@@ -57,7 +57,7 @@
           <div class="col-md-12"></div>
 
           {!! __form::textbox(
-           '6', 'remarks', 'text', 'Remarks', 'Batch Code', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+           '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}   
 
         </div>
