@@ -105,6 +105,23 @@ class PurchaseOrderItemRepository extends BaseRepository implements PurchaseOrde
 
 
 
+    public function updateIsGenerated($slug, $int){
+
+        $po_item = $this->findBySlug($slug);
+        $po_item->is_generated = $int;
+        $po_item->updated_at = $this->carbon->now();
+        $po_item->ip_updated = request()->ip();
+        $po_item->user_updated = $this->auth->user()->user_id;
+        $po_item->save();
+
+        return $po_item;
+
+    }
+
+
+
+
+
     public function findBySlug($slug){
 
         $po_item = $this->cache->remember('purchase_order_items:findBySlug:' . $slug, 240, function() use ($slug){

@@ -254,7 +254,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
     public function getUnscheduled(){
 
         $tasks = $this->cache->remember('tasks:getUnscheduled', 240, function(){
-            return $this->task->select('slug', 'name', 'color')
+            return $this->task->select('machine_id', 'slug', 'name', 'color')
                               ->where('status', 1)
                               ->get();
         });
@@ -271,7 +271,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
     public function getScheduled(){
 
         $tasks = $this->cache->remember('tasks:getScheduled', 240, function(){
-            return $this->task->select('slug', 'name', 'is_allday', 'date_from', 'date_to', 'color')
+            return $this->task->select('machine_id', 'slug', 'name', 'is_allday', 'date_from', 'date_to', 'color')
                               ->whereIn('status', [2,3])
                               ->get();
         });

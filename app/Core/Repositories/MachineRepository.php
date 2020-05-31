@@ -124,25 +124,6 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
 
 
-    // public function findByMachineId($machine_id){
-
-    //     $machine = $this->cache->remember('machines:findByMachineId:' . $machine_id, 240, function() use ($machine_id){
-    //         return $this->machine->where('machine_id', $machine_id)->first();
-    //     });
-        
-    //     if(empty($machine)){
-    //         abort(404);
-    //     }
-        
-    //     return $machine;
-
-    // }
-
-
-
-
-
-
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
@@ -158,7 +139,7 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'slug')
+        return $model->select('machine_id', 'name', 'description', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

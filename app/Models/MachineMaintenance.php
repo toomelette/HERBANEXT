@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
-
+use Carbon;
 
 class MachineMaintenance extends Model{
 
@@ -35,6 +35,24 @@ class MachineMaintenance extends Model{
         'user_updated' => '',
 
     ];
+
+
+
+    public function getDateFromAttribute($value){
+        return Carbon::parse($value)->format('m/d/Y');
+    }
+
+
+
+    public function getDateToAttribute($value){
+        return Carbon::parse($value)->format('m/d/Y');
+    }
+
+
+    // Relationships
+    public function machine() {
+        return $this->belongsTo('App\Models\Machine','machine_id','machine_id');
+    }
 
 
 

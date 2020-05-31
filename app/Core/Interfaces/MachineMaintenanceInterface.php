@@ -6,16 +6,14 @@ namespace App\Core\Interfaces;
 
 interface MachineMaintenanceInterface {
 
-	// public function fetch($request);
+	public function fetchByMachineId($request, $machine_id);
 
-	// public function store($request);
+	public function store($request);
 
-	// public function update($request, $slug);
+	public function update($request, $slug);
 
-	// public function destroy($slug);
+	public function destroy($slug);
 
-	// public function findBySlug($slug);
-
-	// public function getAll();
+	public function getBySlug($slug);
 		
 }

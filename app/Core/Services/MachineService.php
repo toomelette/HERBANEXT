@@ -4,6 +4,7 @@ namespace App\Core\Services;
 
 
 use App\Core\Interfaces\MachineInterface;
+use App\Core\Interfaces\MachineMaintenanceInterface;
 use App\Core\BaseClasses\BaseService;
 
 
@@ -12,12 +13,15 @@ class MachineService extends BaseService{
 
 
     protected $machine_repo;
+    protected $machine_mnt_repo;
 
 
 
-    public function __construct(MachineInterface $machine_repo){
+    public function __construct(MachineInterface $machine_repo, 
+                                MachineMaintenanceInterface $machine_mnt_repo){
 
         $this->machine_repo = $machine_repo;
+        $this->machine_mnt_repo = $machine_mnt_repo;
         parent::__construct();
 
     }
@@ -73,10 +77,15 @@ class MachineService extends BaseService{
 
 
 
-    public function maintenance($slug){
+    public function maintenance($request, $slug){
 
         $machine = $this->machine_repo->findbySlug($slug);
-        return view('dashboard.machine.maintenance')->with('machine', $machine);
+        $machine_maintenance_list = $this->machine_mnt_repo->fetchByMachineId($request, $machine->machine_id);
+        
+        return view('dashboard.machine.maintenance')->with([
+            'machine' => $machine,
+            'machine_maintenance_list' => $machine_maintenance_list,
+        ]);
 
     }
 

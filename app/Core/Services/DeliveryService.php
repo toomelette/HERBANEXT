@@ -197,15 +197,19 @@ class DeliveryService extends BaseService{
 
         if (!empty($delivery->deliveryItem)) {
             foreach ($delivery->deliveryItem as $data) {
-                $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 0);
-                $this->event->fire('delivery.flush_po_item', $data->po_item_id);
+                if (isset($data->PurchaseOrderItem)) {
+                    $this->po_item_repo->updateDeliveryStatus($data->po_item_id, 0);
+                    $this->event->fire('delivery.flush_po_item', $data->po_item_id);
+                }
             }  
         }
 
         if(!empty($delivery->deliveryJO)){
             foreach ($delivery->deliveryJO as $data) {
-                $this->jo_repo->updateDeliveryStatus($data->jo_id, 1);
-                $this->event->fire('delivery.flush_jo', $data->jo_id);
+                if (isset($data->jobOrder)) {
+                    $this->jo_repo->updateDeliveryStatus($data->jo_id, 1);
+                    $this->event->fire('delivery.flush_jo', $data->jo_id);
+                }
             }
         }
 

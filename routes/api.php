@@ -12,5 +12,9 @@ Route::post('/task/drop/{slug}', 'Api\ApiTaskController@drop');
 Route::post('/task/resize/{slug}', 'Api\ApiTaskController@resize');
 Route::post('/task/eventDrop/{slug}', 'Api\ApiTaskController@eventDrop');
 
+//Machine Maintenance
+Route::get('/machine_maintenance/{slug}/edit', 'Api\ApiMachineMaintenanceController@edit')
+		->name('api.machine_maintenance.edit');
+
 
 

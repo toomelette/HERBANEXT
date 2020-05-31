@@ -23,40 +23,48 @@
             <th>Status</th>
             <th style="width:200px;">Action</th>
           </tr>
+
           @foreach($delivery->deliveryItem as $data) 
-            <tr> 
-              <td id="mid-vert">{{ optional($data->purchaseOrderItem)->po_no }}</td>
-              <td id="mid-vert">{{ optional($data->purchaseOrderItem->item)->name }}</td>
-              <td id="mid-vert">
-                {{ optional($data->purchaseOrderItem)->displayAmount() }}
-              </td>
-              <td id="mid-vert">
-                {!! optional($data->purchaseOrderItem)->displayDeliveryConfirmStatus() !!}
-              </td>
-              <td id="mid-vert">
-                <div class="btn-group">
-                  @if(in_array('dashboard.delivery.confirm_delivered_post', $global_user_submenus))
-                     <a type="button" 
-                        class="btn btn-success"  
-                        id="confirm_delivered_button" 
-                        data-action="confirm-delivered" 
-                        data-url="{{ route('dashboard.delivery.confirm_delivered_post', ['POI', $data->po_item_id ]) }}">
-                        Delivered
-                      </a>
-                  @endif
-                  @if(in_array('dashboard.delivery.confirm_returned_post', $global_user_submenus))
-                     <a type="button"
-                        class="btn btn-danger" 
-                        id="confirm_returned_button" 
-                        data-action="confirm-returned" 
-                        data-url="{{ route('dashboard.delivery.confirm_returned_post', ['POI', $data->po_item_id ]) }}">
-                        Returned
-                      </a>
-                  @endif
-                </div>
-              </td>
-            </tr>
+
+            @if (isset($data->purchaseOrderItem))
+
+              <tr> 
+                <td id="mid-vert">{{ optional($data->purchaseOrderItem)->po_no }}</td>
+                <td id="mid-vert">{{ optional($data->purchaseOrderItem->item)->name }}</td>
+                <td id="mid-vert">
+                  {{ optional($data->purchaseOrderItem)->displayAmount() }}
+                </td>
+                <td id="mid-vert">
+                  {!! optional($data->purchaseOrderItem)->displayDeliveryConfirmStatus() !!}
+                </td>
+                <td id="mid-vert">
+                  <div class="btn-group">
+                    @if(in_array('dashboard.delivery.confirm_delivered_post', $global_user_submenus))
+                       <a type="button" 
+                          class="btn btn-success"  
+                          id="confirm_delivered_button" 
+                          data-action="confirm-delivered" 
+                          data-url="{{ route('dashboard.delivery.confirm_delivered_post', ['POI', $data->po_item_id ]) }}">
+                          Delivered
+                        </a>
+                    @endif
+                    @if(in_array('dashboard.delivery.confirm_returned_post', $global_user_submenus))
+                       <a type="button"
+                          class="btn btn-danger" 
+                          id="confirm_returned_button" 
+                          data-action="confirm-returned" 
+                          data-url="{{ route('dashboard.delivery.confirm_returned_post', ['POI', $data->po_item_id ]) }}">
+                          Returned
+                        </a>
+                    @endif
+                  </div>
+                </td>
+              </tr>
+              
+            @endif
+
           @endforeach
+          
         </table>
       </div>
 
@@ -85,35 +93,41 @@
             <th style="width:200px;">Action</th>
           </tr>
           @foreach($delivery->deliveryJO as $data) 
-            <tr> 
-              <td id="mid-vert">{{ optional($data->jobOrder)->lot_no }}</td>
-              <td id="mid-vert">{{ optional($data->jobOrder->purchaseOrderItem->item)->name }}</td>
-              <td id="mid-vert">
-                {!! optional($data->jobOrder)->displayDeliveryConfirmStatus() !!}
-              </td>
-              <td id="mid-vert">
-                <div class="btn-group">
-                  @if(in_array('dashboard.delivery.confirm_delivered_post', $global_user_submenus))
-                     <a type="button" 
-                        class="btn btn-success"  
-                        id="confirm_delivered_button" 
-                        data-action="confirm-delivered" 
-                        data-url="{{ route('dashboard.delivery.confirm_delivered_post', ['JO', $data->jo_id ]) }}">
-                        Delivered
-                      </a>
-                  @endif
-                  @if(in_array('dashboard.delivery.confirm_returned_post', $global_user_submenus))
-                     <a type="button"
-                        class="btn btn-danger" 
-                        id="confirm_returned_button" 
-                        data-action="confirm-returned" 
-                        data-url="{{ route('dashboard.delivery.confirm_returned_post', ['JO', $data->jo_id ]) }}">
-                        Returned
-                      </a>
-                  @endif
-                </div>
-              </td>
-            </tr>
+
+            @if (isset($data->jobOrder))
+
+              <tr> 
+                <td id="mid-vert">{{ optional($data->jobOrder)->lot_no }}</td>
+                <td id="mid-vert">{{ optional($data->jobOrder->purchaseOrderItem->item)->name }}</td>
+                <td id="mid-vert">
+                  {!! optional($data->jobOrder)->displayDeliveryConfirmStatus() !!}
+                </td>
+                <td id="mid-vert">
+                  <div class="btn-group">
+                    @if(in_array('dashboard.delivery.confirm_delivered_post', $global_user_submenus))
+                       <a type="button" 
+                          class="btn btn-success"  
+                          id="confirm_delivered_button" 
+                          data-action="confirm-delivered" 
+                          data-url="{{ route('dashboard.delivery.confirm_delivered_post', ['JO', $data->jo_id ]) }}">
+                          Delivered
+                        </a>
+                    @endif
+                    @if(in_array('dashboard.delivery.confirm_returned_post', $global_user_submenus))
+                       <a type="button"
+                          class="btn btn-danger" 
+                          id="confirm_returned_button" 
+                          data-action="confirm-returned" 
+                          data-url="{{ route('dashboard.delivery.confirm_returned_post', ['JO', $data->jo_id ]) }}">
+                          Returned
+                        </a>
+                    @endif
+                  </div>
+                </td>
+              </tr>
+
+            @endif
+            
           @endforeach
         </table>
       </div>

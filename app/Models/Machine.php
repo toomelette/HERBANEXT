@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
-
+use Carbon;
 
 class Machine extends Model{
 
@@ -36,6 +36,75 @@ class Machine extends Model{
         'user_updated' => '',
 
     ];
+
+
+
+    public function maintenanceStatus(){
+
+        $count = 0;
+        $status = false;
+
+        if (!$this->machineMaintenance->isEmpty()) {
+
+            foreach ($this->machineMaintenance as $data) {
+
+                $from = Carbon::parse($data->date_from)->format('Y-m-d');
+                $to = Carbon::parse($data->date_to)->format('Y-m-d');
+
+                $from = Carbon::createFromFormat('Y-m-d', $from);
+                $to = Carbon::createFromFormat('Y-m-d', $to);
+
+                $is_under_mnt = Carbon::now()->between($from, $to);
+
+                if ($is_under_mnt == true) {
+                    $count += 1;
+                }
+
+            }
+            
+        }
+
+        if ($count > 0) {
+            $status = true;
+        }
+
+        return $status;
+
+    }
+
+
+
+    public function displayMaintenanceStatusSpan(){
+
+        $span = '<span class=" badge bg-green">Operational<span>';
+
+        if ($this->maintenanceStatus() == true) {
+            $span = '<span class=" badge bg-orange">Under Maintenance<span>';
+        }
+
+        return $span;
+
+    }
+
+
+
+    public function displayMaintenanceStatusText(){
+
+        $txt = 'Operational';
+
+        if ($this->maintenanceStatus() == true) {
+            $txt = 'Under Maintenance';
+        }
+
+        return $txt;
+
+    }
+
+
+    // Relationships
+    public function machineMaintenance() {
+        return $this->hasMany('App\Models\MachineMaintenance','machine_id','machine_id');
+    }
 
 
 }

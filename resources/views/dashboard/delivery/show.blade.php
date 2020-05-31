@@ -45,27 +45,33 @@
             </thead>
             <tbody>
               @foreach($delivery->deliveryItem as $data)
-                <tr>
-                  <td>{{ optional($data->purchaseOrderItem)->po_no }}</td>
 
-                  <td id="mid-vert">
-                    <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_name }}</b><br>
-                    {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_company }}<br>
-                    {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_address }}<br>
-                  </td>
+                @isset ($data->purchaseOrderItem)
 
-                  <td id="mid-vert">
-                    <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_name }}</b><br>
-                    {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_company }}<br>
-                    {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_address }}<br>
-                  </td>
+                  <tr>
+                    <td>{{ optional($data->purchaseOrderItem)->po_no }}</td>
 
-                  <td>{{ optional($data->purchaseOrderItem->item)->product_code }}</td>
-                  <td>{{ optional($data->purchaseOrderItem->item)->name }}</td>
-                  <td>
-                    {{ number_format(optional($data->purchaseOrderItem)->amount, 3) .' '. optional($data->purchaseOrderItem)->unit }}
-                  </td>
-                </tr>
+                    <td id="mid-vert">
+                      <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_name }}</b><br>
+                      {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_company }}<br>
+                      {{ optional($data->purchaseOrderItem)->purchaseOrder->bill_to_address }}<br>
+                    </td>
+
+                    <td id="mid-vert">
+                      <b>{{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_name }}</b><br>
+                      {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_company }}<br>
+                      {{ optional($data->purchaseOrderItem)->purchaseOrder->ship_to_address }}<br>
+                    </td>
+
+                    <td>{{ optional($data->purchaseOrderItem->item)->product_code }}</td>
+                    <td>{{ optional($data->purchaseOrderItem->item)->name }}</td>
+                    <td>
+                      {{ number_format(optional($data->purchaseOrderItem)->amount, 3) .' '. optional($data->purchaseOrderItem)->unit }}
+                    </td>
+                  </tr>
+                    
+                @endisset
+
               @endforeach
             </tbody>
           </table>
@@ -91,27 +97,33 @@
             </thead>
             <tbody>
               @foreach($delivery->deliveryJO as $data)
-                <tr>
-                  <td>{{ optional($data->jobOrder)->po_no }}</td>
 
-                  <td id="mid-vert">
-                    <b>{{ optional($data->jobOrder)->purchaseOrder->bill_to_name }}</b><br>
-                    {{ optional($data->jobOrder)->purchaseOrder->bill_to_company }}<br>
-                    {{ optional($data->jobOrder)->purchaseOrder->bill_to_address }}<br>
-                  </td>
+                @isset ($data->jobOrder)
 
-                  <td id="mid-vert">
-                    <b>{{ optional($data->jobOrder)->purchaseOrder->ship_to_name }}</b><br>
-                    {{ optional($data->jobOrder)->purchaseOrder->ship_to_company }}<br>
-                    {{ optional($data->jobOrder)->purchaseOrder->ship_to_address }}<br>
-                  </td>
+                  <tr>
+                    <td>{{ optional($data->jobOrder)->po_no }}</td>
 
-                  <td>{{ optional($data->jobOrder)->lot_no }}</td>
-                  <td>{{ optional($data->jobOrder->item)->name }}</td>
-                  <td>
-                    {{ number_format(optional($data->jobOrder)->amount, 3) .' '. optional($data->jobOrder)->unit }}
-                  </td>
-                </tr>
+                    <td id="mid-vert">
+                      <b>{{ optional($data->jobOrder)->purchaseOrder->bill_to_name }}</b><br>
+                      {{ optional($data->jobOrder)->purchaseOrder->bill_to_company }}<br>
+                      {{ optional($data->jobOrder)->purchaseOrder->bill_to_address }}<br>
+                    </td>
+
+                    <td id="mid-vert">
+                      <b>{{ optional($data->jobOrder)->purchaseOrder->ship_to_name }}</b><br>
+                      {{ optional($data->jobOrder)->purchaseOrder->ship_to_company }}<br>
+                      {{ optional($data->jobOrder)->purchaseOrder->ship_to_address }}<br>
+                    </td>
+
+                    <td>{{ optional($data->jobOrder)->lot_no }}</td>
+                    <td>{{ optional($data->jobOrder->item)->name }}</td>
+                    <td>
+                      {{ number_format(optional($data->jobOrder)->amount, 3) .' '. optional($data->jobOrder)->unit }}
+                    </td>
+                  </tr>
+                    
+                @endisset
+                
               @endforeach
             </tbody>
           </table>

@@ -43,12 +43,14 @@
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('description', 'Description')</th>
+            <th>Status</th>
             <th style="width: 250px">Action</th>
           </tr>
           @foreach($machines as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
+              <td id="mid-vert">{!! $data->displayMaintenanceStatusSpan() !!}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.machine.maintenance', $global_user_submenus))
