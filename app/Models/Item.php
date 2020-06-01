@@ -86,7 +86,7 @@ class Item extends Model{
         $amount = 0.00;
 
         foreach ($this->purchaseOrderItem as $data) {
-            if (optional($data->purchaseOrder)->process_status != 5) {
+            if ($data->isJOCompleted() == true) {
                 $amount += $data->amount;
             }
         }

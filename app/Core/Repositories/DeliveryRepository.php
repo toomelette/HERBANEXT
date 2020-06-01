@@ -160,6 +160,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
     public function populate($model, $entries){
 
         return $model->select('delivery_id', 'delivery_code', 'description', 'date', 'is_delivered', 'updated_at', 'slug')
+                     ->with('deliveryItem', 'deliveryJO')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

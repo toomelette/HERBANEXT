@@ -56,6 +56,40 @@ class PurchaseOrderItem extends Model{
 
 
 
+    public function isJOCompleted(){
+
+        if($this->delivery_status == 0 && $this->is_generated == 0){
+
+            if (!$this->jobOrder->isEmpty()) {
+
+                $count_total = 0;
+                $count_rfd = 0;
+
+                foreach($this->jobOrder as $jo) {
+                    $count_total = $count_total + 1;
+                    if ($jo->delivery_status == 4) {
+                        $count_rfd = $count_rfd + 1;     
+                    }
+                }
+
+                if ($count_total == $count_rfd) {
+                    return true;
+                }
+
+                return false;
+                
+            }
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+
+
     public function isReadyForDelivery(){
 
         if($this->delivery_status == 0 && $this->is_generated == 0){
