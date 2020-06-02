@@ -22,7 +22,9 @@ class MachineMaintenanceFormRequest extends FormRequest{
 
             'machine_id'=>'required|string|max:11',
             'date_from'=>'required|date_format:"m/d/Y"',
+            'time_from' => 'required|date_format:"h:i A"',
             'date_to'=>'required|date_format:"m/d/Y"',
+            'time_to' => 'required|date_format:"h:i A"',
             'description'=>'required|string|max:255',
             
         ];

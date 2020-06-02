@@ -48,11 +48,11 @@ class Machine extends Model{
 
             foreach ($this->machineMaintenance as $data) {
 
-                $from = Carbon::parse($data->date_from)->format('Y-m-d');
-                $to = Carbon::parse($data->date_to)->format('Y-m-d');
+                $from_parse = Carbon::parse($data->date_from .' '. $data->time_from)->format('Y-m-d H:i:s');
+                $to_parse = Carbon::parse($data->date_to  .' '. $data->time_to)->format('Y-m-d H:i:s');
 
-                $from = Carbon::createFromFormat('Y-m-d', $from);
-                $to = Carbon::createFromFormat('Y-m-d', $to);
+                $from = Carbon::createFromFormat('Y-m-d H:i:s', $from_parse);
+                $to = Carbon::createFromFormat('Y-m-d H:i:s', $to_parse);
 
                 $is_under_mnt = Carbon::now()->between($from, $to);
 

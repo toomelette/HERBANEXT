@@ -34,12 +34,24 @@
           <input type="hidden" name="machine_id" value="{{ $machine->machine_id }}">
 
           {!! __form::datepicker(
-            '12', 'date_from',  'Date From *', old('date_from') , $errors->has('date_from'), $errors->first('date_from')
+            '6', 'date_from',  'Date From *', old('date_from') , $errors->has('date_from'), $errors->first('date_from')
           ) !!}
 
-          {!! __form::datepicker(
-            '12', 'date_to',  'Date To *', old('date_to') , $errors->has('date_to'), $errors->first('date_to')
+          {!! __form::timepicker(
+            '6', 'time_from',  'Time From *', old('time_from'), $errors->has('time_from'), $errors->first('time_from')
           ) !!}
+
+          <div class="col-md-12"></div>
+
+          {!! __form::datepicker(
+            '6', 'date_to',  'Date To *', old('date_to') , $errors->has('date_to'), $errors->first('date_to')
+          ) !!}
+
+          {!! __form::timepicker(
+            '6', 'time_to',  'Time To *', old('time_to'), $errors->has('time_to'), $errors->first('time_to')
+          ) !!}
+
+          <div class="col-md-12"></div>
 
           {!! __form::textbox(
             '12', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
@@ -151,11 +163,21 @@
               <input name="_method" value="PUT" type="hidden">
 
               {!! __form::datepicker(
-                '12', 'e_date_from',  'Date From *', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from')
+                '6', 'e_date_from',  'Date From *', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from')
               ) !!}
 
+              {!! __form::timepicker(
+                '6', 'e_time_from',  'Time From *', old('e_time_from'), $errors->has('e_time_from'), $errors->first('e_time_from')
+              ) !!}
+
+              <div class="col-md-12"></div>
+              
               {!! __form::datepicker(
-                '12', 'e_date_to',  'Date To *', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to')
+                '6', 'e_date_to',  'Date To *', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to')
+              ) !!}
+
+              {!! __form::timepicker(
+                '6', 'e_time_to',  'Time To *', old('e_time_to'), $errors->has('e_time_to'), $errors->first('e_time_to')
               ) !!}
 
               {!! __form::textbox(
@@ -220,6 +242,13 @@
           });
       });
 
+      // Time Picker
+      $('.timepicker').timepicker({
+        showInputs: false,
+        minuteStep: 1,
+        showMeridian: true,
+      });
+
       $.ajax({
         headers: {"X-CSRF-TOKEN": $('meta[name="cwpef-token"]').attr("content")},
           url: "/api/machine_maintenance/"+slug+"/edit",
@@ -229,7 +258,9 @@
             
             $.each(data, function(key, value) {
               $("#update_form #e_date_from").val(value.date_from);
+              $("#update_form #e_time_from").val(value.time_from);
               $("#update_form #e_date_to").val(value.date_to);
+              $("#update_form #e_time_to").val(value.time_to);
               $("#update_form #e_description").val(value.description);
             });
 

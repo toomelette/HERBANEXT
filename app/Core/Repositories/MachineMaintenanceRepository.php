@@ -56,7 +56,9 @@ class MachineMaintenanceRepository extends BaseRepository implements MachineMain
         $machine_mnt->slug = $this->str->random(16);
         $machine_mnt->machine_id = $request->machine_id;
         $machine_mnt->date_from = $this->__dataType->date_parse($request->date_from);
+        $machine_mnt->time_from = $this->__dataType->time_parse($request->time_from);
         $machine_mnt->date_to = $this->__dataType->date_parse($request->date_to);
+        $machine_mnt->time_to = $this->__dataType->time_parse($request->time_to);
         $machine_mnt->description = $request->description;
         $machine_mnt->created_at = $this->carbon->now();
         $machine_mnt->updated_at = $this->carbon->now();
@@ -78,7 +80,9 @@ class MachineMaintenanceRepository extends BaseRepository implements MachineMain
 
         $machine_mnt = $this->findBySlug($slug);
         $machine_mnt->date_from = $this->__dataType->date_parse($request->e_date_from);
+        $machine_mnt->time_from = $this->__dataType->time_parse($request->e_time_from);
         $machine_mnt->date_to = $this->__dataType->date_parse($request->e_date_to);
+        $machine_mnt->time_to = $this->__dataType->time_parse($request->e_time_to);
         $machine_mnt->description = $request->e_description;
         $machine_mnt->updated_at = $this->carbon->now();
         $machine_mnt->ip_updated = request()->ip();

@@ -25,7 +25,9 @@ class MachineMaintenance extends Model{
         'slug' => '',
         'machine_id' => '',
         'date_from' => null,
+        'time_from' => null,
         'date_to' => null,
+        'time_to' => null,
         'description' => '',
         'created_at' => null,
         'updated_at' => null,
@@ -46,6 +48,18 @@ class MachineMaintenance extends Model{
 
     public function getDateToAttribute($value){
         return Carbon::parse($value)->format('m/d/Y');
+    }
+
+
+
+    public function getTimeFromAttribute($value){
+        return Carbon::parse($value)->format('h:i A');
+    }
+
+
+
+    public function getTimeToAttribute($value){
+        return Carbon::parse($value)->format('h:i A');
     }
 
 
