@@ -88,8 +88,14 @@
           </tr>
           @foreach($machine_maintenance_list as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td id="mid-vert">{{ __dataType::date_parse($data->date_from, 'F d, Y') }}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->date_to, 'F d, Y') }}</td>
+              <td id="mid-vert">
+                {{ __dataType::date_parse($data->date_from, 'F d, Y') }}
+                {{ __dataType::date_parse($data->time_from, 'h:i A') }}
+              </td>
+              <td id="mid-vert">
+                {{ __dataType::date_parse($data->date_to, 'F d, Y') }}
+                {{ __dataType::date_parse($data->time_to, 'h:i A') }}
+              </td>
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">
 

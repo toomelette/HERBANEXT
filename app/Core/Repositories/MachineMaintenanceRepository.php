@@ -35,7 +35,7 @@ class MachineMaintenanceRepository extends BaseRepository implements MachineMain
 
                 $machine_mnt = $this->machine_mnt->newQuery();
 
-                return $machine_mnt->select('date_from', 'date_to', 'description', 'slug')
+                return $machine_mnt->select('date_from', 'time_from', 'date_to', 'time_to', 'description', 'slug')
                                    ->sortable()
                                    ->orderBy('date_from', 'desc')
                                    ->paginate($entries);
