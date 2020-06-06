@@ -17,5 +17,7 @@ interface DeliveryInterface {
 	public function destroy($delivery);
 
 	public function findBySlug($slug);
+
+	public function countNew();
 	
 }

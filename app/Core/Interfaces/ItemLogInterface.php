@@ -14,4 +14,6 @@ interface ItemLogInterface {
 		
 	public function fetch($request);
 
+	public function checkedOutFinishGoodsCurrentMonth();
+
 }

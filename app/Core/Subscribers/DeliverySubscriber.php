@@ -41,6 +41,7 @@ class DeliverySubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:countNew');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
 
@@ -69,6 +70,7 @@ class DeliverySubscriber extends BaseSubscriber{
     public function onDestroy($delivery){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:countNew');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:deliveries:findBySlug:'. $delivery->slug .'');

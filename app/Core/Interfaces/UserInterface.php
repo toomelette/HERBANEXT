@@ -26,6 +26,6 @@ interface UserInterface {
 
 	public function login($slug);
 
-	public function getByIsOnline($status);
+	public function countByIsOnline($status);
 		
 }

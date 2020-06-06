@@ -74,7 +74,7 @@ class UserSubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:countByIsOnline:*');
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getAll:'. $user->user_id .'');
@@ -125,7 +125,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:1');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:users:countByIsOnline:1');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');

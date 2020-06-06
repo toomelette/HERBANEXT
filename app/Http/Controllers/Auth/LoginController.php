@@ -86,7 +86,7 @@ class LoginController extends Controller{
 
                 $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
                 $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:countByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -117,7 +117,7 @@ class LoginController extends Controller{
 
             $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
             $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:countByIsOnline:'. $user->is_online .'');
 
             $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
 

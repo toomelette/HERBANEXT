@@ -24,4 +24,6 @@ interface PurchaseOrderInterface {
 
 	public function findBySlug($slug);
 
+	public function countNew();
+
 }

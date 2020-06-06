@@ -4,7 +4,6 @@ namespace App\Core\Repositories;
  
 use App\Core\BaseClasses\BaseRepository;
 use App\Core\Interfaces\PurchaseOrderInterface;
-
 use App\Models\PurchaseOrder;
 
 
@@ -280,6 +279,22 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
+
+    }
+
+
+
+    public function countNew(){
+
+        $purchase_order = $this->cache->remember('purchase_orders:countNew', 240, function(){
+
+            $date_now = $this->carbon->now()->format('Y-m-d');
+
+            return $this->purchase_order->whereDate('created_at', $date_now)->count();
+        
+        }); 
+
+        return $purchase_order;
 
     }
 

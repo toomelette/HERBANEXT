@@ -42,6 +42,7 @@ class TaskSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:countNew');
 
         $this->session->flash('TASK_CREATE_SUCCESS', 'The Task has been successfully created!');
 
@@ -73,6 +74,7 @@ class TaskSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:findBySlug:'. $task->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:countNew');
 
         $this->session->flash('TASK_DELETE_SUCCESS', 'The Task has been successfully deleted!');
         $this->session->flash('TASK_DELETE_SUCCESS_SLUG', $task->slug);

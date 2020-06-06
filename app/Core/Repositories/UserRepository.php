@@ -303,10 +303,10 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-    public function getByIsOnline($status){
+    public function countByIsOnline($status){
 
-        $users = $this->cache->remember('users:getByIsOnline:'. $status .'', 240, function() use ($status){
-            return $this->user->where('is_online', $status)->get();
+        $users = $this->cache->remember('users:countByIsOnline:'. $status .'', 240, function() use ($status){
+            return $this->user->where('is_online', $status)->count();
         }); 
 
         return $users;

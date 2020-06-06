@@ -27,5 +27,7 @@ interface TaskInterface {
 	public function getUnscheduled();
 
 	public function getScheduled();
+
+	public function countNew();
 		
 }

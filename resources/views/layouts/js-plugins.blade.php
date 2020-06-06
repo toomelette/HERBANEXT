@@ -38,6 +38,10 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/multiselect/js/jquery.multi-select.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('template/bower_components/chart.js/Chart.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 

@@ -169,6 +169,22 @@ class DeliveryRepository extends BaseRepository implements DeliveryInterface {
 
 
 
+    public function countNew(){
+
+        $deliveries = $this->cache->remember('deliveries:countNew', 240, function(){
+
+            $date_now = $this->carbon->now()->format('Y-m-d');
+
+            return $this->delivery->whereDate('created_at', $date_now)->count();
+        
+        }); 
+
+        return $deliveries;
+
+    }
+
+
+
 
 
 

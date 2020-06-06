@@ -282,6 +282,22 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+    public function countNew(){
+
+        $tasks = $this->cache->remember('tasks:countNew', 240, function(){
+
+            $date_now = $this->carbon->now()->format('Y-m-d');
+
+            return $this->task->whereDate('created_at', $date_now)->count();
+        
+        }); 
+
+        return $tasks;
+
+    }
+
+
+
 
 
 

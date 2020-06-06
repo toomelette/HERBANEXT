@@ -204,5 +204,26 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
+    public function checkedOutFinishGoodsCurrentMonth(){
+
+        $item_logs = $this->cache->remember('item_logs:checkedOutFinishGoodsCurrentMonth', 240, function(){
+
+            $month_now = $this->carbon->now()->format('m');
+
+            return $this->item_log->select('item_id', 'amount', 'unit')
+                                  ->where('transaction_type', 0)
+                                  ->whereMonth('datetime', $month_now)
+                                  ->get();
+
+        });
+        
+        return $item_logs;
+
+    }
+
+
+
+
+
 
 }
