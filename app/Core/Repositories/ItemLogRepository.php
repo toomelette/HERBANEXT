@@ -211,8 +211,12 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
             $month_now = $this->carbon->now()->format('m');
 
             return $this->item_log->select('item_id', 'amount', 'unit')
+                                  ->with('item')
                                   ->where('transaction_type', 0)
                                   ->whereMonth('datetime', $month_now)
+                                  ->whereHas('item', function ($model){
+                                    $model->where('item_category_id', 'IC10005');
+                                  })
                                   ->get();
 
         });

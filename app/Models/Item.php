@@ -104,7 +104,6 @@ class Item extends Model{
 
 
 
-
     /** RELATIONSHIPS **/
     public function itemBatch() {
     	return $this->hasMany('App\Models\ItemBatch','item_id','item_id');

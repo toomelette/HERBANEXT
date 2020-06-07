@@ -10,4 +10,6 @@ interface TaskPersonnelInterface {
 
 	public function updateRating($task_personnel_id, $rating);
 
+	public function personnelRatingThisMonth();
+
 }

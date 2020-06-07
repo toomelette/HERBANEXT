@@ -48,7 +48,6 @@ class TaskPersonnelRepository extends BaseRepository implements TaskPersonnelInt
 
 
 
-
     public function findByTaskPersonnelId($task_personnel_id){
 
         $task_personnel = $this->cache->remember('task_personnel:findByTaskPersonnelId:' . $task_personnel_id, 240, 
@@ -70,6 +69,27 @@ class TaskPersonnelRepository extends BaseRepository implements TaskPersonnelInt
 
 
 
+    public function personnelRatingThisMonth(){
+
+        $task_personnels = $this->cache->remember('task_personnel:personnelRatingThisMonth', 240, function(){
+
+            $month_now = $this->carbon->now()->format('m');
+
+            return $this->task_personnel->select('task_id', 'personnel_id', 'rating')
+                                        ->with('task', 'personnel')
+                                        ->whereHas('task', function ($model) use ($month_now){
+                                            $model->whereMonth('date_to', $month_now);
+                                        })
+                                        ->get();
+
+        });
+        
+        return $task_personnels;
+
+    }
+
+
+
     public function getTaskPersonnelIdInc(){
 
         $id = 'TP100001';
@@ -85,6 +105,8 @@ class TaskPersonnelRepository extends BaseRepository implements TaskPersonnelInt
         return $id;
         
     }
+
+
 
 
 

@@ -244,6 +244,23 @@ class PurchaseOrderRepository extends BaseRepository implements PurchaseOrderInt
 
 
 
+    public function getCurrentMonth(){
+
+        $purchase_order = $this->cache->remember('purchase_orders:getCurrentMonth', 240, function(){
+
+            return $this->purchase_order->select('po_no', 'bill_to_name', 'bill_to_company', 'bill_to_address', 'ship_to_name', 'ship_to_company', 'ship_to_address', 'process_status')
+                                        ->limit(5)
+                                        ->orderBy('updated_at', 'desc')
+                                        ->get();
+
+        }); 
+
+        return $purchase_order;
+
+    }
+
+
+
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

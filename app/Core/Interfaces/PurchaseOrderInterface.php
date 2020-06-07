@@ -26,4 +26,6 @@ interface PurchaseOrderInterface {
 
 	public function countNew();
 
+	public function getCurrentMonth();
+
 }

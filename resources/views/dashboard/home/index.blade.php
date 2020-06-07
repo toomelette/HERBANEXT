@@ -118,55 +118,183 @@
 
 	<div class="row">
 
-		<div class="col-xs-8">
-
-			<div class="box box-default">
-
+		<div class="col-md-8">
+			<div class="box box-success">
 				<div class="box-header with-border">
 				  <h3 class="box-title">
-				  	Number of checked out finished goods for this month
+				  	Most Checked Out Finished Goods this Month
 				  </h3>
 				</div>
 
 				<div class="box-body">
+
 				  <div class="row">
 				    <div class="col-md-8">
 				      <div class="chart-responsive">
 				        <canvas id="pieChart" height="400"></canvas>
 				      </div>
-
 				    </div>
 
 				    <div class="col-md-4">
 				      <ul class="chart-legend clearfix">
-				        <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-				        <li><i class="fa fa-circle-o text-green"></i> IE</li>
-				        <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-				        <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-				        <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-				        <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+				      	@foreach ($get_current_month_item_logs->unique('item_id') as $key => $data)
+				      		
+				      		<?php $count = 0; ?>
+
+				      		@foreach ($get_current_month_item_logs as $data2)
+					      		@if ($data->item_id == $data2->item_id)
+					      			<?php $count += 1; ?>
+					      		@endif
+				      		@endforeach
+
+				        	<li>
+				        		<i class="fa fa-circle-o" style="color:{{ $color_array[$key] }};"></i> 
+				        		{{ optional($data->item)->name }} - {{ $count }}
+				        	</li>
+
+				      	@endforeach
 				      </ul>
 				    </div>
-
 				  </div>
 
 				</div>
-
-				{{-- <div class="box-footer no-padding">
-				  <ul class="nav nav-pills nav-stacked">
-				    <li><a href="#">United States of America
-				      <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-				    <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
-				    </li>
-				    <li><a href="#">China
-				      <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-				  </ul>
-				</div> --}}
-
 			</div>
+		</div>
+
+
+		<div class="col-md-4">
+		    <div class="box box-primary">
+		        <div class="box-header with-border">
+		          <h3 class="box-title">Top 5 Most Effecient Personnel this month</h3>
+		        </div>
+
+		        <div class="box-body">
+		          <ul class="products-list product-list-in-box">
+				      	
+				      	<?php
+				      		$personnel_array = [];
+				      	?>
+
+				      	@foreach ($get_personnel_ratings->unique('personnel_id') as $key => $data)
+				      		
+				      		<?php 
+				      			$partial_rating = 0;
+				      			$ave_rating = 0;
+				      			$count = 0; 
+				      		?>
+
+				      		@foreach ($get_personnel_ratings as $data2)
+					      		@if ($data->personnel_id == $data2->personnel_id)
+					      			<?php 
+					      				$count += 1;
+					      				$partial_rating += $data2->rating; 
+					      			?>
+					      		@endif
+				      		@endforeach
+
+				      		<?php
+
+					      		$ave_rating = $partial_rating / $count;
+
+				      			$personnel_array[] = [
+				      				'name' => optional($data->personnel)->fullname, 
+				      				'position' => optional($data->personnel)->position,
+				      				'rating' => number_format($ave_rating, 2),
+				      			];
+				      		?>
+
+				      	@endforeach
+
+
+				      	@foreach (array_slice(collect($personnel_array)->sortBy('rating')->reverse()->toArray(), 0, 5) as $data)
+
+				            <li class="item">
+				              <div class="product-img">
+				                <img src="{{ asset('images/avatar.jpeg') }}" class="img-circle" alt="Product Image">
+				              </div>
+				              <div class="product-info">
+				                <a href="#" class="product-title">{{ $data['name'] }}
+				                  <span class="badge bg-yellow pull-right">Rating : {{ $data['rating'] }}</span>
+				              	</a>
+				                <span class="product-description">
+			                      {{ $data['position'] }}
+			                    </span>
+				              </div>
+				            </li>
+				      		
+				      	@endforeach
+
+		          </ul>
+		        </div>
+
+		        <div class="box-footer text-center">
+		          <a href="{{ route('dashboard.personnel.index') }}" class="uppercase">View All Personnels</a>
+		        </div>
+
+		    </div>
+		</div>
+
+
+		<div class="col-md-8">
 			
+			<div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Latest Purchase Orders</h3>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+                  <tr>
+                    <th>PO No.</th>
+                    <th>Bill to</th>
+                    <th>Ship to</th>
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+              	  @foreach ($get_latest_po as $data)
+
+	                  <tr>
+	                    <td id="mid-vert">{{ $data->po_no }}</td>
+	                    <td id="mid-vert">
+			                <b>{{ $data->bill_to_name }}</b><br>
+			                {{ $data->bill_to_company }}<br>
+			                {{ $data->bill_to_address }}<br>
+			            </td>
+	                    <td id="mid-vert">
+			                <b>{{ $data->ship_to_name }}</b><br>
+			                {{ $data->ship_to_company }}<br>
+			                {{ $data->ship_to_address }}<br>
+			            </td>
+	                    <td id="mid-vert">
+	                      {!! $data->displayProcessStatusSpan() !!}
+	                    </td>
+	                  </tr>
+
+              	  @endforeach
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer clearfix">
+              <a href="{{ route('dashboard.purchase_order.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+            </div>
+          </div>
 
 		</div>
+
+
+		<div class="col-md-4">
+		    <div class="box box-warning">
+		      <div class="box-body no-padding">
+		        <div id="calendar"></div>
+		      </div>
+		    </div>
+		</div>
+
 
 	</div>
 
@@ -181,7 +309,9 @@
 @section('scripts')
 
 <script type="text/javascript">
-		
+				
+
+  // Pie Graph
   $(function () {
 
 	  'use strict';
@@ -190,42 +320,24 @@
 	  var pieChart       = new Chart(pieChartCanvas);
 	  var PieData        = [
 
+	  @foreach ($get_current_month_item_logs->unique('item_id') as $key => $data)
+				      		
+  		<?php $count = 0; ?>
+
+  		@foreach ($get_current_month_item_logs as $data2)
+      		@if ($data->item_id == $data2->item_id)
+      			<?php $count += 1; ?>
+      		@endif
+  		@endforeach
+
 	    {
-	      value    : 700,
-	      color    : '#f56954',
-	      highlight: '#f56954',
-	      label    : 'Chrome'
+	      value    : {{ $count }},
+	      color    : '{{ $color_array[$key] }}',
+	      highlight: '{{ $color_array[$key] }}',
+	      label    : '{{ optional($data->item)->name }}'
 	    },
-	    {
-	      value    : 500,
-	      color    : '#00a65a',
-	      highlight: '#00a65a',
-	      label    : 'IE'
-	    },
-	    {
-	      value    : 400,
-	      color    : '#f39c12',
-	      highlight: '#f39c12',
-	      label    : 'FireFox'
-	    },
-	    {
-	      value    : 600,
-	      color    : '#00c0ef',
-	      highlight: '#00c0ef',
-	      label    : 'Safari'
-	    },
-	    {
-	      value    : 300,
-	      color    : '#3c8dbc',
-	      highlight: '#3c8dbc',
-	      label    : 'Opera'
-	    },
-	    {
-	      value    : 100,
-	      color    : '#d2d6de',
-	      highlight: '#d2d6de',
-	      label    : 'Navigator'
-	    }
+
+	  @endforeach
 
 	  ];
 
@@ -242,13 +354,48 @@
 	    responsive           : true,
 	    maintainAspectRatio  : false,
 	    legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-	    tooltipTemplate      : '<%=value %> <%=label%> users'
+	    tooltipTemplate      : '<%=value %> <%=label%>'
 
 	  };
 
 	  pieChart.Doughnut(PieData, pieOptions);
 
 	});
+
+
+
+    // Calendar
+    $(function () {
+
+	  var date = new Date()
+	  var d    = date.getDate(),
+	      m    = date.getMonth(),
+	      y    = date.getFullYear()
+	  $('#calendar').fullCalendar({
+	  	height: 650,
+	  	defaultView: 'agendaDay',
+
+	    events    : [
+	      
+	      @foreach($get_scheduled_tasks as $data)
+	        {
+	          slug            : '{{ $data->slug }}',
+	          title           : '{{ $data->name ." - ". optional($data->machine)->displayMaintenanceStatusText() }}',
+	          start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
+	          end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
+	          allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
+	          backgroundColor : '{{ $data->color }}',
+	          borderColor     : '{{ $data->color }}'
+	        },
+
+	      @endforeach
+
+	    ],
+
+	  })
+
+	})
+
 
 </script>
 

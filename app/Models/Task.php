@@ -14,7 +14,7 @@ class Task extends Model{
 
     protected $table = 'tasks';
 
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at', 'updated_at', 'date_from', 'date_to'];
 
     protected $sortable = ['name', 'description', 'date_from', 'status'];
     
