@@ -56,6 +56,10 @@
                 {!! __form::textbox(
                   '12', 'email', 'email', 'Email *', 'Email', old('email') ? old('email') : $user->email, $errors->has('email'), $errors->first('email'), ''
                 ) !!}
+
+                {!! __form::select_static(
+                  '12', 'home_type', 'Home Type *', old('home_type') ? old('home_type') : $user->home_type, ['Empty Dashboard' => 'ED', 'Dashboard With Stats' => 'DWS',], $errors->has('home_type'), $errors->first('home_type'), '', ''
+                ) !!}
                 
                 {!! __form::textbox(
                   '12', 'username', 'text', 'Username *', 'Username', old('username') ? old('username') : $user->username, $errors->has('username'), $errors->first('username'), ''

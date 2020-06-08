@@ -55,7 +55,8 @@
 
 <section class="content">
       
-
+@if (Auth::user()->home_type == 'DWS')
+	
 	<div class="row">
 
 		<div class="col-lg-3 col-xs-6">
@@ -323,7 +324,11 @@
 
 		</div>
 
+	</div>
 
+@endif
+
+	<div class="row">
 		<div class="col-md-12">
 		    <div class="box box-warning">
 		      <div class="box-body no-padding">
@@ -331,11 +336,7 @@
 		      </div>
 		    </div>
 		</div>
-
-
 	</div>
-
-
 
 </section>
 
@@ -347,57 +348,59 @@
 
 <script type="text/javascript">
 				
+	@if (Auth::user()->home_type == 'DWS')
+	  // Pie Graph
+	  $(function () {
 
-  // Pie Graph
-  $(function () {
+		  'use strict';
 
-	  'use strict';
+		  var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+		  var pieChart       = new Chart(pieChartCanvas);
+		  var PieData        = [
 
-	  var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-	  var pieChart       = new Chart(pieChartCanvas);
-	  var PieData        = [
+		  @foreach ($get_current_month_item_logs->unique('item_id') as $key => $data)
+					      		
+	  		<?php $count = 0; ?>
 
-	  @foreach ($get_current_month_item_logs->unique('item_id') as $key => $data)
-				      		
-  		<?php $count = 0; ?>
+	  		@foreach ($get_current_month_item_logs as $data2)
+	      		@if ($data->item_id == $data2->item_id)
+	      			<?php $count += 1; ?>
+	      		@endif
+	  		@endforeach
 
-  		@foreach ($get_current_month_item_logs as $data2)
-      		@if ($data->item_id == $data2->item_id)
-      			<?php $count += 1; ?>
-      		@endif
-  		@endforeach
+		    {
+		      value    : {{ $count }},
+		      color    : '{{ $color_array[$key] }}',
+		      highlight: '{{ $color_array[$key] }}',
+		      label    : '{{ optional($data->item)->name }}'
+		    },
 
-	    {
-	      value    : {{ $count }},
-	      color    : '{{ $color_array[$key] }}',
-	      highlight: '{{ $color_array[$key] }}',
-	      label    : '{{ optional($data->item)->name }}'
-	    },
+		  @endforeach
 
-	  @endforeach
+		  ];
 
-	  ];
+		  var pieOptions     = {
 
-	  var pieOptions     = {
+		    segmentShowStroke    : true,
+		    segmentStrokeColor   : '#fff',
+		    segmentStrokeWidth   : 1,
+		    percentageInnerCutout: 50,
+		    animationSteps       : 100,
+		    animationEasing      : 'easeOutBounce',
+		    animateRotate        : true,
+		    animateScale         : false,
+		    responsive           : true,
+		    maintainAspectRatio  : false,
+		    legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+		    tooltipTemplate      : '<%=value %> <%=label%>'
 
-	    segmentShowStroke    : true,
-	    segmentStrokeColor   : '#fff',
-	    segmentStrokeWidth   : 1,
-	    percentageInnerCutout: 50,
-	    animationSteps       : 100,
-	    animationEasing      : 'easeOutBounce',
-	    animateRotate        : true,
-	    animateScale         : false,
-	    responsive           : true,
-	    maintainAspectRatio  : false,
-	    legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
-	    tooltipTemplate      : '<%=value %> <%=label%>'
+		  };
 
-	  };
+		  pieChart.Doughnut(PieData, pieOptions);
 
-	  pieChart.Doughnut(PieData, pieOptions);
+		});
 
-	});
+	@endif
 
 
 
@@ -429,7 +432,6 @@
 	  })
 
 	})
-
 
 </script>
 
