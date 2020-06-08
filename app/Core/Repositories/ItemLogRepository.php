@@ -204,6 +204,25 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
+    public function getLatest(){
+
+        $item_logs = $this->cache->remember('item_logs:getLatest', 240, function(){
+
+            return $this->item_log->select('item_id', 'item_name', 'transaction_type', 'amount', 'unit')
+                                  ->orderBy('datetime', 'desc')
+                                  ->limit(15)
+                                  ->get();
+
+        });
+        
+        return $item_logs;
+
+    }
+
+
+
+
+
     public function checkedOutFinishGoodsCurrentMonth(){
 
         $item_logs = $this->cache->remember('item_logs:checkedOutFinishGoodsCurrentMonth', 240, function(){

@@ -59,6 +59,7 @@ class HomeService extends BaseService{
             'get_personnel_ratings' => $this->task_personnel_repo->personnelRatingThisMonth(),
             'get_scheduled_tasks' => $this->task_repo->getScheduled(),
             'get_latest_po' => $this->po_repo->getCurrentMonth(),
+            'get_latest_item_logs' => $this->item_log_repo->getLatest(),
 
         ]);
 

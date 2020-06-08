@@ -287,7 +287,44 @@
 		</div>
 
 
+
 		<div class="col-md-4">
+			
+			<div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Latest Inventory Logs</h3>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+	                  <tr>
+	                    <th>Item</th>
+	                    <th>Amount</th>
+	                  </tr>
+                  </thead>
+                  <tbody>
+
+	              	  @foreach ($get_latest_item_logs as $data)
+		                <tr>
+		                  <td id="mid-vert">{{ $data->item_name }}</td>
+		                  <td id="mid-vert">{!! $data->displayAmount() !!}</td>
+		                </tr>
+	              	  @endforeach
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer clearfix">
+              <a href="{{ route('dashboard.item.logs') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Item Logs</a>
+            </div>
+          </div>
+
+		</div>
+
+
+		<div class="col-md-12">
 		    <div class="box box-warning">
 		      <div class="box-body no-padding">
 		        <div id="calendar"></div>
@@ -367,13 +404,10 @@
     // Calendar
     $(function () {
 
-	  var date = new Date()
-	  var d    = date.getDate(),
-	      m    = date.getMonth(),
-	      y    = date.getFullYear()
 	  $('#calendar').fullCalendar({
-	  	height: 650,
-	  	defaultView: 'agendaDay',
+
+	  	height: 1200,
+	  	defaultView: 'agendaWeek',
 
 	    events    : [
 	      

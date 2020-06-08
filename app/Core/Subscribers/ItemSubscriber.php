@@ -105,6 +105,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:getLatest');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findByItemId:'. $item->item_id .'');
@@ -127,6 +128,7 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:checkedOutFinishGoodsCurrentMonth');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:getLatest');
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findBySlug:'. $item->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:items:findByItemId:'. $item->product_code .'');

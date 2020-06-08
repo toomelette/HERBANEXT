@@ -16,4 +16,6 @@ interface ItemLogInterface {
 
 	public function checkedOutFinishGoodsCurrentMonth();
 
+	public function getLatest();
+
 }
