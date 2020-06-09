@@ -36,6 +36,7 @@ class PersonnelSubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:task_personnel:personnelRatingThisMonth');
 
         $this->session->flash('PERSONNEL_CREATE_SUCCESS', 'The Personnel has been successfully created!');
 
@@ -51,6 +52,7 @@ class PersonnelSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:findBySlug:'. $personnel->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:findByPersonnelId:'. $personnel->personnel_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:task_personnel:personnelRatingThisMonth');
 
         $this->session->flash('PERSONNEL_UPDATE_SUCCESS', 'The Personnel has been successfully updated!');
         $this->session->flash('PERSONNEL_UPDATE_SUCCESS_SLUG', $personnel->slug);
@@ -65,6 +67,7 @@ class PersonnelSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:findBySlug:'. $personnel->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:personnels:findByPersonnelId:'. $personnel->personnel_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:task_personnel:personnelRatingThisMonth');
 
         $this->session->flash('PERSONNEL_DELETE_SUCCESS', 'The Personnel has been successfully deleted!');
         $this->session->flash('PERSONNEL_DELETE_SUCCESS_SLUG', $personnel->slug);

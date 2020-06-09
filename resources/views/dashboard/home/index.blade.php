@@ -198,6 +198,7 @@
 					      		$ave_rating = $partial_rating / $count;
 
 				      			$personnel_array[] = [
+				      				'avatar' => optional($data->personnel)->avatar, 
 				      				'name' => optional($data->personnel)->fullname, 
 				      				'position' => optional($data->personnel)->position,
 				      				'rating' => number_format($ave_rating, 2),
@@ -211,8 +212,8 @@
 
 				            <li class="item">
 				              <div class="product-img">
-				                @if (isset($data->avatar))
-				                  <img src="data:image/jpg;base64,{{ $data->avatar }}" 
+				                @if (isset($data['avatar']))
+				                  <img src="data:image/jpg;base64,{{ $data['avatar'] }}" 
 				                       class="img-circle" 
 				                       alt="Product Image">
 				                @else
