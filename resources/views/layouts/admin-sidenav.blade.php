@@ -2,7 +2,11 @@
   <section class="sidebar">
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="{{ asset('images/avatar.jpeg') }}" class="img-circle" alt="User Image">
+        @if (isset(Auth::user()->avatar))
+          <img src="data:image/jpg;base64,{{ Auth::user()->avatar }}" class="img-circle" alt="User Image">
+        @else
+          <img src="{{ asset('images/avatar.jpeg') }}" class="img-circle" alt="User Image">
+        @endif
       </div>
       <div class="pull-left info">
         

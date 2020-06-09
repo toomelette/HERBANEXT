@@ -189,4 +189,43 @@ class __js{
 
 
 
+    public static function img_upload($id, $theme, $type, $value){
+
+      if ($type == 'URL') {
+      	$initialPreviewAsData = 'true';
+      	$value = $value;
+      }elseif ('BLOB') {
+      	$initialPreviewAsData = 'false';
+      	$value =  "<img style='width:auto; height:160px;' src='data:image/png;base64,". $value ."'>";
+      }
+
+      return '$("#'. $id .'").fileinput({
+		        theme: "'. $theme .'",
+		        allowedFileExtensions: ["jpg", "jpeg", "png"],
+    			maxFileCount: 1,
+		        showUpload: false,
+		        showCaption: false,
+		        overwriteInitial: true,
+		        fileType: "jpg",
+		        browseClass: "btn btn-primary btn-md",
+		        initialPreview: [
+		            "'. $value .'",
+		        ],
+		        initialPreviewAsData: '. $initialPreviewAsData .',
+		        initialPreviewFileType: "image",
+		        initialPreviewConfig: [
+		            {caption: "avatar.jpg", width: "100%", key: 1},
+		        ],
+		      }); 
+			  $(".kv-file-remove").hide();
+	  ';
+
+    }
+
+
+
+
+
+
+
 }

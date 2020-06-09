@@ -21,6 +21,7 @@ class PersonnelFormRequest extends FormRequest{
     public function rules(){
 
         return [
+            'avatar' => 'nullable|mimes:jpg,jpeg,png|max:50000',
             'firstname'=>'required|string|max:90',
             'middlename'=>'required|string|max:90',
             'lastname'=>'required|string|max:90',

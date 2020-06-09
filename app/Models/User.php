@@ -32,6 +32,7 @@ class User extends Authenticatable{
 
         'slug' => '',
         'user_id' => '', 
+        'avatar' => null, 
         'email' => '', 
         'username' => '', 
         'password' => '', 

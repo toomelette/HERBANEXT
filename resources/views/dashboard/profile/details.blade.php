@@ -14,7 +14,16 @@
 
       <div class="box box-default">
         <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="{{asset('images/avatar.jpeg')}}" alt="User profile picture">
+            
+          @if (isset(Auth::user()->avatar))
+            <img class="profile-user-img img-responsive img-circle" 
+                 src="data:image/jpg;base64,{{ Auth::user()->avatar }}" 
+                 alt="User profile picture">
+          @else
+            <img class="profile-user-img img-responsive img-circle" 
+                 src="{{asset('images/avatar.jpeg')}}" 
+                 alt="User profile picture">
+          @endif
 
           <h3 class="profile-username text-center">{{ Auth::check() ? Auth::user()->fullname : '' }}</h3>
 

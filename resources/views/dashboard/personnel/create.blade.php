@@ -13,12 +13,19 @@
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.personnel.store') }}">
+      <form method="POST" 
+            autocomplete="off" 
+            action="{{ route('dashboard.personnel.store') }}" 
+            enctype="multipart/form-data">
 
         <div class="box-body">
           <div class="col-md-12">
                   
             @csrf    
+
+            {!! __form::file(
+              '4', 'avatar', 'Upload Avatar', $errors->has('avatar'), $errors->first('avatar'), ''
+            ) !!} 
 
             {!! __form::textbox(
               '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), ''
@@ -31,8 +38,6 @@
             {!! __form::textbox(
               '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), ''
             ) !!}
-
-            <div class="col-md-12"></div>
 
             {!! __form::textbox(
               '4', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), ''
@@ -71,6 +76,8 @@
     @if(Session::has('PERSONNEL_CREATE_SUCCESS'))
       {!! __js::toast(Session::get('PERSONNEL_CREATE_SUCCESS')) !!}
     @endif
+
+    {!! __js::img_upload('avatar', 'fa', 'URL', '') !!}
 
   </script>
     

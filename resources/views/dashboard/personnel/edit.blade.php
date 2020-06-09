@@ -15,7 +15,10 @@
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.personnel.update', $personnel->slug) }}">
+      <form method="POST" 
+            autocomplete="off" 
+            action="{{ route('dashboard.personnel.update', $personnel->slug) }}" 
+            enctype="multipart/form-data">
 
         <div class="box-body">
           <div class="col-md-12">
@@ -23,6 +26,10 @@
             <input name="_method" value="PUT" type="hidden">
 
             @csrf    
+
+            {!! __form::file(
+              '4', 'avatar', 'Upload Avatar', $errors->has('avatar'), $errors->first('avatar'), ''
+            ) !!} 
 
             {!! __form::textbox(
               '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : $personnel->firstname, $errors->has('firstname'), $errors->first('firstname'), ''
@@ -35,8 +42,6 @@
             {!! __form::textbox(
               '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $personnel->lastname, $errors->has('lastname'), $errors->first('lastname'), ''
             ) !!}
-
-            <div class="col-md-12"></div>
 
             {!! __form::textbox(
               '4', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : $personnel->position, $errors->has('position'), $errors->first('position'), ''
@@ -64,4 +69,17 @@
 
 </section>
 
+@endsection
+
+
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+    {!! __js::img_upload('avatar', 'fa', 'BLOB', $personnel->avatar) !!}
+
+  </script>
+    
 @endsection

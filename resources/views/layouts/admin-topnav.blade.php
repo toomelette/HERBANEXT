@@ -14,14 +14,22 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
+            @if (isset(Auth::user()->avatar))
+              <img src="data:image/jpg;base64,{{ Auth::user()->avatar }}" class="user-image" alt="User Image">
+            @else
+              <img src="{{ asset('images/avatar.jpeg') }}" class="user-image" alt="User Image">
+            @endif
             @if(Auth::check())
               {{ __sanitize::html_encode(Auth::user()->firstname) }}
             @endif
           </a>
           <ul class="dropdown-menu">
             <li class="user-header">
-              <img src="{{asset('images/avatar.jpeg')}}" class="img-circle" alt="User Image">
+              @if (isset(Auth::user()->avatar))
+                <img src="data:image/jpg;base64,{{ Auth::user()->avatar }}" class="img-circle" alt="User Image">
+              @else
+                <img src="{{ asset('images/avatar.jpeg') }}" class="img-circle" alt="User Image">
+              @endif
               <p>
                 @if(Auth::check())
                   {{ __sanitize::html_encode(Auth::user()->firstname) .' '. __sanitize::html_encode(Auth::user()->lastname) }}

@@ -1,21 +1,24 @@
 @extends('layouts.admin-master')
 
 @section('content')
-  
-  <section class="content-header">
-      <h1>New User</h1>
-      {{ Breadcrumbs::render('user_add') }}  
-  </section>
 
   <section class="content">    
 
     <div class="box box-solid">
-      
+        
       <div class="box-header with-border">
-        <code>Fields with asterisks(*) are required</code>
+        <h2 class="box-title">New User</h2>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
-      <form id="user_create_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">
+      <form id="user_create_form" 
+            class="form-horizontal" 
+            method="POST" 
+            autocomplete="off" 
+            action="{{ route('dashboard.user.store') }}" 
+            enctype="multipart/form-data">
 
         <div class="box-body">
 
@@ -27,6 +30,10 @@
                   <h3 class="box-title">User Info</h3>
                 </div>
                 <div class="box-body">
+
+                  {!! __form::file(
+                    '12', 'avatar', 'Upload Avatar', $errors->has('avatar'), $errors->first('avatar'), ''
+                  ) !!} 
 
                   {!! __form::textbox(
                     '12', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
@@ -217,6 +224,8 @@
   @if(Session::has('USER_CREATE_SUCCESS'))
     {!! __js::toast(Session::get('USER_CREATE_SUCCESS')) !!}
   @endif
+
+  {!! __js::img_upload('avatar', 'fa', 'URL', '') !!}
 
 </script>
     

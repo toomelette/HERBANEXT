@@ -211,7 +211,15 @@
 
 				            <li class="item">
 				              <div class="product-img">
-				                <img src="{{ asset('images/avatar.jpeg') }}" class="img-circle" alt="Product Image">
+				                @if (isset($data->avatar))
+				                  <img src="data:image/jpg;base64,{{ $data->avatar }}" 
+				                       class="img-circle" 
+				                       alt="Product Image">
+				                @else
+				                  <img src="{{ asset('images/avatar.jpeg') }}" 
+				                       class="img-circle" 
+				                       alt="Product Image">
+				                @endif
 				              </div>
 				              <div class="product-info">
 				                <a href="#" class="product-title">{{ $data['name'] }}

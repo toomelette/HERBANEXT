@@ -41,6 +41,7 @@
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
+            <th style="width:150px; text-align:center;">Avatar</th>
             <th>@sortablelink('firstname', 'Fullname')</th>
             <th>@sortablelink('position', 'Position')</th>
             <th>Rating</th>
@@ -48,6 +49,19 @@
           </tr>
           @foreach($personnels as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+              <td style="text-align:center;">
+                @if (isset($data->avatar))
+                  <img src="data:image/jpg;base64,{{ $data->avatar }}" 
+                       class="img-circle" 
+                       alt="Product Image"
+                       style="height:60px;">
+                @else
+                  <img src="{{ asset('images/avatar.jpeg') }}" 
+                       class="img-circle" 
+                       alt="Product Image"
+                       style="height:60px;">
+                @endif
+              </td>
               <td id="mid-vert">{{ $data->fullname }}</td>
               <td id="mid-vert">{{ $data->position }}</td>
               <td id="mid-vert">{{ $data->aveRating() }}</td>

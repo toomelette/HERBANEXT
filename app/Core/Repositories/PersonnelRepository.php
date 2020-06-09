@@ -57,6 +57,11 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
         $personnel = new Personnel;
         $personnel->personnel_id = $this->getPersonnelIdInc();
         $personnel->slug = $this->str->random(16);
+
+        if(!empty($request->file('avatar'))){
+            $personnel->avatar = base64_encode(file_get_contents($request->file('avatar')));
+        }
+
         $personnel->firstname = $request->firstname;
         $personnel->middlename = $request->middlename;
         $personnel->lastname = $request->lastname;
@@ -82,6 +87,11 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
     public function update($request, $slug){
 
         $personnel = $this->findBySlug($slug);
+
+        if(!empty($request->file('avatar'))){
+            $personnel->avatar = base64_encode(file_get_contents($request->file('avatar')));
+        }
+        
         $personnel->firstname = $request->firstname;
         $personnel->middlename = $request->middlename;
         $personnel->lastname = $request->lastname;
@@ -151,7 +161,7 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('personnel_id', 'firstname', 'middlename', 'lastname', 'position', 'slug')
+        return $model->select('avatar', 'personnel_id', 'firstname', 'middlename', 'lastname', 'position', 'slug')                     
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -187,7 +197,7 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
     public function getAll(){
 
         $personnels = $this->cache->remember('personnels:getAll', 240, function(){
-            return $this->personnel->select('personnel_id', 'firstname', 'middlename', 'lastname')
+            return $this->personnel->select('personnel_id', 'avatar', 'firstname', 'middlename', 'lastname')
                                    ->get();
         });
         
