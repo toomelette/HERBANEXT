@@ -4,6 +4,7 @@ namespace App\Core\ViewHelpers;
 
 use URL;
 use Input;
+use App\Core\Helpers\__sanitize;
 
 
 class __html{
@@ -119,7 +120,7 @@ class __html{
 
        	return '<div class="box-title">  
 	                <div class="input-group input-group-md" style="width: 500px;">
-	                  <input name="q" class="form-control pull-right" placeholder="Search .." type="text" value="'. old("q") .'">
+	                  <input name="q" class="form-control pull-right" placeholder="Search .." type="text" value="'. __sanitize::html_attribute_encode(old("q")) .'">
 	                  <div class="input-group-btn ">
 	                    <button  id="'. $seach_button_id .'" type="submit" class="btn btn-default btn-md">
 	                    	<i class="fa fa-search"></i>

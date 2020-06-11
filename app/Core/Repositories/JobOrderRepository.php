@@ -29,6 +29,37 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
 
 
 
+    public function fetch($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
+
+        $job_orders = $this->cache->remember('job_orders:fetch:' . $key, 240, function() use ($request, $entries){
+
+            $job_order = $this->job_order->newQuery();
+            
+            if(isset($request->q)){
+                $job_order->where('jo_no', 'LIKE', '%'. $request->q .'%')
+                          ->orWhere('po_no', 'LIKE', '%'. $request->q .'%')
+                          ->orWhere('item_name', 'LIKE', '%'. $request->q .'%')
+                          ->orWhere('item_product_code', 'LIKE', '%'. $request->q .'%');
+            }
+
+            return $job_order->select('jo_no', 'po_no', 'item_name', 'item_product_code', 'delivery_status', 'slug')
+                             ->sortable()
+                             ->orderBy('created_at', 'desc')
+                             ->paginate($entries);
+
+        });
+
+        return $job_orders;
+
+    }
+
+
+
+
+
     public function store($purchase_order_item){
 
         $job_order = new JobOrder;
@@ -103,6 +134,24 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
         
         if(empty($job_order)){abort(404);}
         
+        return $job_order;
+
+    }
+
+
+
+
+
+    public function findBySlug($slug){
+
+        $job_order = $this->cache->remember('job_orders:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->job_order->where('slug', $slug)->first();
+        }); 
+        
+        if(empty($job_order)){
+            abort(404);
+        }
+
         return $job_order;
 
     }

@@ -82,23 +82,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/job_order/generate_fill/{slug}', 'JobOrderController@generateFill')->name('job_order.generate_fill');
 	Route::post('/job_order/generate_fill/{slug}', 'JobOrderController@generateFillPost')->name('job_order.generate_fill_post');
 	Route::get('/job_order/print/{slug}', 'JobOrderController@print')->name('job_order.print');
+	Route::post('/job_order/confirm_rfd/{status}/{slug}', 'JobOrderController@confirmRFD')->name('job_order.confirm_rfd');
 	Route::resource('job_order', 'JobOrderController');
-
-
-	/** MANUFACTURING ORDER **/
-	Route::get('/manufacturing_order', 'ManufacturingOrderController@index')->name('manufacturing_order.index');
-	Route::get('/manufacturing_order/{slug}', 'ManufacturingOrderController@fillUp')->name('manufacturing_order.fill_up');
-	Route::post('/manufacturing_order/{slug}', 'ManufacturingOrderController@fillUpPost')->name('manufacturing_order.fill_up_post');
-	Route::get('/manufacturing_order/details/{slug}', 'ManufacturingOrderController@show')->name('manufacturing_order.show');
-	Route::get('/manufacturing_order/print/{slug}', 'ManufacturingOrderController@print')->name('manufacturing_order.print');
-
-
-	/** FINISHING ORDER **/
-	Route::get('/finishing_order', 'FinishingOrderController@index')->name('finishing_order.index');
-	Route::get('/finishing_order/{slug}', 'FinishingOrderController@fillUp')->name('finishing_order.fill_up');
-	Route::post('/finishing_order/{slug}', 'FinishingOrderController@fillUpPost')->name('finishing_order.fill_up_post');
-	Route::get('/finishing_order/details/{slug}', 'FinishingOrderController@show')->name('finishing_order.show');
-	Route::get('/finishing_order/print/{slug}', 'FinishingOrderController@print')->name('finishing_order.print');
 
 
 	/** PERSONNELS **/
@@ -106,13 +91,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MACHINES **/
-	Route::get('/machine/maintenance/{slug}', 'MachineController@maintenance')
-	->name('machine.maintenance');
 	Route::resource('machine', 'MachineController');
-
-
-	/** MACHINE MAINTENANCE **/
-	Route::resource('machine_maintenance', 'MachineMaintenanceController');
 
 
 	/** TASKS **/

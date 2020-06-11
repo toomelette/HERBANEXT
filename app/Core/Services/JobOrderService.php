@@ -41,6 +41,18 @@ class JobOrderService extends BaseService{
 
 
 
+    public function fetch($request){
+
+        $job_orders = $this->job_order_repo->fetch($request);
+        $request->flash();
+        return view('dashboard.job_order.index')->with('job_orders', $job_orders);
+
+    }
+
+
+
+
+
     public function fetchPurchaseOrderItem($request){
 
         $po_items = $this->po_item_repo->fetch($request);
@@ -134,6 +146,24 @@ class JobOrderService extends BaseService{
 
         $po_item = $this->po_item_repo->findbySlug($slug);
         return view('printables.job_order.jo')->with('po_item', $po_item);
+
+    }
+
+
+
+
+    public function confirmRFD($status, $slug){
+
+        $job_order = $this->job_order_repo->findbySlug($slug);
+
+        if ($status == 'check') {
+            $this->job_order_repo->updateDeliveryStatus($job_order->jo_id, 1);
+        }elseif ($status == 'uncheck') {
+            $this->job_order_repo->updateDeliveryStatus($job_order->jo_id, 0);
+        }
+
+        $this->event->fire('job_order.confirm_rfd', $job_order);
+        return redirect()->back();
 
     }
 

@@ -20,7 +20,7 @@ class TaskFormRequest extends FormRequest{
 
             'name' => 'required|string|max:90',
             'description' => 'nullable|string|max:255',
-            'item_id' => 'required|string|max:11',
+            'item_id' => 'nullable|string|max:11',
             'machine_id' => 'required|string|max:11',
             'color' => 'required|string|max:45',
             'personnels' => 'nullable|array',

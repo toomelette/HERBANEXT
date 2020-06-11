@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class JobOrder extends Model{
 
 
+    use Sortable;
 
     protected $table = 'job_orders';
     

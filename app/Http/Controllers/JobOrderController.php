@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Services\JobOrderService;
 use App\Http\Requests\JobOrder\JobOrderGenerateFormRequest;
 use App\Http\Requests\JobOrder\JobOrderGenerateFillFormRequest;
+use App\Http\Requests\JobOrder\JobOrderFilterRequest;
 use App\Http\Requests\JobOrder\PurchaseOrderItemFilterRequest;
 
 
@@ -19,6 +20,14 @@ class JobOrderController extends Controller{
     public function __construct(JobOrderService $job_order){
 
         $this->job_order = $job_order;
+
+    }
+
+
+    
+    public function index(JobOrderFilterRequest $request){
+        
+        return $this->job_order->fetch($request);
 
     }
 
@@ -70,6 +79,14 @@ class JobOrderController extends Controller{
     public function print($slug){
         
         return $this->job_order->print($slug);
+
+    }
+
+   
+
+    public function confirmRFD($status, $slug){
+        
+        return $this->job_order->confirmRFD($status, $slug);
 
     }
 
