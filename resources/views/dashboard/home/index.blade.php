@@ -310,7 +310,7 @@
                   <thead>
 	                  <tr>
 	                    <th>Item</th>
-	                    <th>Amount</th>
+	                    <th>Quantity</th>
 	                  </tr>
                   </thead>
                   <tbody>

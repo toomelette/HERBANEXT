@@ -50,8 +50,8 @@
 	        	<table class="table table-hover">
 			          <tr>
 			            <th>@sortablelink('po_no', 'PO No.')</th>
-			            <th>@sortablelink('item.name', 'name')</th>
-			            <th>@sortablelink('amount', 'amount')</th>
+			            <th>@sortablelink('item.name', 'Name')</th>
+			            <th>@sortablelink('amount', 'Quantity')</th>
 			            <th>@sortablelink('updated_at', 'Date')</th>
 			            <th>@sortablelink('delivery_status', 'Delivery Status')</th>
 			            <th style="width: 150px">Action</th>

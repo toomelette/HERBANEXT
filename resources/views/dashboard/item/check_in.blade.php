@@ -43,7 +43,7 @@
           ) !!}          
 
           {!! __form::textbox_numeric(
-            '3', 'amount', 'text', 'Amount *', 'Amount', old('amount'), $errors->has('amount'), $errors->first('amount'), ''
+            '3', 'amount', 'text', 'Quantity *', 'Quantity', old('amount'), $errors->has('amount'), $errors->first('amount'), ''
           ) !!}
 
           {!! __form::select_static(

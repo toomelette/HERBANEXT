@@ -40,7 +40,7 @@
                 <th>Ship to</th>
                 <th>Product Code</th>
                 <th>Product Name</th>
-                <th>Amount</th>
+                <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +92,7 @@
                 <th>Ship to</th>
                 <th>Batch No</th>
                 <th>Product Name</th>
-                <th>Amount</th>
+                <th>Quantity</th>
               </tr>
             </thead>
             <tbody>

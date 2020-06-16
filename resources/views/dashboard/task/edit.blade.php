@@ -63,7 +63,7 @@
             <div class="col-md-12"></div>
             
             {!! __form::select_dynamic(
-              '6', 'item_id', 'Product to be Process', old('item_id') ? old('item_id') : $task->item_id, $global_items_all, 'item_id', 'name', $errors->has('item_id'), $errors->first('item_id'), 'select2', ''
+              '6', 'item_id', 'Product to be Processed', old('item_id') ? old('item_id') : $task->item_id, $global_items_all, 'item_id', 'name', $errors->has('item_id'), $errors->first('item_id'), 'select2', ''
             ) !!}
 
             {!! __form::select_dynamic(

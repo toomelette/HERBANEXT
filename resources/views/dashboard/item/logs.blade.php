@@ -66,7 +66,7 @@
             <th>@sortablelink('product_code', 'Product Code')</th>
             <th>@sortablelink('item.name', 'Name')</th>
             <th>@sortablelink('transaction_type', 'Transaction Type')</th>
-            <th>@sortablelink('amount', 'Amount')</th>
+            <th>@sortablelink('amount', 'Quantity')</th>
             <th>@sortablelink('remarks', 'Remarks')</th>
             <th>@sortablelink('datetime', 'Date')</th>
           </tr>

@@ -19,7 +19,7 @@
           <tr>
             <th>PO No.</th>
             <th>Product Name</th>
-            <th>Amount</th>
+            <th>Quantity</th>
             <th>Status</th>
             <th style="width:200px;">Action</th>
           </tr>

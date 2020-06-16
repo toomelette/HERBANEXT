@@ -109,7 +109,7 @@
         </div>
 
         <div class="col-xs-6">
-          <p class="lead">Amount</p>
+          <p class="lead">Quantity</p>
 
           <div class="table-responsive">
             <table class="table table-bordered">

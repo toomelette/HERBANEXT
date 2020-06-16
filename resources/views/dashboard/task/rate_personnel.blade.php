@@ -28,7 +28,7 @@
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <code>Please rate the personnel involved in the task based on thier Efficiency.</code>
+        <code>Please rate the personnel involved in the task based on their Efficiency.</code>
       </div>
       
       <div class="box-body">

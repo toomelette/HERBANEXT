@@ -46,7 +46,7 @@
           <table class="table table-hover">
             <tr>
               <th>@sortablelink('batch_code', 'Batch Code')</th>
-              <th>@sortablelink('amount', 'Amount')</th>
+              <th>@sortablelink('amount', 'Quantity')</th>
               <th>@sortablelink('expiry_date', 'Expiry Date')</th>
             </tr>
             @foreach($batches as $data) 
