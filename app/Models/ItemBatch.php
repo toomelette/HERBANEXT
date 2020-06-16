@@ -44,9 +44,9 @@ class ItemBatch extends Model{
         $amount = '';
 
         if ($this->unit == 'PCS') {
-            $amount = number_format($this->amount, 3) .' '. $this->unit;
+            $amount = number_format($this->amount) .' '. $this->unit;
         }else{
-            $amount = number_format($this->amount, 0) .' '. $this->unit;
+            $amount = number_format($this->amount, 3) .' '. $this->unit;
         }
 
         return $amount;
