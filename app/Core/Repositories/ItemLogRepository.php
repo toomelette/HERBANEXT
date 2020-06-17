@@ -33,14 +33,14 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
-        $entries = isset($request->e) ? $request->e : 100;
+        $entries = isset($request->e) ? $request->e : 20;
 
         $item_logs = $this->cache->remember('item_logs:fetch:' . $key, 240, function() use ($request, $entries){
 
             $item_log = $this->item_log->newQuery();
 
             $df = $this->__dataType->date_parse($request->df, 'Y-m-d 00:00:00');
-            $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d 24:00:00');
+            $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d 23:59:00');
 
             if(isset($request->q)){
                 $this->search($item_log, $request->q);
@@ -65,7 +65,7 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
     public function fetchByItem($item_id, $request){
 
         $key = str_slug($request->fullUrl(), '_');
-        $entries = isset($request->e) ? $request->e : 100;
+        $entries = isset($request->e) ? $request->e : 20;
 
         $item_logs = $this->cache->remember('item_logs:fetchByItem:' . $key, 240, function() use ($request, $entries, $item_id){
 
