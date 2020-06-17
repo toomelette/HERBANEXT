@@ -166,7 +166,7 @@
 		<div class="col-md-4">
 		    <div class="box box-primary">
 		        <div class="box-header with-border">
-		          <h3 class="box-title">Top 5 Most Effecient Personnel this month</h3>
+		          <h3 class="box-title">Top 5 Most Efficient Personnel this month</h3>
 		        </div>
 
 		        <div class="box-body">
