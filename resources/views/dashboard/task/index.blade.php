@@ -60,6 +60,13 @@
                       </a>
                     @endif
                   @endif
+                  @if(in_array('dashboard.task.update_unfinished', $global_user_submenus))
+                    @if($data->status == 3)
+                      <a type="button" class="btn btn-default" id="update_unfinished_button" data-action="update-unfinished" data-url="{{ route('dashboard.task.update_unfinished', $data->slug) }}">
+                        Revert Unfinished
+                      </a>
+                    @endif
+                  @endif
                   @if(in_array('dashboard.task.rate_personnel', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.task.rate_personnel', $data->slug) }}">
                       Personnel Ratings
@@ -100,6 +107,10 @@
     @csrf
   </form>
 
+  <form id="frm-update-unfinished" method="POST" style="display: none;">
+    @csrf
+  </form>
+
 @endsection
 
 
@@ -124,6 +135,13 @@
       if($(this).data("action") == "update-finished"){
         $("#frm-update-finished").attr("action", $(this).data("url"));
         $("#frm-update-finished").submit();
+      }
+    });
+
+    $(document).on("click", "#update_unfinished_button", function () {
+      if($(this).data("action") == "update-unfinished"){
+        $("#frm-update-unfinished").attr("action", $(this).data("url"));
+        $("#frm-update-unfinished").submit();
       }
     });
 

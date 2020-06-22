@@ -76,6 +76,10 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Core\Interfaces\DeliveryJOInterface', 'App\Core\Repositories\DeliveryJORepository');
 
 		$this->app->bind('App\Core\Interfaces\SupplierInterface', 'App\Core\Repositories\SupplierRepository');
+
+		$this->app->bind('App\Core\Interfaces\EngrTaskInterface', 'App\Core\Repositories\EngrTaskRepository');
+
+		$this->app->bind('App\Core\Interfaces\EngrTaskPersonnelInterface', 'App\Core\Repositories\EngrTaskPersonnelRepository');
 		
 		
 		

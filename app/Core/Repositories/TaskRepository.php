@@ -100,10 +100,10 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-    public function updateFinished($slug){
+    public function updateStatus($slug, $int){
 
         $task = $this->findBySlug($slug);
-        $task->status = 3;
+        $task->status = $int;
         $task->save();
         
         return $task;
@@ -271,7 +271,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
     public function getScheduled(){
 
         $tasks = $this->cache->remember('tasks:getScheduled', 240, function(){
-            return $this->task->select('machine_id', 'slug', 'name', 'is_allday', 'date_from', 'date_to', 'color')
+            return $this->task->select('machine_id', 'slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
                               ->whereIn('status', [2,3])
                               ->get();
         });

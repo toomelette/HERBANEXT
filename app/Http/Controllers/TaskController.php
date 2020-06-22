@@ -30,8 +30,18 @@ class TaskController extends Controller{
     }
 
     
+    public function calendar(){
+        return $this->task->calendar();
+    }
+
+    
     public function updateFinished($slug){
         return $this->task->updateFinished($slug);
+    }
+
+    
+    public function updateUnfinished($slug){
+        return $this->task->updateUnfinished($slug);
     }
 
     

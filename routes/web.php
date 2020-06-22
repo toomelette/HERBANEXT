@@ -96,8 +96,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** TASKS **/
 	Route::get('/task/scheduling', 'TaskController@scheduling')->name('task.scheduling');
+	Route::get('/task/calendar', 'TaskController@calendar')->name('task.calendar');
 	Route::post('/task/update_finished/{slug}', 'TaskController@updateFinished')
 	->name('task.update_finished');
+	Route::post('/task/update_unfinished/{slug}', 'TaskController@updateUnfinished')
+	->name('task.update_unfinished');
 	Route::get('/task/rate_personnel/{task_slug}', 'TaskController@ratePersonnel')
 	->name('task.rate_personnel');
 	Route::post('/task/rate_personnel/{task_personnel_id}', 'TaskController@ratePersonnelPost')
@@ -117,6 +120,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** Suppliers **/
 	Route::resource('supplier', 'SupplierController');
+
+
+	/** ENGR TASKS **/
+	Route::get('/engr_task/create_jo', 'EngrTaskController@createJO')->name('engr_task.create_jo');
+	Route::get('/engr_task/create_da', 'EngrTaskController@createDA')->name('engr_task.create_da');
+	Route::resource('engr_task', 'EngrTaskController');
 	
 });
 

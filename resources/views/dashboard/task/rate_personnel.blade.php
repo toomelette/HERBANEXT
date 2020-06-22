@@ -29,6 +29,11 @@
         
       <div class="box-header with-border">
         <code>Please rate the personnel involved in the task based on their Efficiency.</code>
+        <div class="pull-right">
+          <a href="{{ route('dashboard.task.index') }}" class="btn btn-sm btn-default">
+            <i class="fa fa-fw fa-arrow-left"></i>Back
+          </a>
+        </div> 
       </div>
       
       <div class="box-body">

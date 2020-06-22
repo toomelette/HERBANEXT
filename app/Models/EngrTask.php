@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Task extends Model{
+class EngrTask extends Model{
 
 
 
     use Sortable;
 
-    protected $table = 'tasks';
+    protected $table = 'engr_tasks';
 
     protected $dates = ['created_at', 'updated_at', 'date_from', 'date_to'];
 
-    protected $sortable = ['name', 'description', 'date_from', 'status'];
+    protected $sortable = ['description', 'location', 'status'];
     
 	public $timestamps = false;
 
@@ -25,14 +25,17 @@ class Task extends Model{
     protected $attributes = [
 
         'slug' => '',
-        'task_id' => '',
-        'item_id' => '',
-        'machine_id' => '',
-        'name' => '',
+        'engr_task_id' => '',
+        'cat' => '',
+        'requested_by' => '',
+        'unit' => '',
+        'location' => '',
         'description' => '',
+        'pic' => '',
         'is_allday' => 1,
         'date_from' => null,
         'date_to' => null,
+        'color' => '',
         'status' => 1,
         'created_at' => null,
         'updated_at' => null,
@@ -66,16 +69,9 @@ class Task extends Model{
 
 
     // Relationships
-    public function item() {
-        return $this->belongsTo('App\Models\Item','item_id','item_id');
-    }
 
-    public function machine() {
-        return $this->belongsTo('App\Models\Machine','machine_id','machine_id');
-    }
-
-    public function taskPersonnel() {
-        return $this->hasMany('App\Models\TaskPersonnel','task_id','task_id');
+    public function engrTaskPersonnel() {
+        return $this->hasMany('App\Models\EngrTaskPersonnel','engr_task_id','engr_task_id');
     }
 
 

@@ -51,6 +51,15 @@ class TaskService extends BaseService{
 
 
 
+    public function calendar(){
+
+        $scheduled_tasks = $this->task_repo->getScheduled();
+        return view('dashboard.task.calendar')->with('scheduled_tasks', $scheduled_tasks);
+
+    }
+
+
+
     public function store($request){    
 
         $task = $this->task_repo->store($request);
@@ -96,7 +105,18 @@ class TaskService extends BaseService{
 
     public function updateFinished($slug){
 
-        $task = $this->task_repo->updateFinished($slug);
+        $task = $this->task_repo->updateStatus($slug, 3);
+        
+        $this->event->fire('task.update', $task);
+        return redirect()->route('dashboard.task.index');
+
+    }
+
+
+
+    public function updateUnfinished($slug){
+
+        $task = $this->task_repo->updateStatus($slug, 2);
         
         $this->event->fire('task.update', $task);
         return redirect()->route('dashboard.task.index');
