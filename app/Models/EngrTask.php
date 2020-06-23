@@ -27,6 +27,7 @@ class EngrTask extends Model{
         'slug' => '',
         'engr_task_id' => '',
         'cat' => '',
+        'name' => '',
         'requested_by' => '',
         'unit' => '',
         'location' => '',
@@ -68,11 +69,29 @@ class EngrTask extends Model{
 
 
 
+    public function displayCategory(){
+
+        $span = '';
+
+        if ($this->cat == "JO") {
+            $span = '<span class="badge bg-blue">JOB ORDER</span>';
+        }elseif ($this->cat == "DA") {
+            $span = '<span class="badge bg-orange">DAILY ACTIVITY</span>';
+        }
+
+        return $span;
+
+    }
+
+
+
+
     // Relationships
 
     public function engrTaskPersonnel() {
         return $this->hasMany('App\Models\EngrTaskPersonnel','engr_task_id','engr_task_id');
     }
+
 
 
 }

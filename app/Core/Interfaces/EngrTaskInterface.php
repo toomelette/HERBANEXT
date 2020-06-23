@@ -6,7 +6,7 @@ namespace App\Core\Interfaces;
 
 interface EngrTaskInterface {
 
-	// public function fetch($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -20,9 +20,9 @@ interface EngrTaskInterface {
 
 	// public function updateEventDrop($request, $slug);
 
-	// public function destroy($slug);
+	public function destroy($slug);
 
-	// public function findBySlug($slug);
+	public function findBySlug($slug);
 
 	// public function getUnscheduled();
 

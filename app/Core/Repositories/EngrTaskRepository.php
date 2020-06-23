@@ -27,26 +27,26 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    // public function fetch($request){
+    public function fetch($request){
 
-    //     $key = str_slug($request->fullUrl(), '_');
-    //     $entries = isset($request->e) ? $request->e : 20;
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-    //     $engr_tasks = $this->cache->remember('engr_tasks:fetch:' . $key, 240, function() use ($request, $entries){
+        $engr_tasks = $this->cache->remember('engr_tasks:fetch:' . $key, 240, function() use ($request, $entries){
 
-    //         $engr_task = $this->engr_task->newQuery();
+            $engr_task = $this->engr_task->newQuery();
             
-    //         if(isset($request->q)){
-    //             $this->search($engr_task, $request->q);
-    //         }
+            if(isset($request->q)){
+                $this->search($engr_task, $request->q);
+            }
 
-    //         return $this->populate($engr_task, $entries);
+            return $this->populate($engr_task, $entries);
 
-    //     });
+        });
 
-    //     return $engr_tasks;
+        return $engr_tasks;
 
-    // }
+    }
 
 
 
@@ -58,12 +58,19 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         $engr_task->engr_task_id = $this->getEngrTaskIdInc();
         $engr_task->slug = $this->str->random(16);
         $engr_task->cat = $request->cat;
+        $engr_task->name = $request->name;
         $engr_task->requested_by = $request->requested_by;
         $engr_task->unit = $request->unit;
         $engr_task->location = $request->location;
         $engr_task->description = $request->description;
         $engr_task->pic = $request->pic;
-        $engr_task->color = $request->color;
+        
+        if ($request->cat == 'JO') {
+            $engr_task->color = '#0073b7'; 
+        }elseif ($request->cat == 'DA') {
+            $engr_task->color = '#ff851b';
+        }
+
         $engr_task->created_at = $this->carbon->now();
         $engr_task->updated_at = $this->carbon->now();
         $engr_task->ip_created = request()->ip();
@@ -80,23 +87,44 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    // public function update($request, $slug){
+    public function update($request, $slug){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->item_id = $request->item_id;
-    //     $engr_task->machine_id = $request->machine_id;
-    //     $engr_task->name = $request->name;
-    //     $engr_task->description = $request->description;
-    //     $engr_task->color = $request->color;
-    //     $engr_task->updated_at = $this->carbon->now();
-    //     $engr_task->ip_updated = request()->ip();
-    //     $engr_task->user_updated = $this->auth->user()->user_id;
-    //     $engr_task->save();
-    //     $engr_task->engr_taskPersonnel()->delete();
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->name = $request->name;
+        $engr_task->requested_by = $request->requested_by;
+        $engr_task->unit = $request->unit;
+        $engr_task->location = $request->location;
+        $engr_task->description = $request->description;
+        $engr_task->pic = $request->pic;
         
-    //     return $engr_task;
+        if ($request->cat == 'JO') {
+            $engr_task->color = '#0073b7'; 
+        }elseif ($request->cat == 'DA') {
+            $engr_task->color = '#ff851b';
+        }
 
-    // }
+        $engr_task->updated_at = $this->carbon->now();
+        $engr_task->ip_updated = request()->ip();
+        $engr_task->user_updated = $this->auth->user()->user_id;
+        $engr_task->save();
+        $engr_task->engrTaskPersonnel()->delete();
+        
+        return $engr_task;
+
+    }
+
+
+
+
+
+    public function destroy($slug){
+
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->delete();
+        $engr_task->engrTaskPersonnel()->delete();
+        return $engr_task;
+
+    }
 
 
 
@@ -165,67 +193,52 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    // public function destroy($slug){
+    public function findBySlug($slug){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->delete();
-    //     $engr_task->engr_taskPersonnel()->delete();
-    //     return $engr_task;
-
-    // }
-
-
-
-
-
-    // public function findBySlug($slug){
-
-    //     $engr_task = $this->cache->remember('engr_tasks:findBySlug:' . $slug, 240, function() use ($slug){
-    //         return $this->engr_task->where('slug', $slug)
-    //                           ->with('engr_taskPersonnel')           
-    //                           ->first();
-    //     }); 
+        $engr_task = $this->cache->remember('engr_tasks:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->engr_task->where('slug', $slug)
+                                   ->with('engrTaskPersonnel')           
+                                   ->first();
+        }); 
         
-    //     if(empty($engr_task)){
-    //         abort(404);
-    //     }
+        if(empty($engr_task)){
+            abort(404);
+        }
 
-    //     return $engr_task;
+        return $engr_task;
 
-    // }
-
-
-
-
-
-
-    // public function search($model, $key){
-
-    //     return $model->where(function ($model) use ($key) {
-    //             $model->where('name', 'LIKE', '%'. $key .'%')
-    //                   ->orWhere('description', 'LIKE', '%'. $key .'%')
-    //                   ->orwhereHas('item', function ($model) use ($key) {
-    //                     $model->where('name', 'LIKE', '%'. $key .'%');
-    //                   })
-    //                   ->orwhereHas('machine', function ($model) use ($key) {
-    //                     $model->where('name', 'LIKE', '%'. $key .'%');
-    //                   });
-    //     });
-
-    // }
+    }
 
 
 
 
 
-    // public function populate($model, $entries){
 
-    //     return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'slug')
-    //                  ->sortable()
-    //                  ->orderBy('updated_at', 'desc')
-    //                  ->paginate($entries);
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('requested_by', 'LIKE', '%'. $key .'%')
+                      ->orWhere('unit', 'LIKE', '%'. $key .'%')
+                      ->orWhere('location', 'LIKE', '%'. $key .'%')
+                      ->orWhere('description', 'LIKE', '%'. $key .'%')
+                      ->orWhere('pic', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('name', 'description', 'location', 'cat', 'status', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
     
-    // }
+    }
 
 
 

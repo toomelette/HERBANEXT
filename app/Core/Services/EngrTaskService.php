@@ -28,13 +28,13 @@ class EngrTaskService extends BaseService{
 
 
 
-    // public function fetch($request){
+    public function fetch($request){
 
-    //     $engr_tasks = $this->engr_task_repo->fetch($request);
-    //     $request->flash();
-    //     return view('dashboard.engr_task.index')->with('engr_tasks', $engr_tasks);
+        $engr_tasks = $this->engr_task_repo->fetch($request);
+        $request->flash();
+        return view('dashboard.engr_task.index')->with('engr_tasks', $engr_tasks);
 
-    // }
+    }
 
 
 
@@ -78,29 +78,44 @@ class EngrTaskService extends BaseService{
 
 
 
-    // public function edit($slug){
+    public function edit($slug){
 
-    //     $engr_task = $this->engr_task_repo->findbySlug($slug);
-    //     return view('dashboard.engr_task.edit')->with('engr_task', $engr_task);
+        $engr_task = $this->engr_task_repo->findbySlug($slug);
 
-    // }
+        if ($engr_task->cat == "JO") {
+            return view('dashboard.engr_task.edit_jo')->with('engr_task', $engr_task);
+        }elseif($engr_task->cat == "DA"){
+            return view('dashboard.engr_task.edit_da')->with('engr_task', $engr_task);
+        }
+
+    }
 
 
 
-    // public function update($request, $slug){
+    public function update($request, $slug){
 
-    //     $engr_task = $this->engr_task_repo->update($request, $slug);
+        $engr_task = $this->engr_task_repo->update($request, $slug);
 
-    //     if(!empty($request->personnels)){
-    //         foreach ($request->personnels as $data) {
-    //             $this->task_personnel_repo->store($engr_task->engr_task_id, $data);
-    //         }
-    //     }
+        if(!empty($request->personnels)){
+            foreach ($request->personnels as $data) {
+                $this->engr_task_personnel_repo->store($engr_task->engr_task_id, $data);
+            }
+        }
         
-    //     $this->event->fire('engr_task.update', $engr_task);
-    //     return redirect()->route('dashboard.engr_task.index');
+        $this->event->fire('engr_task.update', $engr_task);
+        return redirect()->route('dashboard.engr_task.index');
 
-    // }
+    }
+
+
+
+    public function destroy($slug){
+
+        $engr_task = $this->engr_task_repo->destroy($slug);
+        $this->event->fire('engr_task.destroy', $engr_task);
+        return redirect()->back();
+
+    }
 
 
 
@@ -121,16 +136,6 @@ class EngrTaskService extends BaseService{
         
     //     $this->event->fire('engr_task.update', $engr_task);
     //     return redirect()->route('dashboard.engr_task.index');
-
-    // }
-
-
-
-    // public function destroy($slug){
-
-    //     $engr_task = $this->engr_task_repo->destroy($slug);
-    //     $this->event->fire('engr_task.destroy', $engr_task);
-    //     return redirect()->back();
 
     // }
 

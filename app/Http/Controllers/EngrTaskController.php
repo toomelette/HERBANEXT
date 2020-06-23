@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Services\EngrTaskService;
 use App\Http\Requests\EngrTask\EngrTaskFormRequest;
-// use App\Http\Requests\EngrTask\EngrTaskFilterRequest;
+use App\Http\Requests\EngrTask\EngrTaskFilterRequest;
 // use App\Http\Requests\EngrTask\EngrTaskRatePersonnelFormRequest;
 
 
@@ -20,9 +20,9 @@ class EngrTaskController extends Controller{
     }
 
     
-    // public function index(TaskFilterRequest $request){
-    //     return $this->engr_task->fetch($request);
-    // }
+    public function index(EngrTaskFilterRequest $request){
+        return $this->engr_task->fetch($request);
+    }
 
     
     // public function scheduling(){
@@ -60,19 +60,19 @@ class EngrTaskController extends Controller{
     }
  
 
-    // public function edit($slug){
-    //     return $this->engr_task->edit($slug);
-    // }
+    public function edit($slug){
+        return $this->engr_task->edit($slug);
+    }
 
 
-    // public function update(TaskFormRequest $request, $slug){
-    //     return $this->engr_task->update($request, $slug);
-    // }
+    public function update(EngrTaskFormRequest $request, $slug){
+        return $this->engr_task->update($request, $slug);
+    }
 
     
-    // public function destroy($slug){
-    //     return $this->engr_task->destroy($slug);
-    // }
+    public function destroy($slug){
+        return $this->engr_task->destroy($slug);
+    }
 
     
     // public function ratePersonnel($slug){

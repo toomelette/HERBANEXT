@@ -1,3 +1,13 @@
+<?php
+ 
+  if(!empty($engr_task->engrTaskPersonnel)){
+    $list_of_selected_personnels = $engr_task->engrTaskPersonnel->pluck('personnel_id')->toArray();
+  }else{
+    $list_of_selected_personnels = [];
+  }
+
+?>
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -7,66 +17,50 @@
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h2 class="box-title">New Task</h2>
+        <h2 class="box-title">Edit JO Task</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
+            &nbsp;
+            {!! __html::back_button(['dashboard.engr_task.index']) !!}
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.task.store') }}">
+      <form method="POST" autocomplete="off" action="{{ route('dashboard.engr_task.update', $engr_task->slug) }}">
 
         <div class="box-body">
           <div class="col-md-12">
                   
             @csrf    
 
+            <input name="_method" value="PUT" type="hidden">    
+
+            <input type="hidden" name="cat" value="JO">
+
             {!! __form::textbox(
-              '6', 'name', 'text', 'Task Name *', 'Task Name', old('name'), $errors->has('name'), $errors->first('name'), ''
+              '4', 'name', 'text', 'Name of Task *', 'Name of Task', old('name') ? old('name') : $engr_task->name, $errors->has('name'), $errors->first('name'), ''
             ) !!}
 
             {!! __form::textbox(
-              '6', 'description', 'text', 'Description', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
+              '4', 'requested_by', 'text', 'Requested By', 'Requested By', old('requested_by') ? old('requested_by') : $engr_task->requested_by, $errors->has('requested_by'), $errors->first('requested_by'), ''
+            ) !!}
+
+            {!! __form::textbox(
+              '4', 'unit', 'text', 'Unit', 'Unit', old('unit') ? old('unit') : $engr_task->unit, $errors->has('unit'), $errors->first('unit'), ''
             ) !!}
 
             <div class="col-md-12"></div>
-            
-            {!! __form::select_dynamic(
-              '6', 'item_id', 'Product to be Processed', old('item_id'), $global_items_all, 'item_id', 'name', $errors->has('item_id'), $errors->first('item_id'), 'select2', ''
+
+            {!! __form::textbox(
+              '4', 'location', 'text', 'Location', 'Location', old('location') ? old('location') : $engr_task->location, $errors->has('location'), $errors->first('location'), ''
             ) !!}
 
-            {!! __form::select_dynamic(
-              '6', 'machine_id', 'Machine to be used *', old('machine_id'), $global_machines_all, 'machine_id', 'name', $errors->has('machine_id'), $errors->first('machine_id'), 'select2', ''
+            {!! __form::textbox(
+              '4', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $engr_task->description, $errors->has('description'), $errors->first('description'), ''
             ) !!}
 
-
-            <div class="col-md-12"></div>
-
-            <div class="col-md-12">
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <p class="box-title">Calendar Task Color *</p>
-                </div>
-                <div class="box-body">
-
-                  <div class="col-md-12" style="padding:25px;">
-
-                    @foreach($task_colors as $key => $data)  
-                      <label>
-                        <input type="radio" class="minimal" name="color" value="{{ $key }}" {{ old('color') == $key ? 'checked' : '' }}>
-                        &nbsp; {!! $data !!}
-                      </label>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @endforeach
-
-                    @if($errors->has('color'))
-                      <p class="text-danger" style="padding-top:10px;">{{ $errors->first('color') }}</p>
-                    @endif
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
+            {!! __form::textbox(
+              '4', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic') ? old('pic') : $engr_task->pic, $errors->has('pic'), $errors->first('pic'), ''
+            ) !!}
 
             {{-- Personnels --}}
             <div class="col-md-12 no-padding">
@@ -85,7 +79,7 @@
                       @if(old('personnels'))
                           <option value="{{ $data->personnel_id }}" style="padding:8px;" {!! in_array($data->personnel_id, old('personnels')) ? 'selected' : '' !!}>{{ $data->fullname }}</option>
                       @else
-                          <option value="{{ $data->personnel_id }}" style="padding:8px;" style="padding:8px;">{{ $data->fullname }}</option>
+                          <option value="{{ $data->personnel_id }}" style="padding:8px;" {!! in_array($data->personnel_id, $list_of_selected_personnels) ? 'selected' : '' !!}>{{ $data->fullname }}</option>
                       @endif
                     @endforeach
                   </select>
@@ -115,11 +109,6 @@
 @section('scripts')
 
   <script type="text/javascript">
-
-    @if(Session::has('TASK_CREATE_SUCCESS'))
-      {!! __js::toast(Session::get('TASK_CREATE_SUCCESS')) !!}
-    @endif
-
 
     {{-- Multi Select --}}
 

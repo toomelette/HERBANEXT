@@ -1,25 +1,3 @@
-<?php
-  
-  $task_colors = [
-
-    '#00c0ef' => '<a class="text-aqua" href="#"><i class="fa fa-square"></i></a>',
-    '#0073b7' => '<a class="text-blue" href="#"><i class="fa fa-square"></i></a>',
-    '#3c8dbc ' => '<a class="text-light-blue" href="#"><i class="fa fa-square"></i></a>',
-    '#39cccc ' => '<a class="text-teal" href="#"><i class="fa fa-square"></i></a>',
-    '#f39c12 ' => '<a class="text-yellow" href="#"><i class="fa fa-square"></i></a>',
-    '#ff851b ' => '<a class="text-orange" href="#"><i class="fa fa-square"></i></a>',
-    '#00a65a ' => '<a class="text-green" href="#"><i class="fa fa-square"></i></a>',
-    '#01ff70 ' => '<a class="text-lime" href="#"><i class="fa fa-square"></i></a>',
-    '#dd4b39 ' => '<a class="text-red" href="#"><i class="fa fa-square"></i></a>',
-    '#605ca8 ' => '<a class="text-purple" href="#"><i class="fa fa-square"></i></a>',
-    '#f012be ' => '<a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a>',
-    '#777 ' => '<a class="text-muted" href="#"><i class="fa fa-square"></i></a>',
-    '#001f3f ' => '<a class="text-navy" href="#"><i class="fa fa-square"></i></a>',
-
-  ];
-
-?>
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -44,6 +22,10 @@
             <input type="hidden" name="cat" value="JO">
 
             {!! __form::textbox(
+              '4', 'name', 'text', 'Name of Task *', 'Name of Task', old('name'), $errors->has('name'), $errors->first('name'), ''
+            ) !!}
+
+            {!! __form::textbox(
               '4', 'requested_by', 'text', 'Requested by', 'Requested by', old('requested_by'), $errors->has('requested_by'), $errors->first('requested_by'), ''
             ) !!}
 
@@ -51,49 +33,20 @@
               '4', 'unit', 'text', 'Unit', 'Unit', old('unit'), $errors->has('unit'), $errors->first('unit'), ''
             ) !!}
 
+            <div class="col-md-12"></div>
+
             {!! __form::textbox(
               '4', 'location', 'text', 'Location', 'Location', old('location'), $errors->has('location'), $errors->first('location'), ''
             ) !!}
 
-            <div class="col-md-12"></div>
-
             {!! __form::textbox(
-              '8', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
+              '4', 'description', 'text', 'Description', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
             ) !!}
 
             {!! __form::textbox(
               '4', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic'), $errors->has('pic'), $errors->first('pic'), ''
             ) !!}
-
-            <div class="col-md-12"></div>
-
-            <div class="col-md-12">
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <p class="box-title">Calendar Task Color *</p>
-                </div>
-                <div class="box-body">
-
-                  <div class="col-md-12" style="padding:25px;">
-
-                    @foreach($task_colors as $key => $data)  
-                      <label>
-                        <input type="radio" class="minimal" name="color" value="{{ $key }}" {{ old('color') == $key ? 'checked' : '' }}>
-                        &nbsp; {!! $data !!}
-                      </label>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @endforeach
-
-                    @if($errors->has('color'))
-                      <p class="text-danger" style="padding-top:10px;">{{ $errors->first('color') }}</p>
-                    @endif
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+            
             {{-- Personnels --}}
             <div class="col-md-12 no-padding">
               <div class="box box-solid">
