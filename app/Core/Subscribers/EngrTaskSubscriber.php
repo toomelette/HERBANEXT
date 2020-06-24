@@ -26,10 +26,10 @@ class EngrTaskSubscriber extends BaseSubscriber{
         $events->listen('engr_task.store', 'App\Core\Subscribers\EngrTaskSubscriber@onStore');
         $events->listen('engr_task.update', 'App\Core\Subscribers\EngrTaskSubscriber@onUpdate');
         $events->listen('engr_task.destroy', 'App\Core\Subscribers\EngrTaskSubscriber@onDestroy');
-        // $events->listen('engr_task.drop', 'App\Core\Subscribers\EngrTaskSubscriber@onDrop');
-        // $events->listen('engr_task.resize', 'App\Core\Subscribers\EngrTaskSubscriber@onResize');
-        // $events->listen('engr_task.event_drop', 'App\Core\Subscribers\EngrTaskSubscriber@onEventDrop');
-        // $events->listen('engr_task.rate_personnel', 'App\Core\Subscribers\EngrTaskSubscriber@onRatePersonnel');
+        $events->listen('engr_task.drop', 'App\Core\Subscribers\EngrTaskSubscriber@onDrop');
+        $events->listen('engr_task.resize', 'App\Core\Subscribers\EngrTaskSubscriber@onResize');
+        $events->listen('engr_task.event_drop', 'App\Core\Subscribers\EngrTaskSubscriber@onEventDrop');
+        $events->listen('engr_task.rate_personnel', 'App\Core\Subscribers\EngrTaskSubscriber@onRatePersonnel');
 
     }
 
@@ -39,9 +39,9 @@ class EngrTaskSubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
         // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:countNew');
         // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
@@ -57,9 +57,9 @@ class EngrTaskSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
         // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
         $this->session->flash('ENGR_TASK_UPDATE_SUCCESS', 'The Engineering Task has been successfully updated!');
@@ -73,11 +73,11 @@ class EngrTaskSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:countNew');
-        // $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        //$this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:countNew');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
         $this->session->flash('ENGR_TASK_DELETE_SUCCESS', 'The Engineering Task has been successfully deleted!');
         $this->session->flash('ENGR_TASK_DELETE_SUCCESS_SLUG', $engr_task->slug);
@@ -86,52 +86,52 @@ class EngrTaskSubscriber extends BaseSubscriber{
 
 
 
-    // public function onDrop($engr_task){
+    public function onDrop($engr_task){
 
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
-    // }
-
-
-
-    // public function onResize($engr_task){
-
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
-
-    // }
+    }
 
 
 
-    // public function onEventDrop($engr_task){
+    public function onResize($engr_task){
 
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getAll');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
-    // }
+    }
 
 
 
-    // public function onRatePersonnel($engr_task_personnel){
+    public function onEventDrop($engr_task){
 
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:findByEngrTaskPersonnelId:'. $engr_task_personnel->engr_task_personnel_id .'');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. optional($engr_task_personnel->engr_task)->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledJO');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getUnscheduledDA');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. $engr_task->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
 
-    // }
+    }
+
+
+
+    public function onRatePersonnel($engr_task_personnel){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:findByEngrTaskPersonnelId:'. $engr_task_personnel->engr_task_personnel_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. optional($engr_task_personnel->engrTask)->slug .'');
+
+    }
 
 
 

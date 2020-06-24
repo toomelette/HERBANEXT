@@ -130,64 +130,64 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    // public function updateStatus($slug, $int){
+    public function updateStatus($slug, $int){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->status = $int;
-    //     $engr_task->save();
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->status = $int;
+        $engr_task->save();
         
-    //     return $engr_task;
+        return $engr_task;
 
-    // }
-
-
+    }
 
 
 
-    // public function updateDrop($request, $slug){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->date_from = $this->__dataType->date_parse($request->date);
-    //     $engr_task->date_to = $this->__dataType->date_parse($request->date);
-    //     $engr_task->is_allday = 1;
-    //     $engr_task->status = 2;
-    //     $engr_task->save();
+
+    public function updateDrop($request, $slug){
+
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->date_from = $this->__dataType->date_parse($request->date);
+        $engr_task->date_to = $this->__dataType->date_parse($request->date);
+        $engr_task->is_allday = 1;
+        $engr_task->status = 2;
+        $engr_task->save();
         
-    //     return $engr_task;
+        return $engr_task;
 
-    // }
-
-
+    }
 
 
 
-    // public function updateResize($request, $slug){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-    //     $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-    //     $engr_task->is_allday =  $this->__dataType->string_to_boolean($request->allday);
-    //     $engr_task->save();
+
+    public function updateResize($request, $slug){
+
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
+        $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
+        $engr_task->is_allday =  $this->__dataType->string_to_boolean($request->allday);
+        $engr_task->save();
         
-    //     return $engr_task;
+        return $engr_task;
 
-    // }
-
-
+    }
 
 
 
-    // public function updateEventDrop($request, $slug){
 
-    //     $engr_task = $this->findBySlug($slug);
-    //     $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-    //     $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-    //     $engr_task->is_allday = $this->__dataType->string_to_boolean($request->allday);
-    //     $engr_task->save();
+
+    public function updateEventDrop($request, $slug){
+
+        $engr_task = $this->findBySlug($slug);
+        $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
+        $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
+        $engr_task->is_allday = $this->__dataType->string_to_boolean($request->allday);
+        $engr_task->save();
         
-    //     return $engr_task;
+        return $engr_task;
 
-    // }
+    }
 
 
 
@@ -266,34 +266,53 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    // public function getUnscheduled(){
+    public function getUnscheduledJO(){
 
-    //     $engr_tasks = $this->cache->remember('engr_tasks:getUnscheduled', 240, function(){
-    //         return $this->engr_task->select('machine_id', 'slug', 'name', 'color')
-    //                           ->where('status', 1)
-    //                           ->get();
-    //     });
+        $engr_tasks = $this->cache->remember('engr_tasks:getUnscheduledJO', 240, function(){
+            return $this->engr_task->select('slug', 'name', 'color')
+                                   ->where('cat', 'JO')
+                                   ->where('status', 1)
+                                   ->get();
+        });
         
-    //     return $engr_tasks;
+        return $engr_tasks;
 
-    // }
-
-
+    }
 
 
 
 
-    // public function getScheduled(){
 
-    //     $engr_tasks = $this->cache->remember('engr_tasks:getScheduled', 240, function(){
-    //         return $this->engr_task->select('machine_id', 'slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
-    //                           ->whereIn('status', [2,3])
-    //                           ->get();
-    //     });
+
+    public function getUnscheduledDA(){
+
+        $engr_tasks = $this->cache->remember('engr_tasks:getUnscheduledDA', 240, function(){
+            return $this->engr_task->select('slug', 'name', 'color')
+                                   ->where('cat', 'DA')
+                                   ->where('status', 1)
+                                   ->get();
+        });
         
-    //     return $engr_tasks;
+        return $engr_tasks;
 
-    // }
+    }
+
+
+
+
+
+
+    public function getScheduled(){
+
+        $engr_tasks = $this->cache->remember('engr_tasks:getScheduled', 240, function(){
+            return $this->engr_task->select('slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
+                              ->whereIn('status', [2,3])
+                              ->get();
+        });
+        
+        return $engr_tasks;
+
+    }
 
 
 

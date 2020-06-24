@@ -37,35 +37,35 @@ class EngrTaskPersonnelRepository extends BaseRepository implements EngrTaskPers
 
 
 
-    // public function updateRating($engr_task_personnel_id, $rating){
-    //     $engr_task_personnel = $this->findByTaskPersonnelId($engr_task_personnel_id);
-    //     $engr_task_personnel->rating = $rating;
-    //     $engr_task_personnel->save();
-    //     return $engr_task_personnel;
+    public function updateRating($engr_task_personnel_id, $rating){
+        $engr_task_personnel = $this->findByTaskPersonnelId($engr_task_personnel_id);
+        $engr_task_personnel->rating = $rating;
+        $engr_task_personnel->save();
+        return $engr_task_personnel;
 
-    // }
-
-
+    }
 
 
-    // public function findByTaskPersonnelId($engr_task_personnel_id){
 
-    //     $engr_task_personnel = $this->cache->remember('engr_task_personnel:findByTaskPersonnelId:' . $engr_task_personnel_id, 240, 
 
-    //         function() use ($engr_task_personnel_id){
+    public function findByTaskPersonnelId($engr_task_personnel_id){
 
-    //             return $this->engr_task_personnel->where('engr_task_personnel_id', $engr_task_personnel_id)     
-    //                                         ->first();
+        $engr_task_personnel = $this->cache->remember('engr_task_personnel:findByEngrTaskPersonnelId:' . $engr_task_personnel_id, 240, 
 
-    //         }); 
+            function() use ($engr_task_personnel_id){
+
+                return $this->engr_task_personnel->where('engr_task_personnel_id', $engr_task_personnel_id)     
+                                                 ->first();
+
+            }); 
         
-    //     if(empty($engr_task_personnel)){
-    //         abort(404);
-    //     }
+        if(empty($engr_task_personnel)){
+            abort(404);
+        }
 
-    //     return $engr_task_personnel;
+        return $engr_task_personnel;
 
-    // }
+    }
 
 
 

@@ -73,7 +73,11 @@
                     </a>
                   @endif
                   @if(in_array('dashboard.task.edit', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.task.edit', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="edit_button" 
+                       href="{{ $data->status == 3 ? "#" : route('dashboard.task.edit', $data->slug)  }}"
+                       {{ $data->status == 3 ? "disabled" : ""  }}>
                       <i class="fa fa-pencil"></i>
                     </a>
                   @endif

@@ -123,6 +123,16 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** ENGR TASKS **/
+	Route::post('/engr_task/update_finished/{slug}', 'EngrTaskController@updateFinished')
+	->name('engr_task.update_finished');
+	Route::post('/engr_task/update_unfinished/{slug}', 'EngrTaskController@updateUnfinished')
+	->name('engr_task.update_unfinished');
+	Route::get('/engr_task/rate_personnel/{task_slug}', 'EngrTaskController@ratePersonnel')
+	->name('engr_task.rate_personnel');
+	Route::post('/engr_task/rate_personnel/{task_personnel_id}', 'EngrTaskController@ratePersonnelPost')
+	->name('engr_task.rate_personnel_post');
+	Route::get('/engr_task/scheduling', 'EngrTaskController@scheduling')->name('engr_task.scheduling');
+	Route::get('/engr_task/calendar', 'EngrTaskController@calendar')->name('engr_task.calendar');
 	Route::get('/engr_task/create_jo', 'EngrTaskController@createJO')->name('engr_task.create_jo');
 	Route::get('/engr_task/create_da', 'EngrTaskController@createDA')->name('engr_task.create_da');
 	Route::resource('engr_task', 'EngrTaskController');

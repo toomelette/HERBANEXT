@@ -5,16 +5,16 @@
 <section class="content">
   
   <div class="row">
+
     <div class="col-md-3">
+
       <div class="box box-solid">
-
         <div class="box-header with-border">
-          <h4 class="box-title">Tasks</h4>
+          <h4 class="box-title">Job Orders</h4>
         </div>
-
         <div class="box-body">
           <div id="external-events">
-            @foreach($unscheduled_tasks as $data)
+            @foreach($unscheduled_jo as $data)
               <div class="external-event"  
                    data-slug="{{ $data->slug }}" 
                    style="border-color:{{ $data->color }}; background-color:{{ $data->color }};"
@@ -24,7 +24,25 @@
             @endforeach  
           </div>
         </div>
+      </div>
 
+
+      <div class="box box-solid">
+        <div class="box-header with-border">
+          <h4 class="box-title">Daily Activities</h4>
+        </div>
+        <div class="box-body">
+          <div id="external-events">
+            @foreach($unscheduled_da as $data)
+              <div class="external-event"  
+                   data-slug="{{ $data->slug }}" 
+                   style="border-color:{{ $data->color }}; background-color:{{ $data->color }};"
+              >
+                <span style="color:#fff;">{{ $data->name }}</span>
+              </div>
+            @endforeach  
+          </div>
+        </div>
       </div>
 
     </div>
@@ -133,7 +151,7 @@ $(function () {
 
     events    : [
       
-      @foreach($scheduled_tasks as $data)
+      @foreach($scheduled_engr_tasks as $data)
         {
           slug            : '{{ $data->slug }}',
           title           : '{{ $data->name }}',
@@ -180,7 +198,7 @@ $(function () {
       });
 
       $.ajax({
-          url: "/api/task/resize/" + slug,
+          url: "/api/engr_task/resize/" + slug,
           type: "POST",
           data: { 
                 start_date : start_date, 
@@ -215,7 +233,7 @@ $(function () {
       });
 
       $.ajax({
-        url: "/api/task/drop/" + slug,
+        url: "/api/engr_task/drop/" + slug,
         type: "POST",
         data: { date : start_date },
       });
@@ -257,7 +275,7 @@ $(function () {
       });
 
       $.ajax({
-          url: "/api/task/eventDrop/" + slug,
+          url: "/api/engr_task/eventDrop/" + slug,
           type: "POST",
           data: { 
               start_date : start_date, 

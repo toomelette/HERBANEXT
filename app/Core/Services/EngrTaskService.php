@@ -38,26 +38,28 @@ class EngrTaskService extends BaseService{
 
 
 
-    // public function scheduling(){
+    public function scheduling(){
 
-    //     $unscheduled_engr_tasks = $this->engr_task_repo->getUnscheduled();
-    //     $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();
+        $unscheduled_jo = $this->engr_task_repo->getUnscheduledJO();
+        $unscheduled_da = $this->engr_task_repo->getUnscheduledDA();
+        $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();
 
-    //     return view('dashboard.engr_task.scheduling')->with([
-    //         'unscheduled_engr_tasks' => $unscheduled_engr_tasks,
-    //         'scheduled_engr_tasks' => $scheduled_engr_tasks,
-    //     ]);
+        return view('dashboard.engr_task.scheduling')->with([
+            'unscheduled_jo' => $unscheduled_jo,
+            'unscheduled_da' => $unscheduled_da,
+            'scheduled_engr_tasks' => $scheduled_engr_tasks,
+        ]);
 
-    // }
+    }
 
 
 
-    // public function calendar(){
+    public function calendar(){
 
-    //     $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();
-    //     return view('dashboard.engr_task.calendar')->with('scheduled_engr_tasks', $scheduled_engr_tasks);
+        $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();
+        return view('dashboard.engr_task.calendar')->with('scheduled_engr_tasks', $scheduled_engr_tasks);
 
-    // }
+    }
 
 
 
@@ -119,45 +121,45 @@ class EngrTaskService extends BaseService{
 
 
 
-    // public function updateFinished($slug){
+    public function updateFinished($slug){
 
-    //     $engr_task = $this->engr_task_repo->updateStatus($slug, 3);
+        $engr_task = $this->engr_task_repo->updateStatus($slug, 3);
         
-    //     $this->event->fire('engr_task.update', $engr_task);
-    //     return redirect()->route('dashboard.engr_task.index');
+        $this->event->fire('engr_task.update', $engr_task);
+        return redirect()->route('dashboard.engr_task.index');
 
-    // }
+    }
 
 
 
-    // public function updateUnfinished($slug){
+    public function updateUnfinished($slug){
 
-    //     $engr_task = $this->engr_task_repo->updateStatus($slug, 2);
+        $engr_task = $this->engr_task_repo->updateStatus($slug, 2);
         
-    //     $this->event->fire('engr_task.update', $engr_task);
-    //     return redirect()->route('dashboard.engr_task.index');
+        $this->event->fire('engr_task.update', $engr_task);
+        return redirect()->route('dashboard.engr_task.index');
 
-    // }
-
-
-
-    // public function ratePersonnel($slug){
-
-    //     $engr_task = $this->engr_task_repo->findbySlug($slug);
-    //     return view('dashboard.engr_task.rate_personnel')->with('engr_task', $engr_task);
-
-    // }
+    }
 
 
 
-    // public function ratePersonnelPost($request, $task_personnel_id){
+    public function ratePersonnel($slug){
 
-    //     $task_personnel = $this->task_personnel_repo->updateRating($task_personnel_id, $request->rating);
+        $engr_task = $this->engr_task_repo->findbySlug($slug);
+        return view('dashboard.engr_task.rate_personnel')->with('engr_task', $engr_task);
 
-    //     $this->event->fire('engr_task.rate_personnel', $task_personnel);
-    //     return redirect()->back();
+    }
 
-    // }
+
+
+    public function ratePersonnelPost($request, $engr_task_personnel_id){
+
+        $engr_task_personnel = $this->engr_task_personnel_repo->updateRating($engr_task_personnel_id, $request->rating);
+
+        $this->event->fire('engr_task.rate_personnel', $engr_task_personnel);
+        return redirect()->back();
+
+    }
 
 
 

@@ -73,7 +73,11 @@
                     </a>
                   @endif
                   @if(in_array('dashboard.engr_task.edit', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.engr_task.edit', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="edit_button" 
+                       href="{{ $data->status == 3 ? "#" : route('dashboard.engr_task.edit', $data->slug)  }}"
+                       {{ $data->status == 3 ? "disabled" : ""  }}>
                       <i class="fa fa-pencil"></i>
                     </a>
                   @endif
@@ -131,19 +135,19 @@
 
   <script type="text/javascript">
 
-    // $(document).on("click", "#update_finished_button", function () {
-    //   if($(this).data("action") == "update-finished"){
-    //     $("#frm-update-finished").attr("action", $(this).data("url"));
-    //     $("#frm-update-finished").submit();
-    //   }
-    // });
+    $(document).on("click", "#update_finished_button", function () {
+      if($(this).data("action") == "update-finished"){
+        $("#frm-update-finished").attr("action", $(this).data("url"));
+        $("#frm-update-finished").submit();
+      }
+    });
 
-    // $(document).on("click", "#update_unfinished_button", function () {
-    //   if($(this).data("action") == "update-unfinished"){
-    //     $("#frm-update-unfinished").attr("action", $(this).data("url"));
-    //     $("#frm-update-unfinished").submit();
-    //   }
-    // });
+    $(document).on("click", "#update_unfinished_button", function () {
+      if($(this).data("action") == "update-unfinished"){
+        $("#frm-update-unfinished").attr("action", $(this).data("url"));
+        $("#frm-update-unfinished").submit();
+      }
+    });
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('engr_task_delete') !!}

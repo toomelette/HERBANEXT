@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\Core\Services\EngrTaskService;
 use App\Http\Requests\EngrTask\EngrTaskFormRequest;
 use App\Http\Requests\EngrTask\EngrTaskFilterRequest;
-// use App\Http\Requests\EngrTask\EngrTaskRatePersonnelFormRequest;
+use App\Http\Requests\EngrTask\EngrTaskRatePersonnelFormRequest;
 
 
 class EngrTaskController extends Controller{
@@ -25,24 +25,24 @@ class EngrTaskController extends Controller{
     }
 
     
-    // public function scheduling(){
-    //     return $this->engr_task->scheduling();
-    // }
+    public function scheduling(){
+        return $this->engr_task->scheduling();
+    }
 
     
-    // public function calendar(){
-    //     return $this->engr_task->calendar();
-    // }
+    public function calendar(){
+        return $this->engr_task->calendar();
+    }
 
     
-    // public function updateFinished($slug){
-    //     return $this->engr_task->updateFinished($slug);
-    // }
+    public function updateFinished($slug){
+        return $this->engr_task->updateFinished($slug);
+    }
 
     
-    // public function updateUnfinished($slug){
-    //     return $this->engr_task->updateUnfinished($slug);
-    // }
+    public function updateUnfinished($slug){
+        return $this->engr_task->updateUnfinished($slug);
+    }
 
     
     public function createJO(){
@@ -75,14 +75,14 @@ class EngrTaskController extends Controller{
     }
 
     
-    // public function ratePersonnel($slug){
-    //     return $this->engr_task->ratePersonnel($slug);
-    // }
+    public function ratePersonnel($slug){
+        return $this->engr_task->ratePersonnel($slug);
+    }
 
     
-    // public function ratePersonnelPost(TaskRatePersonnelFormRequest $request, $engr_task_personnel_id){
-    //     return $this->engr_task->ratePersonnelPost($request, $engr_task_personnel_id);
-    // }
+    public function ratePersonnelPost(EngrTaskRatePersonnelFormRequest $request, $engr_task_personnel_id){
+        return $this->engr_task->ratePersonnelPost($request, $engr_task_personnel_id);
+    }
 
 
 
