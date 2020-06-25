@@ -27,7 +27,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::post('/user/logout/{slug}', 'UserController@logout')->name('user.logout');
 	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
-	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
+	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')
+		 ->name('user.reset_password_post');
+	Route::get('/user/view_avatar/{slug}', 'UserController@viewAvatar')
+		 ->name('user.view_avatar');
 	Route::resource('user', 'UserController');
 
 
@@ -36,6 +39,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
 	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
 	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
+	Route::get('/profile/view_avatar/{slug}', 'ProfileController@viewAvatar')
+		 ->name('profile.view_avatar');
 
 
 	/** MENU **/
@@ -87,6 +92,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** PERSONNELS **/
+	Route::get('/personnel/view_avatar/{slug}', 'PersonnelController@viewAvatar')
+		 ->name('personnel.view_avatar');
 	Route::resource('personnel', 'PersonnelController');
 
 

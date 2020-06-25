@@ -50,16 +50,16 @@
           @foreach($personnels as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td style="text-align:center;">
-                @if (isset($data->avatar))
-                  <img src="data:image/jpg;base64,{{ $data->avatar }}" 
-                       class="img-circle" 
-                       alt="Product Image"
-                       style="height:60px;">
+                @if (isset($data->avatar_location))
+                  <img src="{{ route('dashboard.personnel.view_avatar', $data->slug) }}" 
+                    class="img-circle" 
+                    alt="Product Image"
+                    style="height:60px;">
                 @else
                   <img src="{{ asset('images/avatar.jpeg') }}" 
-                       class="img-circle" 
-                       alt="Product Image"
-                       style="height:60px;">
+                    class="img-circle" 
+                    alt="Product Image"
+                    style="height:60px;">
                 @endif
               </td>
               <td id="mid-vert">{{ $data->fullname }}</td>

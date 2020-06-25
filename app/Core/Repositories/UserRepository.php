@@ -63,16 +63,12 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-	public function store($request){
+	public function store($request, $img_location){
 
         $user = new User;
         $user->slug = $this->str->random(16);
         $user->user_id = $this->getUserIdInc();
-
-        if(!empty($request->file('avatar'))){
-            $user->avatar = base64_encode(file_get_contents($request->file('avatar')));
-        }
-
+        $user->avatar_location = $img_location;
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
         $user->lastname = $request->lastname;
@@ -98,14 +94,10 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-    public function update($request, $slug){
+    public function update($request, $slug, $img_location){
 
         $user = $this->findBySlug($slug);
-
-        if(!empty($request->file('avatar'))){
-            $user->avatar = base64_encode(file_get_contents($request->file('avatar')));
-        }
-        
+        $user->avatar_location = $img_location;
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
         $user->lastname = $request->lastname;

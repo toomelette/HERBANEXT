@@ -52,16 +52,12 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
 
 
-    public function store($request){
+    public function store($request, $img_location){
 
         $personnel = new Personnel;
         $personnel->personnel_id = $this->getPersonnelIdInc();
         $personnel->slug = $this->str->random(16);
-
-        if(!empty($request->file('avatar'))){
-            $personnel->avatar = base64_encode(file_get_contents($request->file('avatar')));
-        }
-
+        $personnel->avatar_location = $img_location;
         $personnel->firstname = $request->firstname;
         $personnel->middlename = $request->middlename;
         $personnel->lastname = $request->lastname;
@@ -84,14 +80,10 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
 
 
-    public function update($request, $slug){
+    public function update($request, $slug, $img_location){
 
         $personnel = $this->findBySlug($slug);
-
-        if(!empty($request->file('avatar'))){
-            $personnel->avatar = base64_encode(file_get_contents($request->file('avatar')));
-        }
-        
+        $personnel->avatar_location = $img_location;
         $personnel->firstname = $request->firstname;
         $personnel->middlename = $request->middlename;
         $personnel->lastname = $request->lastname;
@@ -161,7 +153,7 @@ class PersonnelRepository extends BaseRepository implements PersonnelInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('avatar', 'personnel_id', 'firstname', 'middlename', 'lastname', 'position', 'slug')                     
+        return $model->select('avatar_location', 'personnel_id', 'firstname', 'middlename', 'lastname', 'position', 'slug')                     
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

@@ -10,6 +10,7 @@ use App\Core\Interfaces\MenuInterface;
 use App\Core\Interfaces\SubmenuInterface;
 
 use Hash;
+use File;
 
 class UserService extends BaseService{
 
@@ -56,7 +57,15 @@ class UserService extends BaseService{
 
     public function store($request){
 
-        $user = $this->user_repo->store($request);
+        $img_location = "";
+
+        if(!is_null($request->file('avatar'))){
+            $filename = $this->__dataType::fileFilterReservedChar($request->username .'-'. $this->str->random(8), '.jpg');
+            $request->file('avatar')->storeAs('USERS', $filename);
+            $img_location = 'USERS/'. $filename;
+        }
+
+        $user = $this->user_repo->store($request, $img_location);
 
         if(!empty($request->menu)){
 
@@ -122,7 +131,31 @@ class UserService extends BaseService{
 
     public function update($request, $slug){
 
-        $user = $this->user_repo->update($request, $slug);
+        $user = $this->user_repo->findbySlug($slug);
+        
+        $new_filename = $this->__dataType::fileFilterReservedChar($request->username .'-'. $this->str->random(8), '.jpg');
+        $old_file_location = $user->avatar_location;
+        $new_file_location = 'USERS/'. $new_filename;
+
+        $img_location = $old_file_location;
+
+        // if img_file has value
+        if(!is_null($request->file('avatar'))){
+
+            if ($this->storage->disk('local')->exists($old_file_location)) {
+                $this->storage->disk('local')->delete($old_file_location);
+            }
+            
+            $request->file('avatar')->storeAs('USERS', $new_filename);
+            $img_location = $new_file_location;
+
+        // if username has change
+        }elseif($request->username != $user->username && $this->storage->disk('local')->exists($old_file_location)){
+            $this->storage->disk('local')->move($old_file_location, $new_file_location);
+            $img_location = $new_file_location;
+        }
+
+        $user = $this->user_repo->update($request, $slug, $img_location);
 
         if(!empty($request->menu)){
 
@@ -164,6 +197,14 @@ class UserService extends BaseService{
 
 
     public function delete($slug){
+
+        $user = $this->user_repo->findbySlug($slug);
+
+        if(!is_null($user->avatar_location)){
+            if ($this->storage->disk('local')->exists($user->avatar_location)) {
+                $this->storage->disk('local')->delete($user->avatar_location);
+            }
+        }
 
         $user = $this->user_repo->destroy($slug);
 
@@ -255,6 +296,34 @@ class UserService extends BaseService{
 
         $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
+
+    }
+
+
+
+
+    public function viewAvatar($slug){
+
+        $user = $this->user_repo->findBySlug($slug);
+
+        if(!empty($user->avatar_location)){
+
+            $path = $this->__static->archive_dir() .'/'. $user->avatar_location;
+
+            if (!File::exists($path)) { return "Cannot Detect File!"; }
+
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = response()->make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+
+        }
+
+        return "Cannot Detect File!";;
+        
 
     }
 

@@ -78,7 +78,7 @@
 
   <script type="text/javascript">
 
-    {!! __js::img_upload('avatar', 'fa', 'BLOB', $personnel->avatar) !!}
+    {!! __js::img_upload('avatar', 'fa', 'URL', route('dashboard.personnel.view_avatar', $personnel->slug)) !!}
 
   </script>
     

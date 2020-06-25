@@ -63,9 +63,9 @@ class ProfileController extends Controller{
 
     
 
-    public function printPds($slug, $page){
+    public function viewAvatar($slug){
 
-        return $this->profile_service->printPds($slug, $page);
+        return $this->profile_service->viewAvatar($slug);
         
     }
 

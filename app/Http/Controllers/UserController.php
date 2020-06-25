@@ -134,4 +134,14 @@ class UserController extends Controller{
 
 
 
+    public function viewAvatar($slug){
+
+        return $this->user_service->viewAvatar($slug);
+        
+    }
+
+
+
+
+
 }

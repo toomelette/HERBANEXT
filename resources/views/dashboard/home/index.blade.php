@@ -198,7 +198,8 @@
 					      		$ave_rating = $partial_rating / $count;
 
 				      			$personnel_array[] = [
-				      				'avatar' => optional($data->personnel)->avatar, 
+				      				'slug' => optional($data->personnel)->slug, 
+				      				'avatar_location' => optional($data->personnel)->avatar_location, 
 				      				'name' => optional($data->personnel)->fullname, 
 				      				'position' => optional($data->personnel)->position,
 				      				'rating' => number_format($ave_rating, 2),
@@ -212,8 +213,8 @@
 
 				            <li class="item">
 				              <div class="product-img">
-				                @if (isset($data['avatar']))
-				                  <img src="data:image/jpg;base64,{{ $data['avatar'] }}" 
+				                @if (isset($data['avatar_location']))
+				                  <img src="{{ route('dashboard.personnel.view_avatar', $data['slug']) }}" 
 				                       class="img-circle" 
 				                       alt="Product Image">
 				                @else

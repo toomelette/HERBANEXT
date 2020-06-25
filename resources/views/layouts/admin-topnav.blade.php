@@ -14,8 +14,8 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            @if (isset(Auth::user()->avatar))
-              <img src="data:image/jpg;base64,{{ Auth::user()->avatar }}" class="user-image" alt="User Image">
+            @if (isset(Auth::user()->avatar_location))
+              <img src="{{ route('dashboard.profile.view_avatar', Auth::user()->slug) }}" class="user-image" alt="User Image">
             @else
               <img src="{{ asset('images/avatar.jpeg') }}" class="user-image" alt="User Image">
             @endif

@@ -223,7 +223,7 @@
     {!! __js::toast(Session::get('USER_CREATE_SUCCESS')) !!}
   @endif
 
-  {!! __js::img_upload('avatar', 'fa', 'BLOB', $user->avatar) !!}
+  {!! __js::img_upload('avatar', 'fa', 'URL', route('dashboard.user.view_avatar', $user->slug)) !!}
 
 </script>
     

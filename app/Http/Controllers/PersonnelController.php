@@ -48,6 +48,11 @@ class PersonnelController extends Controller{
         return $this->personnel->destroy($slug);
     }
 
+    
+    public function viewAvatar($slug){
+        return $this->personnel->viewAvatar($slug);
+    }
+
 
 
     

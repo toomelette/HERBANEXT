@@ -15,9 +15,9 @@
       <div class="box box-default">
         <div class="box-body box-profile">
             
-          @if (isset(Auth::user()->avatar))
+          @if (isset(Auth::user()->avatar_location))
             <img class="profile-user-img img-responsive img-circle" 
-                 src="data:image/jpg;base64,{{ Auth::user()->avatar }}" 
+                 src="{{ route('dashboard.profile.view_avatar', Auth::user()->slug) }}" 
                  alt="User profile picture">
           @else
             <img class="profile-user-img img-responsive img-circle" 

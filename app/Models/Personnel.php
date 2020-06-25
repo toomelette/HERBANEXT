@@ -26,7 +26,7 @@ class Personnel extends Model{
 
         'slug' => '',
         'personnel_id' => '',
-        'avatar' => null,
+        'avatar_location' => '',
         'firstname' => '',
         'middlename' => '',
         'lastname' => '',

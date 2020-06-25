@@ -8,9 +8,9 @@ interface PersonnelInterface {
 
 	public function fetch($request);
 
-	public function store($request);
+	public function store($request, $img_location);
 
-	public function update($request, $slug);
+	public function update($request, $slug, $img_location);
 
 	public function destroy($slug);
 
