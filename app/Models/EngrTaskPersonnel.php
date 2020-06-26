@@ -20,6 +20,7 @@ class EngrTaskPersonnel extends Model{
         'personnel_id' => '',
         'engr_task_personnel_id' => '',
         'rating' => 0,
+        'remarks' => '',
 
     ];
 

@@ -19,6 +19,7 @@ class TaskRatePersonnelFormRequest extends FormRequest{
         return [
 
             'rating' => 'required|int|min:1|max:5',
+            'remarks' => 'nullable|max:255',
 
         ];
 

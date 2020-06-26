@@ -154,8 +154,7 @@ class EngrTaskService extends BaseService{
 
     public function ratePersonnelPost($request, $engr_task_personnel_id){
 
-        $engr_task_personnel = $this->engr_task_personnel_repo->updateRating($engr_task_personnel_id, $request->rating);
-
+        $engr_task_personnel = $this->engr_task_personnel_repo->updateRating($engr_task_personnel_id, $request);
         $this->event->fire('engr_task.rate_personnel', $engr_task_personnel);
         return redirect()->back();
 

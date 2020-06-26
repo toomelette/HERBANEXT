@@ -146,8 +146,7 @@ class TaskService extends BaseService{
 
     public function ratePersonnelPost($request, $task_personnel_id){
 
-        $task_personnel = $this->task_personnel_repo->updateRating($task_personnel_id, $request->rating);
-
+        $task_personnel = $this->task_personnel_repo->updateRating($task_personnel_id, $request);
         $this->event->fire('task.rate_personnel', $task_personnel);
         return redirect()->back();
 

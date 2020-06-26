@@ -19,6 +19,7 @@ class EngrTaskRatePersonnelFormRequest extends FormRequest{
         return [
 
             'rating' => 'required|int|min:1|max:5',
+            'rating' => 'nullable|max:255',
 
         ];
 

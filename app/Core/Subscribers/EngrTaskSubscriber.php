@@ -131,6 +131,8 @@ class EngrTaskSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_task_personnel:personnelRatingThisMonth');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:engr_tasks:findBySlug:'. optional($engr_task_personnel->engrTask)->slug .'');
 
+        $this->session->flash('ENGR_TASK_PERSONNEL_RATING_SUCCESS', 'Your rating has been successfully submitted!');
+
     }
 
 

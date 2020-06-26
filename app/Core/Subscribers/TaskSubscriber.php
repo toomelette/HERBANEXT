@@ -131,6 +131,8 @@ class TaskSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:task_personnel:personnelRatingThisMonth');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:findBySlug:'. optional($task_personnel->task)->slug .'');
 
+        $this->session->flash('TASK_PERSONNEL_RATING_SUCCESS', 'Your rating has been successfully submitted!');
+
     }
 
 

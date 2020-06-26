@@ -37,9 +37,10 @@ class TaskPersonnelRepository extends BaseRepository implements TaskPersonnelInt
 
 
 
-    public function updateRating($task_personnel_id, $rating){
+    public function updateRating($task_personnel_id, $request){
         $task_personnel = $this->findByTaskPersonnelId($task_personnel_id);
-        $task_personnel->rating = $rating;
+        $task_personnel->rating = $request->rating;
+        $task_personnel->remarks = $request->remarks;
         $task_personnel->save();
         return $task_personnel;
 

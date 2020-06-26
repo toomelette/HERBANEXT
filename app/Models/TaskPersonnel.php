@@ -20,6 +20,7 @@ class TaskPersonnel extends Model{
         'personnel_id' => '',
         'task_personnel_id' => '',
         'rating' => 0,
+        'remarks' => '',
 
     ];
 

@@ -37,9 +37,10 @@ class EngrTaskPersonnelRepository extends BaseRepository implements EngrTaskPers
 
 
 
-    public function updateRating($engr_task_personnel_id, $rating){
+    public function updateRating($engr_task_personnel_id, $request){
         $engr_task_personnel = $this->findByTaskPersonnelId($engr_task_personnel_id);
-        $engr_task_personnel->rating = $rating;
+        $engr_task_personnel->rating = $request->rating;
+        $engr_task_personnel->remarks = $request->remarks;
         $engr_task_personnel->save();
         return $engr_task_personnel;
 
