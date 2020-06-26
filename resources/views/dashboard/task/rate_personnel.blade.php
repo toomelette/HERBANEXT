@@ -27,11 +27,11 @@
             
     <div class="box box-solid">
       <div class="box-body">
-        <code>1 = Finished but have major problem</code><br>
-        <code>2 = Finished but have mild problem</code><br>
-        <code>3 = Finished but have minor problem</code><br>
-        <code>4 = Finished on time</code><br>
-        <code>5 = Finished Ahead of time</code><br>
+        <code>1 = Late completion with major issues</code><br>
+        <code>2 = Late completion with minor issues</code><br>
+        <code>3 = On-time with minor issues</code><br>
+        <code>4 = On-time with no quality issues</code><br>
+        <code>5 = Ahead of time with no quality issues</code>
       </div>
     </div>
             
