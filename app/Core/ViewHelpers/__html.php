@@ -181,7 +181,7 @@ class __html{
 
        return '<div class="box '. self::collapsed_filter() .'">
 		            <div class="box-header with-border" data-widget="collapse">
-		                <h3 class="box-title">Advance Filters</h3>
+		                <h3 class="box-title">Advanced Filters</h3>
 		                <div class="box-tools pull-right">
 		                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 		                </div> 
