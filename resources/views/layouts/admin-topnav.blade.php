@@ -1,7 +1,7 @@
 <header class="main-header">
   <a href="#" class="logo">
     <span class="logo-mini">H</span>
-    <span>Herbanext</span>
+    <span class="logo-lg">Herbanext</span>
   </a>
   <nav class="navbar navbar-static-top">
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -35,7 +35,6 @@
                   {{ __sanitize::html_encode(Auth::user()->firstname) .' '. __sanitize::html_encode(Auth::user()->lastname) }}
                   <small>{{ __sanitize::html_encode(Auth::user()->position) }}</small>
                 @endif
-                
               </p>
             </li>
             <li class="user-footer">
