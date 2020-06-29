@@ -85,7 +85,7 @@ $(function () {
       @foreach($scheduled_tasks as $data)
         {
           slug            : '{{ $data->slug }}',
-          title           : '{{ $data->name ." - ". optional($data->machine)->displayMaintenanceStatusText() }}',
+          title           : '{{ $data->name }}',
           description           : '{{ $data->description }}',
           start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
           end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
