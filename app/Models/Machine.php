@@ -36,75 +36,7 @@ class Machine extends Model{
         'user_updated' => '',
 
     ];
-
-
-
-    public function maintenanceStatus(){
-
-        $count = 0;
-        $status = false;
-
-        if (!$this->machineMaintenance->isEmpty()) {
-
-            foreach ($this->machineMaintenance as $data) {
-
-                $from_parse = Carbon::parse($data->date_from .' '. $data->time_from)->format('Y-m-d H:i:s');
-                $to_parse = Carbon::parse($data->date_to  .' '. $data->time_to)->format('Y-m-d H:i:s');
-
-                $from = Carbon::createFromFormat('Y-m-d H:i:s', $from_parse);
-                $to = Carbon::createFromFormat('Y-m-d H:i:s', $to_parse);
-
-                $is_under_mnt = Carbon::now()->between($from, $to);
-
-                if ($is_under_mnt == true) {
-                    $count += 1;
-                }
-
-            }
-            
-        }
-
-        if ($count > 0) {
-            $status = true;
-        }
-
-        return $status;
-
-    }
-
-
-
-    public function displayMaintenanceStatusSpan(){
-
-        $span = '<span class=" badge bg-green">Operational<span>';
-
-        if ($this->maintenanceStatus() == true) {
-            $span = '<span class=" badge bg-orange">Under Maintenance<span>';
-        }
-
-        return $span;
-
-    }
-
-
-
-    public function displayMaintenanceStatusText(){
-
-        $txt = 'Operational';
-
-        if ($this->maintenanceStatus() == true) {
-            $txt = 'Under Maintenance';
-        }
-
-        return $txt;
-
-    }
-
-
-    // Relationships
-    public function machineMaintenance() {
-        return $this->hasMany('App\Models\MachineMaintenance','machine_id','machine_id');
-    }
+    
 
 
 }
