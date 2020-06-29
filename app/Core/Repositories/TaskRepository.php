@@ -104,6 +104,9 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
         $task = $this->findBySlug($slug);
         $task->status = $int;
+        $task->updated_at = $this->carbon->now();
+        $task->ip_updated = request()->ip();
+        $task->user_updated = $this->auth->user()->user_id;
         $task->save();
         
         return $task;
@@ -218,7 +221,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'slug')
+        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'created_at', 'updated_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

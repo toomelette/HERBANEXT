@@ -42,6 +42,8 @@
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('location', 'Location')</th>
             <th>@sortablelink('status', 'Status')</th>
+            <th>@sortablelink('created_at', 'Date Encoded')</th>
+            <th>@sortablelink('updated_at', 'Last Modified')</th>
             <th style="width:390px;">Action</th>
           </tr>
           @foreach($engr_tasks as $data) 
@@ -51,6 +53,8 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ $data->location }}</td>
               <td id="mid-vert">{!! $data->displayStatusSpan() !!}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'F d, Y h:i A') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'F d, Y h:i A') }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.engr_task.update_finished', $global_user_submenus))

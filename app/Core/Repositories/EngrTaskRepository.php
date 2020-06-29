@@ -134,6 +134,9 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
         $engr_task = $this->findBySlug($slug);
         $engr_task->status = $int;
+        $engr_task->updated_at = $this->carbon->now();
+        $engr_task->ip_updated = request()->ip();
+        $engr_task->user_updated = $this->auth->user()->user_id;
         $engr_task->save();
         
         return $engr_task;
@@ -233,7 +236,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'location', 'cat', 'status', 'slug')
+        return $model->select('name', 'description', 'location', 'cat', 'status', 'created_at', 'updated_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
