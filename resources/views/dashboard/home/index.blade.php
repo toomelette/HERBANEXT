@@ -427,7 +427,7 @@
 	      @foreach($get_scheduled_tasks as $data)
 	        {
 	          slug            : '{{ $data->slug }}',
-	          title           : '{{ $data->name ." - ". optional($data->machine)->displayMaintenanceStatusText() }}',
+	          title           : '{{ $data->name }}',
 	          start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
 	          end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
 	          allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
