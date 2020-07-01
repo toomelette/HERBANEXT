@@ -308,7 +308,8 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
     public function getScheduled(){
 
         $engr_tasks = $this->cache->remember('engr_tasks:getScheduled', 240, function(){
-            return $this->engr_task->select('slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
+            return $this->engr_task->select('engr_task_id', 'slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
+                              ->with('engrTaskPersonnel')
                               ->whereIn('status', [2,3])
                               ->get();
         });

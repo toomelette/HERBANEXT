@@ -274,7 +274,8 @@ class TaskRepository extends BaseRepository implements TaskInterface {
     public function getScheduled(){
 
         $tasks = $this->cache->remember('tasks:getScheduled', 240, function(){
-            return $this->task->select('machine_id', 'slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
+            return $this->task->select('task_id', 'machine_id', 'slug', 'name', 'description', 'is_allday', 'date_from', 'date_to', 'color')
+                              ->with('taskPersonnel')
                               ->whereIn('status', [2,3])
                               ->get();
         });
