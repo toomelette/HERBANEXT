@@ -60,8 +60,8 @@ class PurchaseOrderService extends BaseService{
         
         $purchase_order = $this->purchase_order_repo->store($request);
 
-        $subtotal_price = 0.00;
-        $total_price = 0.00;
+        $subtotal_price = 0.000;
+        $total_price = 0.000;
 
         if (!empty($request->row)) {
 

@@ -184,7 +184,7 @@
 
 
     $("#freight_fee").priceFormat({
-        centsLimit: 2,
+        centsLimit: 3,
         prefix: "",
         thousandsSeparator: ",",
         clearOnEmpty: true,
@@ -193,7 +193,7 @@
 
 
     $("#vat").priceFormat({
-        centsLimit: 2,
+        centsLimit: 3,
         prefix: "",
         thousandsSeparator: ",",
         clearOnEmpty: true,

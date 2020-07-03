@@ -334,8 +334,8 @@
       });
     }
     
-    textboxNumeric("#freight_fee", 2);
-    textboxNumeric("#vat", 2);
+    textboxNumeric("#freight_fee", 3);
+    textboxNumeric("#vat", 3);
     textboxNumeric(".pcs", 0);
     textboxNumeric(".weight", 3);
     textboxNumeric(".volume", 3);
