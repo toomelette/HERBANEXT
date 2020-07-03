@@ -149,7 +149,7 @@
                 ) !!}
 
                 {!! __form::textbox_numeric(
-                  '6', 'vat', 'text', 'VAT (%)', 'VAT (%)', old('vat') ? old('vat') : "12.00", $errors->has('vat'), $errors->first('vat'), ''
+                  '6', 'vat', 'text', 'VAT (%)', 'VAT (%)', old('vat') ? old('vat') : "12.000", $errors->has('vat'), $errors->first('vat'), ''
                 ) !!}
 
                 {!! __form::textbox(
