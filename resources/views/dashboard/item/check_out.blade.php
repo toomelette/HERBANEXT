@@ -72,14 +72,6 @@
 
   <script type="text/javascript">
 
-    $("#price").priceFormat({
-        centsLimit: 2,
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: false
-    });
-
     @if($item->unit_type_id == 'IU1001')
       $("#unit").empty();
       $("#unit").append("<option value='PCS'{{ old('unit') == 'PCS' ? 'selected' : '' }}>PCS</option>");
