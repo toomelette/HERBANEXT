@@ -149,7 +149,7 @@
                 ) !!}
 
                 {!! __form::textbox_numeric(
-                  '6', 'vat', 'text', 'VAT (%)', 'VAT (%)', old('vat') ? old('vat') : "12.000", $errors->has('vat'), $errors->first('vat'), ''
+                  '6', 'vat', 'text', 'VAT (%)', 'VAT (%)', old('vat') ? old('vat') : "12.0000", $errors->has('vat'), $errors->first('vat'), ''
                 ) !!}
 
                 {!! __form::textbox(
@@ -334,8 +334,8 @@
       });
     }
     
-    textboxNumeric("#freight_fee", 3);
-    textboxNumeric("#vat", 3);
+    textboxNumeric("#freight_fee", 4);
+    textboxNumeric("#vat", 4);
     textboxNumeric(".pcs", 0);
     textboxNumeric(".weight", 3);
     textboxNumeric(".volume", 3);

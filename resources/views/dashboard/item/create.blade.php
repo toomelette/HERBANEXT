@@ -280,7 +280,7 @@
       });
     }
 
-    textboxNumeric("#price", 3);
+    textboxNumeric("#price", 4);
 
     textboxNumeric(".remaining_balance", 3);
 

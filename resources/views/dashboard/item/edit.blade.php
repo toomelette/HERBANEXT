@@ -336,7 +336,7 @@
         });
       }
 
-      textboxNumeric("#price", 3);
+      textboxNumeric("#price", 4);
       textboxNumeric("#min_req_qty", 3);
       textboxNumeric(".remaining_balance", 3);
 

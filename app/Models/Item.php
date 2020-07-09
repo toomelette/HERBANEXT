@@ -36,7 +36,7 @@ class Item extends Model{
         'current_balance' => 0.000,
         'unit' => '',
         'batch_size' => '',
-        'price' => 0.000,
+        'price' => 0.0000,
         'min_req_qty' => 0.000,
         'is_incoming' => false,
         'created_at' => null,

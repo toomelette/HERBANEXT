@@ -81,8 +81,8 @@
                         <span>{{ number_format($data->amount) }} {{ $data->unit }}<span>
                       @endif
                     </td>
-                    <td>&#8369; {{ number_format($data->item_price, 3) }}</td>
-                    <td>&#8369; {{ number_format($data->line_price, 3) }}</td>
+                    <td>&#8369; {{ number_format($data->item_price, 4) }}</td>
+                    <td>&#8369; {{ number_format($data->line_price, 4) }}</td>
                   </tr>
                 @endforeach
               </tbody>
@@ -108,19 +108,19 @@
               <table class="table">
                 <tr>
                   <th style="width:50%">Subtotal:</th>
-                  <td>&#8369; {{ number_format($purchase_order->subtotal_price, 3) }}</td>
+                  <td>&#8369; {{ number_format($purchase_order->subtotal_price, 4) }}</td>
                 </tr>
                 <tr>
-                  <th>VAT ({{ number_format($purchase_order->vat, 3) }} %)</th>
-                  <td>&#8369; {{ number_format($vatable, 3) }}</td>
+                  <th>VAT ({{ number_format($purchase_order->vat, 4) }} %)</th>
+                  <td>&#8369; {{ number_format($vatable, 4) }}</td>
                 </tr>
                 <tr>
                   <th>Freight:</th>
-                  <td>&#8369; {{ number_format($purchase_order->freight_fee, 3) }}</td>
+                  <td>&#8369; {{ number_format($purchase_order->freight_fee, 4) }}</td>
                 </tr>
                 <tr>
                   <th>Total:</th>
-                  <td><b>&#8369; {{ number_format($purchase_order->total_price, 3) }}</b></td>
+                  <td><b>&#8369; {{ number_format($purchase_order->total_price, 4) }}</b></td>
                 </tr>
               </table>
             </div>
