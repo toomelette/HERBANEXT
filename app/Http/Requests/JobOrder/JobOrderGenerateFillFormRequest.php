@@ -28,10 +28,11 @@ class JobOrderGenerateFillFormRequest extends FormRequest{
                 
                 $rules['row.'.$key.'.jo_id'] = 'required|string|max:11';
                 $rules['row.'.$key.'.jo_no'] = 'required|string|max:45';
-                $rules['row.'.$key.'.date'] = 'required|date_format:"m/d/Y"';
-                $rules['row.'.$key.'.lot_no'] = 'required|string|max:45';
-                $rules['row.'.$key.'.pack_size'] = 'required|string|max:255';
-                $rules['row.'.$key.'.theo_yield'] = 'required|string|max:255';
+                $rules['row.'.$key.'.date'] = 'nullable|date_format:"m/d/Y"';
+                $rules['row.'.$key.'.lot_no'] = 'nullable|string|max:45';
+                $rules['row.'.$key.'.batch_size'] = 'nullable|string|max:255';
+                $rules['row.'.$key.'.pack_size'] = 'nullable|string|max:255';
+                $rules['row.'.$key.'.theo_yield'] = 'nullable|string|max:255';
 
             } 
 

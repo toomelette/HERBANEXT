@@ -35,6 +35,7 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetchBuffer:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:countNew');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:getCurrentMonth');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
@@ -52,6 +53,7 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetchBuffer:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:findBySlug:'. $purchase_order->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:getCurrentMonth');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:getAll');
@@ -70,6 +72,7 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetchBuffer:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:findBySlug:'. $purchase_order->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:countNew');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:getCurrentMonth');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:manufacturing_order_items:fetch:*');
@@ -89,6 +92,7 @@ class PurchaseOrderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetchBuffer:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:findBySlug:'. $purchase_order->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:getCurrentMonth');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:getAll');
 
         $this->session->flash('PURCHASE_ORDER_TO_UPDATE_TYPE_SUCCESS', 'The Purchase Order has been successfully updated!');

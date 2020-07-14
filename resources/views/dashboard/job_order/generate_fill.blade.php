@@ -48,7 +48,6 @@
 						        <div class="content box-body">
 
 						        	<input type="hidden" name="row[{{ $key }}][jo_id]" id="jo_id" value="{{ $jobOrder[$key]['jo_id'] }}">
-						        	<input type="hidden" name="batch_size" id="batch_size" value="{{ $jobOrder[$key]['batch_size'] }}">
 						        	<input type="hidden" name="item_type_percent" id="item_type_percent" value="{{ $po_item->item_type_percent }}">
 						        	<input type="hidden" name="unit_type_id" id="unit_type_id" value="{{ $po_item->unit_type_id }}">
 
@@ -87,9 +86,11 @@
 
 					                <div class="col-md-12"></div>
 
-					                {!! __form::textbox(
-					                  '6', '', 'text', 'Batch Size', 'Batch Size', $jobOrder[$key]['batch_size'] , '', '', 'readonly'
-					                ) !!}  
+		                            <div class="form-group col-md-6">
+						              <label for="batch_size">Batch Size</label>
+		                              <input type="text" name="row[{{ $key }}][batch_size]" id="batch_size" class="form-control batch_size" placeholder="Batch Size" value="{{ $data['batch_size'] }}">
+						              <small class="text-danger">{{ $errors->first('row.'. $key .'.batch_size') }}</small>
+		                            </div> 
 
 		                            <div class="form-group col-md-6">
 						              <label for="lot_no">Lot No.</label>
@@ -129,7 +130,6 @@
 						        <div class="content box-body">
 
 						        	<input type="hidden" name="row[{{ $key }}][jo_id]" id="jo_id" value="{{ $data->jo_id }}">
-						        	<input type="hidden" name="batch_size" id="batch_size" value="{{ $data->batch_size }}">
 						        	<input type="hidden" name="item_type_percent" id="item_type_percent" value="{{ $po_item->item_type_percent }}">
 						        	<input type="hidden" name="unit_type_id" id="unit_type_id" value="{{ $po_item->unit_type_id }}">
 
@@ -166,9 +166,10 @@
 
 					                <div class="col-md-12"></div>
 
-					                {!! __form::textbox(
-					                  '6', '', 'text', 'Batch Size', 'Batch Size', $data->batch_size , '', '', 'readonly'
-					                ) !!}  
+		                            <div class="form-group col-md-6">
+						              <label for="batch_size">Batch Size</label>
+		                              <input type="text" name="row[{{ $key }}][batch_size]" id="batch_size" class="form-control batch_size" placeholder="Batch Size" value="{{ $data->batch_size }}">
+		                            </div> 
 
 		                            <div class="form-group col-md-6">
 						              <label for="lot_no">Lot No.</label>
