@@ -92,7 +92,7 @@ class PurchaseOrderItem extends Model{
 
     public function isReadyForDelivery(){
 
-        if($this->delivery_status == 0 && $this->is_generated == 1){
+        if($this->delivery_status == 0 && $this->is_generated == 0){
 
             if (!$this->jobOrder->isEmpty()) {
 
