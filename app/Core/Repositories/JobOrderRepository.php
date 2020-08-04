@@ -165,7 +165,7 @@ class JobOrderRepository extends BaseRepository implements JobOrderInterface {
     public function getAll(){
 
         $job_order = $this->cache->remember('job_orders:getAll', 240, function(){
-            return $this->job_order->select('po_item_id', 'jo_id', 'lot_no', 'delivery_status')
+            return $this->job_order->select('po_item_id', 'jo_id', 'jo_no', 'lot_no', 'delivery_status')
                                    ->with('purchaseOrderItem')
                                    ->orderBy('updated_at', 'asc')
                                    ->get();

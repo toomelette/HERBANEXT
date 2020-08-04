@@ -204,7 +204,7 @@
                         @elseif($data->delivery_status == 1)
                           
                           <option value="{{ $data->jo_id }}" style="padding:8px;" style="padding:8px;">
-                          {{ 'Batch No.: '.$data->lot_no .' | Product Name: '. optional($data->purchaseOrderItem->item)->name }}
+                          {{ 'JO No.: '. $data->jo_no .' | Batch No.: '.$data->lot_no .' | Product Name: '. optional($data->purchaseOrderItem->item)->name }}
                           </option>
 
                         @endif
