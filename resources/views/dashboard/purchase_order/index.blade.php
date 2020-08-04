@@ -68,7 +68,7 @@
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
-            <th>@sortablelink('status', 'Status')</th>
+            <th>@sortablelink('process_status', 'Status')</th>
             <th style="width: 250px">Action</th>
           </tr>
 

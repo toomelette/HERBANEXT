@@ -14,8 +14,6 @@ class PurchaseOrder extends Model{
 
     protected $table = 'purchase_orders';
 
-    public $sortable = ['po_no', 'bill_to_name', 'ship_to_name', 'total_price'];
-
     protected $dates = ['date_required', 'created_at', 'updated_at'];
     
 	public $timestamps = false;
