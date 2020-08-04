@@ -69,6 +69,7 @@
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
             <th>@sortablelink('process_status', 'Status')</th>
+            <th>@sortablelink('', 'Items')</th>
             <th style="width: 250px">Action</th>
           </tr>
 
@@ -94,6 +95,15 @@
 
               <td id="mid-vert">
                 {!! $data->displayProcessStatusSpan() !!}
+              </td>
+
+
+              <td id="mid-vert">
+                <ul class="no-padding">
+                  @foreach ($data->purchaseOrderItem as $data)
+                    <li>{{ $data->item->name }}</li>
+                  @endforeach
+                </ul>
               </td>
 
               <td id="mid-vert">
