@@ -65,11 +65,11 @@
 
           <tr>
             <th>@sortablelink('po_no', 'PO No.')</th>
+            <th>@sortablelink('', 'Items')</th>
             <th>@sortablelink('bill_to_name', 'Bill to')</th>
             <th>@sortablelink('ship_to_name', 'Ship to')</th>
             <th>@sortablelink('created_at', 'Date')</th>
             <th>@sortablelink('process_status', 'Status')</th>
-            <th>@sortablelink('', 'Items')</th>
             <th style="width: 250px">Action</th>
           </tr>
 
@@ -78,6 +78,12 @@
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
 
               <td id="mid-vert">{{ $data->po_no }}</td>
+
+              <td id="mid-vert">
+                @foreach ($data->purchaseOrderItem as $data_po_item)
+                  {{ $data_po_item->item->name }}<br>
+                @endforeach
+              </td>
 
               <td id="mid-vert">
                 <b>{{ $data->bill_to_name }}</b><br>
@@ -95,15 +101,6 @@
 
               <td id="mid-vert">
                 {!! $data->displayProcessStatusSpan() !!}
-              </td>
-
-
-              <td id="mid-vert">
-                <ul class="no-padding">
-                  @foreach ($data->purchaseOrderItem as $data)
-                    <li>{{ $data->item->name }}</li>
-                  @endforeach
-                </ul>
               </td>
 
               <td id="mid-vert">
