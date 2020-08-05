@@ -112,6 +112,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	->name('task.rate_personnel');
 	Route::post('/task/rate_personnel/{task_personnel_id}', 'TaskController@ratePersonnelPost')
 	->name('task.rate_personnel_post');
+	Route::get('/task/reports', 'TaskController@reports')
+	->name('task.reports');
+	Route::get('/task/reports_output', 'TaskController@reportsOutput')
+	->name('task.reports_output');
 	Route::resource('task', 'TaskController');
 
 

@@ -154,4 +154,15 @@ class TaskService extends BaseService{
 
 
 
+    public function reportsOutput($request){
+
+        $task = $this->task_repo->getByDate($request->df, $request->dt);
+        return view('printables.task.task_by_date')->with('task', $task);
+
+    }
+
+
+
+
+
 }

@@ -286,6 +286,35 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+
+
+
+    public function getByDate($df, $dt){
+
+        $tasks = $this->cache->remember('tasks:getByDate:'.$df.'-'.$dt, 240, function() use ($df, $dt){
+            
+            $task = $this->task->newQuery();
+
+            $date_from = $this->__dataType->date_parse($df, 'Y-m-d 00:00:00');
+            $date_to = $this->__dataType->date_parse($dt, 'Y-m-d 24:00:00');
+
+            if(isset($df) || isset($dt)){
+                $task->where('date_from', '>=', $df)
+                     ->where('date_from', '<=', $dt);
+            }
+
+            return $task->select('task_id', 'machine_id', 'name', 'description', 'date_from', 'date_to')
+                        ->with('taskPersonnel')
+                        ->get();
+        
+        });
+        
+        return $tasks;
+
+    }
+
+
+
     public function countNew(){
 
         $tasks = $this->cache->remember('tasks:countNew', 240, function(){

@@ -14,16 +14,16 @@
 
 
 
-  function checkboxVal($old_value, $bool_string, $value, $bool){
+  function checkboxVal($old_value, $int_string, $value, $int){
 
     $txt = '';
 
     if (isset($old_value)) {
-      if ($old_value == $bool_string) {
+      if ($old_value == $int_string) {
         $txt = 'checked';
       }
     }else{
-      if ($value == $bool) {
+      if ($value == $int) {
         $txt = 'checked';
       }
     }

@@ -28,6 +28,8 @@ interface TaskInterface {
 
 	public function getScheduled();
 
+	public function getByDate($df, $dt);
+
 	public function countNew();
 		
 }

@@ -7,6 +7,7 @@ use App\Core\Services\TaskService;
 use App\Http\Requests\Task\TaskFormRequest;
 use App\Http\Requests\Task\TaskFilterRequest;
 use App\Http\Requests\Task\TaskRatePersonnelFormRequest;
+use App\Http\Requests\Task\TaskReportFormRequest;
 
 
 class TaskController extends Controller{
@@ -77,6 +78,18 @@ class TaskController extends Controller{
     
     public function ratePersonnelPost(TaskRatePersonnelFormRequest $request, $task_personnel_id){
         return $this->task->ratePersonnelPost($request, $task_personnel_id);
+    }
+
+    
+    public function reports(){
+        return view('dashboard.task.reports');
+    }
+
+    
+    public function reportsOutput(TaskReportFormRequest $request){
+
+        return $this->task->reportsOutput($request);
+
     }
 
 
