@@ -20,57 +20,54 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-xs-12 table-responsive">
+    <?php 
 
-        <table class="table table-bordered">
+      $days = __dynamic::days_between_dates(Request::get('ts_df'), Request::get('ts_dt'));
 
-          <thead>
+    ?>
 
-            <tr>
-              <th>Day</th>
-            </tr>
+    @foreach ($days as $data_date)
 
-          </thead>
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <h3>{{ __dataType::date_parse($data_date, 'F d, Y - l') }}</h3>
+          <table class="table table-bordered">
 
-          <tbody>
-
-            <?php 
-              $days = __dynamic::days_between_dates(Request::get('ts_df'), Request::get('ts_dt'));
-              //echo dd($days);
-            ?>
-
-            @foreach ($days as $data_date)
-              
+            <thead>
               <tr>
-                <td>{{ __dataType::date_parse($data_date, 'F d, Y l') }}</td>
+                <th>Activity</th>
+                <th>Personnels</th>
+                <th>QC</th>
+                <th>Remarks</th>
               </tr>
+            </thead>
 
-            @endforeach
+            <tbody>
+              @foreach ($task as $data_task)
+                <?php
+                  $date = __dataType::date_parse($data_date, 'mdY');
+                  $task_date = __dataType::date_parse($data_task->date_from, 'mdY');
+                ?>
+                @if ($date == $task_date)
+                  <tr>
+                    <td>{{ $data_task->name }}</td>
+                    <td>
+                      @foreach ($data_task->taskPersonnel as $data_personnel)
+                        {{ optional($data_personnel->personnel)->lastname }},
+                      @endforeach
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                @endif
+              @endforeach
+            </tbody>
 
-          </tbody>
-        </table>
-
+          </table>
+        </div>
       </div>
-    </div>
 
-
-    <div class="col-xs-12" style="margin-top:40px;">
-
-      <div class="col-xs-5 no-padding">Issued by:</div>
-      <div class="col-xs-2 no-padding"></div>
-      <div class="col-xs-5 no-padding">Recieved by:</div>
-
-      <div class="col-md-12" style="margin-top:70px;"></div>
-
-      <div class="col-xs-5" style="border-bottom: solid 1px;"></div>
-      <div class="col-xs-2"></div>
-      <div class="col-xs-5" style="border-bottom: solid 1px;"></div>
-
-      <div class="col-xs-5" style="text-align:center;">Signature over Printer Name</div>
-      <div class="col-xs-2"></div>
-      <div class="col-xs-5" style="text-align:center;">Signature over Printer Name</div>
-    </div>
+    @endforeach
 
   </section>
 
