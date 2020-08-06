@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
 </head>
-<body {{-- onload="window.print();" onafterprint="window.close()" --}}>
+<body onload="window.print();" onafterprint="window.close()">
 
 	<section class="invoice">
 
