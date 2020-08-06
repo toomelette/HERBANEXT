@@ -30,15 +30,15 @@
 
       <div class="row">
         <div class="col-xs-12 table-responsive">
-          <h3>{{ __dataType::date_parse($data_date, 'F d, Y - l') }}</h3>
+          <h4>{{ __dataType::date_parse($data_date, 'F d, Y - l') }}</h4>
           <table class="table table-bordered">
 
             <thead>
               <tr>
-                <th>Activity</th>
-                <th>Personnels</th>
-                <th>QC</th>
-                <th>Remarks</th>
+                <th style="width:100px;">Activity</th>
+                <th style="width:100px;">Personnels</th>
+                <th style="width:50px;">QC</th>
+                <th style="width:100px;">Remarks</th>
               </tr>
             </thead>
 
