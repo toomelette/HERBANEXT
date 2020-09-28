@@ -88,6 +88,7 @@
             <thead>
               <tr>
                 <th>PO No</th>
+                <th>JO No</th>
                 <th>Bill to</th>
                 <th>Ship to</th>
                 <th>Batch No</th>
@@ -102,6 +103,8 @@
 
                   <tr>
                     <td>{{ optional($data->jobOrder)->po_no }}</td>
+
+                    <td>{{ optional($data->jobOrder)->jo_no }}</td>
 
                     <td id="mid-vert">
                       <b>{{ optional($data->jobOrder)->purchaseOrder->bill_to_name }}</b><br>
