@@ -97,7 +97,7 @@ class PurchaseOrderService extends BaseService{
         $vatable = $subtotal_price * $vat_rounded_off;
         $freight_fee = $this->__dataType->string_to_num($request->freight_fee);
         //$total_price = $subtotal_price + $vatable;
-        $total_price = $subtotal_price - $freight_fee;
+        $total_price = $subtotal_price + $freight_fee;
 
         $this->purchase_order_repo->updatePrices($purchase_order, $subtotal_price, $total_price);
 
