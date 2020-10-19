@@ -120,7 +120,7 @@ class PurchaseOrder extends Model{
             foreach($this->purchaseOrderItem as $po_item) {
                 $count_total = $count_total + 1;
                 if ($po_item->delivery_status == 4) {
-                    $count_completed = $count_completed + 1;     
+                    $count_completed = $count_completed + 1; 
                 }
             }
 

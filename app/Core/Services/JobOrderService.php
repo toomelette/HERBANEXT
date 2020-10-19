@@ -158,6 +158,7 @@ class JobOrderService extends BaseService{
 
         if ($status == 'check') {
             $this->job_order_repo->updateDeliveryStatus($job_order->jo_id, 1);
+            $this->po_repo->updateProcessStatus($job_order->purchaseOrder->slug, 3);
         }elseif ($status == 'uncheck') {
             $this->job_order_repo->updateDeliveryStatus($job_order->jo_id, 0);
         }

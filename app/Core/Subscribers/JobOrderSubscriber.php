@@ -50,7 +50,7 @@ class JobOrderSubscriber extends BaseSubscriber{
 
     public function onGenerateFillPost($slug, $jo_id){
 
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:'. $slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo_id .'');
@@ -66,7 +66,8 @@ class JobOrderSubscriber extends BaseSubscriber{
 
 
     public function onConfirmRFD($jo){
-
+        
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo->jo_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findBySlug:*');
