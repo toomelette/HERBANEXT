@@ -29,6 +29,10 @@ interface ItemInterface {
 	public function getPackMats();
 
 	public function getByItemId($item_id);
+
+	public function inventoryByCategory($request);
+
+	public function inventoryAll($request);
 		
 		
 }

@@ -124,6 +124,24 @@ class ItemCategoryRepository extends BaseRepository implements ItemCategoryInter
 
 
 
+    public function findByItemCatId($item_cat_id){
+
+        $item_category = $this->cache->remember('item_categories:findByItemCatId:' . $item_cat_id, 240, function() use ($item_cat_id){
+            return $this->item_category->where('item_category_id', $item_cat_id)->first();
+        }); 
+        
+        if(empty($item_category)){
+            abort(404);
+        }
+
+        return $item_category;
+
+    }
+
+
+
+
+
 
     public function search($model, $key){
 

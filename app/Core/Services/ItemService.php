@@ -4,6 +4,7 @@ namespace App\Core\Services;
 
 
 use App\Core\Interfaces\ItemInterface;
+use App\Core\Interfaces\ItemCategoryInterface;
 use App\Core\Interfaces\ItemBatchInterface;
 use App\Core\Interfaces\ItemLogInterface;
 use App\Core\Interfaces\ItemRawMatInterface;
@@ -15,6 +16,7 @@ class ItemService extends BaseService{
 
 
     protected $item_repo;
+    protected $item_cat_repo;
     protected $item_batch_repo;
     protected $item_log_repo;
     protected $item_raw_mat_repo;
@@ -22,9 +24,15 @@ class ItemService extends BaseService{
 
 
 
-    public function __construct(ItemInterface $item_repo, ItemBatchInterface $item_batch_repo, ItemLogInterface $item_log_repo, ItemRawMatInterface $item_raw_mat_repo, ItemPackMatInterface $item_pack_mat_repo){
+    public function __construct(ItemInterface $item_repo, 
+                                ItemCategoryInterface $item_cat_repo, 
+                                ItemBatchInterface $item_batch_repo, 
+                                ItemLogInterface $item_log_repo, 
+                                ItemRawMatInterface $item_raw_mat_repo, 
+                                ItemPackMatInterface $item_pack_mat_repo){
 
         $this->item_repo = $item_repo;
+        $this->item_cat_repo = $item_cat_repo;
         $this->item_batch_repo = $item_batch_repo;
         $this->item_log_repo = $item_log_repo;
         $this->item_raw_mat_repo = $item_raw_mat_repo;
@@ -391,6 +399,61 @@ class ItemService extends BaseService{
 
         $request->flash();
         return view('dashboard.item.logs_by_item')->with(['logs' => $logs, 'slug' => $item->slug]);
+
+    }
+
+
+
+    public function reportsOutput($request){ 
+
+            if($request->s == 1){
+
+                $items = $this->item_repo->inventoryAll($request);
+
+                if($request->type == 1){
+
+                    return view('printables.item.current_inventory_count')->with([
+                        'items' => $items,
+                        'item_cat_name' => ''
+                    ]);
+                
+                }elseif($request->type == 2){
+
+                    return view('printables.item.current_inventory_cost')->with([
+                        'items' => $items,
+                        'item_cat_name' => ''
+                    ]);
+
+                }else{
+                    abort(404);
+                }
+
+            }elseif($request->s == 2){
+
+                $items = $this->item_repo->inventoryByCategory($request);
+                $item_cat = $this->item_cat_repo->findByItemCatId($request->ic);
+
+                if($request->type == 1){
+
+                    return view('printables.item.current_inventory_count')->with([
+                        'items' => $items,
+                        'item_cat_name' => $item_cat->name
+                    ]);
+                
+                }elseif($request->type == 2){
+
+                    return view('printables.item.current_inventory_cost')->with([
+                        'items' => $items,
+                        'item_cat_name' => $item_cat->name
+                    ]);
+
+                }else{
+                    abort(404);
+                }
+
+            }else{
+                abort(404);
+            }
 
     }
 

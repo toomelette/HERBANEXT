@@ -40,7 +40,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // ITEM CATEGORY
         View::composer(['dashboard.item.create', 
                         'dashboard.item.edit',
-                        'dashboard.item.index'], 'App\Core\ViewComposers\ItemCategoryComposer');
+                        'dashboard.item.index',
+                        'dashboard.item.reports'], 'App\Core\ViewComposers\ItemCategoryComposer');
 
 
         // ITEM TYPES

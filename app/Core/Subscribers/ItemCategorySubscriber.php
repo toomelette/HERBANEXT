@@ -50,6 +50,7 @@ class ItemCategorySubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:findBySlug:'. $item_category->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:findByItemCatId:'. $item_category->item_category_id .'');
 
         $this->session->flash('ITEM_CATEGORY_UPDATE_SUCCESS', 'The Item has been successfully updated!');
         $this->session->flash('ITEM_CATEGORY_UPDATE_SUCCESS_SLUG', $item_category->slug);
@@ -63,6 +64,7 @@ class ItemCategorySubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:findBySlug:'. $item_category->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_categories:findByItemCatId:'. $item_category->item_category_id .'');
 
         $this->session->flash('ITEM_CATEGORY_DELETE_SUCCESS', 'The Item has been successfully deleted!');
         $this->session->flash('ITEM_CATEGORY_DELETE_SUCCESS_SLUG', $item_category->slug);

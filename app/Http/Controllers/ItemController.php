@@ -12,6 +12,8 @@ use App\Http\Requests\Item\ItemCheckOutByBatchFormRequest;
 use App\Http\Requests\Item\ItemLogsFilterRequest;
 use App\Http\Requests\Item\ItemBatchByItemFilterRequest;
 use App\Http\Requests\Item\ItemLogsByItemFilterRequest;
+use App\Http\Requests\Item\ItemReportFormRequest;
+
 
 
 class ItemController extends Controller{
@@ -174,6 +176,24 @@ class ItemController extends Controller{
     public function fetchLogsByItem($slug, ItemLogsByItemFilterRequest $request){
 
         return $this->item->fetchLogsByItem($slug, $request);
+
+    }
+
+
+
+
+    public function reports(){
+
+        return view('dashboard.item.reports');
+
+    }
+
+
+
+
+    public function reportsOutput(ItemReportFormRequest $request){
+
+        return $this->item->reportsOutput($request);
 
     }
 

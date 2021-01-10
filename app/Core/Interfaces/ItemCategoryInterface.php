@@ -16,6 +16,8 @@ interface ItemCategoryInterface {
 
 	public function findBySlug($slug);
 
+	public function findByItemCatId($item_cat_id);
+
 	public function getAll();
 		
 }

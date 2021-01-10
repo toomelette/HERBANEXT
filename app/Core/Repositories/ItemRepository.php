@@ -302,6 +302,72 @@ class ItemRepository extends BaseRepository implements ItemInterface {
 
 
 
+    public function inventoryByCategory($request){
+
+        $items = [];
+
+        if($request->sb == 1){
+
+            if(isset($request->ic)){
+                $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
+                                   ->where('item_category_id', $request->ic)
+                                   ->orderBy('name', 'asc')
+                                   ->get();
+            }
+
+        }elseif($request->sb == 2){
+
+            if(isset($request->ic)){
+                $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
+                                   ->where('item_category_id', $request->ic)
+                                   ->orderBy('unit', 'asc')
+                                   ->orderBy('current_balance', 'desc')
+                                   ->get();
+            }
+
+        }else{
+            abort(404);
+        }
+        
+        return $items;
+
+    }
+
+
+
+
+
+
+    public function inventoryAll($request){
+
+        $items = [];
+
+        if($request->sb == 1){
+
+            $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
+                                ->orderBy('name', 'asc')
+                                ->get();
+            
+        }elseif($request->sb == 2){
+
+            $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
+                                ->orderBy('unit', 'asc')
+                                ->orderBy('current_balance', 'desc')
+                                ->get();
+
+        }else{
+            abort(404);
+        }
+
+        return $items;
+
+    }
+
+
+
+
+
+
     public function getItemIdInc(){
 
         $id = 'I10001';
