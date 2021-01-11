@@ -21,14 +21,14 @@
     </div>
 
     <div class="row" style="text-align:center;">
-        <span style="font-size:25px;">CURRENT INVENTORY COUNT</span><br>
-        <p style="font-size:20px;">{{ $item_cat_name }}</p>        
+        <span style="font-size:20px;">CURRENT INVENTORY COUNT</span><br>
+        <p style="font-size:15px;">{{ $item_cat_name }}</p>        
     </div>
 
     
 
-    <div class="row">
-        <div class="col-xs-12 table-responsive">
+    <div class="row" style="font-size:9px;">
+        <div class="col-xs-12">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -62,9 +62,9 @@
                         ?>
 
                         <tr>
-                            <td>{{ $data->product_code }}</td>
-                            <td>{{ $data->name }}</td>
-                            <td>{{ $data->current_balance }} {{ $data->unit }}</td>
+                            <td style="padding:4px;">{{ $data->product_code }}</td>
+                            <td style="padding:4px;">{{ $data->name }}</td>
+                            <td style="padding:4px;">{{ $data->current_balance }} {{ $data->unit }}</td>
                         </tr>
 
                     @endforeach
