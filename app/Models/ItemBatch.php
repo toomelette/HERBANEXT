@@ -27,6 +27,7 @@ class ItemBatch extends Model{
         'amount' => 0.000,
         'unit' => '',
         'expiry_date' => null,
+        'remarks' => '',
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

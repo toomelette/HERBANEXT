@@ -1,7 +1,5 @@
 <?php
 
-  $table_sessions = [];
-
   $appended_requests = [
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
@@ -48,12 +46,28 @@
               <th>@sortablelink('batch_code', 'Batch Code')</th>
               <th>@sortablelink('amount', 'Quantity')</th>
               <th>@sortablelink('expiry_date', 'Expiry Date')</th>
+              <th>@sortablelink('remarks', 'Remarks')</th>
+              <th>Action</th>
             </tr>
             @foreach($batches as $data) 
-              <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+              <tr>
                 <td id="mid-vert">{{ $data->batch_code }}</td>
                 <td id="mid-vert">{{ $data->displayAmount() }}</td>
                 <td id="mid-vert">{!! $data->displayExpiryStatusSpan() !!} </td>
+                <td id="mid-vert">{!! $data->remarks !!} </td>
+                <td id="mid-vert">
+
+                  @if(in_array('dashboard.item.batch_add_remarks', $global_user_submenus))
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="batch_add_remarks_button" 
+                       data-remarks="{{ $data->remarks }}" 
+                       data-url="{{ route('dashboard.item.batch_add_remarks', $data->batch_id) }}">
+                       Remarks
+                    </a>
+                  @endif
+                
+                </td>
               </tr>
               @endforeach
             </table>
@@ -75,5 +89,59 @@
     </div>
 
   </section>
+
+@endsection
+
+  <div class="modal fade" id="batch_add_remarks_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"> Remarks</h4>
+        </div>
+        <div class="modal-body" id="batch_add_remarks_body">
+          <form method="POST" id="form">
+            
+            @csrf
+            
+            <div class="row">
+              {!! __form::textbox(
+                '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), 'required'
+              ) !!}  	
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@section('modals')
+
+
+@endsection
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+    @if(Session::has('ITEM_ADD_BATCH_REMARKS_SUCCESS'))
+      {!! __js::toast(Session::get('ITEM_ADD_BATCH_REMARKS_SUCCESS')) !!}
+    @endif
+		
+    $(document).on("click", "#batch_add_remarks_button", function () {
+      $("#batch_add_remarks_modal").modal("show");
+      $("#batch_add_remarks_body #form").attr("action", $(this).data("url"));
+      $("#form #remarks").val($(this).data("remarks"));
+    });
+    
+  </script>
 
 @endsection

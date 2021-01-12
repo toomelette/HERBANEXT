@@ -136,6 +136,24 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
 
 
+
+    public function updateRemarks($batch_id, $remarks){
+
+        $item_batch = $this->findByBatchId($batch_id);
+        $item_batch->remarks = $remarks;
+        $item_batch->updated_at = $this->carbon->now();
+        $item_batch->ip_updated = request()->ip();
+        $item_batch->user_updated = $this->auth->user()->user_id;
+        $item_batch->save();
+
+        return $item_batch;
+
+    }
+
+
+
+
+
     public function findByBatchId($batch_id){
 
         $item_batch = $this->item_batch->where('batch_id', $batch_id)->first();
@@ -184,7 +202,7 @@ class ItemBatchRepository extends BaseRepository implements ItemBatchInterface {
 
     public function populateByItem($model, $entries, $item_id){
 
-        return $model->select('batch_code', 'amount', 'unit', 'expiry_date', 'updated_at')
+        return $model->select('batch_code', 'batch_id', 'amount', 'unit', 'expiry_date', 'remarks', 'updated_at')
                      ->where('item_id', $item_id)
                      ->sortable()
                      ->orderBy('updated_at')

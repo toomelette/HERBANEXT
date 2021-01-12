@@ -11,6 +11,7 @@ use App\Http\Requests\Item\ItemCheckOutFormRequest;
 use App\Http\Requests\Item\ItemCheckOutByBatchFormRequest;
 use App\Http\Requests\Item\ItemLogsFilterRequest;
 use App\Http\Requests\Item\ItemBatchByItemFilterRequest;
+use App\Http\Requests\Item\ItemBatchAddRemarksForm;
 use App\Http\Requests\Item\ItemLogsByItemFilterRequest;
 use App\Http\Requests\Item\ItemReportFormRequest;
 
@@ -167,6 +168,15 @@ class ItemController extends Controller{
     public function fetchBatchByItem($slug, ItemBatchByItemFilterRequest $request){
 
         return $this->item->fetchBatchByItem($slug, $request);
+
+    }
+
+    
+
+
+    public function batchAddRemarks($batch_id, ItemBatchAddRemarksForm $request){
+
+        return $this->item->batchAddRemarks($batch_id, $request);
 
     }
 

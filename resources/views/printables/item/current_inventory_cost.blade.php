@@ -1,3 +1,42 @@
+<?php
+
+
+    function sortedList($collection){
+
+        $array = [];
+
+        foreach ($collection as $data) {
+
+            $cost = 0;
+
+            if (isset($data->current_balance) && isset($data->price)){
+                $cost = $data->current_balance * $data->price;
+            }
+
+            $array[] = array(
+
+                'product_code' => $data->product_code,
+                'name' => $data->name,
+                'current_balance' => number_format($data->current_balance, 3),
+                'price' => number_format($data->price, 2) .'/'. $data->unit,
+                'cost' => $cost,
+
+            );
+
+        }
+
+        usort($array, function($a, $b) {
+            return $b['cost'] <=> $a['cost'];
+        });
+
+        return $array;
+
+
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,35 +73,30 @@
                     <tr>
                         <th style="width:100px;">Product Code</th>
                         <th style="width:100px;">Product Name</th>
-                        <th style="width:100px;">Current <br>Balance</th>
+                        <th style="width:100px;">Current Balance</th>
                         <th style="width:100px;">Price</th>
-                        <th style="width:50px;">Current <br>Inventory Cost</th>
+                        <th style="width:50px;">Current Inventory Cost</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <?php
                         $total_cost = 0;
+                        $list = sortedList($items);
                     ?>
 
-                    @foreach ($items as $data)
+                    @foreach ($list as $data)
 
                         <?php
-                        
-                            $cost = 0;
-
-                            if(isset($data->current_balance) && isset($data->price)){
-                                $cost = $data->current_balance * $data->price;
-                                $total_cost += $cost;
-                            }
+                            $total_cost += $data['cost'];
                         ?>
 
                         <tr>
-                            <td style="padding:4px;">{{ $data->product_code }}</td>
-                            <td style="padding:4px;">{{ $data->name }}</td>
-                            <td style="padding:4px;">{{ number_format($data->current_balance, 3) }}</td>
-                            <td style="padding:4px;">Php {{ number_format($data->price, 2) }} / {{ $data->unit }}</td>
-                            <td style="padding:4px;">Php {{ number_format($cost, 3) }}</td>
+                            <td style="padding:4px;">{{ $data['product_code'] }}</td>
+                            <td style="padding:4px;">{{ $data['name'] }}</td>
+                            <td style="padding:4px;">{{ $data['current_balance'] }}</td>
+                            <td style="padding:4px;">Php {{ $data['price'] }}</td>
+                            <td style="padding:4px;">Php {{ number_format($data['cost'], 3) }}</td>
                         </tr>
 
                     @endforeach

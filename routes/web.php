@@ -39,8 +39,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
 	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
 	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
-	Route::get('/profile/view_avatar/{slug}', 'ProfileController@viewAvatar')
-		 ->name('profile.view_avatar');
+	Route::get('/profile/view_avatar/{slug}', 'ProfileController@viewAvatar')->name('profile.view_avatar');
 
 
 	/** MENU **/
@@ -50,10 +49,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** ITEMS **/	
 	Route::get('/item/check_in/{slug}', 'ItemController@checkIn')->name('item.check_in');
 	Route::post('/item/check_in/{slug}', 'ItemController@checkInPost')->name('item.check_in_post');
-	Route::get('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatch')
-	->name('item.check_in_existing_batch');
-	Route::post('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatchPost')
-	->name('item.check_in_existing_batch_post');
+	Route::get('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatch')->name('item.check_in_existing_batch');
+	Route::post('/item/check_in_existing_batch/{slug}', 'ItemController@checkInExistingBatchPost')->name('item.check_in_existing_batch_post');
+	Route::post('/item/batch_add_remarks/{batch_id}', 'ItemController@batchAddRemarks')->name('item.batch_add_remarks');
 
 	Route::get('/item/check_out/{slug}', 'ItemController@checkOut')->name('item.check_out');
 	Route::post('/item/check_out/{slug}', 'ItemController@checkOutPost')->name('item.check_out_post');

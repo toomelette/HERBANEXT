@@ -392,6 +392,18 @@ class ItemService extends BaseService{
 
 
 
+    public function batchAddRemarks($batch_id, $request){
+
+        $batch = $this->item_batch_repo->updateRemarks($batch_id, $request->remarks);
+        $this->event->fire('item.add_batch_remarks', $batch);
+        return redirect()->back();
+
+    }
+
+
+
+
+
     public function fetchLogsByItem($slug, $request){
 
         $item = $this->item_repo->findbySlug($slug);

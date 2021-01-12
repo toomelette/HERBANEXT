@@ -16,6 +16,8 @@ interface ItemBatchInterface {
 
 	public function updateCheckOutByBatchCode($batch_code, $amount);
 
+	public function updateRemarks($batch_id, $remarks);
+
 	public function getAll();
 
 	public function getByItemId($item_id);

@@ -320,8 +320,6 @@ class ItemRepository extends BaseRepository implements ItemInterface {
             if(isset($request->ic)){
                 $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
                                    ->where('item_category_id', $request->ic)
-                                   ->orderBy('unit', 'asc')
-                                   ->orderBy('current_balance', 'desc')
                                    ->get();
             }
 
@@ -351,8 +349,6 @@ class ItemRepository extends BaseRepository implements ItemInterface {
         }elseif($request->sb == 2){
 
             $items = $this->item->select('item_id', 'product_code', 'name', 'unit', 'unit_type_id','current_balance', 'price', 'unit')
-                                ->orderBy('unit', 'asc')
-                                ->orderBy('current_balance', 'desc')
                                 ->get();
 
         }else{

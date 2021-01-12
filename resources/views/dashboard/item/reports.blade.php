@@ -33,7 +33,7 @@
             ) !!}
 
             {!! __form::select_static(
-              '3', 'sb', 'Sort By *', old('sb'), ['A-Z' => '1', 'By Current Balance' => '2'], $errors->has('sb'), $errors->first('sb'), '', ''
+              '3', 'sb', 'Sort By *', old('sb'), ['A-Z' => '1', 'Highest Balance / Cost' => '2'], $errors->has('sb'), $errors->first('sb'), '', ''
             ) !!}
 
         </div>
