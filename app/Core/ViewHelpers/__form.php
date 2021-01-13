@@ -65,11 +65,11 @@ class __form{
 
 
 
-    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr){
+    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr, $col="80"){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <textarea id="editor" name="'. $key .'" rows="10" cols="80" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
+                <textarea id="'. $key .'" name="'. $key .'" rows="10" cols="'. $col .'" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 

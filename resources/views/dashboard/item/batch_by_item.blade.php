@@ -46,7 +46,7 @@
               <th>@sortablelink('batch_code', 'Batch Code')</th>
               <th>@sortablelink('amount', 'Quantity')</th>
               <th>@sortablelink('expiry_date', 'Expiry Date')</th>
-              <th>@sortablelink('remarks', 'Remarks')</th>
+              <th style="width:50px;">@sortablelink('remarks', 'Remarks')</th>
               <th>Action</th>
             </tr>
             @foreach($batches as $data) 
@@ -54,7 +54,7 @@
                 <td id="mid-vert">{{ $data->batch_code }}</td>
                 <td id="mid-vert">{{ $data->displayAmount() }}</td>
                 <td id="mid-vert">{!! $data->displayExpiryStatusSpan() !!} </td>
-                <td id="mid-vert">{!! $data->remarks !!} </td>
+                <td id="mid-vert">{!! Str::limit(strip_tags($data->remarks), 50) !!}</td>
                 <td id="mid-vert">
 
                   @if(in_array('dashboard.item.batch_add_remarks', $global_user_submenus))
@@ -106,10 +106,12 @@
             
             @csrf
             
-            <div class="row">
-              {!! __form::textbox(
-                '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), 'required'
-              ) !!}  	
+            <div class="row" style="padding-right:20px;">
+
+              {!! 
+                __form::textarea('12', 'remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), '', '75') 
+              !!}
+              
             </div>
 
           </div>
@@ -140,6 +142,7 @@
       $("#batch_add_remarks_modal").modal("show");
       $("#batch_add_remarks_body #form").attr("action", $(this).data("url"));
       $("#form #remarks").val($(this).data("remarks"));
+      $("#form #remarks").attr("placeholder", $(this).data("remarks"));
     });
     
   </script>
