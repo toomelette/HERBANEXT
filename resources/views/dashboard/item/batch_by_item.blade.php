@@ -46,7 +46,7 @@
               <th>@sortablelink('batch_code', 'Batch Code')</th>
               <th>@sortablelink('amount', 'Quantity')</th>
               <th>@sortablelink('expiry_date', 'Expiry Date')</th>
-              <th style="width:50px;">@sortablelink('remarks', 'Remarks')</th>
+              <th>@sortablelink('remarks', 'Remarks')</th>
               <th>Action</th>
             </tr>
             @foreach($batches as $data) 
