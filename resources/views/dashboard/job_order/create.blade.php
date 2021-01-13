@@ -16,94 +16,98 @@
 
 <section class="content">
 
-    <div class="col-md-3">
-	    <div class="box box-solid">
-	      <div class="box-header with-border">
-	        <h2 class="box-title">Search PO</h2>
-	      </div>
+	<div class="row">	
 
-	      <form data-pjax method="GET" autocomplete="off" action="{{ route('dashboard.job_order.create') }}">
+		<div class="col-md-3">
+			<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title">Search PO</h2>
+			</div>
 
-	        <div class="box-body">
+			<form data-pjax method="GET" autocomplete="off" action="{{ route('dashboard.job_order.create') }}">
 
-                {!! __form::textbox(
-                  '12', 'q', 'text', 'PO Number *', 'PO Number', old('q'), $errors->has('q'), $errors->first('q'), ''
-                ) !!}  
+				<div class="box-body">
 
-                <div class="col-md-12">
-                	<button type="submit" class="btn btn-default">Search <i class="fa fa-fw fa-search"></i></button>
-                </div>
+					{!! __form::textbox(
+					'12', 'q', 'text', 'PO Number *', 'PO Number', old('q'), $errors->has('q'), $errors->first('q'), ''
+					) !!}  
 
-	        </div>
-	      </form>
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-default">Search <i class="fa fa-fw fa-search"></i></button>
+					</div>
 
-	    </div>	
-    </div>
+				</div>
+			</form>
 
-    <div class="col-md-9">
-	    <div class="box box-solid">
-	      <div class="box-header with-border">
-	        <h2 class="box-title">PO Items</h2>
-	      </div>
+			</div>	
+		</div>
 
-	        <div class="box-body no-padding">
-	        	<table class="table table-hover">
-			          <tr>
-			            <th>@sortablelink('po_no', 'PO No.')</th>
-			            <th>@sortablelink('item.name', 'Name')</th>
-			            <th>@sortablelink('amount', 'Quantity')</th>
-			            <th>@sortablelink('updated_at', 'Date')</th>
-			            <th>@sortablelink('delivery_status', 'Delivery Status')</th>
-			            <th style="width: 150px">Action</th>
-			          </tr>
-			          @foreach($po_items as $data) 
-			            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-			              <td id="mid-vert">{{ $data->po_no }}</td>
-			              <td id="mid-vert">{{ optional($data->item)->name }}</td>
-			              <td id="mid-vert">{!! $data->displayAmount() !!}</td>
-			              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
-			              <td id="mid-vert">{!! $data->isReadyForDeliverySpan() !!}</td>
+		<div class="col-md-9">
+			<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title">PO Items</h2>
+			</div>
 
-			              <td id="mid-vert">
-			              	@if ($data->is_generated == false)
-			                  @if(in_array('dashboard.job_order.generate', $global_user_submenus))
-			                    <a type="button" class="btn btn-default" id="generate_button" data-action="generate" data-url="{{ route('dashboard.job_order.generate', $data->slug) }}">
-			                      Generate JO
-			                    </a>
-			                  @endif
-			                @else
-			                  @if(in_array('dashboard.job_order.show', $global_user_submenus))
-			                    <a href="{{ route('dashboard.job_order.show', $data->slug) }}" type="button" class="btn btn-default">
-			                      <i class="fa fa-print"></i>
-			                    </a>
-			                  @endif
-			                  @if(in_array('dashboard.job_order.generate_fill', $global_user_submenus))
-			                    <a href="{{ route('dashboard.job_order.generate_fill', $data->slug) }}" type="button" class="btn btn-default">
-			                      Edit JO
-			                    </a>
-			                  @endif
-			              	@endif
-			              </td>
-			              
-			            </tr>
-			            @endforeach
-			          </table>
-			      </div>
+				<div class="box-body no-padding">
+					<table class="table table-hover">
+						<tr>
+							<th>@sortablelink('po_no', 'PO No.')</th>
+							<th>@sortablelink('item.name', 'Name')</th>
+							<th>@sortablelink('amount', 'Quantity')</th>
+							<th>@sortablelink('updated_at', 'Date')</th>
+							<th>@sortablelink('delivery_status', 'Delivery Status')</th>
+							<th style="width: 150px">Action</th>
+						</tr>
+						@foreach($po_items as $data) 
+							<tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+							<td id="mid-vert">{{ $data->po_no }}</td>
+							<td id="mid-vert">{{ optional($data->item)->name }}</td>
+							<td id="mid-vert">{!! $data->displayAmount() !!}</td>
+							<td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
+							<td id="mid-vert">{!! $data->isReadyForDeliverySpan() !!}</td>
 
-			      @if($po_items->isEmpty())
-			        <div style="padding :5px;">
-			          <center><h4>No Records found!</h4></center>
-			        </div>
-			      @endif
+							<td id="mid-vert">
+								@if ($data->is_generated == false)
+								@if(in_array('dashboard.job_order.generate', $global_user_submenus))
+									<a type="button" class="btn btn-default" id="generate_button" data-action="generate" data-url="{{ route('dashboard.job_order.generate', $data->slug) }}">
+									Generate JO
+									</a>
+								@endif
+								@else
+								@if(in_array('dashboard.job_order.show', $global_user_submenus))
+									<a href="{{ route('dashboard.job_order.show', $data->slug) }}" type="button" class="btn btn-default">
+									<i class="fa fa-print"></i>
+									</a>
+								@endif
+								@if(in_array('dashboard.job_order.generate_fill', $global_user_submenus))
+									<a href="{{ route('dashboard.job_order.generate_fill', $data->slug) }}" type="button" class="btn btn-default">
+									Edit JO
+									</a>
+								@endif
+								@endif
+							</td>
+							
+							</tr>
+							@endforeach
+						</table>
+					</div>
 
-			      <div class="box-footer">
-			        {!! __html::table_counter($po_items) !!}
-			        {!! $po_items->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
-			      </div>
+					@if($po_items->isEmpty())
+						<div style="padding :5px;">
+						<center><h4>No Records found!</h4></center>
+						</div>
+					@endif
 
-		      </div>
+					<div class="box-footer">
+						{!! __html::table_counter($po_items) !!}
+						{!! $po_items->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
+					</div>
 
-	    </div>	
+				</div>
+
+			</div>	
+		</div>
+
     </div>
 
 </section>
