@@ -25,11 +25,19 @@
             @csrf    
 
             {!! __form::textbox(
-              '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $machine->name, $errors->has('name'), $errors->first('name'), ''
+              '6', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $machine->name, $errors->has('name'), $errors->first('name'), ''
+            ) !!}  
+
+            {!! __form::textbox(
+              '6', 'code', 'text', 'Code', 'Code', old('code') ? old('code') : $machine->code, $errors->has('code'), $errors->first('code'), ''
             ) !!} 
 
             {!! __form::textbox(
-              '8', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $machine->description, $errors->has('description'), $errors->first('description'), ''
+              '6', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $machine->description, $errors->has('description'), $errors->first('description'), ''
+            ) !!} 
+
+            {!! __form::textbox(
+              '6', 'location', 'text', 'Location', 'Location', old('location') ? old('location') : $machine->location, $errors->has('location'), $errors->first('location'), ''
             ) !!} 
 
           </div>

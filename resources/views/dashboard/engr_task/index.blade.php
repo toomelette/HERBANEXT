@@ -35,9 +35,10 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-hover">
+        <table class="table table-bordered">
           <tr>
             <th>@sortablelink('cat', 'Type')</th>
+            <th>@sortablelink('jo_no', 'JO no.')</th>
             <th>@sortablelink('name', 'Name of Task')</th>
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('location', 'Location')</th>
@@ -49,12 +50,13 @@
           @foreach($engr_tasks as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{!! $data->displayCategory() !!}</td>
+              <td id="mid-vert">{{ $data->jo_no }}</td>
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ $data->location }}</td>
               <td id="mid-vert">{!! $data->displayStatusSpan() !!}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'F d, Y h:i A') }}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'F d, Y h:i A') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'm/d/Y h:i A') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.engr_task.update_finished', $global_user_submenus))

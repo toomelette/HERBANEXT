@@ -4,7 +4,7 @@ namespace App\Core\Interfaces;
  
 
 
-interface MachineInterface {
+interface MachineMaintenanceInterface {
 
 	public function fetch($request);
 
@@ -12,12 +12,6 @@ interface MachineInterface {
 
 	public function update($request, $slug);
 
-	public function updateStatus($request, $slug);
-
 	public function destroy($slug);
-
-	public function findBySlug($slug);
-
-	public function getAll();
-		
+	
 }

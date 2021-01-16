@@ -63,6 +63,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\MachineInterface', 'App\Core\Repositories\MachineRepository');
 
+		$this->app->bind('App\Core\Interfaces\MachineMaintenanceInterface', 'App\Core\Repositories\MachineMaintenanceRepository');
+
 		$this->app->bind('App\Core\Interfaces\TaskInterface', 'App\Core\Repositories\TaskRepository');
 
 		$this->app->bind('App\Core\Interfaces\TaskPersonnelInterface', 'App\Core\Repositories\TaskPersonnelRepository');

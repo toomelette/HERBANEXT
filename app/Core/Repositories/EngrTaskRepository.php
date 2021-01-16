@@ -57,6 +57,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         $engr_task = new EngrTask;
         $engr_task->engr_task_id = $this->getEngrTaskIdInc();
         $engr_task->slug = $this->str->random(16);
+        $engr_task->jo_no = $request->jo_no;
         $engr_task->cat = $request->cat;
         $engr_task->name = $request->name;
         $engr_task->requested_by = $request->requested_by;
@@ -90,6 +91,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
     public function update($request, $slug){
 
         $engr_task = $this->findBySlug($slug);
+        $engr_task->jo_no = $request->jo_no;
         $engr_task->name = $request->name;
         $engr_task->requested_by = $request->requested_by;
         $engr_task->unit = $request->unit;
@@ -236,7 +238,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'location', 'cat', 'status', 'created_at', 'updated_at', 'slug')
+        return $model->select('name', 'jo_no', 'description', 'location', 'cat', 'status', 'created_at', 'updated_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

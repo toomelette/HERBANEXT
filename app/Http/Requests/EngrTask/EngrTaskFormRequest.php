@@ -19,6 +19,7 @@ class EngrTaskFormRequest extends FormRequest{
         return [
 
             'cat' => 'required|string|max:2',
+            'jo_no' => 'required|string|max:45',
             'name' => 'required|string|max:255',
             'requested_by' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:90',

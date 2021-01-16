@@ -17,10 +17,6 @@
 @extends('layouts.admin-master')
 
 @section('content')
-    
-  <section class="content-header">
-      <h1>Machine List</h1>
-  </section>
 
   <section class="content">
     
@@ -43,19 +39,48 @@
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('description', 'Description')</th>
+            <th>@sortablelink('location', 'Location')</th>
+            <th>@sortablelink('status', 'Status')</th>
             <th style="width: 250px">Action</th>
           </tr>
           @foreach($machines as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->name }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
+              <td id="mid-vert">{{ $data->location }}</td>
+              <td id="mid-vert">{!! $data->displayStatus() !!}</td>
               <td id="mid-vert">
-                <div class="btn-group">
-                  @if(in_array('dashboard.machine.maintenance', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="maintenance_button" href="{{ route('dashboard.machine.maintenance', $data->slug) }}">
-                      <i class="fa fa-gear"></i> Maintenance
-                    </a>
+
+                @if(in_array('dashboard.machine.update_status', $global_user_submenus))
+
+                  @if ($data->status == false || $data->status == null)
+
+                    <button 
+                      type="button" 
+                      class="btn btn-default" 
+                      id="update_status_button" 
+                      data-url="{{ route('dashboard.machine.update_status', $data->slug) }}"
+                      data-status="1"
+                    >
+                      Set to Available
+                    </button>
+                      
+                  @else
+
+                    <button 
+                      type="button" 
+                      class="btn btn-default" 
+                      id="update_status_button" 
+                      data-url="{{ route('dashboard.machine.update_status', $data->slug) }}"
+                      data-status="0"
+                    >
+                      Set to Unavailable
+                    </button>
+                      
                   @endif
+                @endif
+
+                <div class="btn-group">
                   @if(in_array('dashboard.machine.edit', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.machine.edit', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
@@ -86,6 +111,11 @@
     </div>
 
   </section>
+
+  <form id="update-status-form" method="POST" style="display: none;">
+    <input id="status" name="status">
+    @csrf
+  </form>
 
 @endsection
 
@@ -119,6 +149,12 @@
     @if(Session::has('MACHINE_DELETE_SUCCESS'))
       {!! __js::toast(Session::get('MACHINE_DELETE_SUCCESS')) !!}
     @endif
+
+    $(document).on("click", "#update_status_button", function () {
+        $("#update-status-form").attr("action", $(this).data("url"));
+        $("#update-status-form #status").val($(this).data("status"));
+        $("#update-status-form").submit();
+    });
 
   </script>
     

@@ -73,5 +73,15 @@ class MachineService extends BaseService{
 
 
 
+    public function updateStatus($request, $slug){
+
+        $machine = $this->machine_repo->updateStatus($request, $slug);
+        $this->event->fire('machine.update', $machine);
+        return redirect()->back();
+
+    }
+
+
+
 
 }

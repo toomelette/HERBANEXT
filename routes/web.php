@@ -100,6 +100,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MACHINES **/
+	Route::get('/machine/machine_maintenance', 'MachineMaintenanceController@index')->name('machine.machine_maintenance_index');
+	Route::post('/machine/machine_maintenance/store', 'MachineMaintenanceController@store')->name('machine.machine_maintenance_store');
+	Route::post('/machine/machine_maintenance/update/{slug}', 'MachineMaintenanceController@update')->name('machine.machine_maintenance_update');
+	Route::delete('/machine/machine_maintenance/delete/{slug}', 'MachineMaintenanceController@delete')->name('machine.machine_maintenance_delete');
+	Route::post('/machine/update_status/{slug}', 'MachineController@updateStatus')->name('machine.update_status');
 	Route::resource('machine', 'MachineController');
 
 

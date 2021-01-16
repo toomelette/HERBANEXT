@@ -52,13 +52,43 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
 
 
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('description', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('machine_id', 'code', 'name', 'description', 'location', 'status', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+    
+    }
+
+
+
+
+
     public function store($request){
 
         $machine = new Machine;
         $machine->machine_id = $this->getMachineIdInc();
         $machine->slug = $this->str->random(16);
         $machine->name = $request->name;
+        $machine->code = $request->code;
+        $machine->location = $request->location;
         $machine->description = $request->description;
+        $machine->status = 1;
         $machine->created_at = $this->carbon->now();
         $machine->updated_at = $this->carbon->now();
         $machine->ip_created = request()->ip();
@@ -79,7 +109,26 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
         $machine = $this->findBySlug($slug);
         $machine->name = $request->name;
+        $machine->code = $request->code;
+        $machine->location = $request->location;
         $machine->description = $request->description;
+        $machine->updated_at = $this->carbon->now();
+        $machine->ip_updated = request()->ip();
+        $machine->user_updated = $this->auth->user()->user_id;
+        $machine->save();
+        
+        return $machine;
+
+    }
+
+
+
+
+
+    public function updateStatus($request, $slug){
+
+        $machine = $this->findBySlug($slug);
+        $machine->status = $request->status;
         $machine->updated_at = $this->carbon->now();
         $machine->ip_updated = request()->ip();
         $machine->user_updated = $this->auth->user()->user_id;
@@ -124,33 +173,6 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
 
 
-    public function search($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('name', 'LIKE', '%'. $key .'%')
-                      ->orWhere('description', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('machine_id', 'name', 'description', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-    
-    }
-
-
-
-
-
-
     public function getMachineIdInc(){
 
         $id = 'M10001';
@@ -175,7 +197,9 @@ class MachineRepository extends BaseRepository implements MachineInterface {
     public function getAll(){
 
         $machines = $this->cache->remember('machines:getAll', 240, function(){
-            return $this->machine->select('machine_id', 'name')->get();
+            return $this->machine->select('machine_id', 'name')
+                                 ->where('status', 1)
+                                 ->get();
         });
         
         return $machines;

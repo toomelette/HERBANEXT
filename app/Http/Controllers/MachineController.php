@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Core\Services\MachineService;
 use App\Http\Requests\Machine\MachineFormRequest;
 use App\Http\Requests\Machine\MachineFilterRequest;
+use App\Http\Requests\Machine\MachineUpdateStatusFormRequest;
 use Illuminate\Http\Request;
 
 
@@ -52,6 +53,11 @@ class MachineController extends Controller{
 
     public function maintenance(Request $request, $slug){
         return $this->machine->maintenance($request, $slug);
+    }
+
+
+    public function updateStatus(MachineUpdateStatusFormRequest $request, $slug){
+        return $this->machine->updateStatus($request, $slug);
     }
 
 

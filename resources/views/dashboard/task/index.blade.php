@@ -35,7 +35,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-hover">
+        <table class="table table-bordered">
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('description', 'Description')</th>

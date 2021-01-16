@@ -4,7 +4,7 @@ namespace App\Http\Requests\Machine;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MachineFormRequest extends FormRequest{
+class MachineUpdateStatusFormRequest extends FormRequest{
 
 
     
@@ -20,10 +20,7 @@ class MachineFormRequest extends FormRequest{
 
         return [
 
-            'name'=>'required|string|max:255',
-            'code'=>'nullable|string|max:45',
-            'location'=>'nullable|string|max:255',
-            'description'=>'nullable|string|max:255',
+            'status'=>'required|int|max:1',
             
         ];
 

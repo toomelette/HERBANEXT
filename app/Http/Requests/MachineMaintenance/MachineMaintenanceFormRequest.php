@@ -26,6 +26,7 @@ class MachineMaintenanceFormRequest extends FormRequest{
             'date_to'=>'required|date_format:"m/d/Y"',
             'time_to' => 'required|date_format:"h:i A"',
             'description'=>'required|string|max:255',
+            'remarks'=>'nullable|string|max:255',
             
         ];
 

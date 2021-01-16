@@ -26,6 +26,7 @@ class EngrTask extends Model{
 
         'slug' => '',
         'engr_task_id' => '',
+        'jo_no' => '',
         'cat' => '',
         'name' => '',
         'requested_by' => '',

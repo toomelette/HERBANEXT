@@ -92,6 +92,8 @@
 
 @endsection
 
+@section('modals')
+
   <div class="modal fade" id="batch_add_remarks_modal" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -123,9 +125,6 @@
       </div>
     </div>
   </div>
-
-@section('modals')
-
 
 @endsection
 

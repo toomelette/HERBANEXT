@@ -23,9 +23,9 @@ class MachineMaintenanceSubscriber extends BaseSubscriber{
 
     public function subscribe($events){
 
-        $events->listen('machine_mnt.store', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onStore');
-        $events->listen('machine_mnt.update', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onUpdate');
-        $events->listen('machine_mnt.destroy', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onDestroy');
+        $events->listen('machine_maintenance.store', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onStore');
+        $events->listen('machine_maintenance.update', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onUpdate');
+        $events->listen('machine_maintenance.destroy', 'App\Core\Subscribers\MachineMaintenanceSubscriber@onDestroy');
 
     }
 
@@ -34,9 +34,9 @@ class MachineMaintenanceSubscriber extends BaseSubscriber{
 
     public function onStore($machine_mnt){
         
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:fetchByMachineId:'.$machine_mnt->machine_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenances:fetch:*');
 
-        $this->session->flash('MACHINE_MNT_CREATE_SUCCESS', 'The Machine Maintenance has been successfully created!');
+        $this->session->flash('MACHINE_MNT_CREATE_SUCCESS', 'The Maintenance Schedule has been successfully created!');
 
     }
 
@@ -46,11 +46,10 @@ class MachineMaintenanceSubscriber extends BaseSubscriber{
 
     public function onUpdate($machine_mnt){
 
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:fetchByMachineId:'.$machine_mnt->machine_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:findBySlug:'. $machine_mnt->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:getBySlug:'. $machine_mnt->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenances:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenances:findBySlug:'. $machine_mnt->slug .'');
 
-        $this->session->flash('MACHINE_MNT_UPDATE_SUCCESS', 'The Machine Maintenance has been successfully updated!');
+        $this->session->flash('MACHINE_MNT_UPDATE_SUCCESS', 'The Maintenance Schedule has been successfully updated!');
         $this->session->flash('MACHINE_MNT_UPDATE_SUCCESS_SLUG', $machine_mnt->slug);
 
     }
@@ -59,11 +58,10 @@ class MachineMaintenanceSubscriber extends BaseSubscriber{
 
     public function onDestroy($machine_mnt){
 
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:fetchByMachineId:'.$machine_mnt->machine_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:findBySlug:'. $machine_mnt->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenance:getBySlug:'. $machine_mnt->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenances:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:machine_maintenances:findBySlug:'. $machine_mnt->slug .'');
 
-        $this->session->flash('MACHINE_MNT_DELETE_SUCCESS', 'The Machine Maintenance has been successfully deleted!');
+        $this->session->flash('MACHINE_MNT_DELETE_SUCCESS', 'The Maintenance Schedule has been successfully deleted!');
         $this->session->flash('MACHINE_MNT_DELETE_SUCCESS_SLUG', $machine_mnt->slug);
 
     }

@@ -61,7 +61,7 @@
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
 
-        <table class="table table-hover">
+        <table class="table table-bordered">
 
           <tr>
             <th>@sortablelink('po_no', 'PO No.')</th>
