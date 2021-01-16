@@ -163,4 +163,21 @@ class MachineMaintenanceRepository extends BaseRepository implements MachineMain
 
 
 
+    public function getAll(){
+
+        $tasks = $this->cache->remember('machine_maintenances:getAll', 240, function(){
+            return $this->machine_maintenance->select('machine_id', 'date_from', 'date_to', 'time_from', 'time_to', 'description', 'remarks')
+                                             ->with('machine')
+                                             ->get();
+        });
+        
+        return $tasks;
+
+    }
+
+
+
+
+
+
 }

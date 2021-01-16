@@ -62,6 +62,15 @@ class MachineMaintenanceService extends BaseService{
 
     }
 
+
+
+    public function calendar(){
+
+        $machine_maintenance_list = $this->machine_maintenance_repo->getAll();
+        return view('dashboard.machine.maintenance_calendar')->with('machine_maintenance_list', $machine_maintenance_list);
+
+    }
+
     
 
 

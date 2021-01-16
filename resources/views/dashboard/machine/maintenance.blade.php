@@ -31,7 +31,7 @@
 				<h2 class="box-title">Add Schedule</h2>
 			</div>
 
-			<form method="POST" autocomplete="off" action="{{ route('dashboard.machine.machine_maintenance_store') }}">
+			<form method="POST" autocomplete="off" action="{{ route('dashboard.machine.maintenance_store') }}">
 
 				<div class="box-body">
 
@@ -79,13 +79,13 @@
 		<div class="col-md-12">
     
 			{{-- Form Start --}}
-			<form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.machine.machine_maintenance_index') }}">
+			<form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.machine.maintenance_index') }}">
 
 			<div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
 				{{-- Table Search --}}        
 				<div class="box-header with-border">
-				  {!! __html::table_search(route('dashboard.machine.machine_maintenance_index')) !!}
+				  {!! __html::table_search(route('dashboard.machine.maintenance_index')) !!}
 				</div>
 		  
 			{{-- Form End --}}  
@@ -117,13 +117,13 @@
 
 								<td id="mid-vert">
 
-									@if(in_array('dashboard.machine.machine_maintenance_update', $global_user_submenus))
+									@if(in_array('dashboard.machine.maintenance_update', $global_user_submenus))
 
 										<button
 											 type="button" 
 											 class="btn btn-default"
 											 id="update_button"
-											 data-url="{{ route('dashboard.machine.machine_maintenance_update', $data->slug) }}"
+											 data-url="{{ route('dashboard.machine.maintenance_update', $data->slug) }}"
 											 data-machine_id="{{ $data->machine_id }}"
 											 data-description="{{ $data->description }}"
 											 data-date_from="{{ __dataType::date_parse($data->date_from, 'm/d/Y') }}"
@@ -137,13 +137,13 @@
 
 									@endif
 
-									@if(in_array('dashboard.machine.machine_maintenance_delete', $global_user_submenus))
+									@if(in_array('dashboard.machine.maintenance_delete', $global_user_submenus))
 										
 										<button type="button" 
 												 class="btn btn-default" 
 												 id="delete_button" 
 												 data-action="delete" 
-												 data-url="{{ route('dashboard.machine.machine_maintenance_delete', $data->slug) }}">
+												 data-url="{{ route('dashboard.machine.maintenance_delete', $data->slug) }}">
 											<i class="fa fa-trash"></i>
 										</button>
 

@@ -41,6 +41,11 @@ class MachineMaintenanceController extends Controller{
         return $this->machine_maintenance->destroy($slug);
     }
 
+    
+    public function calendar(){
+        return $this->machine_maintenance->calendar();
+    }
+
 
 
 }

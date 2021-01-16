@@ -14,4 +14,6 @@ interface MachineMaintenanceInterface {
 
 	public function destroy($slug);
 	
+	public function getAll();
+
 }
