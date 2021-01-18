@@ -16,7 +16,7 @@ class EngrTask extends Model{
 
     protected $dates = ['created_at', 'updated_at', 'date_from', 'date_to'];
 
-    protected $sortable = ['description', 'location', 'status'];
+    protected $sortable = ['cat', 'description', 'location', 'status'];
     
 	public $timestamps = false;
 

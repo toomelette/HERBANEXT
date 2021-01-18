@@ -7,6 +7,7 @@
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
                         'cat' => Request::get('cat'),
+                        's' => Request::get('s'),
                       ];
 
 ?>

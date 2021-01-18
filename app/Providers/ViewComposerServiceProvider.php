@@ -34,7 +34,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.item.create',
                         'dashboard.item.edit',
                         'dashboard.task.create',
-                        'dashboard.task.edit'], 'App\Core\ViewComposers\ItemComposer');
+                        'dashboard.task.edit',
+                        'dashboard.task.index'], 'App\Core\ViewComposers\ItemComposer');
         
 
         // ITEM CATEGORY
@@ -66,7 +67,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // MACHINES
         View::composer(['dashboard.task.create',
                         'dashboard.task.edit',
-                        'dashboard.machine.maintenance'], 'App\Core\ViewComposers\MachineComposer');
+                        'dashboard.machine.maintenance',
+                        'dashboard.task.index'], 'App\Core\ViewComposers\MachineComposer');
 
 
         // PO Items

@@ -18,6 +18,9 @@ class TaskFilterRequest extends FormRequest{
 
         return [
             'q' => 'nullable|string|max:90',
+            'i' => 'nullable|string|max:11',
+            'm' => 'nullable|string|max:11',
+            's' => 'nullable|int|max:3',
         ];
 
     }

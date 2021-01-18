@@ -39,6 +39,14 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
             if(isset($request->q)){
                 $this->search($engr_task, $request->q);
             }
+            
+            if(isset($request->t)){
+                $engr_task->whereCat($request->t);
+            }
+            
+            if(isset($request->s)){
+                $engr_task->whereStatus($request->s);
+            }
 
             return $this->populate($engr_task, $entries);
 
@@ -223,6 +231,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
         return $model->where(function ($model) use ($key) {
                 $model->where('name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
                       ->orWhere('requested_by', 'LIKE', '%'. $key .'%')
                       ->orWhere('unit', 'LIKE', '%'. $key .'%')
                       ->orWhere('location', 'LIKE', '%'. $key .'%')

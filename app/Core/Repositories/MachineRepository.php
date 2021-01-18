@@ -57,7 +57,8 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
         return $model->where(function ($model) use ($key) {
                 $model->where('name', 'LIKE', '%'. $key .'%')
-                      ->orWhere('description', 'LIKE', '%'. $key .'%');
+                      ->orWhere('description', 'LIKE', '%'. $key .'%')
+                      ->orWhere('code', 'LIKE', '%'. $key .'%');
         });
 
     }

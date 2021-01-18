@@ -6,6 +6,9 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+
+                        't' => Request::get('t'),
+                        's' => Request::get('s'),
                       ];
 
 ?>
@@ -22,6 +25,18 @@
     
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.engr_task.index') }}">
+
+      {!! __html::filter_open() !!}
+
+        {!! __form::select_static_for_filter(
+          '4', 't', 'Type', old('t'), ['JOB ORDER' => 'JO', 'DAILY ACTIVITY' => 'DA'] , 'submit_et_filter', '', ''
+        ) !!}
+
+        {!! __form::select_static_for_filter(
+          '4', 's', 'Status', old('s'), ['UNSCHEDULED' => '1', 'WORKING' => '2', 'FINISHED' => '3'] , 'submit_et_filter', '', ''
+        ) !!}
+      
+      {!! __html::filter_close('submit_et_filter') !!}
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 

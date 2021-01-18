@@ -38,6 +38,7 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('name', 'Name')</th>
+            <th>@sortablelink('code', 'Machine Code')</th>
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('location', 'Location')</th>
             <th>@sortablelink('status', 'Status')</th>
@@ -46,6 +47,7 @@
           @foreach($machines as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert">{{ $data->code }}</td>
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ $data->location }}</td>
               <td id="mid-vert">{!! $data->displayStatus() !!}</td>

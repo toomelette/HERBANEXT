@@ -23,6 +23,23 @@
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.task.index') }}">
 
+      {!! __html::filter_open() !!}
+
+
+        {!! __form::select_dynamic_for_filter(
+          '4', 'i', 'Product', old('i'), $global_items_all, 'item_id', 'name', 'submit_task_filter', 'select2', 'style="width:100%;"'
+        ) !!}
+
+        {!! __form::select_dynamic_for_filter(
+          '4', 'm', 'Machine', old('m'), $global_machines_all, 'machine_id', 'name', 'submit_task_filter', 'select2', 'style="width:100%;"'
+        ) !!}
+
+        {!! __form::select_static_for_filter(
+          '4', 's', 'Status', old('s'), ['UNSCHEDULED' => '1', 'WORKING' => '2', 'FINISHED' => '3'] , 'submit_task_filter', '', ''
+        ) !!}
+
+      {!! __html::filter_close('submit_task_filter') !!}
+
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        

@@ -19,6 +19,8 @@ class EngrTaskFilterRequest extends FormRequest{
         return [
 
             'q' => 'nullable|string|max:90',
+            't' => 'nullable|string|max:2',
+            's' => 'nullable|int|max:3',
 
         ];
 

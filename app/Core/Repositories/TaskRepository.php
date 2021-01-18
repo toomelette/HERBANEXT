@@ -39,6 +39,18 @@ class TaskRepository extends BaseRepository implements TaskInterface {
             if(isset($request->q)){
                 $this->search($task, $request->q);
             }
+            
+            if(isset($request->i)){
+                $task->whereItemId($request->i);
+            }
+            
+            if(isset($request->m)){
+                $task->whereMachineId($request->m);
+            }
+            
+            if(isset($request->s)){
+                $task->whereStatus($request->s);
+            }
 
             return $this->populate($task, $entries);
 
