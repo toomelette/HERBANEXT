@@ -80,7 +80,7 @@
               <td id="mid-vert">{{ $data->po_no }}</td>
 
               <td id="mid-vert">
-                @if (!empty($data->purchaseOrderItem->isEmpty()))
+                @if (!$data->purchaseOrderItem->isEmpty())
                   @foreach ($data->purchaseOrderItem as $key => $data_po_item)
                     {{ $key + 1 }}. {{ $data_po_item->item->name }}<br>
                   @endforeach
