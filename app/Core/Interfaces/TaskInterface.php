@@ -8,9 +8,17 @@ interface TaskInterface {
 
 	public function fetch($request);
 
+	public function fetchByScheduled($request);
+
 	public function store($request);
 
 	public function update($request, $slug);
+
+	public function updateOnScheduleStore($request);
+
+	public function updateOnScheduleUpdate($request);
+
+	public function updateOnScheduleRollback($slug);
 
 	public function updateStatus($slug, $int);
 

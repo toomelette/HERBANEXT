@@ -8,6 +8,9 @@ use App\Http\Requests\Task\TaskFormRequest;
 use App\Http\Requests\Task\TaskFilterRequest;
 use App\Http\Requests\Task\TaskRatePersonnelFormRequest;
 use App\Http\Requests\Task\TaskReportFormRequest;
+use App\Http\Requests\Task\TaskSchedulingFilterRequest;
+use App\Http\Requests\Task\TaskSchedulingStoreFormRequest;
+use App\Http\Requests\Task\TaskSchedulingUpdateFormRequest;
 
 
 class TaskController extends Controller{
@@ -26,8 +29,23 @@ class TaskController extends Controller{
     }
 
     
-    public function scheduling(){
-        return $this->task->scheduling();
+    public function schedulingIndex(TaskSchedulingFilterRequest $request){
+        return $this->task->schedulingIndex($request);
+    }
+
+    
+    public function schedulingStore(TaskSchedulingStoreFormRequest $request){
+        return $this->task->schedulingStore($request);
+    }
+
+    
+    public function schedulingUpdate(TaskSchedulingUpdateFormRequest $request){
+        return $this->task->schedulingUpdate($request);
+    }
+
+    
+    public function schedulingRollback($slug){
+        return $this->task->schedulingRollback($slug);
     }
 
     

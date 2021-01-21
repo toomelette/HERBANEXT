@@ -64,6 +64,90 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+    public function fetchByScheduled($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
+
+        $tasks = $this->cache->remember('tasks:fetchByScheduled:' . $key, 240, function() use ($request, $entries){
+
+            $task = $this->task->newQuery();
+            
+            if(isset($request->q)){
+                $this->search($task, $request->q);
+            }
+            
+            if(isset($request->i)){
+                $task->whereItemId($request->i);
+            }
+            
+            if(isset($request->m)){
+                $task->whereMachineId($request->m);
+            }
+            
+            if(isset($request->s)){
+                $task->whereStatus($request->s);
+            }
+
+            return $this->populateScheduled($task, $entries);
+
+        });
+
+        return $tasks;
+
+    }
+
+
+
+
+
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('description', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('item', function ($model) use ($key) {
+                        $model->where('name', 'LIKE', '%'. $key .'%');
+                      })
+                      ->orwhereHas('machine', function ($model) use ($key) {
+                        $model->where('name', 'LIKE', '%'. $key .'%');
+                      });
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'created_at', 'updated_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+    
+    }
+
+
+
+
+
+    public function populateScheduled($model, $entries){
+
+        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'date_from', 'date_to', 'slug')
+                     ->whereIn('status', [2,3])
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+    
+    }
+
+
+
+
+
     public function store($request){
 
         $task = new Task;
@@ -112,6 +196,63 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+    public function updateOnScheduleStore($request){
+
+        $task = $this->findBySlug($request->slug);
+        $task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
+        $task->status = 2;
+        $task->is_allday = 0;
+        $task->updated_at = $this->carbon->now();
+        $task->ip_updated = request()->ip();
+        $task->user_updated = $this->auth->user()->user_id;
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
+    public function updateOnScheduleUpdate($request){
+
+        $task = $this->findBySlug($request->e_slug);
+        $task->date_from = $this->__dataType->date_parse($request->e_date_from .''. $request->e_time_from, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->e_date_to .''. $request->e_time_to, 'Y-m-d H:i:s');
+        $task->updated_at = $this->carbon->now();
+        $task->ip_updated = request()->ip();
+        $task->user_updated = $this->auth->user()->user_id;
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
+    public function updateOnScheduleRollback($slug){
+
+        $task = $this->findBySlug($slug);
+        $task->date_from = null;
+        $task->date_to = null;
+        $task->status = 1;
+        $task->updated_at = $this->carbon->now();
+        $task->ip_updated = request()->ip();
+        $task->user_updated = $this->auth->user()->user_id;
+        $task->save();
+        
+        return $task;
+
+    }
+
+
+
+
+
     public function updateStatus($slug, $int){
 
         $task = $this->findBySlug($slug);
@@ -119,6 +260,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->updated_at = $this->carbon->now();
         $task->ip_updated = request()->ip();
         $task->user_updated = $this->auth->user()->user_id;
+        
         $task->save();
         
         return $task;
@@ -205,39 +347,6 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
         return $task;
 
-    }
-
-
-
-
-
-
-    public function search($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('name', 'LIKE', '%'. $key .'%')
-                      ->orWhere('description', 'LIKE', '%'. $key .'%')
-                      ->orwhereHas('item', function ($model) use ($key) {
-                        $model->where('name', 'LIKE', '%'. $key .'%');
-                      })
-                      ->orwhereHas('machine', function ($model) use ($key) {
-                        $model->where('name', 'LIKE', '%'. $key .'%');
-                      });
-        });
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'created_at', 'updated_at', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-    
     }
 
 

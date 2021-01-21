@@ -37,10 +37,11 @@ class TaskService extends BaseService{
 
 
 
-    public function scheduling(){
+    public function schedulingIndex($request){
 
         $unscheduled_tasks = $this->task_repo->getUnscheduled();
-        $scheduled_tasks = $this->task_repo->getScheduled();
+        $scheduled_tasks = $this->task_repo->fetchByScheduled($request);
+        $request->flash();
 
         return view('dashboard.task.scheduling')->with([
             'unscheduled_tasks' => $unscheduled_tasks,
@@ -49,6 +50,40 @@ class TaskService extends BaseService{
 
     }
 
+
+
+    public function schedulingStore($request){
+
+        $task = $this->task_repo->updateOnScheduleStore($request);
+    
+        $this->event->fire('task.scheduling', $task);
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function schedulingUpdate($request){
+
+        $task = $this->task_repo->updateOnScheduleUpdate($request);
+    
+        $this->event->fire('task.scheduling', $task);
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function schedulingRollback($slug){
+
+        $task = $this->task_repo->updateOnScheduleRollback($slug);
+    
+        $this->event->fire('task.scheduling', $task);
+        return redirect()->back();
+
+    }
 
 
     public function calendar(){

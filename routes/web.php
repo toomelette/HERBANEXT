@@ -110,20 +110,18 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TASKS **/
-	Route::get('/task/scheduling', 'TaskController@scheduling')->name('task.scheduling');
+	Route::get('/task/scheduling', 'TaskController@schedulingIndex')->name('task.scheduling_index');
+	Route::post('/task/scheduling/store', 'TaskController@schedulingStore')->name('task.scheduling_store');
+	Route::post('/task/scheduling/update', 'TaskController@schedulingUpdate')->name('task.scheduling_update');
+	Route::post('/task/scheduling/rollback/{slug}', 'TaskController@schedulingRollback')->name('task.scheduling_rollback');
+
 	Route::get('/task/calendar', 'TaskController@calendar')->name('task.calendar');
-	Route::post('/task/update_finished/{slug}', 'TaskController@updateFinished')
-	->name('task.update_finished');
-	Route::post('/task/update_unfinished/{slug}', 'TaskController@updateUnfinished')
-	->name('task.update_unfinished');
-	Route::get('/task/rate_personnel/{task_slug}', 'TaskController@ratePersonnel')
-	->name('task.rate_personnel');
-	Route::post('/task/rate_personnel/{task_personnel_id}', 'TaskController@ratePersonnelPost')
-	->name('task.rate_personnel_post');
-	Route::get('/task/reports', 'TaskController@reports')
-	->name('task.reports');
-	Route::get('/task/reports_output', 'TaskController@reportsOutput')
-	->name('task.reports_output');
+	Route::post('/task/update_finished/{slug}', 'TaskController@updateFinished')->name('task.update_finished');
+	Route::post('/task/update_unfinished/{slug}', 'TaskController@updateUnfinished')->name('task.update_unfinished');
+	Route::get('/task/rate_personnel/{task_slug}', 'TaskController@ratePersonnel')->name('task.rate_personnel');
+	Route::post('/task/rate_personnel/{task_personnel_id}', 'TaskController@ratePersonnelPost')->name('task.rate_personnel_post');
+	Route::get('/task/reports', 'TaskController@reports')->name('task.reports');
+	Route::get('/task/reports_output', 'TaskController@reportsOutput')->name('task.reports_output');
 	Route::resource('task', 'TaskController');
 
 

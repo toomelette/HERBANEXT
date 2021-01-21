@@ -26,6 +26,9 @@ class TaskSubscriber extends BaseSubscriber{
         $events->listen('task.store', 'App\Core\Subscribers\TaskSubscriber@onStore');
         $events->listen('task.update', 'App\Core\Subscribers\TaskSubscriber@onUpdate');
         $events->listen('task.destroy', 'App\Core\Subscribers\TaskSubscriber@onDestroy');
+        $events->listen('task.scheduling', 'App\Core\Subscribers\TaskSubscriber@onScheduling');
+
+
         $events->listen('task.drop', 'App\Core\Subscribers\TaskSubscriber@onDrop');
         $events->listen('task.resize', 'App\Core\Subscribers\TaskSubscriber@onResize');
         $events->listen('task.event_drop', 'App\Core\Subscribers\TaskSubscriber@onEventDrop');
@@ -39,6 +42,7 @@ class TaskSubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetchByScheduled:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
@@ -56,6 +60,7 @@ class TaskSubscriber extends BaseSubscriber{
     public function onUpdate($task){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetchByScheduled:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
@@ -69,9 +74,28 @@ class TaskSubscriber extends BaseSubscriber{
 
 
 
+
+
+    public function onScheduling($task){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetchByScheduled:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:findBySlug:'. $task->slug .'');
+
+        $this->session->flash('TASK_SCHEDULING_STORE_SUCCESS', 'The Task has been successfully updated!');
+        $this->session->flash('TASK_SCHEDULING_STORE_SUCCESS_SLUG', $task->slug);
+
+    }
+
+
+
     public function onDestroy($task){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:fetchByScheduled:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getUnscheduled');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:tasks:getScheduled');
