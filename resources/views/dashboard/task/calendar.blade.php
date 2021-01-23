@@ -118,8 +118,8 @@ $(function () {
           start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
           end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
           allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
-          backgroundColor : '{{ $data->color }}',
-          borderColor     : '{{ $data->color }}'
+          backgroundColor : '#' + Math.floor(Math.random()*16777215).toString(16),
+          borderColor     : '#' + Math.floor(Math.random()*16777215).toString(16),
         },
 
       @endforeach

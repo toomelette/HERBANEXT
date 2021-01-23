@@ -110,11 +110,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TASKS **/
-	Route::get('/task/scheduling', 'TaskController@schedulingIndex')->name('task.scheduling_index');
-	Route::post('/task/scheduling/store', 'TaskController@schedulingStore')->name('task.scheduling_store');
-	Route::post('/task/scheduling/update', 'TaskController@schedulingUpdate')->name('task.scheduling_update');
-	Route::post('/task/scheduling/rollback/{slug}', 'TaskController@schedulingRollback')->name('task.scheduling_rollback');
-
 	Route::get('/task/calendar', 'TaskController@calendar')->name('task.calendar');
 	Route::post('/task/update_finished/{slug}', 'TaskController@updateFinished')->name('task.update_finished');
 	Route::post('/task/update_unfinished/{slug}', 'TaskController@updateUnfinished')->name('task.update_unfinished');
@@ -148,7 +143,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	->name('engr_task.rate_personnel');
 	Route::post('/engr_task/rate_personnel/{task_personnel_id}', 'EngrTaskController@ratePersonnelPost')
 	->name('engr_task.rate_personnel_post');
-	Route::get('/engr_task/scheduling', 'EngrTaskController@scheduling')->name('engr_task.scheduling');
 	Route::get('/engr_task/calendar', 'EngrTaskController@calendar')->name('engr_task.calendar');
 	Route::get('/engr_task/create_jo', 'EngrTaskController@createJO')->name('engr_task.create_jo');
 	Route::get('/engr_task/create_da', 'EngrTaskController@createDA')->name('engr_task.create_da');

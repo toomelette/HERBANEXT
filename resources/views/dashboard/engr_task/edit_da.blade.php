@@ -37,21 +37,39 @@
             <input type="hidden" name="cat" value="DA">
 
             {!! __form::textbox(
-              '4', 'name', 'text', 'Name of Task *', 'Name of Task', old('name') ? old('name') : $engr_task->name, $errors->has('name'), $errors->first('name'), ''
+              '6', 'name', 'text', 'Name of Task *', 'Name of Task', old('name') ? old('name') : $engr_task->name, $errors->has('name'), $errors->first('name'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'location', 'text', 'Location', 'Location', old('location') ? old('location') : $engr_task->location, $errors->has('location'), $errors->first('location'), ''
-            ) !!}
-
-            {!! __form::textbox(
-              '4', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $engr_task->description, $errors->has('description'), $errors->first('description'), ''
+              '6', 'location', 'text', 'Location', 'Location', old('location') ? old('location') : $engr_task->location, $errors->has('location'), $errors->first('location'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '4', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic') ? old('pic') : $engr_task->pic, $errors->has('pic'), $errors->first('pic'), ''
+              '6', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $engr_task->description, $errors->has('description'), $errors->first('description'), ''
+            ) !!}
+
+            {!! __form::textbox(
+              '6', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic') ? old('pic') : $engr_task->pic, $errors->has('pic'), $errors->first('pic'), ''
+            ) !!}
+
+            <div class="col-md-12"></div>
+
+            {!! __form::datepicker(
+              '3', 'date_from',  'Date From *', old('date_from') ? old('date_from') : __dataType::date_parse($engr_task->date_from, 'm/d/Y'), $errors->has('date_from'), $errors->first('date_from')
+            ) !!}
+
+            {!! __form::timepicker(
+              '3', 'time_from',  'Time From *', old('time_from') ? old('time_from') : date('h:i A', strtotime($engr_task->date_from)), $errors->has('time_from'), $errors->first('time_from')
+            ) !!}
+
+            {!! __form::datepicker(
+              '3', 'date_to',  'Date To *', old('date_to') ? old('date_to') : __dataType::date_parse($engr_task->date_to, 'm/d/Y'), $errors->has('date_to'), $errors->first('date_to')
+            ) !!}
+
+            {!! __form::timepicker(
+              '3', 'time_to',  'Time To *', old('time_to') ?  old('time_to') : date('h:i A', strtotime($engr_task->date_to)), $errors->has('time_to'), $errors->first('time_to')
             ) !!}
 
             {{-- Personnels --}}

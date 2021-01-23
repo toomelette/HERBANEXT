@@ -199,7 +199,6 @@ class MachineRepository extends BaseRepository implements MachineInterface {
 
         $machines = $this->cache->remember('machines:getAll', 240, function(){
             return $this->machine->select('machine_id', 'name')
-                                 ->where('status', 1)
                                  ->get();
         });
         

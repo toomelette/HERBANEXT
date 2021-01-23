@@ -58,9 +58,10 @@
             <th>@sortablelink('description', 'Description')</th>
             <th>@sortablelink('location', 'Location')</th>
             <th>@sortablelink('status', 'Status')</th>
+            <th>@sortablelink('date_from', 'Date from')</th>
+            <th>@sortablelink('date_to', 'Date to')</th>
             <th>@sortablelink('created_at', 'Date Encoded')</th>
-            <th>@sortablelink('updated_at', 'Last Modified')</th>
-            <th style="width:390px;">Action</th>
+            <th style="width:250px;">Action</th>
           </tr>
           @foreach($engr_tasks as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -70,27 +71,28 @@
               <td id="mid-vert">{{ $data->description }}</td>
               <td id="mid-vert">{{ $data->location }}</td>
               <td id="mid-vert">{!! $data->displayStatusSpan() !!}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'm/d/Y h:i A') }}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->updated_at, 'm/d/Y h:i A') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->date_from, 'm/d/Y H:i') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->date_to, 'm/d/Y H:i') }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->created_at, 'm/d/Y H:i') }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.engr_task.update_finished', $global_user_submenus))
                     @if($data->status != 3)
                       <a type="button" class="btn btn-default" id="update_finished_button" data-action="update-finished" data-url="{{ route('dashboard.engr_task.update_finished', $data->slug) }}">
-                        Confirm Finished
+                        Done
                       </a>
                     @endif
                   @endif
                   @if(in_array('dashboard.engr_task.update_unfinished', $global_user_submenus))
                     @if($data->status == 3)
                       <a type="button" class="btn btn-default" id="update_unfinished_button" data-action="update-unfinished" data-url="{{ route('dashboard.engr_task.update_unfinished', $data->slug) }}">
-                        Revert Unfinished
+                        Ongoing
                       </a>
                     @endif
                   @endif
                   @if(in_array('dashboard.engr_task.rate_personnel', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.engr_task.rate_personnel', $data->slug) }}">
-                      Personnel Ratings
+                      Rate
                     </a>
                   @endif
                   @if(in_array('dashboard.engr_task.edit', $global_user_submenus))

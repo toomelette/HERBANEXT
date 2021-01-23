@@ -38,22 +38,6 @@ class EngrTaskService extends BaseService{
 
 
 
-    public function scheduling(){
-
-        $unscheduled_jo = $this->engr_task_repo->getUnscheduledJO();
-        $unscheduled_da = $this->engr_task_repo->getUnscheduledDA();
-        $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();
-
-        return view('dashboard.engr_task.scheduling')->with([
-            'unscheduled_jo' => $unscheduled_jo,
-            'unscheduled_da' => $unscheduled_da,
-            'scheduled_engr_tasks' => $scheduled_engr_tasks,
-        ]);
-
-    }
-
-
-
     public function calendar(){
 
         $scheduled_engr_tasks = $this->engr_task_repo->getScheduled();

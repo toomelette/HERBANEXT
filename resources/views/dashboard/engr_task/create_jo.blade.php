@@ -36,21 +36,39 @@
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '4', 'unit', 'text', 'Unit', 'Unit', old('unit'), $errors->has('unit'), $errors->first('unit'), ''
+              '6', 'unit', 'text', 'Unit', 'Unit', old('unit'), $errors->has('unit'), $errors->first('unit'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'location', 'text', 'Location', 'Location', old('location'), $errors->has('location'), $errors->first('location'), ''
-            ) !!}
-
-            {!! __form::textbox(
-              '4', 'description', 'text', 'Description', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
+              '6', 'location', 'text', 'Location', 'Location', old('location'), $errors->has('location'), $errors->first('location'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '4', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic'), $errors->has('pic'), $errors->first('pic'), ''
+              '6', 'description', 'text', 'Description', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
+            ) !!}
+
+            {!! __form::textbox(
+              '6', 'pic', 'text', 'Person In Charge', 'Person In Charge', old('pic'), $errors->has('pic'), $errors->first('pic'), ''
+            ) !!}
+
+            <div class="col-md-12"></div>
+
+            {!! __form::datepicker(
+              '3', 'date_from',  'Date From *', old('date_from') ? old('date_from') : Carbon::now()->format('m/d/Y'), $errors->has('date_from'), $errors->first('date_from')
+            ) !!}
+
+            {!! __form::timepicker(
+              '3', 'time_from',  'Time From *', old('time_from'), $errors->has('time_from'), $errors->first('time_from')
+            ) !!}
+
+            {!! __form::datepicker(
+              '3', 'date_to',  'Date To *', old('date_to') ? old('date_to') : Carbon::now()->format('m/d/Y'), $errors->has('date_to'), $errors->first('date_to')
+            ) !!}
+
+            {!! __form::timepicker(
+              '3', 'time_to',  'Time To *', old('time_to'), $errors->has('time_to'), $errors->first('time_to')
             ) !!}
             
             {{-- Personnels --}}

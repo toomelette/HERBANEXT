@@ -29,26 +29,6 @@ class TaskController extends Controller{
     }
 
     
-    public function schedulingIndex(TaskSchedulingFilterRequest $request){
-        return $this->task->schedulingIndex($request);
-    }
-
-    
-    public function schedulingStore(TaskSchedulingStoreFormRequest $request){
-        return $this->task->schedulingStore($request);
-    }
-
-    
-    public function schedulingUpdate(TaskSchedulingUpdateFormRequest $request){
-        return $this->task->schedulingUpdate($request);
-    }
-
-    
-    public function schedulingRollback($slug){
-        return $this->task->schedulingRollback($slug);
-    }
-
-    
     public function calendar(){
         return $this->task->calendar();
     }

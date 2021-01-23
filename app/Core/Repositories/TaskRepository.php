@@ -64,43 +64,6 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-    public function fetchByScheduled($request){
-
-        $key = str_slug($request->fullUrl(), '_');
-        $entries = isset($request->e) ? $request->e : 20;
-
-        $tasks = $this->cache->remember('tasks:fetchByScheduled:' . $key, 240, function() use ($request, $entries){
-
-            $task = $this->task->newQuery();
-            
-            if(isset($request->q)){
-                $this->search($task, $request->q);
-            }
-            
-            if(isset($request->i)){
-                $task->whereItemId($request->i);
-            }
-            
-            if(isset($request->m)){
-                $task->whereMachineId($request->m);
-            }
-            
-            if(isset($request->s)){
-                $task->whereStatus($request->s);
-            }
-
-            return $this->populateScheduled($task, $entries);
-
-        });
-
-        return $tasks;
-
-    }
-
-
-
-
-
 
     public function search($model, $key){
 
@@ -123,21 +86,7 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'created_at', 'updated_at', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-    
-    }
-
-
-
-
-
-    public function populateScheduled($model, $entries){
-
-        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'date_from', 'date_to', 'slug')
-                     ->whereIn('status', [2,3])
+        return $model->select('name', 'description', 'item_id', 'machine_id', 'status', 'date_from', 'date_to', 'created_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -157,7 +106,10 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->machine_id = $request->machine_id;
         $task->name = $request->name;
         $task->description = $request->description;
-        $task->color = $request->color;
+        $task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
+        $task->status = 2;
+        $task->is_allday = 0;
         $task->created_at = $this->carbon->now();
         $task->updated_at = $this->carbon->now();
         $task->ip_created = request()->ip();
@@ -181,69 +133,13 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->machine_id = $request->machine_id;
         $task->name = $request->name;
         $task->description = $request->description;
-        $task->color = $request->color;
+        $task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
+        $task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
         $task->updated_at = $this->carbon->now();
         $task->ip_updated = request()->ip();
         $task->user_updated = $this->auth->user()->user_id;
         $task->save();
         $task->taskPersonnel()->delete();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateOnScheduleStore($request){
-
-        $task = $this->findBySlug($request->slug);
-        $task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
-        $task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
-        $task->status = 2;
-        $task->is_allday = 0;
-        $task->updated_at = $this->carbon->now();
-        $task->ip_updated = request()->ip();
-        $task->user_updated = $this->auth->user()->user_id;
-        $task->save();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateOnScheduleUpdate($request){
-
-        $task = $this->findBySlug($request->e_slug);
-        $task->date_from = $this->__dataType->date_parse($request->e_date_from .''. $request->e_time_from, 'Y-m-d H:i:s');
-        $task->date_to = $this->__dataType->date_parse($request->e_date_to .''. $request->e_time_to, 'Y-m-d H:i:s');
-        $task->updated_at = $this->carbon->now();
-        $task->ip_updated = request()->ip();
-        $task->user_updated = $this->auth->user()->user_id;
-        $task->save();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateOnScheduleRollback($slug){
-
-        $task = $this->findBySlug($slug);
-        $task->date_from = null;
-        $task->date_to = null;
-        $task->status = 1;
-        $task->updated_at = $this->carbon->now();
-        $task->ip_updated = request()->ip();
-        $task->user_updated = $this->auth->user()->user_id;
-        $task->save();
         
         return $task;
 
@@ -261,55 +157,6 @@ class TaskRepository extends BaseRepository implements TaskInterface {
         $task->ip_updated = request()->ip();
         $task->user_updated = $this->auth->user()->user_id;
         
-        $task->save();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateDrop($request, $slug){
-
-        $task = $this->findBySlug($slug);
-        $task->date_from = $this->__dataType->date_parse($request->date);
-        $task->date_to = $this->__dataType->date_parse($request->date);
-        $task->is_allday = 1;
-        $task->status = 2;
-        $task->save();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateResize($request, $slug){
-
-        $task = $this->findBySlug($slug);
-        $task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-        $task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-        $task->is_allday =  $this->__dataType->string_to_boolean($request->allday);
-        $task->save();
-        
-        return $task;
-
-    }
-
-
-
-
-
-    public function updateEventDrop($request, $slug){
-
-        $task = $this->findBySlug($slug);
-        $task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-        $task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-        $task->is_allday = $this->__dataType->string_to_boolean($request->allday);
         $task->save();
         
         return $task;
@@ -354,44 +201,6 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-    public function getTaskIdInc(){
-
-        $id = 'T10001';
-        $task = $this->task->select('task_id')->orderBy('task_id', 'desc')->first();
-
-        if($task != null){
-            if($task->task_id != null){
-                $num = str_replace('T', '', $task->task_id) + 1;
-                $id = 'T' . $num;
-            }
-        }
-        
-        return $id;
-        
-    }
-
-
-
-
-
-
-    public function getUnscheduled(){
-
-        $tasks = $this->cache->remember('tasks:getUnscheduled', 240, function(){
-            return $this->task->select('machine_id', 'slug', 'name', 'color')
-                              ->where('status', 1)
-                              ->get();
-        });
-        
-        return $tasks;
-
-    }
-
-
-
-
-
-
     public function getScheduled(){
 
         $tasks = $this->cache->remember('tasks:getScheduled', 240, function(){
@@ -409,19 +218,16 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
-
     public function getByDate($df, $dt){
 
         $tasks = $this->cache->remember('tasks:getByDate:'.$df.'-'.$dt, 240, function() use ($df, $dt){
             
             $task = $this->task->newQuery();
-
             $date_from = $this->__dataType->date_parse($df, 'Y-m-d 00:00:00');
             $date_to = $this->__dataType->date_parse($dt, 'Y-m-d 24:00:00');
 
             if(isset($df) || isset($dt)){
-                $task->where('date_from', '>=', $df)
-                     ->where('date_from', '<=', $dt);
+                $task->where('date_from', '>=', $df)->where('date_from', '<=', $dt);
             }
 
             return $task->select('task_id', 'machine_id', 'name', 'description', 'date_from', 'date_to')
@@ -436,18 +242,35 @@ class TaskRepository extends BaseRepository implements TaskInterface {
 
 
 
+
     public function countNew(){
 
         $tasks = $this->cache->remember('tasks:countNew', 240, function(){
-
             $date_now = $this->carbon->now()->format('Y-m-d');
-
             return $this->task->whereDate('created_at', $date_now)->count();
-        
         }); 
 
         return $tasks;
 
+    }
+
+
+
+
+    public function getTaskIdInc(){
+
+        $id = 'T10001';
+        $task = $this->task->select('task_id')->orderBy('task_id', 'desc')->first();
+
+        if($task != null){
+            if($task->task_id != null){
+                $num = str_replace('T', '', $task->task_id) + 1;
+                $id = 'T' . $num;
+            }
+        }
+        
+        return $id;
+        
     }
 
 

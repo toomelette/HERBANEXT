@@ -60,6 +60,38 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('name', 'LIKE', '%'. $key .'%')
+                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('requested_by', 'LIKE', '%'. $key .'%')
+                      ->orWhere('unit', 'LIKE', '%'. $key .'%')
+                      ->orWhere('location', 'LIKE', '%'. $key .'%')
+                      ->orWhere('description', 'LIKE', '%'. $key .'%')
+                      ->orWhere('pic', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('name', 'jo_no', 'description', 'location', 'cat', 'status', 'date_from', 'date_to', 'created_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($entries);
+    
+    }
+
+
+
+
+
     public function store($request){
 
         $engr_task = new EngrTask;
@@ -79,6 +111,10 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         }elseif ($request->cat == 'DA') {
             $engr_task->color = '#ff851b';
         }
+
+        $engr_task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
+        $engr_task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
+        $engr_task->status = 2;
 
         $engr_task->created_at = $this->carbon->now();
         $engr_task->updated_at = $this->carbon->now();
@@ -112,6 +148,9 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         }elseif ($request->cat == 'DA') {
             $engr_task->color = '#ff851b';
         }
+
+        $engr_task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
+        $engr_task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
 
         $engr_task->updated_at = $this->carbon->now();
         $engr_task->ip_updated = request()->ip();
@@ -157,55 +196,6 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    public function updateDrop($request, $slug){
-
-        $engr_task = $this->findBySlug($slug);
-        $engr_task->date_from = $this->__dataType->date_parse($request->date);
-        $engr_task->date_to = $this->__dataType->date_parse($request->date);
-        $engr_task->is_allday = 1;
-        $engr_task->status = 2;
-        $engr_task->save();
-        
-        return $engr_task;
-
-    }
-
-
-
-
-
-    public function updateResize($request, $slug){
-
-        $engr_task = $this->findBySlug($slug);
-        $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-        $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-        $engr_task->is_allday =  $this->__dataType->string_to_boolean($request->allday);
-        $engr_task->save();
-        
-        return $engr_task;
-
-    }
-
-
-
-
-
-    public function updateEventDrop($request, $slug){
-
-        $engr_task = $this->findBySlug($slug);
-        $engr_task->date_from = $this->__dataType->date_parse($request->start_date, 'Y-m-d H:i:s');
-        $engr_task->date_to = $this->__dataType->date_parse($request->end_date, 'Y-m-d H:i:s');
-        $engr_task->is_allday = $this->__dataType->string_to_boolean($request->allday);
-        $engr_task->save();
-        
-        return $engr_task;
-
-    }
-
-
-
-
-
     public function findBySlug($slug){
 
         $engr_task = $this->cache->remember('engr_tasks:findBySlug:' . $slug, 240, function() use ($slug){
@@ -220,38 +210,6 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
         return $engr_task;
 
-    }
-
-
-
-
-
-
-    public function search($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('name', 'LIKE', '%'. $key .'%')
-                      ->orWhere('jo_no', 'LIKE', '%'. $key .'%')
-                      ->orWhere('requested_by', 'LIKE', '%'. $key .'%')
-                      ->orWhere('unit', 'LIKE', '%'. $key .'%')
-                      ->orWhere('location', 'LIKE', '%'. $key .'%')
-                      ->orWhere('description', 'LIKE', '%'. $key .'%')
-                      ->orWhere('pic', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('name', 'jo_no', 'description', 'location', 'cat', 'status', 'created_at', 'updated_at', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-    
     }
 
 
@@ -280,42 +238,6 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
 
 
 
-    public function getUnscheduledJO(){
-
-        $engr_tasks = $this->cache->remember('engr_tasks:getUnscheduledJO', 240, function(){
-            return $this->engr_task->select('slug', 'name', 'color')
-                                   ->where('cat', 'JO')
-                                   ->where('status', 1)
-                                   ->get();
-        });
-        
-        return $engr_tasks;
-
-    }
-
-
-
-
-
-
-    public function getUnscheduledDA(){
-
-        $engr_tasks = $this->cache->remember('engr_tasks:getUnscheduledDA', 240, function(){
-            return $this->engr_task->select('slug', 'name', 'color')
-                                   ->where('cat', 'DA')
-                                   ->where('status', 1)
-                                   ->get();
-        });
-        
-        return $engr_tasks;
-
-    }
-
-
-
-
-
-
     public function getScheduled(){
 
         $engr_tasks = $this->cache->remember('engr_tasks:getScheduled', 240, function(){
@@ -328,22 +250,6 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         return $engr_tasks;
 
     }
-
-
-
-    // public function countNew(){
-
-    //     $engr_tasks = $this->cache->remember('engr_tasks:countNew', 240, function(){
-
-    //         $date_now = $this->carbon->now()->format('Y-m-d');
-
-    //         return $this->engr_task->whereDate('created_at', $date_now)->count();
-        
-    //     }); 
-
-    //     return $engr_tasks;
-
-    // }
 
 
 

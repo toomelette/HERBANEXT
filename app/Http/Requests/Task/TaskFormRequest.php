@@ -22,7 +22,10 @@ class TaskFormRequest extends FormRequest{
             'description' => 'nullable|string|max:255',
             'item_id' => 'nullable|string|max:11',
             'machine_id' => 'required|string|max:11',
-            'color' => 'required|string|max:45',
+            'date_from'=>'required|date_format:"m/d/Y"',
+            'time_from' => 'required|date_format:"h:i A"',
+            'date_to'=>'required|date_format:"m/d/Y"',
+            'time_to' => 'required|date_format:"h:i A"',
             'personnels' => 'nullable|array',
 
         ];

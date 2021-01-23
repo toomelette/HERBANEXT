@@ -25,11 +25,6 @@ class EngrTaskController extends Controller{
     }
 
     
-    public function scheduling(){
-        return $this->engr_task->scheduling();
-    }
-
-    
     public function calendar(){
         return $this->engr_task->calendar();
     }
