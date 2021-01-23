@@ -30,8 +30,9 @@
 
       <div class="row">
         <div class="col-xs-12 table-responsive">
-          <h4>{{ __dataType::date_parse($data_date, 'F d, Y - l') }}</h4>
-          <table class="table table-bordered">
+          <h5>{{ __dataType::date_parse($data_date, 'F d, Y - l') }}</h5>
+
+          <table class="table table-bordered" style="font-size:9px;">
 
             <thead>
               <tr>
@@ -50,8 +51,8 @@
                 ?>
                 @if ($date == $task_date)
                   <tr>
-                    <td>{{ $data_task->name }}</td>
-                    <td>
+                    <td style="padding:4px;">{{ $data_task->name }}</td>
+                    <td style="padding:4px;">
                       @foreach ($data_task->taskPersonnel as $data_personnel)
                         {{ optional($data_personnel->personnel)->lastname }},
                       @endforeach
