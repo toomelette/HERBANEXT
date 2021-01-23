@@ -113,8 +113,9 @@ $(function () {
         {
           slug            : '{{ $data->slug }}',
           title           : '{{ $data->name }}',
-          description           : '{{ $data->description }}',
-          personnels           : '{!! json_encode($personnels) !!}',
+          description     : '{{ $data->description }}',
+          personnels      : '{!! json_encode($personnels) !!}',
+          dateTo          : '{{ __dataType::date_parse($data->date_to, "m/d/Y h:i A") }}',
           start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
           end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
           allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
@@ -144,10 +145,7 @@ $(function () {
         $("#title").text(info.title);
         $("#description").text(info.description);
         $("#datetime_from").text(info.start.format('MM/DD/YYYY hh:mm A'));
-
-        if(info.allDay == false){
-          $("#datetime_to").text(info.end.format('MM/DD/YYYY hh:mm A'));
-        }
+        $("#datetime_to").text(info.dateTo);
 
         $.each(JSON.parse(info.personnels), function (index, data) {
             var html = '';

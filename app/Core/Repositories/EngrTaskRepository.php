@@ -115,6 +115,7 @@ class EngrTaskRepository extends BaseRepository implements EngrTaskInterface {
         $engr_task->date_from = $this->__dataType->date_parse($request->date_from .''. $request->time_from, 'Y-m-d H:i:s');
         $engr_task->date_to = $this->__dataType->date_parse($request->date_to .''. $request->time_to, 'Y-m-d H:i:s');
         $engr_task->status = 2;
+        $engr_task->is_allday = 0;
 
         $engr_task->created_at = $this->carbon->now();
         $engr_task->updated_at = $this->carbon->now();
