@@ -8,9 +8,9 @@ interface ItemLogInterface {
 
 	public function fetchByItem($product_code, $request);
 
-	public function storeCheckIn($request, $item);
+	public function storeCheckIn($request, $item, $item_batch);
 		
-	public function storeCheckOut($request, $item);
+	public function storeCheckOut($request, $item, $item_batch = null);
 		
 	public function fetch($request);
 

@@ -22,6 +22,7 @@ class ItemLog extends Model{
     protected $attributes = [
 
         'item_id' => '',
+        'batch_id' => '',
         'product_code' => '',
         'item_name' => '',
     	'transaction_type' => false,
@@ -67,7 +68,12 @@ class ItemLog extends Model{
     /** RELATIONSHIPS **/
     public function item() {
     	return $this->belongsTo('App\Models\Item','item_id','item_id');
-   	}		
+    }	
+       
+
+    public function itemBatch() {
+        return $this->belongsTo('App\Models\ItemBatch','batch_id','batch_id');
+    }		
 
 
     public function user() {

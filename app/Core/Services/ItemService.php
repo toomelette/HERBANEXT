@@ -169,7 +169,7 @@ class ItemService extends BaseService{
         $item_batch = $this->item_batch_repo->store($request, $item);
 
         // Storing Logs
-        $item_log = $this->item_log_repo->storeCheckIn($request, $item);
+        $item_log = $this->item_log_repo->storeCheckIn($request, $item, $item_batch);
 
         // Updating Current Balance
         $this->item_repo->updateCheckIn($amount, $item);
@@ -218,7 +218,7 @@ class ItemService extends BaseService{
         $item_batch = $this->item_batch_repo->updateCheckIn($request->batch_code, $amount);
 
         // Storing Logs
-        $item_log = $this->item_log_repo->storeCheckIn($request, $item);
+        $item_log = $this->item_log_repo->storeCheckIn($request, $item, $item_batch);
 
         // Updating Current Balance
         $this->item_repo->updateCheckIn($amount, $item);
@@ -346,7 +346,7 @@ class ItemService extends BaseService{
             $item_batch = $this->item_batch_repo->updateCheckOutByBatchCode($request->batch_code, $amount);
             
             // Storing Logs
-            $item_log = $this->item_log_repo->storeCheckOut($request, $item);
+            $item_log = $this->item_log_repo->storeCheckOut($request, $item, $item_batch);
 
             // Updating Current Balance
             $this->item_repo->updateCheckOut($amount, $item); 

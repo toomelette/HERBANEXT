@@ -88,11 +88,12 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
-    public function storeCheckIn($request, $item){
+    public function storeCheckIn($request, $item, $item_batch){
 
     	$item_log = new ItemLog;
     	$item_log->product_code = $item->product_code;
         $item_log->item_id = $item->item_id;
+        $item_log->batch_id = $item_batch->batch_id;
         $item_log->item_name = $item->name;
     	$item_log->transaction_type = true;
     	$item_log->amount = $this->__dataType->string_to_num($request->amount);
@@ -113,11 +114,12 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
-    public function storeCheckOut($request, $item){
+    public function storeCheckOut($request, $item, $item_batch = null){
 
         $item_log = new ItemLog;
         $item_log->product_code = $item->product_code;
         $item_log->item_id = $item->item_id;
+        $item_log->batch_id = $item_batch ? $item_batch->batch_id : null;
         $item_log->item_name = $item->name;
         $item_log->transaction_type = false;
         $item_log->amount = $this->__dataType->string_to_num($request->amount);
@@ -177,8 +179,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
-                     ->with('item', 'user')
+        return $model->select('batch_id', 'product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
+                     ->with('item', 'user', 'itemBatch')
                      ->sortable()
                      ->orderBy('datetime', 'desc')
                      ->paginate($entries);
@@ -191,8 +193,8 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
     public function populateByItem($model, $entries, $item_id){
 
-        return $model->select('transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
-                     ->with('user')
+        return $model->select('batch_id', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
+                     ->with('user', 'itemBatch')
                      ->where('item_id', $item_id)
                      ->sortable()
                      ->orderBy('datetime', 'desc')

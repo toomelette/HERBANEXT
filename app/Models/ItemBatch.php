@@ -21,6 +21,7 @@ class ItemBatch extends Model{
 
     protected $attributes = [
         
+        'batch_id' => '',
         'item_id' => '',
         'product_code' => '',
     	'batch_code' => '',
@@ -96,7 +97,12 @@ class ItemBatch extends Model{
     /** RELATIONSHIPS **/
     public function item() {
     	return $this->belongsTo('App\Models\Item','item_id','item_id');
-   	}
+    }
+       
+    
+    public function itemLog() {
+        return $this->hasMany('App\Models\ItemLog','batch_id','batch_id');
+    }
 
 
 

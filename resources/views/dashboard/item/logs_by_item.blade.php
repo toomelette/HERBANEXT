@@ -49,6 +49,7 @@
           <table class="table table-hover">
             <tr>
               <th>@sortablelink('transaction_type', 'Transaction Type')</th>
+              <th>@sortablelink('itemBatch.batch_code', 'Batch Code')</th>
               <th>@sortablelink('amount', 'Quantity')</th>
               <th>@sortablelink('remarks', 'Remarks')</th>
               <th>@sortablelink('user.name', 'User Updated')</th>
@@ -57,6 +58,7 @@
             @foreach($logs as $data) 
               <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
                 <td id="mid-vert">{{ $data->transaction_type == 1 ? 'Check In' : 'Check Out' }}</td>
+                <td id="mid-vert">{!! $data->itemBatch ? $data->itemBatch->batch_code : 'NA' !!}</td>
                 <td id="mid-vert">{!! $data->displayAmount() !!}</td>
                 <td id="mid-vert">{{ $data->remarks }}</td>
                 <td id="mid-vert">{{ optional($data->user)->username }}</td>
