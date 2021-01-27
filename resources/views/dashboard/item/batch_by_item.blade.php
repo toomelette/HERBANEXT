@@ -54,7 +54,7 @@
                 <td id="mid-vert">{{ $data->batch_code }}</td>
                 <td id="mid-vert">{{ $data->displayAmount() }}</td>
                 <td id="mid-vert">{!! $data->displayExpiryStatusSpan() !!} </td>
-                <td id="mid-vert">{!! Str::limit(strip_tags($data->remarks), 50) !!}</td>
+                <td id="mid-vert">{!! Str::limit(strip_tags($data->remarks), 50) !!} ...</td>
                 <td id="mid-vert">
 
                   @if(in_array('dashboard.item.batch_add_remarks', $global_user_submenus))
