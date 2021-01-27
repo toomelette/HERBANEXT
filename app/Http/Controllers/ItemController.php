@@ -14,6 +14,7 @@ use App\Http\Requests\Item\ItemBatchByItemFilterRequest;
 use App\Http\Requests\Item\ItemBatchAddRemarksForm;
 use App\Http\Requests\Item\ItemLogsByItemFilterRequest;
 use App\Http\Requests\Item\ItemReportFormRequest;
+use App\Http\Requests\Item\ItemLogsUpdateRemarksFormRequest;
 
 
 
@@ -159,6 +160,15 @@ class ItemController extends Controller{
     public function logs(ItemLogsFilterRequest $request){
 
         return $this->item->logs($request);
+
+    }
+
+    
+
+
+    public function logsUpdateRemarks($id, ItemLogsUpdateRemarksFormRequest $request){
+        
+        return $this->item->logsUpdateRemarks($id, $request);
 
     }
 

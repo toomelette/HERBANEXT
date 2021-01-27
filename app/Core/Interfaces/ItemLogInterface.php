@@ -5,6 +5,8 @@ namespace App\Core\Interfaces;
 
 
 interface ItemLogInterface {
+		
+	public function fetch($request);
 
 	public function fetchByItem($product_code, $request);
 
@@ -12,7 +14,7 @@ interface ItemLogInterface {
 		
 	public function storeCheckOut($request, $item, $item_batch = null);
 		
-	public function fetch($request);
+	public function updateRemarks($id, $request);
 
 	public function checkedOutFinishGoodsCurrentMonth();
 

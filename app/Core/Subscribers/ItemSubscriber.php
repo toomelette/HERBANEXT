@@ -29,6 +29,7 @@ class ItemSubscriber extends BaseSubscriber{
         $events->listen('item.check_in', 'App\Core\Subscribers\ItemSubscriber@onCheckIn');
         $events->listen('item.check_out', 'App\Core\Subscribers\ItemSubscriber@onCheckOut');
         $events->listen('item.add_batch_remarks', 'App\Core\Subscribers\ItemSubscriber@onAddBatchRemarks');
+        $events->listen('item.update_logs_remarks', 'App\Core\Subscribers\ItemSubscriber@onUpdateLogsRemarks');
 
 
     }
@@ -150,6 +151,20 @@ class ItemSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:item_batches:getAll');
 
         $this->session->flash('ITEM_ADD_BATCH_REMARKS_SUCCESS', 'Remarks Successfully updated!');
+
+    }
+
+
+
+
+
+    public function onUpdateLogsRemarks($log){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:item_logs:fetchByItem:*');
+
+        $this->session->flash('ITEM_LOGS_UPDATE_REMARKS_SUCCESS', 'Record Successfully updated!');
+        $this->session->flash('ITEM_LOGS_UPDATE_REMARKS_SUCCESS_ID', $log->id);
 
     }
 

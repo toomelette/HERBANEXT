@@ -378,6 +378,18 @@ class ItemService extends BaseService{
 
 
 
+    public function logsUpdateRemarks($id, $request){
+        
+        $log = $this->item_log_repo->updateRemarks($id, $request);
+        $this->event->fire('item.update_logs_remarks', $log);
+        return redirect()->back();
+
+    }
+
+
+
+
+
     public function fetchBatchByItem($slug, $request){
 
         $item = $this->item_repo->findbySlug($slug);

@@ -20,7 +20,6 @@ class ItemLog extends Model{
 
 
     protected $attributes = [
-
         'item_id' => '',
         'batch_id' => '',
         'product_code' => '',

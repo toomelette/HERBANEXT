@@ -60,6 +60,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	Route::get('/item/{slug}/batches', 'ItemController@fetchBatchByItem')->name('item.fetch_batch_by_item');
 	Route::get('/item/{slug}/logs', 'ItemController@fetchLogsByItem')->name('item.fetch_logs_by_item');
+	Route::post('/item/logs/update_remarks/{slug}', 'ItemController@logsUpdateRemarks')->name('item.logs_update_remarks');
 	Route::get('/item/logs', 'ItemController@logs')->name('item.logs');
 
 	Route::get('/item/reports', 'ItemController@reports')->name('item.reports');

@@ -1,6 +1,8 @@
 <?php
 
-  $table_sessions = [];
+  $table_sessions = [
+    Session::get('ITEM_LOGS_UPDATE_REMARKS_SUCCESS_ID'),
+  ];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
@@ -70,9 +72,10 @@
             <th>@sortablelink('amount', 'Quantity')</th>
             <th>@sortablelink('remarks', 'Remarks')</th>
             <th>@sortablelink('datetime', 'Date')</th>
+            <th>Action</th>
           </tr>
           @foreach($logs as $data) 
-            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter($data->id, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->product_code }}</td>
               <td id="mid-vert">{{ $data->item_name }}</td>
               <td id="mid-vert">{!! $data->itemBatch ? $data->itemBatch->batch_code : 'NA' !!}</td>
@@ -80,6 +83,17 @@
               <td id="mid-vert">{!! $data->displayAmount() !!}</td>
               <td id="mid-vert">{{ $data->remarks }}</td>
               <td id="mid-vert">{{ __dataType::date_parse($data->datetime, 'M d, Y g:i A') }}</td>
+              <td id="mid-vert">
+                @if(in_array('dashboard.item.logs_update_remarks', $global_user_submenus))
+                  <a type="button" 
+                     class="btn btn-default" 
+                     id="update_remarks_button" 
+                     data-remarks="{{ $data->remarks }}" 
+                     data-url="{{ route('dashboard.item.logs_update_remarks', $data->id) }}">
+                     Remarks
+                  </a>
+                @endif
+              </td>
             </tr>
             @endforeach
           </table>
@@ -99,5 +113,66 @@
     </div>
 
   </section>
+
+@endsection
+
+
+
+
+@section('modals')
+
+  <div class="modal fade" id="update_remarks_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"> Remarks</h4>
+        </div>
+        <div class="modal-body" id="update_remarks_body">
+          <form method="POST" id="form">
+            
+            @csrf
+            
+            <div class="row" style="padding-right:20px;">
+
+              {!! 
+                __form::textarea('12', 'remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), '', '75') 
+              !!}
+              
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+    @if(Session::has('ITEM_LOGS_UPDATE_REMARKS_SUCCESS'))
+      {!! __js::toast(Session::get('ITEM_LOGS_UPDATE_REMARKS_SUCCESS')) !!}
+    @endif
+		
+    $(document).on("click", "#update_remarks_button", function () {
+      $("#update_remarks_modal").modal("show");
+      $("#update_remarks_body #form").attr("action", $(this).data("url"));
+      $("#form #remarks").val($(this).data("remarks"));
+      $("#form #remarks").attr("placeholder", $(this).data("remarks"));
+    });
+    
+  </script>
 
 @endsection

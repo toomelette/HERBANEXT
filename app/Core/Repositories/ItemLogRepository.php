@@ -62,6 +62,40 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('product_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('item', function ($model) use ($key) {
+                            $model->where('name', 'LIKE', '%'. $key .'%');
+                        })
+                      ->orwhereHas('user', function ($model) use ($key) {
+                            $model->where('username', 'LIKE', '%'. $key .'%');
+                        });
+        });
+
+    }
+
+
+
+
+
+    public function populate($model, $entries){
+
+        return $model->select('id', 'batch_id', 'product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
+                     ->with('item', 'user', 'itemBatch')
+                     ->sortable()
+                     ->orderBy('datetime', 'desc')
+                     ->paginate($entries);
+
+    }
+
+
+
+
+
     public function fetchByItem($item_id, $request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -80,6 +114,38 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
         });
 
         return $item_logs;
+
+    }
+
+
+
+
+
+
+    public function searchByItem($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('product_code', 'LIKE', '%'. $key .'%')
+                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('user', function ($model) use ($key) {
+                            $model->where('username', 'LIKE', '%'. $key .'%');
+                        });
+        });
+
+    }
+
+
+
+
+
+    public function populateByItem($model, $entries, $item_id){
+
+        return $model->select('id', 'batch_id', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
+                     ->with('user', 'itemBatch')
+                     ->where('item_id', $item_id)
+                     ->sortable()
+                     ->orderBy('datetime', 'desc')
+                     ->paginate($entries);
 
     }
 
@@ -130,7 +196,6 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
         $item_log->ip_address = request()->ip();
         $item_log->user_id = $this->auth->user()->user_id;
         $item_log->save();
-        $item_log->save();
 
         return $item_log;
 
@@ -141,64 +206,13 @@ class ItemLogRepository extends BaseRepository implements ItemLogInterface {
 
 
 
-    public function search($model, $key){
+    public function updateRemarks($id, $request){
+        
+        $item_log = ItemLog::where('id', $id)->first();
+        $item_log->remarks = $request->remarks;
+        $item_log->save();
 
-        return $model->where(function ($model) use ($key) {
-                $model->where('product_code', 'LIKE', '%'. $key .'%')
-                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
-                      ->orwhereHas('item', function ($model) use ($key) {
-                            $model->where('name', 'LIKE', '%'. $key .'%');
-                        })
-                      ->orwhereHas('user', function ($model) use ($key) {
-                            $model->where('username', 'LIKE', '%'. $key .'%');
-                        });
-        });
-
-    }
-
-
-
-
-
-
-    public function searchByItem($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('product_code', 'LIKE', '%'. $key .'%')
-                      ->orWhere('amount', 'LIKE', '%'. $key .'%')
-                      ->orwhereHas('user', function ($model) use ($key) {
-                            $model->where('username', 'LIKE', '%'. $key .'%');
-                        });
-        });
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('batch_id', 'product_code', 'item_name', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
-                     ->with('item', 'user', 'itemBatch')
-                     ->sortable()
-                     ->orderBy('datetime', 'desc')
-                     ->paginate($entries);
-
-    }
-
-
-
-
-
-    public function populateByItem($model, $entries, $item_id){
-
-        return $model->select('batch_id', 'transaction_type', 'amount', 'unit', 'remarks', 'user_id', 'datetime')
-                     ->with('user', 'itemBatch')
-                     ->where('item_id', $item_id)
-                     ->sortable()
-                     ->orderBy('datetime', 'desc')
-                     ->paginate($entries);
+        return $item_log;
 
     }
 
