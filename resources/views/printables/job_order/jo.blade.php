@@ -62,11 +62,20 @@
 
                 <div style="border:solid 1px; padding:10px;" >
                   <div class="row" style="padding-top:10px;">
-                    <div class="col-xs-12">
-                      <h2 class="page-header">
-                        <img src="{{ asset('images/logo.png') }}" style="width:130px; height:50px; margin-top: -20px"> 
-                        <span class="pull-right" style="font-size:20px;">Job Order Form</span>
-                      </h2>
+                    <div class="col-xs-4">
+                      <img src="{{ asset('images/logo.png') }}" style="width:130px; height:50px; margin-top: -20px">
+                    </div>
+                    <div class="col-xs-4" style="margin-top:12px;">
+                      <span class="pull-right" style="font-size:20px;">Job Order</span>
+                    </div>
+                    <div class="col-xs-4" style="font-size:9px;"">
+                      <p>
+                        Form No.: HFPRF 015ca<br>
+                        Rev. No.: 00<br>
+                        Rev. Date: NA<br>
+                        Effective Date: 01/02/17<br>
+                        Page 1 of 1<br>
+                      </p>
                     </div>
                   </div>
 
