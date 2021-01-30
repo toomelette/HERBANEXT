@@ -60,10 +60,10 @@
 
               <div class="col-xs-6" style="margin-bottom:10px;">
 
-                <div style="border:solid 1px; padding:10px;" >
+                <div style="border:solid 1px; padding:10px;">
                   <div class="row" style="padding-top:10px;">
                     <div class="col-xs-4">
-                      <img src="{{ asset('images/logo.png') }}" style="width:130px; height:50px; margin-top: -20px">
+                      <img src="{{ asset('images/logo.png') }}" style="width:130px; height:50px; margin-top: -15px">
                     </div>
                     <div class="col-xs-4" style="margin-top:12px;">
                       <span class="pull-right" style="font-size:20px;">Job Order</span>
