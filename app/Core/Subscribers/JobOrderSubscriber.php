@@ -52,6 +52,7 @@ class JobOrderSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:purchase_order_items:findBySlug:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findByJoId:'. $jo_id .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:job_orders:findBySlug:*');
