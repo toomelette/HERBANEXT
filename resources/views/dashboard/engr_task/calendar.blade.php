@@ -77,95 +77,102 @@
 
 <script>
 
-$(function () {
+  function decodeHTMLEntities(str) {
+    if(str && typeof str === 'string') {
+      str = str.replace(/&[#A-Za-z0-9]+;/gi, '');
+    }
+    return str;
+  }
 
-  $('#calendar').fullCalendar({
+  $(function () {
 
-    header    : {
-      left  : 'prev,next today',
-      center: 'title',
-      right : 'month,agendaWeek,agendaDay'
-    },
-    buttonText: {
-      today: 'today',
-      month: 'month',
-      week : 'week',
-      day  : 'day'
-    },
+    $('#calendar').fullCalendar({
 
-    events    : [
-      
-      @foreach($scheduled_engr_tasks as $data)
+      header    : {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'today',
+        month: 'month',
+        week : 'week',
+        day  : 'day'
+      },
+
+      events    : [
         
-        <?php
+        @foreach($scheduled_engr_tasks as $data)
+          
+          <?php
 
-          $personnels = [];
+            $personnels = [];
 
-          foreach ($data->engrTaskPersonnel as $data_tp) {
-            $personnels[] = [
-              'fullname' => optional($data_tp->personnel)->fullname,
-              'position' => optional($data_tp->personnel)->position,
-            ];
-          }
+            foreach ($data->engrTaskPersonnel as $data_tp) {
+              $personnels[] = [
+                'fullname' => optional($data_tp->personnel)->fullname,
+                'position' => optional($data_tp->personnel)->position,
+              ];
+            }
 
-        ?>
+          ?>
 
-        {
-          slug            : '{{ $data->slug }}',
-          title           : '{{ $data->name }}',
-          description     : '{{ $data->description }}',
-          personnels      : '{!! json_encode($personnels) !!}',
-          dateTo          : '{{ __dataType::date_parse($data->date_to, "m/d/Y h:i A") }}',
-          start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
-          end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
-          allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
-          backgroundColor : '{{ $data->color }}',
-          borderColor     : '{{ $data->color }}'
-        },
+          {
+            slug            : '{{ $data->slug }}',
+            title           : decodeHTMLEntities('{{ $data->name }}'),
+            description     : decodeHTMLEntities('{{ $data->description }}'),
+            personnels      : '{!! json_encode($personnels) !!}',
+            dateTo          : '{{ __dataType::date_parse($data->date_to, "m/d/Y h:i A") }}',
+            start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
+            end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
+            allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
+            backgroundColor : '{{ $data->color }}',
+            borderColor     : '{{ $data->color }}'
+          },
 
-      @endforeach
+        @endforeach
 
-    ],
+      ],
 
 
 
-    eventClick: function(info) {
-      
-      $( document ).ready(function() {
+      eventClick: function(info) {
         
-        $("#task_details").modal("show");
+        $( document ).ready(function() {
+          
+          $("#task_details").modal("show");
 
-        $("#personnels tr td").remove();
+          $("#personnels tr td").remove();
 
-        $("#title").text('');
-        $("#description").text('');
-        $("#datetime_from").text('');
-        $("#datetime_to").text('');
+          $("#title").text('');
+          $("#description").text('');
+          $("#datetime_from").text('');
+          $("#datetime_to").text('');
 
-        $("#title").text(info.title);
-        $("#description").text(info.description);
-        $("#datetime_from").text(info.start.format('MM/DD/YYYY hh:mm A'));
-        $("#datetime_to").text(info.dateTo);
+          $("#title").text(info.title);
+          $("#description").text(info.description);
+          $("#datetime_from").text(info.start.format('MM/DD/YYYY hh:mm A'));
+          $("#datetime_to").text(info.dateTo);
 
-        $.each(JSON.parse(info.personnels), function (index, data) {
-            var html = '';
-            html += "<tr>";
-            html += "<td>" + data.fullname + "</td>";
-            html += "<td>" + data.position + "</td>";
-            html += "</tr>";
-            $("#personnels").append(html);
+          $.each(JSON.parse(info.personnels), function (index, data) {
+              var html = '';
+              html += "<tr>";
+              html += "<td>" + data.fullname + "</td>";
+              html += "<td>" + data.position + "</td>";
+              html += "</tr>";
+              $("#personnels").append(html);
+          });
+
         });
 
-      });
+      }
 
-    }
 
+
+    })
 
 
   })
-
-
-})
 
 </script>
     

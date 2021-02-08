@@ -77,6 +77,14 @@
 
 <script>
 
+function decodeHTMLEntities(str) {
+  if(str && typeof str === 'string') {
+    str = str.replace(/&[#A-Za-z0-9]+;/gi, '');
+  }
+  return str;
+}
+
+
 $(function () {
 
   $('#calendar').fullCalendar({
@@ -113,8 +121,8 @@ $(function () {
 
         {
           slug            : '{{ $data->slug }}',
-          title           : '{{ $data->name }}',
-          description     : '{{ $data->description }}',
+          title           : decodeHTMLEntities('{{ $data->name }}'),
+          description     : decodeHTMLEntities('{{ $data->description }}'),
           personnels      : '{!! json_encode($personnels) !!}',
           dateTo          : '{{ __dataType::date_parse($data->date_to, "m/d/Y h:i A") }}',
           start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
@@ -145,7 +153,7 @@ $(function () {
         $("#datetime_to").text('');
         
         $("#title").text(info.title);
-        $("#description").text(info.description);
+        $("#description").text(decodeHTMLEntities(info.description));
         $("#datetime_from").text(info.start.format('MM/DD/YYYY hh:mm A'));
         $("#datetime_to").text(info.dateTo);
 
