@@ -81,7 +81,7 @@
               <td id="mid-vert">{!! $data->itemBatch ? $data->itemBatch->batch_code : 'NA' !!}</td>
               <td id="mid-vert">{{ $data->transaction_type == 1 ? 'Check In' : 'Check Out' }}</td>
               <td id="mid-vert">{!! $data->displayAmount() !!}</td>
-              <td id="mid-vert">{!! $data->remarks !!}</td>
+              <td id="mid-vert">{!! Str::limit($data->remarks, 40) .. !!}</td>
               <td id="mid-vert">{{ __dataType::date_parse($data->datetime, 'M d, Y g:i A') }}</td>
               <td id="mid-vert">
                 @if(in_array('dashboard.item.logs_update_remarks', $global_user_submenus))
