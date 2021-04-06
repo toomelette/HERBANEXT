@@ -105,7 +105,7 @@
 
 							<tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
 								
-								<td id="mid-vert">{{ $data->machine->name }}</td>
+								<td id="mid-vert">{{ optional($data->machine)->name }}</td>
 								<td id="mid-vert">
 									{{ __dataType::date_parse($data->date_from, 'm/d/Y') }} {{ date('h:i A', strtotime($data->time_from)) }}
 								</td>
