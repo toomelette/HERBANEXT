@@ -8,9 +8,9 @@
 
     <div class="col-md-12" style="margin-bottom:10px;">
       <span>Legend:</span><br>
-      Perne = <span class="label bg-red">&nbsp;</span>&nbsp;&nbsp;
-      Gian = <span class="label bg-blue">&nbsp;</span>&nbsp;&nbsp;
-      Paulo = <span class="label bg-orange">&nbsp;</span>
+      Perne = <span class="label bg-maroon">&nbsp;</span>&nbsp;&nbsp;
+      Gian = <span class="label bg-purple">&nbsp;</span>&nbsp;&nbsp;
+      Paulo = <span class="label bg-blue">&nbsp;</span>
     </div>
 
     <div class="col-md-12">
@@ -117,11 +117,11 @@
             $personnels = [];
 
             if($data->user_created == "U10027"){
-              $color = "#dd4b39";
+              $color = "#d81b60";
             }else if($data->user_created == "U10028"){
-              $color = "#0073b7";
+              $color = "#605ca8";
             }else if($data->user_created == "U10029"){
-              $color = "#ff851b ";
+              $color = "#0073b7 ";
             }else{
               $color = "grey";
             }
