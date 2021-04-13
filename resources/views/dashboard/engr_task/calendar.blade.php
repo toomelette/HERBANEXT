@@ -6,6 +6,13 @@
   
   <div class="row">
 
+    <div class="col-md-12" style="margin-bottom:10px;">
+      <span>Legend:</span><br>
+      Perne = <span class="label bg-red">&nbsp;</span>&nbsp;&nbsp;
+      Gian = <span class="label bg-blue">&nbsp;</span>&nbsp;&nbsp;
+      Paulo = <span class="label bg-orange">&nbsp;</span>
+    </div>
+
     <div class="col-md-12">
       <div class="box box-primary">
         <div class="box-body no-padding">
@@ -106,9 +113,21 @@
           
           <?php
 
+            $color = "";
             $personnels = [];
 
+            if($data->user_created == "U10027"){
+              $color = "#dd4b39";
+            }else if($data->user_created == "U10028"){
+              $color = "#0073b7";
+            }else if($data->user_created == "U10029"){
+              $color = "#ff851b ";
+            }else{
+              $color = "grey";
+            }
+
             foreach ($data->engrTaskPersonnel as $data_tp) {
+
               $personnels[] = [
                 'fullname' => optional($data_tp->personnel)->fullname,
                 'position' => optional($data_tp->personnel)->position,
@@ -126,8 +145,8 @@
             start           : '{{ __dataType::date_parse($data->date_from, "m/d/Y H:i:s") }}',
             end             : '{{ __dataType::date_parse($data->date_to, "m/d/Y H:i:s") }}',
             allDay          : {!! $data->is_allday == 1 ? 'true' : 'false' !!},
-            backgroundColor : '{{ $data->color }}',
-            borderColor     : '{{ $data->color }}'
+            backgroundColor : '{{ $color }}',
+            borderColor     : '{{ $color }}'
           },
 
         @endforeach
