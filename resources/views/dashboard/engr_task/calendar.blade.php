@@ -10,7 +10,7 @@
       <span>Legend:</span><br>
       Perne = <span class="label bg-maroon">&nbsp;</span>&nbsp;&nbsp;
       Gian = <span class="label bg-purple">&nbsp;</span>&nbsp;&nbsp;
-      Paulo = <span class="label bg-blue">&nbsp;</span>
+      Paulo = <span class="label bg-yellow">&nbsp;</span>
     </div>
 
     <div class="col-md-12">
@@ -121,7 +121,7 @@
             }else if($data->user_created == "U10028"){
               $color = "#605ca8";
             }else if($data->user_created == "U10029"){
-              $color = "#0073b7 ";
+              $color = "#f39c12";
             }else{
               $color = "grey";
             }
